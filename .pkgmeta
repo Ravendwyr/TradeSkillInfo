@@ -1,0 +1,16 @@
+package-as: TradeskillInfo
+
+externals:
+    /libs/AceAddon-2.0: http://svn.wowace.com/wowace/trunk/Ace2/AceAddon-2.0
+    /libs/AceOO-2.0: http://svn.wowace.com/wowace/trunk/Ace2/AceOO-2.0
+    /libs/AceLibrary: http://svn.wowace.com/wowace/trunk/Ace2/AceLibrary
+    /libs/AceHook-2.1: http://svn.wowace.com/wowace/trunk/Ace2/AceHook-2.1
+    /libs/LibBabble-Zone-3.0: http://svn.wowace.com/wowace/trunk/LibBabble-Zone-3.0
+    /libs/LibAbacus-3.0: http://svn.wowace.com/wowace/trunk/LibAbacus-3.0
+    /libs/AceEvent-2.0: http://svn.wowace.com/wowace/trunk/Ace2/AceEvent-2.0
+    /libs/LibBabble-Faction-3.0: http://svn.wowace.com/wowace/trunk/LibBabble-Faction-3.0
+    /libs/AceDB-2.0: http://svn.wowace.com/wowace/trunk/Ace2/AceDB-2.0
+    /libs/Babble-Tradeskill-2.2: http://svn.wowace.com/wowace/trunk/Babble-2.2/Babble-Tradeskill-2.2
+    /libs/LibRock-1.0: http://svn.wowace.com/wowace/trunk/LibRock-1.0
+    /libs/AceConsole-2.0: http://svn.wowace.com/wowace/trunk/Ace2/AceConsole-2.0
+    /libs/FuBarPlugin-2.0: http://svn.wowace.com/wowace/trunk/FuBarPlugin-2.0
