@@ -1,0 +1,44 @@
+﻿## Title: Tradeskill Info |cff7fff7f-Ace2-|r
+## Notes: Complete Tradeskill Info
+## Notes-zhTW: 完整的商業技能百科
+## Notes-zhCN: 完整的商业技能百科
+## Notes-esES: Informarcion Completa de las Habilidades de Comercio
+## Author: wmrojer
+## eMail: evenue.wow@gmail.com
+## X-eMail: evenue.wow@gmail.com
+
+## Interface: 20400
+## Version: 1.0.$Revision$
+## X-Revision: $Rev$
+## X-Date: $Date$
+
+## X-Credits Evenue (updates), Fieroivan (updates), Coani (Titan Plugin)
+
+## X-Category: Tradeskill
+## X-RelSite-WoWI: 5473
+## X-WoWIPortal: wmrojer
+## X-AceForum: 4692
+#### X-Website: http://www.wowace.com/wiki/TradeskillInfo
+## X-LoadOn-Slash: /tsi
+
+## Dependencies:
+## X-Embeds: Ace2, LibAbacus-3.0, FubarPlugin-2.0, LibRock-1.0, LibBabble-Zone-3.0, LibBabble-Faction-3.0, Babble-Tradeskill-2.2
+## OptionalDeps: Ace2, LibAbacus-3.0, FubarPlugin-2.0, LibRock-1.0, LibBabble-Zone-3.0, LibBabble-Faction-3.0, Babble-Tradeskill-2.2, Titan
+## DefaultState: Enabled
+## LoadOnDemand: 0
+
+## SavedVariables: TradeskillInfoDB
+
+#### List of embedded Ace2 libraries
+embeds.xml
+
+TradeskillInfo.lua
+
+TradeskillData.lua
+TradeskillData-zhTW.lua
+TradeskillData-zhCN.lua
+TradeskillData-deDE.lua
+TradeskillData-esES.lua
+
+TitanTSI.lua
+TitanTSI.xml
