@@ -444,7 +444,6 @@ end
 function TradeskillInfo:OnEnable()
 	self:InitPlayer();
 	self:HookTradeSkillUI();
-	self:HookCraftUI();
 	self:SecureHook("ContainerFrameItemButton_OnModifiedClick");
 	self:SecureHook("BankFrameItemButtonGeneric_OnModifiedClick");
 	self:SecureHook("MerchantItemButton_OnModifiedClick");
@@ -453,7 +452,6 @@ function TradeskillInfo:OnEnable()
 	self:RegisterEvent("AceEvent_FullyInitialized","OnFullyInitialized")
 	self:RegisterEvent("TRADE_SKILL_SHOW", "OnTradeShow");
 	self:RegisterEvent("SKILL_LINES_CHANGED", "OnSkillUpdate");
-	self:RegisterEvent("CRAFT_SHOW", "OnCraftShow");
 	self:RegisterEvent("ADDON_LOADED", "OnAddonLoaded");
 	self:UpdateSkills();
 	self:UpdateSpecializations();
@@ -473,8 +471,6 @@ function TradeskillInfo:OnAddonLoaded(addon)
 		self:HookAuctionUI();
 	elseif addon == "Blizzard_TradeSkillUI" then
 		self:HookTradeSkillUI();
-	elseif addon == "Blizzard_CraftUI" then
-		self:HookCraftUI();
 	end
 end
 
@@ -489,18 +485,7 @@ function TradeskillInfo:OnTradeUpdate()
 end
 
 function TradeskillInfo:OnSkillUpdate()
-	if (GetTradeSkillLine() ~= "UNKNOWN") or
-		(GetCraftDisplaySkillLine() ~= nil) then
-		self:ScheduleEvent(self.UpdateKnownRecipes,1,self);
-	end
-end
-
-function TradeskillInfo:OnCraftShow()
-	self:ScheduleEvent(self.UpdateKnownRecipes,1,self);
-end
-
-function TradeskillInfo:OnCraftUpdate()
-	if (GetCraftDisplaySkillLine() ~= nil) then
+	if (GetTradeSkillLine() ~= "UNKNOWN") then
 		self:ScheduleEvent(self.UpdateKnownRecipes,1,self);
 	end
 end
@@ -514,63 +499,56 @@ function TradeskillInfo:HookAuctionUI()
 		end
 		self:SecureHook("AuctionFrameBrowse_Update");
 	end
---    if Auc-Advanced and not self:IsHooked(Auc-Advanced, "lib.ListUpdate")
---        self:Hook (Auc-Advanced, "lib.ListUpdate")
---    end
+--	if Auc-Advanced and not self:IsHooked(Auc-Advanced, "lib.ListUpdate")
+--		self:Hook (Auc-Advanced, "lib.ListUpdate")
+--	end
 end
 
 function TradeskillInfo:GetExtraItemDetailText(something, tradeskill, skill_index)
 --Thanks to nogudnik for providing this code!
-    local skillName, skillType, numAvailable, isExpanded = GetTradeSkillInfo(skill_index);
-    if ( skillType == "header" ) then return end
-    if ( skill_index > GetNumTradeSkills() ) then return end
+	local skillName, skillType, numAvailable, isExpanded = GetTradeSkillInfo(skill_index);
+	if ( skillType == "header" ) then return end
+	if ( skill_index > GetNumTradeSkills() ) then return end
 
-    local link = GetTradeSkillItemLink(skill_index);
-    local itemId = getIdFromLink(link)
-    local text = nil
+	local link = GetTradeSkillItemLink(skill_index);
+	local itemId = getIdFromLink(link)
+	local text = nil
 
-    if self:CombineExists(itemId) then
-        if self:ShowingSkillProfit() then
-            -- Insert item value and reagent costs
-            local value,cost,profit = self:GetCombineCost(itemId);
-            text = string.format("s: %s - c: %s = p: %s",
-                self:GetMoneyString(value), self:GetMoneyString(cost), self:GetMoneyString(profit));
-        end
-        if self:ShowingSkillLevel() then
-            local sep = ""
-            if text then sep = "\n" else text = "" end
-            text = text .. sep .. self:GetColoredDifficulty(itemId)
-        end
-    end
+	if self:CombineExists(itemId) then
+		if self:ShowingSkillProfit() then
+			-- Insert item value and reagent costs
+			local value,cost,profit = self:GetCombineCost(itemId);
+			text = string.format("s: %s - c: %s = p: %s",
+				self:GetMoneyString(value), self:GetMoneyString(cost), self:GetMoneyString(profit));
+		end
+		if self:ShowingSkillLevel() then
+			local sep = ""
+			if text then sep = "\n" else text = "" end
+			text = text .. sep .. self:GetColoredDifficulty(itemId)
+		end
+	end
 
-    return text
+	return text
 end
 
 function TradeskillInfo:HookTradeSkillUI()
-    if TradeSkillFrame and not self:IsHooked("TradeSkillFrame_SetSelection") then
-        self:SecureHook("TradeSkillFrame_SetSelection");
-    end
+	if TradeSkillFrame and not self:IsHooked("TradeSkillFrame_SetSelection") then
+		self:SecureHook("TradeSkillFrame_SetSelection");
+	end
 
-    if Skillet and not self:IsHooked(Skillet, "GetExtraItemDetailText") then
-        self:Hook(Skillet, "GetExtraItemDetailText")
-    end
-end
-function TradeskillInfo:HookCraftUI()
-	if CraftFrame and not self:IsHooked("CraftFrame_SetSelection") then
-		self:SecureHook("CraftFrame_SetSelection");
+	if Skillet and not self:IsHooked(Skillet, "GetExtraItemDetailText") then
+		self:Hook(Skillet, "GetExtraItemDetailText")
 	end
 end
 
 function TradeskillInfo:UpdateKnownRecipes()
 	if not self.processingUpdates and
-		(GetTradeSkillLine() ~= "UNKNOWN") or
-		(GetCraftDisplaySkillLine() ~= nil) then
+		(GetTradeSkillLine() ~= "UNKNOWN") then
 		self.processingUpdates = true;
 
 		self:UpdateSkills();
 		self:UpdateSpecializations();
 		self:UpdateKnownTradeRecipes();
-		self:UpdateKnownCraftRecipes();
 		self.processingUpdates = false;
 	end
 end
@@ -606,16 +584,18 @@ function TradeskillInfo:UpdateSpecializations()
 	end
 end
 
-function TradeskillInfo:MakeSpecialCase(id,itemName)
-	if not self.vars.specialcases[id] then
+function TradeskillInfo:MakeSpecialCase(id,spellId)
+	if id < 100 or not self.vars.specialcases[id] then
 		return id;
 	end
-	local spec=tostring(id)..'|'..itemName;
-	for k,v in pairs(self.vars.specialcases) do
-		if v==spec then
-			return k
+	local specialIds=self.vars.specialcases[id]
+	for i in string.gmatch(specialIds, "(%d+)") do
+		i = tonumber(i)
+		if -self:GetCombineEnchantId(i) == spellId then
+			return i
 		end
 	end
+
 	return id;
 end
 
@@ -623,7 +603,8 @@ function TradeskillInfo:GetSpecialCase(id,itemName)
 	if id > 100 or not self.vars.specialcases[id] then
 		return id,itemName;
 	end
-	_, _, id,itemName = string.find(self.vars.specialcases[id],"(%d+)|(.+)");
+	_, _, id = string.find(self.vars.specialcases[id],"(%d+)");
+	itemName = GetItemInfo(id)
 	return tonumber(id),itemName;
 end
 
@@ -644,9 +625,11 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 				CollapseTradeSkillSubClass(i);
 			elseif (itemType ~= "header" and (GetTradeSkillLine() == skillName)) then
 				local link = GetTradeSkillItemLink(i);
-				local id = getIdFromLink(link);
+				local id = getIdFromLink(link)
+				link = GetTradeSkillRecipeLink(i)
+				local spellId = getIdFromLink(link)
 				local diff = self.vars.difficulty[itemType];
-				id = self:MakeSpecialCase(id,itemName);
+				id = self:MakeSpecialCase(id, spellId);
 				if id then
 					self.db.realm.userdata[self.vars.playername].knownRecipes[id] = diff;
 					self:UpdateDifficultyData(id, diff, currentSkillLvl);
@@ -654,35 +637,6 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 					self:Print("UpdateKnownTradeRecipes startLine=%d endLine%d line=%d name=%s type=%s link=%s",startLine,endLine,i,itemName,itemType,link);
 					return;
 				end
-			end
-		end
-	end
-end
-
-function TradeskillInfo:UpdateKnownCraftRecipes(startLine, endLine)
-	local skillName, currentSkillLvl, _ = GetCraftDisplaySkillLine()
-	if (skillName ~= nil) then
-		if skillName ~= self.vars.tradeskills['D'] then return end  -- Only enchanting supported
-		local numSkills = GetNumCrafts();
-		if not startLine then
-			startLine = 1;
-			endLine= numSkills;
-		end
-		for i=startLine, endLine do
-			local craftName, _, craftType, _,	isExpanded = GetCraftInfo(i);
-			if (craftType == "header" and not isExpanded) then
-				ExpandCraftSkillLine(i);
-				self:UpdateKnownCraftRecipes(i+1, i+GetNumCrafts()-numSkills);
-				CollapseCraftSkillLine(i);
-			elseif (craftType ~= "header" and (GetCraftDisplaySkillLine() == skillName)) then
-				local link = GetCraftItemLink(i);
-				local id = getIdFromLink(link);
-				local diff = self.vars.difficulty[craftType];
-				if self.vars.enchantItems[id] then  -- Enchants that generate items are stored by there itemid
-					id = self.vars.enchantItems[id];
-				end
-				self.db.realm.userdata[self.vars.playername].knownRecipes[id] = diff;
-				self:UpdateDifficultyData(id, diff, currentSkillLvl);
 			end
 		end
 	end
@@ -739,52 +693,28 @@ function TradeskillInfo:TradeSkillFrame_SetSelection(id)
 end
 
 ----------------------------------------------------------------------
--- CraftFrame Hook to display recipe skill level
-----------------------------------------------------------------------
-function TradeskillInfo:CraftFrame_SetSelection(id)
-	if not id then return end
-	local craftName, craftSubSpellName, craftType, numAvailable, isExpanded, trainingPointCost, requiredLevel = GetCraftInfo(id);
-	if ( craftType == "header" ) then return end
-	if ( GetCraftSelectionIndex() > GetNumCrafts() ) then return end
-
-	local link = GetCraftItemLink(GetCraftSelectionIndex());
-	local enchantId = getIdFromLink(link);
-	if self:CombineExists(enchantId) then
-
-		if self:ShowingSkillLevel() then
-			local text = REQUIRES_LABEL .. " ";
-			if CraftRequirements:GetText() and CraftRequirements:GetText() ~= "" then
-				text = CraftRequirements:GetText() .. ", ";
-			end
-			text = text .. "skill(" ..self:GetCombineLevel(enchantId) .. ")"
-			CraftRequirements:SetText(text);
-		end
-	end
-end
-
-----------------------------------------------------------------------
 -- OnClick hooks
 ----------------------------------------------------------------------
-function TradeskillInfo:ContainerFrameItemButton_OnModifiedClick(button, ignoreModifiers)
+function TradeskillInfo:ContainerFrameItemButton_OnModifiedClick(object, button)
 	local link = GetContainerItemLink(this:GetParent():GetID(),this:GetID())
 	if self:Item_OnClick(button,link) then return end
 end
 
-function TradeskillInfo:BankFrameItemButtonGeneric_OnModifiedClick(button)
+function TradeskillInfo:BankFrameItemButtonGeneric_OnModifiedClick(object, button)
 	local link = GetContainerItemLink(BANK_CONTAINER,this:GetID())
 	if self:Item_OnClick(button,link) then return end
 end
 
-function TradeskillInfo:MerchantItemButton_OnModifiedClick(button)
+function TradeskillInfo:MerchantItemButton_OnModifiedClick(object, button)
 	local link = GetMerchantItemLink(this:GetID())
 	if self:Item_OnClick(button,link) then return end
 end
 
-function TradeskillInfo:ChatFrame_OnHyperlinkShow(link,text,button)
+function TradeskillInfo:ChatFrame_OnHyperlinkShow(object, link, text, button)
 	if self:Item_OnClick(button,text) then return end
 end
 
-function TradeskillInfo:AuctionItemButton_OnClick(object,button)
+function TradeskillInfo:AuctionItemButton_OnClick(object, button)
 	local offset = FauxScrollFrame_GetOffset(BrowseScrollFrame)
 	local itemID = this:GetParent():GetID()+offset
 	local link = GetAuctionItemLink("list",itemID)
@@ -859,11 +789,7 @@ function TradeskillInfo:GetCombineName(id)
 	if id > 0 then
 		name = self:GetComponent(id);
 	else
-		if self.vars.enchants[id] then
-			_,_,name = string.find(self.vars.enchants[id],"(.+)/");
-		else
-			name = ""
-		end
+		name = GetSpellInfo(-id)
 	end
 	if not name then name=tostring(id) end
 	return name
@@ -934,9 +860,19 @@ end
 function TradeskillInfo:GetCombineDescription(id)
 	local description
 	if id < 0 then
-		if self.vars.enchants[id] then
-			_,_,description = string.find(self.vars.enchants[id],"[^/]*/(.*)");
+		-- TODO: This is probably not the best place to put this if we need to scan more tooltips
+		if not TSIScanTooltip then
+			CreateFrame( "GameTooltip", "TSIScanTooltip" );
+			TSIScanTooltip:SetOwner( WorldFrame, "ANCHOR_NONE" );
+			TSIScanTooltip:AddFontStrings(
+				TSIScanTooltip:CreateFontString( "$parentTextLeft1", nil, "GameTooltipText" ),
+				TSIScanTooltip:CreateFontString( "$parentTextRight1", nil, "GameTooltipText" ) );
 		end
+
+		TSIScanTooltip:ClearLines()
+		TSIScanTooltip:SetHyperlink(GetSpellLink(-id))
+		description = getglobal("TSIScanTooltipTextLeft3")
+		if description then description = description:GetText() end
 	end
 	return description
 end
@@ -1072,18 +1008,19 @@ function TradeskillInfo:ComponentExists(id)
 	if id and self.vars.components[id] then return true end
 end
 
-function TradeskillInfo:GetIdFromName(name)
-	for i,s in pairs(self.vars.components) do
-		local _,_,n = string.find(s,"(.+)/%d+/%a+")
-		if n == name then
-			return i;
-		end
-	end
-end
-
 function TradeskillInfo:GetComponent(id)
 	if not self:ComponentExists(id) then return end
-	local _,_,name,cost,source = string.find(self.vars.components[id],"(.+)/(%d+)/(%a+)")
+	local realId = id
+	if realId < 100 then
+		local specialCase = self.vars.specialcases[id]
+		if specialCase and specialCase ~= "" then
+			_, _, realId = string.find(specialCase, "(%d+)")
+			realId = tonumber(realId)
+		end
+	end
+	local name = GetItemInfo(realId)
+	if not name then name="????" end
+	local _,_,cost,source = string.find(self.vars.components[realId],"(%d+)/(%a+)")
 	return name,tonumber(cost),source
 end
 
@@ -1091,7 +1028,7 @@ function TradeskillInfo:GetComponentSource(id, tooltip)
 	if not self:ComponentExists(id) then return end
 	local c = self.db.profile.ColorSource;
 	local Ltext;
-	local _,_,name,cost,source = string.find(self.vars.components[id],"(.+)/(%d+)/(%a+)")
+	local name,cost,source = self:GetComponent(id)
 	local ret
 	for s in string.gmatch(source,"%u%l*") do
 		if self.vars.sources[s] then
@@ -1126,11 +1063,11 @@ function TradeskillInfo:PrintWhereUsed(id)
 	local num = 0;
 	for s in string.gmatch(self.vars.whereUsed[id],"%S+") do
 		num = num + 1;
-    local _,_,skill,item = string.find(s, "(%u+)([-]?%d+)")
-    if not skills[skill] then
-    	skills[skill] = {}
-    end
-    table.insert(skills[skill],tonumber(item))
+	local _,_,skill,item = string.find(s, "(%u+)([-]?%d+)")
+	if not skills[skill] then
+		skills[skill] = {}
+	end
+	table.insert(skills[skill],tonumber(item))
 	end
 	local name = self:GetComponent(id);
 	self:Print("Found "..name.." in "..num.." combines");
@@ -1191,11 +1128,11 @@ function TradeskillInfo:BuildWhereUsed()
 		local skills = self:GetItemUseCount(i);
 		local overview
 		for s,n in pairs(skills) do
-	    if not overview then
-	    	overview = s..n;
-	    else
-	    	overview = overview.." "..s..tostring(n);
-	    end
+		if not overview then
+			overview = s..n;
+		else
+			overview = overview.." "..s..tostring(n);
+		end
 	  end
 		self.vars.whereUsedOverview[i] = overview;
 	end
@@ -1585,7 +1522,6 @@ function TradeskillInfo:HookTooltips()
 	self:SecureHook(GameTooltip, "SetInventoryItem");
 	self:SecureHook(GameTooltip, "SetLootItem");
 	self:SecureHook(GameTooltip, "SetHyperlink");
-	self:SecureHook(GameTooltip, "SetCraftItem");
 	self:SecureHook(GameTooltip, "SetTradeSkillItem");
 	self:SecureHook(GameTooltip, "SetMerchantItem");
 	self:SecureHook(GameTooltip, "SetAuctionItem");
@@ -1599,7 +1535,7 @@ end
 function TradeskillInfo:SetItemRef(link, text, button)
 --	if IsControlKeyDown() or IsShiftKeyDown() then return end
 	if ( IsModifiedClick() ) then return end
-    local id = getIdFromLink(link);
+	local id = getIdFromLink(link);
 	if id then
 		self:AddToTooltip(ItemRefTooltip,id);
 	end
@@ -1636,17 +1572,6 @@ function TradeskillInfo:SetHyperlink(tooltip, link)
 	self:AddToTooltip(tooltip, id);
 end
 
-function TradeskillInfo:SetCraftItem(tooltip, itemIndex, reagentIndex)
-	local link
-	if reagentIndex then
-		link = GetCraftReagentItemLink(itemIndex, reagentIndex);
-	else
-		link = GetCraftItemLink(itemIndex);
-	end
-	local id = getIdFromLink(link)
-	self:AddToTooltip(tooltip, id);
-end
-
 function TradeskillInfo:SetTradeSkillItem(tooltip, itemIndex, reagentIndex)
 	local link
 	if reagentIndex then
@@ -1671,12 +1596,15 @@ function TradeskillInfo:SetAuctionItem(tooltip, type, index)
 end
 
 function TradeskillInfo:SetTrainerService(tooltip, selectedService)
-	local name = getglobal(tooltip:GetName().."TextLeft1"):GetText();
+	local _, _, category = GetTrainerServiceInfo(selectedService)
 	if category ~= "header" then
-		local id = self:GetIdFromName(name);
-		if id then
-			self:AddToTooltip(tooltip, id);
-			self:AddReagentsToTooltip(tooltip, id);
+		local link = GetTrainerServiceItemLink(selectedService)
+		if link then
+			local id = getIdFromLink(link)
+			if id then
+				self:AddToTooltip(tooltip, id);
+				self:AddReagentsToTooltip(tooltip, id);
+			end
 		end
 	end
 end
@@ -1817,43 +1745,6 @@ function TradeskillInfo:AddStackToTooltip(tooltip, id)
 	end
 end
 
-
-----------------------------------------------------------------------
--- Parse enchant tooltips to store information
-----------------------------------------------------------------------
---do
---	local enchants
---	local index
---	function TradeskillInfo:ParseEnchantTooltip()
---		self.db.account.enchantdescriptions = {};
---		enchants = {};
---		index = 0;
---		for i in pairs(self.vars.enchants) do
---			table.insert(enchants,i);
---		end
---		self:ScheduleEvent(self.SetEnchantTooltip,1,self);
---	end
---
---	function TradeskillInfo:SetEnchantTooltip()
---		index = index + 1;
---		if enchants[index] then
---			GameTooltip:SetOwner(UIParent);
---			GameTooltip:SetHyperlink("enchant:"..-enchants[index]);
---			self:ScheduleEvent(self.ReadEnchantTooltip,1,self);
---		end
---	end
---
---	function TradeskillInfo:ReadEnchantTooltip()
---		local enchantname = GameTooltipTextLeft1:GetText();
---		local enchantdescription = GameTooltipTextLeft5:GetText();
---		if not enchantname then enchantname="" end
---		if not enchantdescription then enchantdescription="" end
---		self.db.account.enchantdescriptions[enchants[index]] = enchantname.."/"..enchantdescription;
---		GameTooltip:Hide();
---		self:ScheduleEvent(self.SetEnchantTooltip,1,self);
---	end
---end
-
 ----------------------------------------------------------------------
 -- UI Load and Toggle
 ----------------------------------------------------------------------
@@ -1906,7 +1797,7 @@ function TradeskillInfo:AuctionFrameBrowse_Update()
 				button.Icon = getglobal("BrowseButton"..i.."ItemIconTexture"); -- cache the icon texture
 				iconTexture = button.Icon
 			end
-			if button.id then     -- contains real index when sorted in Compact-UI level
+			if button.id then  -- contains real index when sorted in Compact-UI level
 				index = button.id
 			end
 			local recipeLink = GetAuctionItemLink("list", index)
@@ -2038,7 +1929,7 @@ TradeskillInfo.OnMenuRequest = {
 			type = "execute",
 			name = TradeskillInfo_ToggleGUI_Text,
 			desc = TradeskillInfo_ToggleGUI_Desc_Text,
-            func  = function() TradeskillInfo:UI_Toggle() end,
+			func  = function() TradeskillInfo:UI_Toggle() end,
 		},
 		GUI_Config = {
 			type = "execute",
