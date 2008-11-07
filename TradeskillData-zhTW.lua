@@ -48,6 +48,8 @@ TradeskillInfo.vars.tradeskills = {
 	['X'] = TT(BTS["First Aid"]),
 	['Y'] = TT(BTS["Mining"]),
 	['Z'] = TT(BTS["Poisons"]),
+	-- New in 3.0.2
+	['I'] = TT("銘文學"),
 }
 
 TradeskillInfo.vars.skillnames = {
@@ -62,6 +64,8 @@ TradeskillInfo.vars.skillnames = {
 	[TradeskillInfo.vars.tradeskills['X']] = 'X',
 	[TradeskillInfo.vars.tradeskills['Y']] = 'Y',
 	[TradeskillInfo.vars.tradeskills['Z']] = 'Z',
+	-- New in 3.0.2
+	[TradeskillInfo.vars.tradeskills['I']] = 'I',
 }
 
 TradeskillInfo.vars.specializations = {
@@ -189,6 +193,9 @@ TradeskillInfo.vars.sources = {
 	['X'] = "尚無資料",
 	['R'] = "勘探",
 	['U'] = "未知",
+	-- New in 3.0.2
+	['I'] = "研磨",
+	['Ci'] = "銘文學",
 }
 
 TradeskillInfo.vars.zones = {

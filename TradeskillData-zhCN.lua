@@ -45,6 +45,8 @@ TradeskillInfo.vars.tradeskills = {
 	['X'] = TT("急救"),
 	['Y'] = TT("采矿"),
 	['Z'] = TT("毒药"),
+	-- New in 3.0.2
+	['I'] = TT("???"),
 }
 
 TradeskillInfo.vars.skillnames = {
@@ -59,6 +61,8 @@ TradeskillInfo.vars.skillnames = {
 	[TradeskillInfo.vars.tradeskills['X']] = 'X',
 	[TradeskillInfo.vars.tradeskills['Y']] = 'Y',
 	[TradeskillInfo.vars.tradeskills['Z']] = 'Z',
+	-- New in 3.0.2
+	[TradeskillInfo.vars.tradeskills['I']] = 'I',
 }
 
 TradeskillInfo.vars.specializations = {
@@ -186,6 +190,9 @@ TradeskillInfo.vars.sources = {
 	['X'] = "目前无法获得",
 	['R'] = "采矿",
 	['U'] = "未知",
+	-- New in 3.0.2
+	['I'] = "??",
+	['Ci'] = "???",	
 }
 
 TradeskillInfo.vars.zones = {
