@@ -1,4 +1,5 @@
 TradeskillInfoUI = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceDB-2.0", "AceConsole-2.0")
+local L = AceLibrary("AceLocale-2.2"):new("TradeskillInfoUI")
 TradeskillInfoUI.version = "1.0." .. string.sub("$Revision: 61 $", 12, -3);
 TradeskillInfoUI.date = string.sub("$Date: 2008-11-05 16:45:52 +0200 (Wed, 05 Nov 2008) $", 8, 17);
 TradeskillInfoUI:RegisterDB("TradeskillInfoUIDB")
@@ -20,9 +21,9 @@ TradeskillInfoUI.cons.strata = { "LOW", "MEDIUM", "HIGH" };
 
 TradeskillInfoUI.options = {};
 TradeskillInfoUI.options.buttons = {
-	["TradeskillInfoOpposingButton"] = { text = "Opposing", var = "ShowOpposing", tooltip="Include recipes from opposing faction" },
-	["TradeskillInfoNameButton"] = { text = "Name", var = "SearchName", tooltip="Search for name"},
-	["TradeskillInfoReagentButton"] = { text = "Reagent", var = "SearchReagent", tooltip="Search for reagents"},
+	["TradeskillInfoOpposingButton"] = { text = L["Opposing"], var = "ShowOpposing", tooltip=L["Include recipes from opposing faction"] },
+	["TradeskillInfoNameButton"] = { text = L["Name"], var = "SearchName", tooltip=L["Search for name"]},
+	["TradeskillInfoReagentButton"] = { text = L["Reagent"], var = "SearchReagent", tooltip=L["Search for reagents"]},
 };
 
 --UIPanelWindows["TradeskillInfoFrame"] =	{ area = "right", pushable = 3 };
@@ -31,18 +32,18 @@ TradeskillInfoUI.vars = {};
 TradeskillInfoUI.vars.selectionIndex = 2;
 TradeskillInfoUI.vars.searchResult = {};
 TradeskillInfoUI.vars.availability = {
-	"Player known",
-	"Player can learn",
-	"Player will be able to learn",
-	"Alt known",
-	"Alt can learn",
-	"Alt will be able to learn",
-	"Unavailable",
+	L["Player known"],
+	L["Player can learn"],
+	L["Player will be able to learn"],
+	L["Alt known"],
+	L["Alt can learn"],
+	L["Alt will be able to learn"],
+	L["Unavailable"],
 };
 TradeskillInfoUI.vars.faction = {
-	"Neutral",
-	"Alliance",
-	"Horde",
+	L["Neutral"],
+	L["Alliance"],
+	L["Horde"],
 };
 -- 0123456789ABCDEF
 -- 1  1   1   1   1
@@ -50,9 +51,6 @@ TradeskillInfoUI.vars.TradeSkillTypeColor = {
 	["playerknown"] = { r = 1.00, g = 1.00, b = 1.00 }, -- ffffff
 	["playerlearn"] = { r = 0.25, g = 1.00, b = 0.25 }, -- 33ff33
 	["playerhigh"] = { r = 1.00, g = 0.75, b = 0.25 }, -- ff7733
---	["altknown"] = { r = 0.25, g = 1.00, b = 1.00 },
---	["altlearn"] = { r = 0.25, g = 0.50, b = 1.00 },
---	["althigh"] = { r = 1.00, g = 0.25, b = 0.50 },
 	["altknown"] = { r = 0.75, g = 0.75, b = 0.75 },
 	["altlearn"] = { r = 0.00, g = 0.75, b = 0.00 },
 	["althigh"] = { r = 0.75, g = 0.50, b = 0.00 },
@@ -542,9 +540,9 @@ function TradeskillInfoUI:ShowReagentTooltip(this)
 		CursorUpdate();
 	else
 		GameTooltip:SetText(this.name);
-		GameTooltip:AddLine("Item not in local cache.");
-		GameTooltip:AddLine("Click to try to update local cache.");
-		GameTooltip:AddLine("Warning! You can be disconnected.");
+		GameTooltip:AddLine(L["Item not in local cache."]);
+		GameTooltip:AddLine(L["Click to try to update local cache."]);
+		GameTooltip:AddLine(L["Warning! You can be disconnected."]);
 		GameTooltip:Show();
 	end
 end
@@ -565,12 +563,12 @@ end
 ----------------------------------------------------------------------
 function TradeskillInfoUI:AvailabilityDropDown_OnLoad()
 	UIDropDownMenu_SetWidth(TradeskillInfoAvailabilityDropDown, 120);
-	UIDropDownMenu_SetText(TradeskillInfoAvailabilityDropDown, "Availability");
+	UIDropDownMenu_SetText(TradeskillInfoAvailabilityDropDown, L["Availability"]);
 end
 
 function TradeskillInfoUI:AvailabilityDropDown_OnShow()
 	UIDropDownMenu_Initialize(this, TradeskillInfoUI.AvailabilityDropDown_Initialize);
-	UIDropDownMenu_SetText(TradeskillInfoAvailabilityDropDown, "Availability");
+	UIDropDownMenu_SetText(TradeskillInfoAvailabilityDropDown, L["Availability"]);
 end
 
 function TradeskillInfoUI.AvailabilityDropDown_Initialize()
@@ -598,12 +596,12 @@ end
 ----------------------------------------------------------------------
 function TradeskillInfoUI:TradeskillsDropDown_OnLoad()
 	UIDropDownMenu_SetWidth(TradeskillInfoTradeskillsDropDown, 120);
-	UIDropDownMenu_SetText(TradeskillInfoTradeskillsDropDown, "Tradeskills");
+	UIDropDownMenu_SetText(TradeskillInfoTradeskillsDropDown, L["Tradeskills"]);
 end
 
 function TradeskillInfoUI:TradeskillsDropDown_OnShow()
 	UIDropDownMenu_Initialize(this, TradeskillInfoUI.TradeskillsDropDown_Initialize);
-	UIDropDownMenu_SetText(TradeskillInfoTradeskillsDropDown, "Tradeskills");
+	UIDropDownMenu_SetText(TradeskillInfoTradeskillsDropDown, L["Tradeskills"]);
 end
 
 function TradeskillInfoUI.TradeskillsDropDown_Initialize()
@@ -907,35 +905,27 @@ function TradeskillInfoUI:GetTradeSkillRecipe(index)
 	if id then
 		height, sources = TradeskillInfo:GetRecipeSources(id,self.db.profile.ShowOpposing);
 		if sources then
-			text = "Recipe: "..sources;
+			text = L["Recipe"] .. ": "..sources;
 		end
 	end
 	return height, text;
 end
 
 function TradeskillInfoUI:GetTradeSkillBy(index)
-	local knownBy = TradeskillInfo:GetCombineKnownBy(self.vars.searchResult[index]);
-	local learnableBy = TradeskillInfo:GetCombineLearnableBy(self.vars.searchResult[index]);
-	local availableTo = TradeskillInfo:GetCombineAvailableTo(self.vars.searchResult[index]);
-	local text
+	local knownBy = TradeskillInfo:GetCombineKnownBy(self.vars.searchResult[index])
+	local learnableBy = TradeskillInfo:GetCombineLearnableBy(self.vars.searchResult[index])
+	local availableTo = TradeskillInfo:GetCombineAvailableTo(self.vars.searchResult[index])
+	local text = ""
 	if knownBy then
-		text = "|CffffffffKnown By: "..knownBy.."|r";
+		text = "|Cffffffff" .. L["Known by"] .. ": " .. knownBy .. "|r\n"
 	end
 	if learnableBy then
-		if not text then
-			text = "|Cff33ff33Learnable By: "..learnableBy.."|r";
-		else
-			text = text.."\n|cff33ff33Learnable By: "..learnableBy.."|r";
-		end
+		text = text .. "|Cff33ff33" .. L["Learnable by"] .. ": " .. learnableBy .. "|r\n"
 	end
 	if availableTo then
-		if not text then
-			text = "|Cffff7733Will Be Learnable By: "..availableTo.."|r";
-		else
-			text = text.."\n|Cffff7733Will Be Learnable By: "..availableTo.."|r"
-		end
+		text = text .. "|Cffff7733" .. L["Will be learnable by"] .. ": " .. availableTo.."|r"
 	end
-	return text;
+	return text
 end
 
 function TradeskillInfoUI:GetTradeSkillIcon(index)

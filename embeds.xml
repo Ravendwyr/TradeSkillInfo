@@ -1,23 +1,24 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 
-<!--Ace2 Libraries-->
-<Script file="libs\AceLibrary\AceLibrary.lua"/>
-<Script file="libs\AceOO-2.0\AceOO-2.0.lua"/>
-<Script file="libs\AceConsole-2.0\AceConsole-2.0.lua"/>
-<Script file="libs\AceEvent-2.0\AceEvent-2.0.lua"/>
-<Script file="libs\AceAddon-2.0\AceAddon-2.0.lua"/>
-<Script file="libs\AceDB-2.0\AceDB-2.0.lua"/>
-<Script file="libs\AceHook-2.1\AceHook-2.1.lua"/>
+	<!--Ace2 Libraries-->
+	<Script file="libs\AceLibrary\AceLibrary.lua"/>
+	<Script file="libs\AceOO-2.0\AceOO-2.0.lua"/>
+	<Script file="libs\AceConsole-2.0\AceConsole-2.0.lua"/>
+	<Script file="libs\AceEvent-2.0\AceEvent-2.0.lua"/>
+	<Script file="libs\AceAddon-2.0\AceAddon-2.0.lua"/>
+	<Script file="libs\AceDB-2.0\AceDB-2.0.lua"/>
+	<Script file="libs\AceHook-2.1\AceHook-2.1.lua"/>
+	<Script file="libs\AceLocale-2.2\AceLocale-2.2.lua"/>
 
-<!--Libraries-->
-<Script file="libs\LibRock-1.0\LibRock-1.0.lua"/>
-<Include file="libs\LibAbacus-3.0\lib.xml"/>
+	<!--Libraries-->
+	<Script file="libs\LibRock-1.0\LibRock-1.0.lua"/>
+	<Include file="libs\LibAbacus-3.0\lib.xml"/>
 
-<Include file="libs\LibBabble-Zone-3.0\lib.xml"/>
-<Include file="libs\LibBabble-Faction-3.0\lib.xml"/>
-<Script file="libs\Babble-Tradeskill-2.2\Babble-Tradeskill-2.2.lua"/>
+	<Include file="libs\LibBabble-Zone-3.0\lib.xml"/>
+	<Include file="libs\LibBabble-Faction-3.0\lib.xml"/>
+	<Script file="libs\Babble-Tradeskill-2.2\Babble-Tradeskill-2.2.lua"/>
 
-<Script file="libs\FuBarPlugin-2.0\FuBarPlugin-2.0\FuBarPlugin-2.0.lua"/>
+	<Script file="libs\FuBarPlugin-2.0\FuBarPlugin-2.0\FuBarPlugin-2.0.lua"/>
 
 </Ui>

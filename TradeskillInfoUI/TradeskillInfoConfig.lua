@@ -1,32 +1,33 @@
 -- $Revision: 61 $
+local L = AceLibrary("AceLocale-2.2"):new("TradeskillInfoUI")
 
 TradeskillInfo.options = {};
 TradeskillInfo.options.CheckBoxes = {
 	-- Item Tooltip
-	["Source"] = { index=1, tooltipText="Show source in tooltip", var="TooltipSource"},
-	["Used in"] = { index=2, tooltipText="Show used in in tooltip", var="TooltipUsedIn"},
-	["Usable by"] = { index=3, tooltipText="Show who can use an item", var="TooltipUsableBy"},
-	["Banked"] = { index=4, tooltipText="Show how many you have in the bank (Req CharacterInfoStorage)", var="TooltipBankedAmount"},
-	["Alt Amount"] = { index=8, tooltipText="Show how many you have on alt's  (Req CharacterInfoStorage)", var="TooltipAltAmount"},
-	["ItemID"] = { index=9, tooltipText="Show ItemID in tooltip", var="TooltipID"},
-	["Stack Size"] = { index=10, tooltipText="Show item stack size in tooltip" , var="TooltipStack"},
+	[L["Source"]] = { index=1, tooltipText=L["Show source in tooltip"], var="TooltipSource"},
+	[L["Used in"]] = { index=2, tooltipText=L["Show used in in tooltip"], var="TooltipUsedIn"},
+	[L["Usable by"]] = { index=3, tooltipText=L["Show who can use an item"], var="TooltipUsableBy"},
+	[L["Banked"]] = { index=4, tooltipText=L["Show how many you have in the bank (Req CharacterInfoStorage)"], var="TooltipBankedAmount"},
+	[L["Alt Amount"]] = { index=8, tooltipText=L["Show how many you have on alt's  (Req CharacterInfoStorage)"], var="TooltipAltAmount"},
+	[L["ItemID"]] = { index=9, tooltipText=L["Show ItemID in tooltip"], var="TooltipID"},
+	[L["Stack Size"]] = { index=10, tooltipText=L["Show item stack size in tooltip"], var="TooltipStack"},
 	-- Recipe Tooltip
-	["Recipe Source"] = { index=13, tooltipText="Show source in tooltip", var="TooltipRecipeSource"},
-	["Recipe Price"] = { index=14, tooltipText="Show vendor sell price in tooltip", var="TooltipRecipePrice"},
-	["Known by"] = { index=5, tooltipText="Show known by in recipe tooltip", var="TooltipKnownBy"},
-	["Learnable by"] = { index=6, tooltipText="Show learnable by in recipe tooltip", var="TooltipLearnableBy"},
-	["Will be learnable by"] = { index=7, tooltipText="Show will be learnable by in recipe tooltip", var="TooltipAvailableTo"},
+	[L["Recipe Source"]] = { index=13, tooltipText=L["Show source in tooltip"], var="TooltipRecipeSource"},
+	[L["Recipe Price"]] = { index=14, tooltipText=L["Show vendor sell price in tooltip"], var="TooltipRecipePrice"},
+	[L["Known by"]] = { index=5, tooltipText=L["Show known by in recipe tooltip"], var="TooltipKnownBy"},
+	[L["Learnable by"]] = { index=6, tooltipText=L["Show learnable by in recipe tooltip"], var="TooltipLearnableBy"},
+	[L["Will be learnable by"]] = { index=7, tooltipText=L["Show will be learnable by in recipe tooltip"], var="TooltipAvailableTo"},
 	-- Tradeskill/Craft Frame
-	["Skill required"] = { index=11, tooltipText="Show skill required", var="ShowSkillLevel"},
-	["Combine cost"] = { index=12, tooltipText="Show combine cost", var="ShowSkillProfit"},
+	[L["Skill required"]] = { index=11, tooltipText=L["Show skill required"], var="ShowSkillLevel"},
+	[L["Combine cost"]] = { index=12, tooltipText=L["Show combine cost"], var="ShowSkillProfit"},
 	-- Trainer
-	["Trainer reagents"] = { index=15, tooltipText="Show recipe reagents in tooltip at trainer", var="TrainerReagents"},
+	[L["Trainer reagents"]] = { index=15, tooltipText=L["Show recipe reagents in tooltip at trainer"], var="TrainerReagents"},
 	-- QuickSearch
+	[L["Quick Search"]] = { index=21, tooltipText=L["Enable Quick Search"], var="QuickSearch"},
 	-- TradeSkillInfoUI
-	["Quick Search"] = { index=21, tooltipText="Enable Quick Search", var="QuickSearch"},
-	["Save Frame Position"] = { index=22, tooltipText="Remember TradeskillInfoUI frame position", var="SavePosition"},
+	[L["Save Frame Position"]] = { index=22, tooltipText=L["Remember TradeskillInfoUI frame position"], var="SavePosition"},
 	-- AH
-	["Color Recipes"] = { index=31, tooltipText="Color recipes in the Auction House", var="ColorAHRecipes"},
+	[L["Color Recipes"]] = { index=31, tooltipText=L["Color recipes in the Auction House"], var="ColorAHRecipes"},
 }
 TradeskillInfo.options.ColorSwatches = {
 	{ index=1, var="ColorSource" },
@@ -49,9 +50,9 @@ TradeskillInfo.options.ColorSwatches = {
 	{ index=36, var="AHColorUnavailable"},
 }
 TradeskillInfo.options.Selections = {
-	["Search Mouse Button"] = { index=1, tooltipText="Mouse button that does a quick search", table={"LeftButton","RightButton"}, var="SearchMouseButton" },
-	["Search Shift Key"] = { index=2, tooltipText="Shift key to be held down for quick search", table={"Shift","Control","Alt"}, var="SearchShiftKey" },
-	["Frame Strata"] = { index=3, tooltipText="Set TradeskillInfoUI frame strata", table={"LOW","MEDIUM","HIGH"}, var="FrameStrata" },
+	[L["Search Mouse Button"]] = { index=1, tooltipText=L["Mouse button that does a quick search"], table={L["LeftButton"],L["RightButton"]}, var="SearchMouseButton" },
+	[L["Search Shift Key"]] = { index=2, tooltipText=L["Shift key to be held down for quick search"], table={"Shift","Control","Alt"}, var="SearchShiftKey" },
+	[L["Frame Strata"]] = { index=3, tooltipText=L["Set TradeskillInfoUI frame strata"], table={L["LOW"],L["MEDIUM"],L["HIGH"]}, var="FrameStrata" },
 }
 TradeskillInfo.options.Frames = {
 	["TradeskillInfo_Tab1"] = "TradeskillInfoConfig_Sub1Frame",
@@ -60,23 +61,23 @@ TradeskillInfo.options.Frames = {
 	["TradeskillInfo_Tab4"] = "TradeskillInfoConfig_Sub4Frame",
 }
 TradeskillInfo.options.Labels = {
-	["TradeskillInfo_Label1Text"] = "Item Tooltip",
-	["TradeskillInfo_Label2Text"] = "Recipe Tooltip",
-	["TradeskillInfo_Label3Text"] = "TradeSkill Frame",
-	["TradeskillInfo_Label4Text"] = "Trainer Frame",
-	["TradeskillInfo_Label5Text"] = "Quick Search",
-	["TradeskillInfo_Label6Text"] = "Auction House",
-	["TradeskillInfo_Label32Text"] = "You can learn",
-	["TradeskillInfo_Label33Text"] = "An alt can learn",
-	["TradeskillInfo_Label34Text"] = "You will be able to learn",
-	["TradeskillInfo_Label35Text"] = "An alt will be able to learn",
-	["TradeskillInfo_Label36Text"] = "Unavailable or already known",
-	["TradeskillInfo_Tab1"] = "Tooltip",
-	["TradeskillInfo_Tab2"] = "Tradeskill",
+	["TradeskillInfo_Label1Text"] = L["Item Tooltip"],
+	["TradeskillInfo_Label2Text"] = L["Recipe Tooltip"],
+	["TradeskillInfo_Label3Text"] = L["TradeSkill Frame"],
+	["TradeskillInfo_Label4Text"] = L["Trainer Frame"],
+	["TradeskillInfo_Label5Text"] = L["Quick Search"],
+	["TradeskillInfo_Label6Text"] = L["Auction House"],
+	["TradeskillInfo_Label32Text"] = L["You can learn"],
+	["TradeskillInfo_Label33Text"] = L["An alt can learn"],
+	["TradeskillInfo_Label34Text"] = L["You will be able to learn"],
+	["TradeskillInfo_Label35Text"] = L["An alt will be able to learn"],
+	["TradeskillInfo_Label36Text"] = L["Unavailable or already known"],
+	["TradeskillInfo_Tab1"] = L["Tooltip"],
+	["TradeskillInfo_Tab2"] = L["Tradeskill"],
 	["TradeskillInfo_Tab3"] = "UI",
-	["TradeskillInfo_Tab4"] = "Auction",
-	["TradeskillInfo_OkButton"] = "OK",
-	["TradeskillInfoConfig_Title"] = "Tradeskill Info Config",
+	["TradeskillInfo_Tab4"] = L["Auction"],
+	["TradeskillInfo_OkButton"] = L["OK"],
+	["TradeskillInfoConfig_Title"] = L["Tradeskill Info Config"],
 }
 
 --	MoneyFormat = 3,

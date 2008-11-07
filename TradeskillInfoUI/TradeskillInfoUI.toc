@@ -13,14 +13,13 @@
 ## X-eMail: evenue.wow@gmail.com
 ## X-Credits Evenue (updates), Fieroivan (updates)
 ## LoadOnDemand: 1
+## X-Curse-Packaged-Version: v1.1-beta1
 
+locale-enUS.lua
+locale-esES.lua
+locale-zhCN.lua
+locale-zhTW.lua
 TradeskillInfoUI.lua
 TradeskillInfoUI.xml
 TradeskillInfoConfig.lua
 TradeskillInfoConfig.xml
-TradeskillInfoConfig-zhCN.lua
-TradeskillInfoConfig-zhTW.lua
-TradeskillInfoConfig-esES.lua
-TradeskillInfoUI-zhCN.lua
-TradeskillInfoUI-zhTW.lua
-TradeskillInfoUI-esES.lua
