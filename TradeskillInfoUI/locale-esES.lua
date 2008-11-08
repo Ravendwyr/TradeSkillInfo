@@ -83,9 +83,9 @@ L:RegisterTranslations("esES", function() return {
 	["Tooltip"] = "Tooltip",
 	["Tradeskill"] = "Habilidades de Comercio",
 	["Auction"] = "Subasta",
-	["OK"] = true,
+	["OK"] = "OK",
 	["Tradeskill Info Config"] = "ConfiguraciÃ³n de Tradeskill Info",
-	["UI Scale"] = true,
-	["Change scale of user interface"] = true,
+	["UI Scale"] = "UI Scale",
+	["Change scale of user interface"] = "Change scale of user interface",
 } end)
 

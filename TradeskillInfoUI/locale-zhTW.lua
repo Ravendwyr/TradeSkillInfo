@@ -85,7 +85,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Auction"] = "拍賣",
 	["OK"] = "確定",	
 	["Tradeskill Info Config"] = "交易技能資訊設定",
-	["UI Scale"] = true,
-	["Change scale of user interface"] = true,
+	["UI Scale"] = "UI Scale",
+	["Change scale of user interface"] = "Change scale of user interface",
 } end)
 

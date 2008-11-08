@@ -85,7 +85,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Auction"] = "æ‹å–",
 	["OK"] = "ç¡®å®š",
 	["Tradeskill Info Config"] = "ä¸“ä¸šæŠ€èƒ½èµ„æ–™åº“è®¾å®š",
-	["UI Scale"] = true,
-	["Change scale of user interface"] = true,
+	["UI Scale"] = "UI Scale",
+	["Change scale of user interface"] = "Change scale of user interface",
 } end)
 
