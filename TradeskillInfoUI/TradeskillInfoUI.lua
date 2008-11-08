@@ -3,7 +3,7 @@ local L = AceLibrary("AceLocale-2.2"):new("TradeskillInfoUI")
 TradeskillInfoUI.version = "1.0." .. string.sub("$Revision: 61 $", 12, -3);
 TradeskillInfoUI.date = string.sub("$Date: 2008-11-05 16:45:52 +0200 (Wed, 05 Nov 2008) $", 8, 17);
 TradeskillInfoUI:RegisterDB("TradeskillInfoUIDB")
-TradeskillInfoUI:RegisterDefaults('profile', { 
+TradeskillInfoUI:RegisterDefaults('profile', {
 	tradeskills = {['A']=true,['B']=true,['D']=true,['E']=true,['J']=true,['L']=true,['T']=true,['W']=true,['X']=true,['Z']=true,['Y']=true,['I']=true},
 	expanded = {['A']=true,['B']=true,['D']=true,['E']=true,['J']=true,['L']=true,['T']=true,['W']=true,['X']=true,['Z']=true,['Y']=true,['I']=true},
 	availability = {true,true,true,true,true,true,true},
@@ -72,6 +72,8 @@ function TradeskillInfoUI:OnEnable()
 	end
 	TradeskillInfoKnown:ClearAllPoints()
 	TradeskillInfoKnown:SetPoint("TOPLEFT", TradeskillInfoRecipe, "BOTTOMLEFT",0,-3)
+	TradeskillInfoFrame:SetScale(TradeskillInfo.db.profile["UIScale"]);
+	TradeskillInfoConfigFrame:SetScale(TradeskillInfo.db.profile["UIScale"]);
 end
 
 function TradeskillInfoUI:Frame_Show()

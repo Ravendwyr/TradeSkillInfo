@@ -7,12 +7,12 @@
 				<Scripts>
 					<OnLoad>
                         if IsAddOnLoaded("Titan") then
-                        TitanPanelTSIButton_OnLoad();
-						TitanPanelButton_OnLoad();
+                        TitanPanelTSIButton_OnLoad(self);
+						TitanPanelButton_OnLoad(self);
                         end
 					</OnLoad>
 					<OnClick>
-							TitanPanelTSI_OnClick(arg1);
+							TitanPanelTSI_OnClick(self, button);
 					</OnClick>
 				</Scripts>
 			</Button>

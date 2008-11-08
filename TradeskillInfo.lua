@@ -220,6 +220,7 @@ TradeskillInfo:RegisterDefaults('profile', {
 	AHColorUnavailable = { r=1.0, g=0.1, b=0.1 },
 	SavePosition = true,
 	FrameStrata = 1,
+	UIScale = 1,
 })
 
 TradeskillInfo:RegisterDefaults('realm', {

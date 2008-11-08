@@ -79,6 +79,9 @@ TradeskillInfo.options.Labels = {
 	["TradeskillInfo_OkButton"] = L["OK"],
 	["TradeskillInfoConfig_Title"] = L["Tradeskill Info Config"],
 }
+TradeskillInfo.options.Sliders = {
+	[L["UI Scale"]] = { index=1, tooltipText=L["Change scale of user interface"], min=0.5, max=2, step=0.05, var="UIScale" },
+}
 
 --	MoneyFormat = 3,
 function TradeskillInfo:Config_Init()
@@ -157,6 +160,22 @@ function TradeskillInfo:ConfigFrame_OnShow()
 			option2:SetText(key);
 		end
 	end
+	
+	--Sliders
+	for key, value in pairs(self.options.Sliders) do
+		local name = "TradeskillInfo_Slider"..value.index
+		option = getglobal(name)
+		option.var = value.var
+		getglobal(name .. "Text"):SetText(key)
+		getglobal(name .. "High"):SetText(string.format("%.2f", value.max))
+		getglobal(name .. "Low"):SetText(string.format("%.2f", value.min))
+		option:SetMinMaxValues(value.min, value.max)
+		option:SetValueStep(value.step)
+		option:SetValue(self.db.profile[value.var])
+		if (value.tooltipText) then
+				option.tooltipText = value.tooltipText
+		end
+	end
 end
 
 function TradeskillInfo:ConfigFrame_OnHide()
@@ -168,6 +187,11 @@ end
 
 function TradeskillInfo:OptionsRadioButtonOnClick()
 end
+
+function TradeskillInfo:OptionsSliderValueChanged()	
+	self.db.profile[this.var] = this:GetValue()
+end
+
 
 ----------------------
 --change tabs

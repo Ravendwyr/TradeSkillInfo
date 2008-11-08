@@ -1,9 +1,9 @@
 
 TITAN_TSI_ID = "TSI";
 
-function TitanPanelTSIButton_OnLoad()
+function TitanPanelTSIButton_OnLoad(self)
 if IsAddOnLoaded("Titan") then 
-            this.registry = { 
+            self.registry = { 
             id = TITAN_TSI_ID,
             menuText = "TradeSkillInfo", 
             category = "Information",
@@ -16,7 +16,7 @@ if IsAddOnLoaded("Titan") then
     end
 end
 
-function TitanPanelTSI_OnClick(button)
+function TitanPanelTSI_OnClick(self, button)
 	if ( button == "LeftButton" ) then
 		TradeskillInfo:UI_Toggle()
 	elseif ( button == "RightButton" ) then

@@ -22,9 +22,9 @@ L:RegisterTranslations("zhCN", function() return {
 	["Availability"] = "è¿‡æ»¤æ–¹å¼",
 	["Tradeskills"] = "æŠ€èƒ½",
 	["Recipe"] = "å‡ºå¤„",
-	["Known by"] = "å·²ç»å­¦ä¼š",
-	["Learnable by"] = "ç°åœ¨å¯å­¦",
-	["Will be learnable by"] = "å°†æ¥å¯å­¦",
+	["Known By"] = "å·²ç»å­¦ä¼š",
+	["Learnable By"] = "ç°åœ¨å¯å­¦",
+	["Will Be Learnable By"] = "å°†æ¥å¯å­¦",
 	["Source"] = "æ¥æº",
 	["Show source in tooltip"] = "åœ¨é¼ æ ‡æç¤ºä¸­æ˜¾ç¤ºç‰©å“æ¥æº",
 	["Used in"] = "ç”¨é€”",
@@ -85,6 +85,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Auction"] = "æ‹å–",
 	["OK"] = "ç¡®å®š",
 	["Tradeskill Info Config"] = "ä¸“ä¸šæŠ€èƒ½èµ„æ–™åº“è®¾å®š",
-
+	["UI Scale"] = true,
+	["Change scale of user interface"] = true,
 } end)
 

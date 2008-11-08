@@ -136,6 +136,27 @@
 		</Scripts>
 	</Frame>
 	
+	
+	<Slider name="TSISliderTemplate" inherits="OptionsSliderTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="148" y="16"/>
+		</Size>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentCurrent" inherits="GameFontHighlightSmall" text="HIGH">
+					<Anchors>
+						<Anchor point="TOP" relativePoint="BOTTOM" />
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnValueChanged>
+				getglobal(this:GetName().."Current"):SetText(string.format("%.2f", this:GetValue()))
+				TradeskillInfo:OptionsSliderValueChanged()
+			</OnValueChanged>
+		</Scripts>
+	</Slider>
 	<!-- CONFIG FRAME -->
 	<Frame name="TradeskillInfoConfigFrame" toplevel="true" frameStrata="LOW" movable="true" enableMouse="true" hidden="true" parent="UIParent">
 		<TitleRegion>
@@ -554,6 +575,26 @@
 								</Anchors>
 							</Frame>
 
+							<Slider name="TradeskillInfo_Slider1" inherits="TSISliderTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="180" y="-25" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnMouseWheel>
+										this:SetValue(this:GetValue() + arg1*this:GetValueStep())
+										TradeskillInfoFrame:SetScale(this:GetValue());
+										TradeskillInfoConfigFrame:SetScale(this:GetValue());
+									</OnMouseWheel>
+									<OnMouseUp>
+										TradeskillInfoFrame:SetScale(this:GetValue());
+										TradeskillInfoConfigFrame:SetScale(this:GetValue());
+									</OnMouseUp>
+								</Scripts>
+							</Slider>
 						</Frames>
 					</Frame> <!-- QuickSearch Config Frame -->
 

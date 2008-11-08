@@ -85,5 +85,7 @@ L:RegisterTranslations("esES", function() return {
 	["Auction"] = "Subasta",
 	["OK"] = true,
 	["Tradeskill Info Config"] = "ConfiguraciÃ³n de Tradeskill Info",
+	["UI Scale"] = true,
+	["Change scale of user interface"] = true,
 } end)
 
