@@ -476,18 +476,16 @@ function TradeskillInfo:OnAddonLoaded(addon)
 end
 
 function TradeskillInfo:OnTradeShow()
-	self:ScheduleEvent(self.UpdateKnownRecipes,1,self);
-end
-
-function TradeskillInfo:OnTradeUpdate()
-	if (GetTradeSkillLine() ~= "UNKNOWN") then
+	if not IsTradeSkillLinked() then
 		self:ScheduleEvent(self.UpdateKnownRecipes,1,self);
 	end
 end
 
 function TradeskillInfo:OnSkillUpdate()
-	if (GetTradeSkillLine() ~= "UNKNOWN") then
-		self:ScheduleEvent(self.UpdateKnownRecipes,1,self);
+	if not IsTradeSkillLinked() then
+		if (GetTradeSkillLine() ~= "UNKNOWN") then
+			self:ScheduleEvent(self.UpdateKnownRecipes,1,self);
+		end
 	end
 end
 

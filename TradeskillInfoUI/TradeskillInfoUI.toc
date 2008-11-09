@@ -13,7 +13,6 @@
 ## X-eMail: evenue.wow@gmail.com
 ## X-Credits Evenue (updates), Fieroivan (updates)
 ## LoadOnDemand: 1
-## X-Curse-Packaged-Version: v1.1-beta1
 
 locale-enUS.lua
 locale-esES.lua
