@@ -586,12 +586,10 @@
 								<Scripts>
 									<OnMouseWheel>
 										this:SetValue(this:GetValue() + arg1*this:GetValueStep())
-										TradeskillInfoFrame:SetScale(this:GetValue());
-										TradeskillInfoConfigFrame:SetScale(this:GetValue());
+										TradeskillInfoUI:SetUiScale(this:GetValue())
 									</OnMouseWheel>
 									<OnMouseUp>
-										TradeskillInfoFrame:SetScale(this:GetValue());
-										TradeskillInfoConfigFrame:SetScale(this:GetValue());
+										TradeskillInfoUI:SetUiScale(this:GetValue())
 									</OnMouseUp>
 								</Scripts>
 							</Slider>

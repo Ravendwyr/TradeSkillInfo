@@ -72,8 +72,6 @@ function TradeskillInfoUI:OnEnable()
 	end
 	TradeskillInfoKnown:ClearAllPoints()
 	TradeskillInfoKnown:SetPoint("TOPLEFT", TradeskillInfoRecipe, "BOTTOMLEFT",0,-3)
-	TradeskillInfoFrame:SetScale(TradeskillInfo.db.profile["UIScale"]);
-	TradeskillInfoConfigFrame:SetScale(TradeskillInfo.db.profile["UIScale"]);
 end
 
 function TradeskillInfoUI:Frame_Show()
@@ -130,19 +128,51 @@ function TradeskillInfoUI:Frame_Toggle()
 end
 
 function TradeskillInfoUI:UpdateFramePosition()
-	if TradeskillInfo.db.profile.SavePosition and TradeskillInfo.db.profile.PositionX and TradeskillInfo.db.profile.PositionY then
+	TradeskillInfoFrame:SetScale(TradeskillInfo.db.profile["UIScale"]);
+	TradeskillInfoConfigFrame:SetScale(TradeskillInfo.db.profile["UIScale"]);
+	if TradeskillInfo.db.profile.SavePosition then
 		local s = TradeskillInfoFrame:GetEffectiveScale();
-		TradeskillInfoFrame:ClearAllPoints();
-		TradeskillInfoFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", 
-					TradeskillInfo.db.profile.PositionX / s, TradeskillInfo.db.profile.PositionY / s);
+		if TradeskillInfo.db.profile.PositionX and TradeskillInfo.db.profile.PositionY then
+			TradeskillInfoFrame:ClearAllPoints();
+			TradeskillInfoFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", 
+						TradeskillInfo.db.profile.PositionX / s, TradeskillInfo.db.profile.PositionY / s);
+		end
+		if TradeskillInfo.db.profile.Width then
+			TradeskillInfoFrame:SetWidth(TradeskillInfo.db.profile.Width)
+		end
+		if TradeskillInfo.db.profile.Height then
+			TradeskillInfoFrame:SetHeight(TradeskillInfo.db.profile.Height)
+		end
 	end
+end
+
+function TradeskillInfoUI:SetUiScale(scale)
+	-- rescale main UI frame
+	local s = TradeskillInfoFrame:GetEffectiveScale()
+	local x = TradeskillInfoFrame:GetLeft() * s
+	local y = TradeskillInfoFrame:GetTop() * s
+	TradeskillInfoFrame:SetScale(scale)
+	s = TradeskillInfoFrame:GetEffectiveScale()
+	TradeskillInfoFrame:ClearAllPoints()
+	TradeskillInfoFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x/s, y/s)
+
+	-- rescale config frame
+	local s = TradeskillInfoConfigFrame:GetEffectiveScale()
+	local x = TradeskillInfoConfigFrame:GetLeft() * s
+	local y = TradeskillInfoConfigFrame:GetTop() * s
+	TradeskillInfoConfigFrame:SetScale(scale)
+	s = TradeskillInfoConfigFrame:GetEffectiveScale()
+	TradeskillInfoConfigFrame:ClearAllPoints()
+	TradeskillInfoConfigFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x/s, y/s)
 end
 
 function TradeskillInfoUI:SaveFramePosition()
 	if TradeskillInfo.db.profile.SavePosition then
-		local s = TradeskillInfoFrame:GetEffectiveScale();
-		TradeskillInfo.db.profile.PositionX = TradeskillInfoFrame:GetLeft() * s;
-		TradeskillInfo.db.profile.PositionY = TradeskillInfoFrame:GetTop() * s;
+		local s = TradeskillInfoFrame:GetEffectiveScale()
+		TradeskillInfo.db.profile.PositionX = TradeskillInfoFrame:GetLeft() * s
+		TradeskillInfo.db.profile.PositionY = TradeskillInfoFrame:GetTop() * s
+		TradeskillInfo.db.profile.Width = TradeskillInfoFrame:GetWidth()
+		TradeskillInfo.db.profile.Height = TradeskillInfoFrame:GetHeight()
 	end
 end
 
@@ -181,6 +211,25 @@ end
 ----------------------------------------------------------------------
 --- Draw Tradeskills List
 ----------------------------------------------------------------------
+
+TradeskillInfoUI.vars.numSkillButtons = 0
+
+local function getSkillButton(i)
+	local skillButton = getglobal("TradeskillInfoSkill"..i)
+	if not skillButton then
+		-- Create a new button. Assume button (i-1) was already created
+        skillButton = CreateFrame("Button", "TradeskillInfoSkill"..i, TradeskillInfoListFrame, "TradeskillInfoSkillButtonTemplate")
+        skillButton:SetPoint("TOPLEFT", "TradeskillInfoSkill"..(i-1), "BOTTOMLEFT")
+		skillButton:SetFrameLevel(TradeskillInfoListFrame:GetFrameLevel() + 1)
+		skillButton:SetNormalTexture("");
+		skillButton:SetText("");
+	end
+	
+	TradeskillInfoUI.vars.numSkillButtons = math.max(i, TradeskillInfoUI.vars.numSkillButtons)
+
+	return skillButton
+end
+
 function TradeskillInfoUI.Frame_Update()
 -- Draw frame with tradeskill info
 	local self = TradeskillInfoUI;
@@ -201,13 +250,39 @@ function TradeskillInfoUI.Frame_Update()
 	else
 		TradeskillInfoCollapseAllButton:Enable();
 	end
+
 	-- ScrollFrame update
-	FauxScrollFrame_Update(TradeskillInfoListScrollFrame, numTradeSkills, TradeskillInfoUI.cons.skillsDisplayed, TradeskillInfoUI.cons.skillHeight, nil, nil, nil, TradeskillInfoHighlightFrame, 293, 316 );
+	local buttonCount = TradeskillInfoListScrollFrame:GetHeight() / TradeskillInfoUI.cons.skillHeight
+    buttonCount = math.floor(buttonCount)
+
+	FauxScrollFrame_Update(TradeskillInfoListScrollFrame, numTradeSkills, buttonCount, TradeskillInfoUI.cons.skillHeight, nil, nil, nil, TradeskillInfoHighlightFrame, 293, 316 );
+
+	--
+	-- First adjust the visibility of buttons
+	--
 
 	TradeskillInfoHighlightFrame:Hide();
-	for i=1, TradeskillInfoUI.cons.skillsDisplayed, 1 do
+	for i=1, buttonCount do
+		local skillButton = getSkillButton(i)
+		skillButton:Show()
+	end
+
+	for i = buttonCount + 1, TradeskillInfoUI.vars.numSkillButtons do
+		local skillButton = getSkillButton(i)
+		skillButton:Hide()
+	end
+
+	-- If we are still resizing, stop here
+	if TradeskillInfoFrame.isResizing then return end
+
+	TradeskillInfoHighlightFrame:Hide();
+	for i=1, buttonCount do
 		local skillIndex = i + skillOffset;
-		local skillButton = getglobal("TradeskillInfoSkill"..i);
+		local skillButton = getSkillButton(i)
+		local skillButtonText = getglobal(skillButton:GetName() .. "Text")
+		-- Adjust width of buttons and their texts
+		skillButton:SetWidth(TradeskillInfoListFrame:GetWidth()-34)
+		skillButtonText:SetWidth(TradeskillInfoListFrame:GetWidth()-34)
 		if ( skillIndex <= numTradeSkills ) then	
 			local skillName, skillType, isExpanded = self:GetTradeSkillInfo(skillIndex);
 			skillType = self:GetTradeSkillAvailability(skillIndex);
@@ -219,12 +294,12 @@ function TradeskillInfoUI.Frame_Update()
 			end
 			local color = self.vars.TradeSkillTypeColor[skillType];
 			if ( color ) then
-				local skillButtonText = getglobal("TradeskillInfoSkill"..i.."Text")
 				if (skillButtonText) then skillButtonText:SetVertexColor(color.r, color.g, color.b) end
 			end
 			
 			skillButton:SetID(skillIndex);
 			skillButton:Show();
+			local skillButtonHighlight = getglobal(skillButton:GetName() .. "Highlight")
 			-- Handle headers
 			if ( skillType == "header" ) then
 				skillButton:SetText(skillName);
@@ -233,23 +308,23 @@ function TradeskillInfoUI.Frame_Update()
 				else
 					skillButton:SetNormalTexture("Interface\\Buttons\\UI-PlusButton-Up");
 				end
-				getglobal("TradeskillInfoSkill"..i.."Highlight"):SetTexture("Interface\\Buttons\\UI-PlusButton-Hilight");
-				getglobal("TradeskillInfoSkill"..i):UnlockHighlight();
+				skillButtonHighlight:SetTexture("Interface\\Buttons\\UI-PlusButton-Hilight");
+				skillButton:UnlockHighlight();
 			else
 				if ( not skillName ) then
 					return;
 				end
 				skillButton:SetNormalTexture("");
-				getglobal("TradeskillInfoSkill"..i.."Highlight"):SetTexture("");
+				skillButtonHighlight:SetTexture("");
 				skillButton:SetText(" "..skillName);
 				
 				-- Place the highlight and lock the highlight state
 				if ( self.vars.selectionIndex == skillIndex ) then
 					TradeskillInfoHighlightFrame:SetPoint("TOPLEFT", "TradeskillInfoSkill"..i, "TOPLEFT", 0, 0);
 					TradeskillInfoHighlightFrame:Show();
-					getglobal("TradeskillInfoSkill"..i):LockHighlight();
+					skillButton:LockHighlight();
 				else
-					getglobal("TradeskillInfoSkill"..i):UnlockHighlight();
+					skillButton:UnlockHighlight();
 				end
 			end
 		else
