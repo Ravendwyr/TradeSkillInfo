@@ -177,6 +177,47 @@ elseif GetLocale() == 'esES' then
 	TradeskillInfo_UnknownNPC_Text		= "NPC Desconocido. Por favor, informa sobre esto. Fuente=";
 	TradeskillInfo_CouldNotLoadUI_Text	= "No se pudo cargar el UI. Razón: ";
 	TradeskillInfo_Search_Text		= "Buscar";
+elseif GetLocale() == 'koKR' then
+	TradeskillInfo_Cosmos_Name_Text	 	= "TradeskillInfo";
+	TradeskillInfo_Cosmos_Tooltip_Text 	= "Complete Tradeskill Info";
+	TradeskillInfo_Source_Text			= "출처";
+	TradeskillInfo_Vendorprice_Text		= "상인 판매가격";
+	TradeskillInfo_ItemID_Text			= "아이템ID";
+	TradeskillInfo_Stacksize_Text		= "겹침";
+	TradeskillInfo_CombineProfit_MText	= "제작 이익";
+	TradeskillInfo_CombineProfit_Desc_MText	= "제작 비용 / 이익 표시";
+	TradeskillInfo_CombineLevel_MText		= "제작 가능 레벨";
+	TradeskillInfo_CombineLevel_Desc_MText	= "제작에 필요한 숙련치 표시";
+	TradeskillInfo_Source_MText			= "출처";
+	TradeskillInfo_Source_Desc_MText	= "아이템 출처 표시";
+	TradeskillInfo_UsedIn_MText			= "사용처";
+	TradeskillInfo_UsedIn_Desc_MText	= "사용 가능한 전문기술 툴팁에 표시";
+	TradeskillInfo_UsableBy_MText		= "사용 가능";
+	TradeskillInfo_UsableBy_Desc_MText	= "사용 가능한 케릭 툴팁에 표시";
+	TradeskillInfo_KnownBy_MText		= "이미 배움";
+	TradeskillInfo_KnownBy_Desc_MText		= "이미 배운 케릭을 툴팁에 표시";
+	TradeskillInfo_LearnableBy_MText		= "추후 배움 가능";
+	TradeskillInfo_LearnableBy_Desc_MText	= "추후 배움 가능한 케릭 툴팁에 표시";
+	TradeskillInfo_WillBeAbleToLearn_MText	= "추후 배움 가능";
+	TradeskillInfo_WillBeAbleToLearn_Desc_MText = "추후 배움 가능한 케릭 툴팁에 표시";
+	TradeskillInfo_Reagents_MText		= "재료";
+	TradeskillInfo_Reagents_Desc_MText	= "트레이너한테 배우는 제조법 재료표시";
+	TradeskillInfo_Config_MText			= "설정";
+	TradeskillInfo_Config_Desc_MText	= "설정창 표시";
+	TradeskillInfo_Menu_MText			= "메뉴";
+	TradeskillInfo_Menu_Desc_MText		= "TradeskillInfo 설정창 표시";
+	TradeskillInfo_Banked_Text			= "은행 보유";
+	TradeskillInfo_AltsHave_Text		= "다른케릭 소유";
+	TradeskillInfo_ToggleGUI_Text		= "TradeskillInfo 표시/숨기기";
+	TradeskillInfo_ToggleGUI_Desc_Text	= "TradeskillInfo 메인창 표시/숨기기";
+	TradeskillInfo_Options_Text			= "설정";
+	TradeskillInfo_Options_Desc_Text		= "TradeskillInfo 설정창 표시/숨기기";
+	TradeskillInfo_FoundUnknownSkill_Text	= "미확인 기술 발견!";
+	TradeskillInfo_FoundUnknownSource_Text	= "미확인 출처 발견!";
+	TradeskillInfo_UnknownSource_Text		= "미확인 출처. 제보바람. 출처=";
+	TradeskillInfo_UnknownNPC_Text		= "미확인 NPC. 제보바람. 출처=";
+	TradeskillInfo_CouldNotLoadUI_Text	= "UI를 로드할 수 없습니다. 이유: ";
+	TradeskillInfo_Search_Text			= "검색";
 end
 
 TradeskillInfo:RegisterDefaults('profile', {
