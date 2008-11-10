@@ -5,6 +5,7 @@
 ## Notes-zhCN: 商业技能资料库设置窗口
 ## Notes-zhTW: 商業技能資料庫設置窗口
 ## Notes-esES: UI con Info Completa de las Habilidades de Comercio
+## Notes-koKR: 전문기술 정보 UI
 ## Version: 1.1.$Revision: 63 $
 ## SavedVariables: TradeskillInfoUIDB
 ## Dependencies: TradeskillInfo
@@ -18,6 +19,7 @@ locale-enUS.lua
 locale-esES.lua
 locale-zhCN.lua
 locale-zhTW.lua
+locale-koKR.lua
 TradeskillInfoUI.lua
 TradeskillInfoUI.xml
 TradeskillInfoConfig.lua
