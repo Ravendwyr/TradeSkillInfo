@@ -4,6 +4,7 @@
 ## Notes-zhTW: 完整的商業技能百科
 ## Notes-zhCN: 完整的商业技能百科
 ## Notes-esES: Informarcion Completa de las Habilidades de Comercio
+## Notes-koKR: 전문기술 정보의 모든 것!
 ## Author: wmrojer
 ## eMail: evenue.wow@gmail.com
 ## X-eMail: evenue.wow@gmail.com
@@ -38,6 +39,7 @@ TradeskillData-zhTW.lua
 TradeskillData-zhCN.lua
 TradeskillData-deDE.lua
 TradeskillData-esES.lua
+TradeskillData-koKR.lua
 
 TitanTSI.lua
 TitanTSI.xml
