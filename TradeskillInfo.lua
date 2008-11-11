@@ -1760,22 +1760,3 @@ if ldb then
 	})
 end
 
---[[ DYS: Is this fubar stuff?
-function TradeskillInfo.LinksMenu(link)
-	if not TradeskillInfo.db.profile.QuickSearch then return end
-	local _,_,item = string.find(link,":(%d+):");
-	if self:LoadUI(true) then -- Have TradeskillInfoUI
-		TradeskillInfoUI:SetSearchText("id="..item.." "..name);
-		TradeskillInfoUI:Search_OnClick();
-		TradeskillInfoUI:Frame_Show()
-	else
-	end
-end
-
-if Links then
-	Links:AddToMenu("TSI: "..L["Search"],
-	function (_, _, link)
-		TradeskillInfo.LinksMenu(link)
-	end)
-end
-]]--
