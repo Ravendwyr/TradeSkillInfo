@@ -1,16 +1,8 @@
-TradeskillInfoUI = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceDB-2.0", "AceConsole-2.0")
-local L = AceLibrary("AceLocale-2.2"):new("TradeskillInfoUI")
+TradeskillInfoUI = LibStub("AceAddon-3.0"):NewAddon("TradeskillInfoUI", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0")
+local L = LibStub("AceLocale-3.0"):GetLocale("TradeskillInfoUI")
+
 TradeskillInfoUI.version = "1.0." .. string.sub("$Revision: 61 $", 12, -3);
 TradeskillInfoUI.date = string.sub("$Date: 2008-11-05 16:45:52 +0200 (Wed, 05 Nov 2008) $", 8, 17);
-TradeskillInfoUI:RegisterDB("TradeskillInfoUIDB")
-TradeskillInfoUI:RegisterDefaults('profile', {
-	tradeskills = {['A']=true,['B']=true,['D']=true,['E']=true,['J']=true,['L']=true,['T']=true,['W']=true,['X']=true,['Z']=true,['Y']=true,['I']=true},
-	expanded = {['A']=true,['B']=true,['D']=true,['E']=true,['J']=true,['L']=true,['T']=true,['W']=true,['X']=true,['Z']=true,['Y']=true,['I']=true},
-	availability = {true,true,true,true,true,true,true},
-	ShowOpposing = false,
-	SearchName = true,
-	SearchReagent = true,
-})
 
 
 TradeskillInfoUI.cons = {};
@@ -58,6 +50,20 @@ TradeskillInfoUI.vars.TradeSkillTypeColor = {
 	["header"]	= { r = 1.00, g = 0.82, b = 0 },
 };
 
+function TradeskillInfoUI:OnInitialize()
+	local dbDefaults = {
+		profile = {
+			tradeskills = {['A']=true,['B']=true,['D']=true,['E']=true,['J']=true,['L']=true,['T']=true,['W']=true,['X']=true,['Z']=true,['Y']=true,['I']=true},
+			expanded = {['A']=true,['B']=true,['D']=true,['E']=true,['J']=true,['L']=true,['T']=true,['W']=true,['X']=true,['Z']=true,['Y']=true,['I']=true},
+			availability = {true,true,true,true,true,true,true},
+			ShowOpposing = false,
+			SearchName = true,
+			SearchReagent = true,
+		}
+	}
+	self.db = LibStub("AceDB-3.0"):New("TradeskillInfoUIDB", dbDefaults)
+end
+
 function TradeskillInfoUI:OnEnable()
 	if oSkin and oSkin.applySkin then
 		oSkin:applySkin(TradeskillInfoFrame);
@@ -104,7 +110,7 @@ function TradeskillInfoUI:Frame_Show()
 	self:UpdateFrameStrata()
 	ShowUIPanel(TradeskillInfoFrame);
 
-	if not self:IsEventRegistered("TradeskillInfo_Update") then self:RegisterEvent("TradeskillInfo_Update","OnTradeskillInfoUpdate") end
+	self:RegisterMessage("TradeskillInfo_Update", "OnTradeskillInfoUpdate")
 	
 	FauxScrollFrame_SetOffset(TradeskillInfoListScrollFrame, 0);
 	TradeskillInfoListScrollFrameScrollBar:SetMinMaxValues(0, 0); 
@@ -151,19 +157,27 @@ function TradeskillInfoUI:SetUiScale(scale)
 	local s = TradeskillInfoFrame:GetEffectiveScale()
 	local x = TradeskillInfoFrame:GetLeft() * s
 	local y = TradeskillInfoFrame:GetTop() * s
+	local w = TradeskillInfoFrame:GetWidth()
+	local h = TradeskillInfoFrame:GetHeight()
 	TradeskillInfoFrame:SetScale(scale)
 	s = TradeskillInfoFrame:GetEffectiveScale()
 	TradeskillInfoFrame:ClearAllPoints()
 	TradeskillInfoFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x/s, y/s)
+	TradeskillInfoFrame:SetWidth(w)
+	TradeskillInfoFrame:SetHeight(h)
 
 	-- rescale config frame
 	local s = TradeskillInfoConfigFrame:GetEffectiveScale()
 	local x = TradeskillInfoConfigFrame:GetLeft() * s
 	local y = TradeskillInfoConfigFrame:GetTop() * s
+	local w = TradeskillInfoConfigFrame:GetWidth()
+	local h = TradeskillInfoConfigFrame:GetHeight()
 	TradeskillInfoConfigFrame:SetScale(scale)
 	s = TradeskillInfoConfigFrame:GetEffectiveScale()
 	TradeskillInfoConfigFrame:ClearAllPoints()
 	TradeskillInfoConfigFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x/s, y/s)
+	TradeskillInfoConfigFrame:SetWidth(w)
+	TradeskillInfoConfigFrame:SetHeight(h)
 end
 
 function TradeskillInfoUI:SaveFramePosition()
@@ -575,7 +589,7 @@ function TradeskillInfoUI:ReagentIcon_OnClick(button)
 		else
 			GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT");
 			GameTooltip:SetHyperlink(this.tooltip);
-			self:ScheduleEvent(self.Frame_Refresh, 1, self);
+			self:ScheduleTimer(self.Frame_Refresh, 1, self);
 		end
 	elseif ( button == "RightButton" ) then
 			if AuctionFrameBrowse and AuctionFrameBrowse:IsVisible() then
@@ -665,7 +679,7 @@ end
 
 function TradeskillInfoUI:AvailabilityDropDown_OnClick(self, val)
 	self.db.profile.availability[val] = not self.db.profile.availability[val];
-	self:TriggerEvent("TradeskillInfo_Update");
+	self:SendMessage("TradeskillInfo_Update");
 end
 
 ----------------------------------------------------------------------
@@ -698,14 +712,14 @@ end
 
 function TradeskillInfoUI:TradeskillsDropDown_OnClick(self, val)
 	self.db.profile.tradeskills[val] = not self.db.profile.tradeskills[val];
-	self:TriggerEvent("TradeskillInfo_Update");
+	self:SendMessage("TradeskillInfo_Update");
 end
 
 ----------------------------------------------------------------------
 --- Search Button
 ----------------------------------------------------------------------
 function TradeskillInfoUI:Search_OnClick()
-	self:TriggerEvent("TradeskillInfo_Update");
+	self:SendMessage("TradeskillInfo_Update");
 end
 
 function TradeskillInfoUI:ToggleButton()
@@ -717,7 +731,7 @@ function TradeskillInfoUI:ToggleButton()
 		this:LockHighlight();
 		self.db.profile[var] = true;
 	end
-	self:TriggerEvent("TradeskillInfo_Update");
+	self:SendMessage("TradeskillInfo_Update");
 end
 ----------------------------------------------------------------------
 --- Reset Button
@@ -726,7 +740,7 @@ function TradeskillInfoUI:Reset_OnClick()
 	self:SetSearchText("");
 	self.db.profile.tradeskills = {['A']=true,['B']=true,['D']=true,['E']=true,['J']=true,['L']=true,['T']=true,['W']=true,['X']=true,['Z']=true,['Y']=true};
 	self.db.profile.availability = {true,true,true,true,true,true,true};
-	self:TriggerEvent("TradeskillInfo_Update");
+	self:SendMessage("TradeskillInfo_Update");
 end
 
 ----------------------------------------------------------------------
@@ -1054,24 +1068,24 @@ end
 function TradeskillInfoUI:CollapseHeader(index)
 	if self.vars.searchResult[index] and type(self.vars.searchResult[index]) == "string" then
 		self.db.profile.expanded[self.vars.searchResult[index]] = false;
-		self:TriggerEvent("TradeskillInfo_Update");
+		self:SendMessage("TradeskillInfo_Update");
 	elseif index == 0 then
 		for i,_ in pairs(self.db.profile.expanded) do
 			self.db.profile.expanded[i] = false;
 		end
-		self:TriggerEvent("TradeskillInfo_Update");
+		self:SendMessage("TradeskillInfo_Update");
 	end
 end
 
 function TradeskillInfoUI:ExpandHeader(index)
 	if self.vars.searchResult[index] and type(self.vars.searchResult[index]) == "string" then
 		self.db.profile.expanded[self.vars.searchResult[index]] = true;
-		self:TriggerEvent("TradeskillInfo_Update");
+		self:SendMessage("TradeskillInfo_Update");
 	elseif index == 0 then
 		for i,_ in pairs(self.db.profile.expanded) do
 			self.db.profile.expanded[i] = true;
 		end
-		self:TriggerEvent("TradeskillInfo_Update");
+		self:SendMessage("TradeskillInfo_Update");
 	end
 end
 

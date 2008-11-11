@@ -1,5 +1,5 @@
 -- $Revision: 61 $
-local L = AceLibrary("AceLocale-2.2"):new("TradeskillInfoUI")
+local L = LibStub("AceLocale-3.0"):GetLocale("TradeskillInfoUI")
 
 TradeskillInfo.options = {};
 TradeskillInfo.options.CheckBoxes = {

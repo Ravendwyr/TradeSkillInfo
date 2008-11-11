@@ -1,20 +1,20 @@
 package-as: TradeskillInfo
 
 externals:
-    libs/AceAddon-2.0: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceAddon-2.0
-    libs/AceOO-2.0: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceOO-2.0
-    libs/AceLibrary: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceLibrary
-    libs/AceHook-2.1: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceHook-2.1
-    libs/AceEvent-2.0: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceEvent-2.0
-    libs/AceDB-2.0: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceDB-2.0
-    libs/AceConsole-2.0: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceConsole-2.0
-    libs/AceLocale-2.2: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceLocale-2.2
-    libs/LibBabble-Zone-3.0: svn://svn.wowace.com/wow/libbabble-zone-3-0/mainline/trunk
-    libs/LibAbacus-3.0: svn://svn.wowace.com/wow/libabacus-3-0/mainline/trunk
-    libs/LibBabble-Faction-3.0: svn://svn.wowace.com/wow/libbabble-faction-3-0/mainline/trunk
-    libs/Babble-Tradeskill-2.2: svn://svn.wowace.com/wow/babble-2-2/mainline/trunk/Babble-Tradeskill-2.2
-    libs/LibRock-1.0: svn://svn.wowace.com/wow/librock-1-0/mainline/trunk
-    libs/FuBarPlugin-2.0: svn://svn.wowace.com/wow/fubarplugin-2-0/mainline/trunk
+	libs/LibStub: svn://svn.wowace.com/wow/libstub/mainline/tags/1.0
+	libs/CallbackHandler-1.0: svn://svn.wowace.com/wow/callbackhandler/mainline/tags/1.0.3/CallbackHandler-1.0
+	libs/AceAddon-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceAddon-3.0
+	libs/AceConfig-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceConfig-3.0
+	libs/AceConsole-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceConsole-3.0
+	libs/AceDB-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceDB-3.0
+	libs/AceEvent-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceEvent-3.0
+	libs/AceHook-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceHook-3.0
+	libs/AceLocale-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceLocale-3.0
+	libs/AceTimer-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceTimer-3.0
+	libs/LibAbacus-3.0: svn://svn.wowace.com/wow/libabacus-3-0/mainline/trunk
+	libs/LibDataBroker-1.1: git://github.com/tekkub/libdatabroker-1-1.git
+	libs/LibBabble-Zone-3.0: svn://svn.wowace.com/wow/libbabble-zone-3-0/mainline/trunk
+	libs/LibBabble-Faction-3.0: svn://svn.wowace.com/wow/libbabble-faction-3-0/mainline/trunk
 
 move-folders:
-  TradeskillInfo/TradeskillInfoUI: TradeskillInfoUI
+	TradeskillInfo/TradeskillInfoUI: TradeskillInfoUI
