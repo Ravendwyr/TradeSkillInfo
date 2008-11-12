@@ -121,7 +121,7 @@ function TradeskillInfoUI:Frame_Show()
 end
 
 function TradeskillInfoUI:Frame_Hide()
-	if self:IsEventRegistered("TradeskillInfo_Update") then self:UnregisterEvent("TradeskillInfo_Update") end
+	self:UnregisterEvent("TradeskillInfo_Update")
 	HideUIPanel(TradeskillInfoFrame);
 end
 
