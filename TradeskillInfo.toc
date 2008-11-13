@@ -41,6 +41,3 @@ TradeskillInfo.lua
 
 TradeskillIdData.lua
 TradeskillData.lua
-
-TitanTSI.lua
-TitanTSI.xml
