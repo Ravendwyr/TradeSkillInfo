@@ -588,7 +588,7 @@ function TradeskillInfo:Combines()
 end
 
 function TradeskillInfo:CombineExists(id)
-	if id and self.vars.combines[id] then return true end
+	if id and (self.vars.combines[id] or self.vars.specialcases[id]) then return true end
 end
 
 function TradeskillInfo:GetCombine(id)
@@ -988,6 +988,23 @@ function TradeskillInfo:GetItemUseCount(item,deep)
 		end
 	end
 	return skills
+end
+
+function TradeskillInfo:GetItemCrafted(item, use)
+	if not use then use = {} end
+	if not item then return end
+	-- If it is a straightforward item, mark it
+	if self.vars.combines[item] then use[item] = true end
+	
+	-- If it is a special item, translate its item ID
+	local specialIds = self.vars.specialcases[item]
+	if specialIds then
+		for i in string.gmatch(specialIds, "(%d+)") do
+			use[tonumber(i)] = true
+		end
+	end
+
+	return use
 end
 
 function TradeskillInfo:GetItemUsedIn(item,use)

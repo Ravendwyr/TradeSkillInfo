@@ -843,9 +843,7 @@ function TradeskillInfoUI:Search()
 		searchItem = tonumber(searchItem);
 		searchText = "";
 		if self.db.profile.SearchName then
-			if TradeskillInfo:CombineExists(searchItem) then
-				searchArea[searchItem] = true;
-			end
+			TradeskillInfo:GetItemCrafted(searchItem,searchArea);
 		end
 		if self.db.profile.SearchReagent then
 			TradeskillInfo:GetItemUsedIn(searchItem,searchArea);
