@@ -1543,7 +1543,7 @@ function TradeskillInfo:AddReagentsToTooltip(tooltip, id)
 	if self:ShowingTrainerReagents() then
 		local components = self:GetCombineComponents(id);
 		if components then
-			local c = self.db.profile.ColorTrainerReagents;
+			local clr = self.db.profile.ColorTrainerReagents;
 			local Ltext, Rtext;
 			local text
 			for _,c in ipairs(components) do
@@ -1558,7 +1558,7 @@ function TradeskillInfo:AddReagentsToTooltip(tooltip, id)
 					text = text..", "..Rtext;
 				end
 				if tooltip then
-					tooltip:AddDoubleLine(Ltext, Rtext, c.r, c.g, c.b, c.r, c.g, c.b/1.2);
+					tooltip:AddDoubleLine(Ltext, Rtext, clr.r, clr.g, clr.b, clr.r, clr.g, clr.b/1.2);
 				end
 			end
 		end
