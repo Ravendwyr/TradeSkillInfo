@@ -13,7 +13,7 @@
 	<Button name="TradeskillInfoSkillButtonTemplate" inherits="ClassTrainerSkillButtonTemplate" hidden="false" virtual="true">
 		<Scripts>
 			<OnClick>
-				TradeskillInfoUI:SkillButton_OnClick(arg1);
+				TradeskillInfoUI:SkillButton_OnClick(self, button, down);
 			</OnClick>
 		</Scripts>
 	</Button>
@@ -22,10 +22,10 @@
 	<Button name="TradeskillInfoItemTemplate" inherits="QuestItemTemplate" virtual="true">
 		<Scripts>
 			<OnLoad>
-				this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+				self:RegisterForClicks("LeftButtonUp", "RightButtonUp");
 			</OnLoad>
 			<OnEnter>
-				TradeskillInfoUI:ShowReagentTooltip(this);
+				TradeskillInfoUI:ShowReagentTooltip(self);
 			</OnEnter>
 			<OnLeave>
 				GameTooltip:Hide();
@@ -35,7 +35,7 @@
 				CursorOnUpdate(self);
 			</OnUpdate>
 			<OnClick>
-				TradeskillInfoUI:ReagentIcon_OnClick(arg1);
+				TradeskillInfoUI:ReagentIcon_OnClick(self, button);
 			</OnClick>
 		</Scripts>
 	</Button>
@@ -53,9 +53,9 @@
 				PlaySound("igMainMenuOptionCheckBoxOn");
 			</OnClick>
 			<OnEnter>
-				if ( this.tooltipText ) then
-					GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-					GameTooltip:SetText(this.tooltipText, nil, nil, nil, nil, 1);
+				if ( self.tooltipText ) then
+					GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+					GameTooltip:SetText(self.tooltipText, nil, nil, nil, nil, 1);
 				end
 			</OnEnter>
 			<OnLeave>
@@ -141,7 +141,7 @@
 		</Layers>
 		<Scripts>
 			<OnLoad>
-				this.scrollBarHideable = 1;
+				self.scrollBarHideable = 1;
 				ScrollFrame_OnLoad(self);
 			</OnLoad>
 		</Scripts>
@@ -365,13 +365,13 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+										self:RegisterForClicks("LeftButtonUp", "RightButtonUp");
 									</OnLoad>
 									<OnClick>
-										TradeskillInfoUI:ReagentIcon_OnClick(arg1);
+										TradeskillInfoUI:ReagentIcon_OnClick(self, button);
 									</OnClick>
 									<OnEnter>
-										TradeskillInfoUI:ShowReagentTooltip(this);
+										TradeskillInfoUI:ShowReagentTooltip(self);
 									</OnEnter>
 									<OnLeave>
 										GameTooltip:Hide();
@@ -395,7 +395,7 @@
 								</Anchors>
 								<FontString inherits="GameFontNormalSmall" justifyV="TOP" justifyH="LEFT"/>
 								<Scripts>
-									<OnHyperlinkClick>TradeskillInfoUI:RecipeSource_OnHyperlinkClick(arg1);</OnHyperlinkClick>
+									<OnHyperlinkClick>TradeskillInfoUI:RecipeSource_OnHyperlinkClick(self, link);</OnHyperlinkClick>
 								</Scripts>
 							</SimpleHTML>
 							<Button name="TradeskillInfoReagent1" inherits="TradeskillInfoItemTemplate" id="1">
@@ -473,9 +473,9 @@
 						</Frames>
 		<!--				<Scripts>
 							<OnLoad>
-								this:SetBackdropColor(.05,.05,.05,.8);
-								this:SetBackdropBorderColor(.4,.4,.4,1);
-								tinsert(UISpecialFrames,this:GetName());
+								self:SetBackdropColor(.05,.05,.05,.8);
+								self:SetBackdropBorderColor(.4,.4,.4,1);
+								tinsert(UISpecialFrames,self:GetName());
 							</OnLoad>
 						</Scripts> -->
 					</Frame>
@@ -573,22 +573,22 @@
 				</Layers>
 				<Scripts>
 					<OnEnterPressed>
-						this:ClearFocus();
+						self:ClearFocus();
 						TradeskillInfoUI:Search_OnClick();
 					</OnEnterPressed>
 					<OnEscapePressed>
-						this:ClearFocus();
+						self:ClearFocus();
 					</OnEscapePressed>
 					<OnTextChanged>
-						--if ( this:GetText() == "0" ) then
-						--	this:SetText("1");
+						--if ( self:GetText() == "0" ) then
+						--	self:SetText("1");
 						--end
 					</OnTextChanged> 
 					<OnEditFocusLost>
-						this:HighlightText(0, 0);
+						self:HighlightText(0, 0);
 					</OnEditFocusLost>
 					<OnEditFocusGained>
-						this:HighlightText();
+						self:HighlightText();
 					</OnEditFocusGained>
 				</Scripts>
 				<FontString inherits="ChatFontNormal"/>
@@ -607,7 +607,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						TradeskillInfoUI:ToggleButton();
+						TradeskillInfoUI:ToggleButton(self, button);
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -690,7 +690,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName()):SetText(ALL);
+								getglobal(self:GetName()):SetText(ALL);
 							</OnLoad>
 							<OnClick>
 								TradeskillInfoUI:CollapseAllButton_OnClick();
@@ -713,7 +713,7 @@
 								TradeskillInfoUI:AvailabilityDropDown_OnLoad();
 							</OnLoad>
 							<OnShow>
-								TradeskillInfoUI:AvailabilityDropDown_OnShow();
+								TradeskillInfoUI:AvailabilityDropDown_OnShow(self);
 							</OnShow>
 						</Scripts>
 					</Frame>
@@ -732,7 +732,7 @@
 								TradeskillInfoUI:TradeskillsDropDown_OnLoad();
 							</OnLoad>
 							<OnShow>
-								TradeskillInfoUI:TradeskillsDropDown_OnShow();
+								TradeskillInfoUI:TradeskillsDropDown_OnShow(self);
 							</OnShow>
 						</Scripts>
 					</Frame>
@@ -788,9 +788,9 @@
 				</Frames>
 <!--				<Scripts>
 					<OnLoad>
-						this:SetBackdropColor(.05,.05,.05,.8);
-						this:SetBackdropBorderColor(.4,.4,.4,1);
-						tinsert(UISpecialFrames,this:GetName());
+						self:SetBackdropColor(.05,.05,.05,.8);
+						self:SetBackdropBorderColor(.4,.4,.4,1);
+						tinsert(UISpecialFrames,self:GetName());
 					</OnLoad>
 				</Scripts> -->
 			</Frame>
@@ -839,9 +839,9 @@
 		</Frames>
 		<Scripts>
 			<OnLoad>
-				this:SetBackdropColor(.05,.05,.05,.8);
-				this:SetBackdropBorderColor(.4,.4,.4,1);
-				tinsert(UISpecialFrames,this:GetName());
+				self:SetBackdropColor(.05,.05,.05,.8);
+				self:SetBackdropBorderColor(.4,.4,.4,1);
+				tinsert(UISpecialFrames,self:GetName());
 			</OnLoad>
 			<OnShow>
 				PlaySound("igCharacterInfoOpen");
@@ -855,13 +855,13 @@
 			</OnMouseWheel>
 			<OnMouseDown>
 				if button == "LeftButton" then
-					this:StartMoving();
+					self:StartMoving();
 				end
 			</OnMouseDown>
 			<OnMouseUp>
 				if button == "LeftButton" then
-					this:StopMovingOrSizing();
-					this.isResizing = false
+					self:StopMovingOrSizing();
+					self.isResizing = false
 					TradeskillInfoUI:Frame_Update()
 					TradeskillInfoUI:SaveFramePosition()
 				end

@@ -523,12 +523,12 @@ end
 ----------------------------------------------------------------------
 --- Clicked tradeskill name
 ----------------------------------------------------------------------
-function TradeskillInfoUI:SkillButton_OnClick(button)
+function TradeskillInfoUI:SkillButton_OnClick(frame, button)
 	if ( button == "LeftButton" ) then
 		if IsShiftKeyDown() and ChatFrameEditBox:IsVisible() then
-			self:PasteRecipie(this:GetID());		  
+			self:PasteRecipie(frame:GetID());		  
 		else
-			self:Frame_SetSelection(this:GetID());
+			self:Frame_SetSelection(frame:GetID());
 			self:Frame_Update();
 		end
 	end
@@ -537,7 +537,7 @@ end
 ----------------------------------------------------------------------
 --- Click on vendor coordinates
 ----------------------------------------------------------------------
-function TradeskillInfoUI:RecipeSource_OnHyperlinkClick(link)
+function TradeskillInfoUI:RecipeSource_OnHyperlinkClick(frame, link)
 	local zone,x,y,note = link:match("^tsicoord:([^:]*):([^:]+):([^:]+):(.*)")
 	x=tonumber(x)
 	y=tonumber(y)
@@ -569,31 +569,31 @@ end
 ----------------------------------------------------------------------
 --- Click on item or reagent icon
 ----------------------------------------------------------------------
-function TradeskillInfoUI:ReagentIcon_OnClick(button)
-	if self:Item_OnClick(button,this) then return end
+function TradeskillInfoUI:ReagentIcon_OnClick(frame, button)
+	if self:Item_OnClick(frame, button) then return end
 	if ( button == "LeftButton" ) then
 		if ( IsControlKeyDown() ) then
-			DressUpItemLink(this.tooltip);		
+			DressUpItemLink(frame.tooltip);		
 		elseif IsShiftKeyDown() then 
 			if ChatFrameEditBox:IsVisible() then
-				if this.link then
-					ChatFrameEditBox:Insert(this.link);
+				if frame.link then
+					ChatFrameEditBox:Insert(frame.link);
 				else
-					ChatFrameEditBox:Insert(this.name);
+					ChatFrameEditBox:Insert(frame.name);
 				end
 			end			  
 		elseif IsAltKeyDown() then 
 			if ChatFrameEditBox:IsVisible() then
-				self:PasteRecipie(this.id);
+				self:PasteRecipie(frame.id);
 			end
 		else
-			GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT");
-			GameTooltip:SetHyperlink(this.tooltip);
+			GameTooltip:SetOwner(frame, "ANCHOR_TOPLEFT");
+			GameTooltip:SetHyperlink(frame.tooltip);
 			self:ScheduleTimer(self.Frame_Refresh, 1, self);
 		end
 	elseif ( button == "RightButton" ) then
 			if AuctionFrameBrowse and AuctionFrameBrowse:IsVisible() then
-				BrowseName:SetText(this.name)
+				BrowseName:SetText(frame.name)
 				BrowseMinLevel:SetText("")
 				BrowseMaxLevel:SetText("")
 				AuctionFrameBrowse.selectedInvtype = nil
@@ -610,12 +610,12 @@ function TradeskillInfoUI:ReagentIcon_OnClick(button)
 			end				
 	end
 end
-function TradeskillInfoUI:Item_OnClick(button,this)
+function TradeskillInfoUI:Item_OnClick(frame, button)
 	if not TradeskillInfo.db.profile.QuickSearch then return end
 	if ( button == TradeskillInfo.vars.MouseButtons[TradeskillInfo.db.profile.SearchMouseButton] and
 			 TradeskillInfo.vars.ShiftKeys[TradeskillInfo.db.profile.SearchShiftKey]() ) then
-		local _,_,item = string.find(this.tooltip,":(%d+):");
-		self:SetSearchText("id="..item.." "..this.name);
+		local _,_,item = string.find(frame.tooltip,":(%d+):");
+		self:SetSearchText("id="..item.." "..frame.name);
 		self:Search_OnClick();
 		return true;
 	end
@@ -624,13 +624,13 @@ end
 ----------------------------------------------------------------------
 --- Show Reagent or Item tooltip on mouse over
 ----------------------------------------------------------------------
-function TradeskillInfoUI:ShowReagentTooltip(this)
-	GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT");
-	if this.known then
-		GameTooltip:SetHyperlink(this.tooltip);
+function TradeskillInfoUI:ShowReagentTooltip(frame)
+	GameTooltip:SetOwner(frame, "ANCHOR_TOPLEFT");
+	if frame.known then
+		GameTooltip:SetHyperlink(frame.tooltip);
 		CursorUpdate();
 	else
-		GameTooltip:SetText(this.name);
+		GameTooltip:SetText(frame.name);
 		GameTooltip:AddLine(L["Item not in local cache."]);
 		GameTooltip:AddLine(L["Click to try to update local cache."]);
 		GameTooltip:AddLine(L["Warning! You can be disconnected."]);
@@ -638,12 +638,12 @@ function TradeskillInfoUI:ShowReagentTooltip(this)
 	end
 end
 
-function TradeskillInfoUI:CollapseAllButton_OnClick()
-	if (this.collapsed) then
-		this.collapsed = nil;
+function TradeskillInfoUI:CollapseAllButton_OnClick(frame)
+	if (frame.collapsed) then
+		frame.collapsed = nil;
 		self:ExpandHeader(0);
 	else
-		this.collapsed = true;
+		frame.collapsed = true;
 		TradeskillInfoListScrollFrameScrollBar:SetValue(0);
 		self:CollapseHeader(0);
 	end
@@ -657,8 +657,8 @@ function TradeskillInfoUI:AvailabilityDropDown_OnLoad()
 	UIDropDownMenu_SetText(TradeskillInfoAvailabilityDropDown, L["Availability"]);
 end
 
-function TradeskillInfoUI:AvailabilityDropDown_OnShow()
-	UIDropDownMenu_Initialize(this, TradeskillInfoUI.AvailabilityDropDown_Initialize);
+function TradeskillInfoUI:AvailabilityDropDown_OnShow(frame)
+	UIDropDownMenu_Initialize(frame, TradeskillInfoUI.AvailabilityDropDown_Initialize);
 	UIDropDownMenu_SetText(TradeskillInfoAvailabilityDropDown, L["Availability"]);
 end
 
@@ -677,7 +677,7 @@ function TradeskillInfoUI.AvailabilityDropDown_Initialize()
 	end
 end
 
-function TradeskillInfoUI:AvailabilityDropDown_OnClick(self, val)
+function TradeskillInfoUI:AvailabilityDropDown_OnClick(val)
 	self.db.profile.availability[val] = not self.db.profile.availability[val];
 	self:SendMessage("TradeskillInfo_Update");
 end
@@ -690,8 +690,8 @@ function TradeskillInfoUI:TradeskillsDropDown_OnLoad()
 	UIDropDownMenu_SetText(TradeskillInfoTradeskillsDropDown, L["Tradeskills"]);
 end
 
-function TradeskillInfoUI:TradeskillsDropDown_OnShow()
-	UIDropDownMenu_Initialize(this, TradeskillInfoUI.TradeskillsDropDown_Initialize);
+function TradeskillInfoUI:TradeskillsDropDown_OnShow(frame)
+	UIDropDownMenu_Initialize(frame, TradeskillInfoUI.TradeskillsDropDown_Initialize);
 	UIDropDownMenu_SetText(TradeskillInfoTradeskillsDropDown, L["Tradeskills"]);
 end
 
@@ -710,7 +710,7 @@ function TradeskillInfoUI.TradeskillsDropDown_Initialize()
 	end
 end
 
-function TradeskillInfoUI:TradeskillsDropDown_OnClick(self, val)
+function TradeskillInfoUI:TradeskillsDropDown_OnClick(val)
 	self.db.profile.tradeskills[val] = not self.db.profile.tradeskills[val];
 	self:SendMessage("TradeskillInfo_Update");
 end
@@ -722,13 +722,13 @@ function TradeskillInfoUI:Search_OnClick()
 	self:SendMessage("TradeskillInfo_Update");
 end
 
-function TradeskillInfoUI:ToggleButton()
-	local var = self.options.buttons[this:GetName()].var
+function TradeskillInfoUI:ToggleButton(frame, button)
+	local var = self.options.buttons[frame:GetName()].var
 	if self.db.profile[var] then
-		this:UnlockHighlight();
+		frame:UnlockHighlight();
 		self.db.profile[var] = false;
 	else
-		this:LockHighlight();
+		frame:LockHighlight();
 		self.db.profile[var] = true;
 	end
 	self:SendMessage("TradeskillInfo_Update");
