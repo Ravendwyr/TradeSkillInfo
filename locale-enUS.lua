@@ -405,3 +405,6 @@ L["Okuno"] = true
 L["Indormi"] = true
 L["Eldara Dawnrunner"] = true
 L["Shaani"] = true
+L["Arille Azuregaze"] = true
+L["Derek Odds"] = true
+L["Misensi"] = true

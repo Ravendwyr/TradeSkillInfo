@@ -693,7 +693,7 @@
 								getglobal(self:GetName()):SetText(ALL);
 							</OnLoad>
 							<OnClick>
-								TradeskillInfoUI:CollapseAllButton_OnClick();
+								TradeskillInfoUI:CollapseAllButton_OnClick(self);
 							</OnClick>
 						</Scripts>
 					</Button>

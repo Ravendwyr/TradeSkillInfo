@@ -176,6 +176,8 @@ TradeskillInfo.vars.zones = {
 	[70] = BZ["Black Temple"],
 	[71] = BZ["Hyjal Summit"],
 	[72] = BZ["Isle of Quel'Danas"],
+-- WotLK
+	[73] = BZ["Dalaran"],
 }
 
 TradeskillInfo.vars.factions = {
@@ -204,6 +206,9 @@ TradeskillInfo.vars.factions = {
 	[22] = BF["Lower City"],
 	[23] = BF["Ashtongue Deathsworn"],
 	[24] = BF["Shattered Sun Offensive"],
+-- WotLK
+	[25] = BF["Kirin Tor"],
+	[26] = BF["The Sunreavers"],
 }
 -- Kurenai / The Mag'har
 -- Honor Hold / Thrallmar
@@ -528,4 +533,7 @@ TradeskillInfo.vars.vendors = {
 	[314] =  L["Indormi"] .. "|71|10",
 	[315] =  L["Eldara Dawnrunner"] .. "|72|24",
 	[316] =  L["Shaani"] .. "|72|24",
+	[317] =  L["Arille Azuregaze"] .. "|73|25|48,38",
+	[318] =  L["Derek Odds"] .. "|73|25|41,65",
+	[319] =  L["Misensi"] .. "|73|26|70,38",
 }
