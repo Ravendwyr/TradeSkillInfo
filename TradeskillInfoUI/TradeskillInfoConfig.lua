@@ -261,26 +261,26 @@ function TradeskillInfo:DropDown_Initialize()
 	for index, value in pairs(TradeskillInfo.options.Selections) do
 		if (this:GetName() == "TradeskillInfo_Selection"..value.index.."Button") then
 			for key, name in pairs(value.table) do
-				info = {};
-				info.text = name;
-				info.func = function(self, x) TradeskillInfo:DropDown_OnClick(self, x) end;
-				info.arg1 = value.index;
-				UIDropDownMenu_AddButton(info);
+				info = {}
+				info.text = name
+				info.func = function(frame, self, index)
+								self:DropDown_OnClick(frame, index)
+							end
+				info.arg1 = self
+				info.arg2 = value.index
+				UIDropDownMenu_AddButton(info)
 			end
-			break;
+			break
 		end
 	end
 end
 
 ---------------------
 -- Dropdown Onclick
-function TradeskillInfo:DropDown_OnClick(obj, list)
-	local ddl = getglobal("TradeskillInfo_Selection"..list);
-	UIDropDownMenu_SetSelectedID(ddl, this:GetID());
---	if (ddl.SCTTable) then
---		self.db.profile[SCT.FRAMES_DATA_TABLE][ddl.SCTTable][ddl.SCTVar] = this:GetID();
---	else
-		self.db.profile[ddl.var] = this:GetID();
---	end
+function TradeskillInfo:DropDown_OnClick(frame, index)
+	local ddl = getglobal("TradeskillInfo_Selection"..index)
+	if not ddl then ChatFrame1:AddMessage("ddl is nil. index=" .. index) end
+	UIDropDownMenu_SetSelectedID(ddl, frame:GetID())
+	self.db.profile[ddl.var] = frame:GetID();
 end
 

@@ -628,13 +628,13 @@ function TradeskillInfoUI:ShowReagentTooltip(frame)
 	GameTooltip:SetOwner(frame, "ANCHOR_TOPLEFT");
 	if frame.known then
 		GameTooltip:SetHyperlink(frame.tooltip);
-		CursorUpdate();
+		CursorUpdate(frame)
 	else
 		GameTooltip:SetText(frame.name);
 		GameTooltip:AddLine(L["Item not in local cache."]);
 		GameTooltip:AddLine(L["Click to try to update local cache."]);
 		GameTooltip:AddLine(L["Warning! You can be disconnected."]);
-		GameTooltip:Show();
+		GameTooltip:Show()
 	end
 end
 
@@ -670,7 +670,7 @@ function TradeskillInfoUI.AvailabilityDropDown_Initialize()
 		info.value = i;
 		info.checked = self.db.profile.availability[i];
 		info.keepShownOnClick = 1;
-		info.func = self.AvailabilityDropDown_OnClick;
+		info.func = function(frame, self, val) self:AvailabilityDropDown_OnClick(val) end
 		info.arg1 = self;
 		info.arg2 = i;
 		UIDropDownMenu_AddButton(info);
@@ -703,7 +703,7 @@ function TradeskillInfoUI.TradeskillsDropDown_Initialize()
 		info.value = i;
 		info.checked = self.db.profile.tradeskills[i];
 		info.keepShownOnClick = 1;
-		info.func = self.TradeskillsDropDown_OnClick;
+		info.func = function(frame, self, val) self:TradeskillsDropDown_OnClick(val) end
 		info.arg1 = self;
 		info.arg2 = i;
 		UIDropDownMenu_AddButton(info);
