@@ -279,7 +279,6 @@ end
 -- Dropdown Onclick
 function TradeskillInfo:DropDown_OnClick(frame, index)
 	local ddl = getglobal("TradeskillInfo_Selection"..index)
-	if not ddl then ChatFrame1:AddMessage("ddl is nil. index=" .. index) end
 	UIDropDownMenu_SetSelectedID(ddl, frame:GetID())
 	self.db.profile[ddl.var] = frame:GetID();
 end
