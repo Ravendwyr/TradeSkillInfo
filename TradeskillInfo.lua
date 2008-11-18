@@ -332,20 +332,28 @@ end
 
 function TradeskillInfo:GetExtraItemDetailText(something, tradeskill, skill_index)
 --Thanks to nogudnik for providing this code!
-	local skillName, skillType, numAvailable, isExpanded = GetTradeSkillInfo(skill_index);
+	local skillName, skillType, numAvailable, isExpanded = GetTradeSkillInfo(skill_index)
 	if ( skillType == "header" ) then return end
 	if ( skill_index > GetNumTradeSkills() ) then return end
 
-	local link = GetTradeSkillItemLink(skill_index);
+	local link = GetTradeSkillItemLink(skill_index)
 	local itemId = getIdFromLink(link)
 	local text = nil
+	
+	if not self:CombineExists(itemId) then
+		local spellLink = GetTradeSkillRecipeLink(skill_index)
+		local spellId = getIdFromLink(spellLink)
+		itemId = self:MakeSpecialCase(itemId, spellId)
+	end
 
 	if self:CombineExists(itemId) then
 		if self:ShowingSkillProfit() then
 			-- Insert item value and reagent costs
 			local value,cost,profit = self:GetCombineCost(itemId);
 			text = string.format("s: %s - c: %s = p: %s",
-				self:GetMoneyString(value), self:GetMoneyString(cost), self:GetMoneyString(profit));
+								 self:GetMoneyString(value),
+								 self:GetMoneyString(cost),
+								 self:GetMoneyString(profit))
 		end
 		if self:ShowingSkillLevel() then
 			local sep = ""
@@ -410,7 +418,7 @@ function TradeskillInfo:UpdateSpecializations()
 	end
 end
 
-function TradeskillInfo:MakeSpecialCase(id,spellId)
+function TradeskillInfo:MakeSpecialCase(id, spellId)
 	if id < 100 or not self.vars.specialcases[id] then
 		return id;
 	end
@@ -489,8 +497,15 @@ function TradeskillInfo:TradeSkillFrame_SetSelection(id)
 	if ( skillType == "header" ) then return end
 	if ( GetTradeSkillSelectionIndex() > GetNumTradeSkills() ) then return end
 
-	local link = GetTradeSkillItemLink(TradeSkillFrame.selectedSkill);
+	local link = GetTradeSkillItemLink(TradeSkillFrame.selectedSkill)
 	local itemId = getIdFromLink(link)
+
+	if not self:CombineExists(itemId) then
+		local spellLink = GetTradeSkillRecipeLink(TradeSkillFrame.selectedSkill)
+		local spellId = getIdFromLink(spellLink)
+		itemId = self:MakeSpecialCase(itemId, spellId)
+	end
+
 	if self:CombineExists(itemId) then
 
 		if self:ShowingSkillLevel() then
@@ -588,7 +603,9 @@ function TradeskillInfo:Combines()
 end
 
 function TradeskillInfo:CombineExists(id)
-	if id and (self.vars.combines[id] or self.vars.specialcases[id]) then return true end
+	if id and self.vars.combines[id] then
+		return true
+	end
 end
 
 function TradeskillInfo:GetCombine(id)
@@ -1417,12 +1434,19 @@ end
 
 function TradeskillInfo:SetTradeSkillItem(tooltip, itemIndex, reagentIndex)
 	local link
+	local id
 	if reagentIndex then
 		link = GetTradeSkillReagentItemLink(itemIndex, reagentIndex);
+		id = getIdFromLink(link)
 	else
 		link = GetTradeSkillItemLink(itemIndex);
+		id = getIdFromLink(link)
+		if not self:CombineExists(itemId) then
+			local spellLink = GetTradeSkillRecipeLink(itemIndex)
+			local spellId = getIdFromLink(spellLink)
+			id = self:MakeSpecialCase(id, spellId)
+		end
 	end
-	local id = getIdFromLink(link)
 	self:AddToTooltip(tooltip, id);
 end
 
