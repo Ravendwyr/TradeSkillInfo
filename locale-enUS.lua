@@ -408,3 +408,4 @@ L["Shaani"] = true
 L["Arille Azuregaze"] = true
 L["Derek Odds"] = true
 L["Misensi"] = true
+L["Haughty Modiste"] = true

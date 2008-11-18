@@ -536,4 +536,5 @@ TradeskillInfo.vars.vendors = {
 	[317] =  L["Arille Azuregaze"] .. "|73|25|48,38",
 	[318] =  L["Derek Odds"] .. "|73|25|41,65",
 	[319] =  L["Misensi"] .. "|73|26|70,38",
+	[320] =  L["Haughty Modiste"] .. "|37|3|67,22",
 }

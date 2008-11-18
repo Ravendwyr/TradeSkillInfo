@@ -406,6 +406,7 @@ L["Indormi"] = "éšå¤šç±³"
 L["Eldara Dawnrunner"] = "åŸƒè¾¾æ‹‰Â·æ™¨è¡Œè€…"
 L["Shaani"] = "çŠå¦®"
 -- TODO
-L["Arille Azuregaze"] = true
-L["Derek Odds"] = true
-L["Misensi"] = true
+L["Arille Azuregaze"] = "Arille Azuregaze"
+L["Derek Odds"] = "Derek Odds"
+L["Misensi"] = "Misensi"
+L["Haughty Modiste"] = "Haughty Modiste"
