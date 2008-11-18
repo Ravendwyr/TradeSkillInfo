@@ -68,7 +68,8 @@ function TradeskillInfoUI:OnEnable()
 	if oSkin and oSkin.applySkin then
 		oSkin:applySkin(TradeskillInfoFrame);
 	elseif Skinner and Skinner.applySkin then
-
+		Skinner:removeRegions(TradeskillInfoAvailabilityDropDown);
+		Skinner:removeRegions(TradeskillInfoTradeskillsDropDown);
 		Skinner:removeRegions(TradeskillInfoListScrollFrame);
 		Skinner:skinScrollBar(TradeskillInfoListScrollFrame);	
 		Skinner:removeRegions(TradeskillInfoDetailScrollFrame);
