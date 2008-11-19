@@ -17,6 +17,7 @@
 
 locale-enUS.lua
 locale-esES.lua
+locale-frFR.lua
 locale-zhCN.lua
 locale-zhTW.lua
 locale-koKR.lua
