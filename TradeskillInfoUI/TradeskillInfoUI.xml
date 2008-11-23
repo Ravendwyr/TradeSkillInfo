@@ -625,7 +625,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						TradeskillInfoUI:ToggleButton();
+						TradeskillInfoUI:ToggleButton(self, button);
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -643,7 +643,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						TradeskillInfoUI:ToggleButton();
+						TradeskillInfoUI:ToggleButton(self, button);
 					</OnClick>
 				</Scripts>
 			</Button>
