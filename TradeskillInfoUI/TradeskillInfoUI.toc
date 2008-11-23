@@ -16,6 +16,7 @@
 ## LoadOnDemand: 1
 
 locale-enUS.lua
+locale-ruRU.lua
 locale-esES.lua
 locale-frFR.lua
 locale-zhCN.lua
