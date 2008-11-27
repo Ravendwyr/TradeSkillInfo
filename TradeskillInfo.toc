@@ -16,12 +16,12 @@
 ## X-Credits Evenue (updates), Fieroivan (updates), Coani (Titan Plugin)
 
 ## X-Category: Tradeskill
+## LoadManagers: AddonLoader
+## X-LoadOn-Always: delayed
 ## X-LoadOn-Slash: /tsi
 
 ## Dependencies:
 ## OptionalDeps: Ace3, LibStub, CallbackHandler-1.0, LibAbacus-3.0, LibBabble-Zone-3.0, LibBabble-Faction-3.0, LibDataBroker-1.1, Titan
-## DefaultState: Enabled
-## LoadOnDemand: 0
 
 ## SavedVariables: TradeskillInfoDB
 
