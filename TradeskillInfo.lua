@@ -494,6 +494,7 @@ end
 ----------------------------------------------------------------------
 function TradeskillInfo:TradeSkillFrame_SetSelection(id)
 	local skillName, skillType, numAvailable, isExpanded = GetTradeSkillInfo(id);
+	if not skillName then return end
 	if ( skillType == "header" ) then return end
 	if ( GetTradeSkillSelectionIndex() > GetNumTradeSkills() ) then return end
 
