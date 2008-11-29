@@ -739,8 +739,12 @@ end
 ----------------------------------------------------------------------
 function TradeskillInfoUI:Reset_OnClick()
 	self:SetSearchText("");
-	self.db.profile.tradeskills = {['A']=true,['B']=true,['D']=true,['E']=true,['J']=true,['L']=true,['T']=true,['W']=true,['X']=true,['Z']=true,['Y']=true};
-	self.db.profile.availability = {true,true,true,true,true,true,true};
+	for i, _ in pairs(self.db.profile.tradeskills) do
+		self.db.profile.tradeskills[i] = true
+	end
+	for i, _ in ipairs(self.db.profile.availability) do
+		self.db.profile.availability[i] = true
+	end
 	self:SendMessage("TradeskillInfo_Update");
 end
 
