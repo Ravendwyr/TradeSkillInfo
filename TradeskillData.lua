@@ -178,6 +178,13 @@ TradeskillInfo.vars.zones = {
 	[72] = BZ["Isle of Quel'Danas"],
 -- WotLK
 	[73] = BZ["Dalaran"],
+	[74] = BZ["Borean Tundra"],
+	[75] = BZ["Howling Fjord"],
+	[76] = BZ["Sholazar Basin"],
+	[77] = BZ["Icecrown"],
+	[78] = BZ["Dragonblight"],
+	[79] = BZ["The Storm Peaks"],
+	[80] = BZ["Wintergrasp"],
 }
 
 TradeskillInfo.vars.factions = {
@@ -209,6 +216,15 @@ TradeskillInfo.vars.factions = {
 -- WotLK
 	[25] = BF["Kirin Tor"],
 	[26] = BF["The Sunreavers"],
+	[27] = BF["Warsong Offensive"],
+	[28] = BF["Valiance Expedition"],
+	[29] = BF["Frenzyheart Tribe"],
+	[30] = BF["Knights of the Ebon Blade"],
+	[31] = BF["The Oracles"],
+	[32] = BF["The Kalu'ak"],
+	[33] = BF["The Sons of Hodir"],
+	[34] = BF["The Wyrmrest Accord"],
+	[35] = BF["Argent Crusade"],
 }
 -- Kurenai / The Mag'har
 -- Honor Hold / Thrallmar
@@ -537,4 +553,29 @@ TradeskillInfo.vars.vendors = {
 	[318] =  L["Derek Odds"] .. "|73|25|41,65",
 	[319] =  L["Misensi"] .. "|73|26|70,38",
 	[320] =  L["Haughty Modiste"] .. "|37|3|67,22",
+	-- TODO: Add to locales
+	[321] =  L["Quartermaster Davian Vaclav"] .. "|69|1|41,44",
+	[322] =  L["Quartermaster Jaffrey Noreliqe"] .. "|69|2|41,44",
+	[322] =  L["Karaaz"] .. "|61|18|44,34",
+	[323] =  L["Paulsta'ats"] .. "|69|18|30,57",
+	[324] =  L["Vanessa Sellers"] .. "|73|25|39,41",
+	[325] =  L["Gara Skullcrush"] .. "|74|27|41,54",
+	[326] =  L["Sebastian Crane"] .. "|75|27|80,31",
+	[327] =  L["Logistics Officer Brighton"] .. "|75|28|60,64",
+	[328] =  L["Logistics Officer Silverstone"] .. "|74|28|58,67",
+	[329] =  L["Ontuvo"] .. "|60|24|49,41",
+	[330] =  L["Tanak"] .. "|76|29|55,69",
+	[331] =  L["Duchess Mynx"] .. "|77|30|43,21",
+	[332] =  L["Geen"] .. "|76|31|55,56",
+	[333] =  L["Sairuk"] .. "|78|32|49,76",
+	[334] =  L["Tanaika"] .. "|75|32|25,59",
+	[335] =  L["Tiffany Cartier"] .. "|73|25|41,35",
+	[336] =  L["Archmage Alvareaux"] .. "|73|25|26,48",
+	[337] =  L["Lillehoff"] .. "|79|33|66,61",
+	[338] =  L["Cielstrasza"] .. "|78|34|60,53",
+	[339] =  L["Veteran Crusader Aliocha Segard"] .. "|77|35|88,76",
+	[340] =  L["Knight Dameron"] .. "|80|28|52,17",
+	[341] =  L["Morgan Day"] .. "|80|3|52,17", -- TODO: Check if this NPC can be found there. Faction looks weird
+	[342] =  L["Stone Guard Mukar"] .. "|80|27|52,17",
+	[343] =  L["Braeg Stoutbeard"] .. "|73|25|38,38",
 }
