@@ -283,12 +283,7 @@ function TradeskillInfo:OnEnable()
 	self:RegisterEvent("TRADE_SKILL_SHOW", "OnTradeShow");
 	self:RegisterEvent("SKILL_LINES_CHANGED", "OnSkillUpdate");
 	self:RegisterEvent("ADDON_LOADED", "OnAddonLoaded");
-	self:UpdateSkills();
-	self:UpdateSpecializations();
 	self:HookTooltips();
-
-	self:UpdateSkills();
-	self:UpdateSpecializations();
 end
 
 function TradeskillInfo:OnDisable()
@@ -309,6 +304,9 @@ function TradeskillInfo:OnTradeShow()
 end
 
 function TradeskillInfo:OnSkillUpdate()
+	self:UpdateSkills();
+	self:UpdateSpecializations();
+
 	if not IsTradeSkillLinked() then
 		if (GetTradeSkillLine() ~= "UNKNOWN") then
 			self:ScheduleTimer(self.UpdateKnownRecipes,1,self);
@@ -380,8 +378,6 @@ function TradeskillInfo:UpdateKnownRecipes()
 		(GetTradeSkillLine() ~= "UNKNOWN") then
 		self.processingUpdates = true;
 
-		self:UpdateSkills();
-		self:UpdateSpecializations();
 		self:UpdateKnownTradeRecipes();
 		self.processingUpdates = false;
 	end
@@ -389,6 +385,9 @@ end
 
 function TradeskillInfo:UpdateSkills(startLine, endLine)
 	local numSkills = GetNumSkillLines()
+	-- If the cache is still not initialized, return, and hope that another
+	-- SKILL_LINES_CHANGED event will get fired
+	if not numSkills or numSkills == 0 then return end
 	if not startLine then
 		self.db.realm.userdata[self.vars.playername].skills = {};
 		startLine = 1;
