@@ -304,13 +304,17 @@ function TradeskillInfo:OnTradeShow()
 end
 
 function TradeskillInfo:OnSkillUpdate()
-	self:UpdateSkills();
-	self:UpdateSpecializations();
+	if not self.UpdateInProgress then
+		self.UpdateInProgress = true
+		self:UpdateSkills();
+		self:UpdateSpecializations();
 
-	if not IsTradeSkillLinked() then
-		if (GetTradeSkillLine() ~= "UNKNOWN") then
-			self:ScheduleTimer(self.UpdateKnownRecipes,1,self);
+		if not IsTradeSkillLinked() then
+			if (GetTradeSkillLine() ~= "UNKNOWN") then
+				self:ScheduleTimer(self.UpdateKnownRecipes,1,self);
+			end
 		end
+		self.UpdateInProgress = false
 	end
 end
 
