@@ -764,17 +764,20 @@ function TradeskillInfo:GetCombineAvailability(id)
 			local charSpec = self:GetCharSkillLevel(name,combineSpec);
 			if skillLevel and (combineSpec=="" or charSpec) then
 				if skillLevel >= combineLevel then
-					if self:IsCombineKnowByChar(name,id) then
+					if alt == 0 and self:IsCombineKnowByChar(name,id) then
+						-- Known by alt has lowest priority
 						alt = 1;
-					elseif alt == 0 or alt == 3 then
+					else
+						-- Alt can learn has highest priority. Stop if we have one of these
 						alt = 2;
+						break;
 					end
-				elseif alt == 0 then
+				else
+					-- Alt will be able to learn: keep searching for alts who can learn
 					alt = 3
 				end
 			end
 		end
-		if alt == 1 then break end
 	end
 	return player,alt
 end
