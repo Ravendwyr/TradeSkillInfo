@@ -3103,7 +3103,6 @@ TradeskillInfo.vars.combines = {
 	[44063] = "59759|J400|41163:2 36930:2 36933", -- Monarch Crab
 	[44943] = "62242|J9999|43102 36923:3 36926:3 36932:3", -- Icy Prism
 	-- WotLK Leatherworking combines
-	[33568] = "59926|L375|33567:4", -- Borean Leather (TODO: Check skill)
 	[38347] = "50971|L415|38425:8|44510", -- Mammoth Mining Bag
 	[38371] = "50964|L405|38425:5 38561", -- Jormungar Leg Armor
 	[38372] = "50966|L400|38425:4 38558", -- Nerubian Leg Armor
