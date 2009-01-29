@@ -1077,11 +1077,13 @@ function TradeskillInfo:GetRecipeSources(recipe,opposing, tooltip, ShowRecipeSou
 	local uf = UnitFactionGroup("player")
 	local res = ""
 	local number_found = 0;
-	for s,n in string.gmatch(sources,"(%u%l*)(%d*)") do
+	for s,f,n in string.gmatch(sources,"(%u)(%l*)(%d*)") do
 		if (s=="V" or s=="Q" or s=="D") and n~="" then
 			local found,_,vname,znr,fnr,pos,note = string.find(self.vars.vendors[tonumber(n)],"([^|]+)|(%d+)|(%d+)[|]?([^|]*)[|]?([^|]*)");
 			if found then
-				if opposing or (uf=="Horde" and fnr~="1") or (uf=="Alliance" and fnr~="2") then
+				if opposing or
+				   (uf=="Horde" and fnr~="1" and f~="a") or
+				   (uf=="Alliance" and fnr~="2" and f~="h") then
 					number_found = number_found + 1;
 					local zone = self.vars.zones[tonumber(znr)];
 					local faction = self.vars.factions[tonumber(fnr)];
@@ -1103,7 +1105,7 @@ function TradeskillInfo:GetRecipeSources(recipe,opposing, tooltip, ShowRecipeSou
 							pos = " ("..pos..")"
 						end
 					end
-					Rtext = self.vars.sources[s]..": "..vname..", "..zone..pos..note
+					Rtext = self.vars.sources[s .. (f or "")]..": "..vname..", "..zone..pos..note
 					if level ~= "" then
 						local rep = getglobal("FACTION_STANDING_LABEL"..level);
 						Rtext = Rtext.." "..faction.."-"..rep;
@@ -1116,8 +1118,8 @@ function TradeskillInfo:GetRecipeSources(recipe,opposing, tooltip, ShowRecipeSou
 			else
 				self:Print(L["Unknown NPC. Please report it. Source="],s);
 			end
-		elseif self.vars.sources[s] then
-			local _,_,f = string.find(s,"%u(%l*)")
+		elseif self.vars.sources[s .. f] then
+			--local _,_,f = string.find(s,"%u(%l*)")
 			if opposing or (uf=="Horde" and f~="a") or (uf=="Alliance" and f~="h") then
 				number_found = number_found + 1;
 				if res ~= "" then
@@ -1126,7 +1128,7 @@ function TradeskillInfo:GetRecipeSources(recipe,opposing, tooltip, ShowRecipeSou
 				else
 					Ltext = L["Source"];
 				end
-				Rtext = self.vars.sources[s];
+				Rtext = self.vars.sources[s .. (f or "")];
 				res = res..Rtext;
 				if tooltip then
 					tooltip:AddDoubleLine(Ltext, Rtext, c.r, c.g, c.b, c.r, c.g, c.b/1.5);

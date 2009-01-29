@@ -575,7 +575,10 @@ TradeskillInfo.vars.vendors = {
 	[338] =  L["Cielstrasza"] .. "|78|34|60,53",
 	[339] =  L["Veteran Crusader Aliocha Segard"] .. "|77|35|88,76",
 	[340] =  L["Knight Dameron"] .. "|80|28|52,17",
-	[341] =  L["Morgan Day"] .. "|80|3|52,17", -- TODO: Check if this NPC can be found there. Faction looks weird
+	[341] =  nil, -- "Morgan Day" R.I.P
 	[342] =  L["Stone Guard Mukar"] .. "|80|27|52,17",
 	[343] =  L["Braeg Stoutbeard"] .. "|73|25|38,38",
+	[344] =  L["Bryan Landers"] .. "|73|25|38.9,25.2",
+	[345] =  L["Captain O'Neal"] .. "|34|1|75.1,66.8",
+	[346] =  L["Lady Palanseer"] .. "|28|2|37.0,64.9",
 }
