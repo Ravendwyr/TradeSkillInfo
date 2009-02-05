@@ -104,6 +104,7 @@ function TradeskillInfo:OnInitialize()
 		profile = {
 			ShowSkillLevel = true,
 			ShowSkillProfit = true,
+			ShowSkillAuctioneerProfit = true,
 			MoneyFormat = 3,
 			TooltipSource = true,
 			TooltipRecipeSource = true,
@@ -166,6 +167,13 @@ function TradeskillInfo:OnInitialize()
 				type = 'toggle',
 				get = function() return self.db.profile.ShowSkillProfit end,
 				set = function(val) self.db.profile.ShowSkillProfit = val end,
+			},
+			auctioneer = {
+				name = L["Combine profit from auctioneer advanced"],
+				desc = L["Show cost of combine and profit from auctioneer advanced"],
+				type = 'toggle',
+				get = function() return self.db.profile.ShowSkillAuctioneerProfit end,
+				set = function(val) self.db.profile.ShowSkillAuctioneerProfit = val end,
 			},
 			level = {
 				name = L["Combine level"],
@@ -352,20 +360,31 @@ function TradeskillInfo:GetExtraItemDetailText(something, tradeskill, skill_inde
 
 	return self:GetExtraItemDataText(itemId,
 	                                 self:ShowingSkillProfit(),
-	                                 self:ShowingSkillLevel())
+	                                 self:ShowingSkillLevel(),
+	                                 self:ShowingSkillAuctioneerProfit())
 end
 
-function TradeskillInfo:GetExtraItemDataText(itemId, showVendorProfit, showDifficulty)
+function TradeskillInfo:GetExtraItemDataText(itemId, showVendorProfit, showDifficulty, showAuctioneerProfit)
 	local text = nil
 
 	if self:CombineExists(itemId) then
+		if showAuctioneerProfit then
+			-- Insert item value and reagent costs from auctioneer
+			local value,cost,profit = self:GetCombineAuctioneerCost(itemId)
+			text = string.format("A: %s - %s = %s",
+			                     self:GetMoneyString(value),
+			                     self:GetMoneyString(cost),
+			                     self:GetMoneyString(profit))
+		end
 		if showVendorProfit then
 			-- Insert item value and reagent costs
-			local value,cost,profit = self:GetCombineCost(itemId);
-			text = string.format("Vendor: s: %s - c: %s = p: %s",
-								 self:GetMoneyString(value),
-								 self:GetMoneyString(cost),
-								 self:GetMoneyString(profit))
+			local value,cost,profit = self:GetCombineCost(itemId)
+			if text then sep = "\n" else text = "" end
+			text = text .. sep ..
+			       string.format("V: %s - %s = %s",
+			                     self:GetMoneyString(value),
+			                     self:GetMoneyString(cost),
+			                     self:GetMoneyString(profit))
 		end
 		if showDifficulty then
 			local sep = ""
@@ -521,10 +540,15 @@ function TradeskillInfo:TradeSkillFrame_SetSelection(id)
 			TradeSkillRequirementText:SetText(text);
 		end
 
-		if self:ShowingSkillProfit() then
+		if self:ShowingSkillAuctioneerProfit() then
+			-- Insert item value and reagent costs
+			local value,cost,profit = self:GetCombineAuctioneerCost(itemId);
+			TradeSkillReagentLabel:SetText(string.format("%s %s - %s = %s", SPELL_REAGENTS,
+				self:GetMoneyString(value), self:GetMoneyString(cost), self:GetMoneyString(profit)));
+		elseif self:ShowingSkillProfit() then
 			-- Insert item value and reagent costs
 			local value,cost,profit = self:GetCombineCost(itemId);
-			TradeSkillReagentLabel:SetText(string.format("%s s: %s - c: %s = p: %s", SPELL_REAGENTS,
+			TradeSkillReagentLabel:SetText(string.format("%s %s - %s = %s", SPELL_REAGENTS,
 				self:GetMoneyString(value), self:GetMoneyString(cost), self:GetMoneyString(profit)));
 		else
 			--TradeSkillReagentLabel:SetText(SPELL_REAGENTS);
@@ -694,7 +718,7 @@ function TradeskillInfo:GetCombineItem(id)
 	return item
 end
 
-function TradeskillInfo:GetCombineComponents(id)
+function TradeskillInfo:GetCombineComponents(id, getVendorPrice, getAuctioneerPrice)
 	if not self:CombineExists(id) then return end
 	local components = {};
 	local _, _, compstring = string.find(self.vars.combines[id],"%d*|?[^|]+|([^|]+)");
@@ -703,7 +727,7 @@ function TradeskillInfo:GetCombineComponents(id)
 		_,_,c.id,c.num = string.find(s,"(%d+):(%d+)");
 		c.id = tonumber(c.id) or tonumber(s);
 		c.num = tonumber(c.num) or 1;
-		c.name,c.cost,c.source = self:GetComponent(c.id);
+		c.name,c.cost,c.source,c.aucCost,c.aucSeen = self:GetComponent(c.id, getVendorPrice, getAuctioneerPrice);
 		c.link, c.quality, c.itemString, c.texture = getItemLink(c.id);
 		table.insert(components,c);
 	end
@@ -810,19 +834,39 @@ end
 
 function TradeskillInfo:GetCombineCost(id)
 	if not self:CombineExists(id) then return end
-	local components = self:GetCombineComponents(id);
+	local components = self:GetCombineComponents(id, true);
 	local value = 0;
 	local item = self:GetCombineItem(id);
-	if item then
-		_,value = self:GetComponent(item);
-	elseif id > 0 then
-		_,value = self:GetComponent(id)
+	if item then id = item end
+
+	if id > 0 then
+		_,value = self:GetComponent(id, true)
 	end
 	local cost = 0;
 	for _,c in ipairs(components) do
 		cost = cost + c.cost * c.num
 	end
 	components = nil;
+	return value, cost, value-cost;
+end
+
+function TradeskillInfo:GetCombineAuctioneerCost(id)
+	if not self:CombineExists(id) then return end
+	if not AucAdvanced then return end
+
+	local components = self:GetCombineComponents(id, false, true)
+	local value = 0
+	local item = self:GetCombineItem(id)
+	if item then id = item end
+	if id > 0 then
+		_,_,_,value = self:GetComponent(id, false, true)
+	end
+	local cost = 0;
+	for _,c in ipairs(components) do
+		cost = cost + (c.aucCost or 0) * c.num
+	end
+	components = nil;
+
 	return value, cost, value-cost;
 end
 
@@ -858,7 +902,7 @@ function TradeskillInfo:ComponentExists(id)
 	if id and self.vars.components[id] then return true end
 end
 
-function TradeskillInfo:GetComponent(id)
+function TradeskillInfo:GetComponent(id, getVendorPrice, getAuctioneerPrice)
 	if not self:ComponentExists(id) then return end
 	local realId = id
 	if realId < 100 then
@@ -871,7 +915,27 @@ function TradeskillInfo:GetComponent(id)
 	local name = GetItemInfo(realId)
 	if not name then name="????" end
 	local _,_,cost,source = string.find(self.vars.components[realId],"(%d+)/(%a+)")
-	return name,tonumber(cost),source
+	if getVendorPrice then
+		-- If we have the GetSellValue API, trust it over our internal data
+		if GetSellValue then
+			local gsvCost = GetSellValue(realId)
+			if gsvCost and gsvCost > 0 then
+				cost = gsvCost
+			end
+		end
+	end
+	-- If we have Auctioneer Advanced, also gather auction prices
+	local aucCost, aucSeen
+	if getAuctioneerPrice then
+		if AucAdvanced and AucAdvanced.API then
+			local itemLink = getItemLink(realId)
+			aucCost, aucSeen = AucAdvanced.API.GetMarketValue(itemLink, AucAdvanced.GetFaction())
+			-- If auctioneer has no idea, plug in vendor sell value
+			if not aucCost then aucCost = cost end
+			if not aucSeen then aucSeen = 0 end
+		end
+	end
+	return name,tonumber(cost),source,tonumber(aucCost),tonumber(aucSeen)
 end
 
 function TradeskillInfo:GetComponentSource(id, tooltip)
@@ -1732,6 +1796,10 @@ end
 
 function TradeskillInfo:ShowingSkillProfit()
 	return self.db.profile.ShowSkillProfit;
+end
+
+function TradeskillInfo:ShowingSkillAuctioneerProfit()
+	return self.db.profile.ShowSkillAuctioneerProfit;
 end
 
 function TradeskillInfo:ShowingTooltipUsedIn()

@@ -1058,7 +1058,7 @@ end
 
 function TradeskillInfoUI:GetTradeSkillExtraData(index)
 	if not self.vars.searchResult[index] then return end
-	return TradeskillInfo:GetExtraItemDataText(self.vars.searchResult[index], true, true);
+	return TradeskillInfo:GetExtraItemDataText(self.vars.searchResult[index], true, true, true);
 end
 
 function TradeskillInfoUI:IsSafeToShowTooltip(index)

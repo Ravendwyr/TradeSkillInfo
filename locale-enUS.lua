@@ -435,3 +435,5 @@ L["Braeg Stoutbeard"] = true
 L["Bryan Landers"] = true
 L["Captain O'Neal"] = true
 L["Lady Palanseer"] = true
+L["Combine profit from auctioneer advanced"] = true
+L["Show cost of combine and profit from auctioneer advanced"] = true
