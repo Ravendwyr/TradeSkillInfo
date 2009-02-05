@@ -143,7 +143,7 @@ function TradeskillInfo:OnInitialize()
 			SavePosition = true,
 			FrameStrata = 1,
 			UIScale = 1,
-		},		
+		},
 		realm = {
 			userdata = {}, -- Stores all known characters
 		},
@@ -284,6 +284,8 @@ function TradeskillInfo:OnEnable()
 	self:RegisterEvent("SKILL_LINES_CHANGED", "OnSkillUpdate");
 	self:RegisterEvent("ADDON_LOADED", "OnAddonLoaded");
 	self:HookTooltips();
+	-- Get rid of legacy diffculty data
+	self.db.global.difficulty = nil
 end
 
 function TradeskillInfo:OnDisable()
@@ -341,23 +343,31 @@ function TradeskillInfo:GetExtraItemDetailText(something, tradeskill, skill_inde
 	local link = GetTradeSkillItemLink(skill_index)
 	local itemId = getIdFromLink(link)
 	local text = nil
-	
+
 	if not self:CombineExists(itemId) then
 		local spellLink = GetTradeSkillRecipeLink(skill_index)
 		local spellId = getIdFromLink(spellLink)
 		itemId = self:MakeSpecialCase(itemId, spellId)
 	end
 
+	return self:GetExtraItemDataText(itemId,
+	                                 self:ShowingSkillProfit(),
+	                                 self:ShowingSkillLevel())
+end
+
+function TradeskillInfo:GetExtraItemDataText(itemId, showVendorProfit, showDifficulty)
+	local text = nil
+
 	if self:CombineExists(itemId) then
-		if self:ShowingSkillProfit() then
+		if showVendorProfit then
 			-- Insert item value and reagent costs
 			local value,cost,profit = self:GetCombineCost(itemId);
-			text = string.format("s: %s - c: %s = p: %s",
+			text = string.format("Vendor: s: %s - c: %s = p: %s",
 								 self:GetMoneyString(value),
 								 self:GetMoneyString(cost),
 								 self:GetMoneyString(profit))
 		end
-		if self:ShowingSkillLevel() then
+		if showDifficulty then
 			local sep = ""
 			if text then sep = "\n" else text = "" end
 			text = text .. sep .. self:GetColoredDifficulty(itemId)
@@ -465,11 +475,10 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 				local id = getIdFromLink(link)
 				link = GetTradeSkillRecipeLink(i)
 				local spellId = getIdFromLink(link)
-				local diff = self.vars.difficulty[itemType];
+				local diff = self.vars.difficultyLevel[itemType];
 				id = self:MakeSpecialCase(id, spellId);
 				if id then
 					self.db.realm.userdata[self.vars.playername].knownRecipes[id] = diff;
-					self:UpdateDifficultyData(id, diff, currentSkillLvl);
 				else
 					self:Print("UpdateKnownTradeRecipes startLine=%d endLine%d line=%d name=%s type=%s link=%s",startLine,endLine,i,itemName,itemType,link);
 					return;
@@ -477,19 +486,6 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 			end
 		end
 	end
-end
-
-function TradeskillInfo:UpdateDifficultyData(id, difficulty, currentSkillLvl)
-	-- Update global difficulty
-	if not self.db.global.difficulty[id] then
-		self.db.global.difficulty[id] = "0/0/0/"..self:GetCombineLevel(id);
-	end
-	local d = splitn(self.db.global.difficulty[id],'/');
-	if d[difficulty] > currentSkillLvl or d[difficulty] == 0 then
-		d[difficulty] = currentSkillLvl;
-	end
-	self.db.global.difficulty[id] = ICombineTable(d,'/');
-	d = nil;
 end
 
 ----------------------------------------------------------------------
@@ -615,7 +611,8 @@ end
 function TradeskillInfo:GetCombine(id)
 	if not self:CombineExists(id) then return end
 	local combine = {};
-	local found, _, skill, spec, level, components, recipe, yield, item = string.find(self.vars.combines[id],"%d*|?(%u)(%l*)(%d+)|([^|]+)[|]?(%d*)[|]?([^|]*)[|]?(%d*)");
+	local found, _, skill, spec, level, l2, l3, l4, components, recipe, yield, item =
+		string.find(a,"%d*|?(%u)(%l*)(%d+)/?(%d*)/?(%d*)/?(%d*)|([^|]+)[|]?(%d*)[|]?([^|]*)[|]?(%d*)")
 	combine.skill = skill;
 	combine.spec = spec;
 	combine.level = tonumber(level);
@@ -657,6 +654,15 @@ function TradeskillInfo:GetCombineLevel(id)
 	if not self:CombineExists(id) then return 0 end
 	local _,_,level = string.find(self.vars.combines[id],"%d*|?%a+(%d+)");
 	return tonumber(level)
+end
+
+function TradeskillInfo:GetCombineDifficulty(id)
+	if not self:CombineExists(id) then return 0 end
+	local _,_,l1,l2,l3,l4 = string.find(self.vars.combines[id],"%d*|?%a+(%d+)/?(%d*)/?(%d*)/?(%d*)");
+	if l2 == "" then l2=nil end
+	if l3 == "" then l3=nil end
+	if l4 == "" then l4=nil end
+	return {l1, l2, l3, l4}
 end
 
 function TradeskillInfo:GetCombineSkill(id)
@@ -783,27 +789,21 @@ function TradeskillInfo:GetCombineAvailability(id)
 end
 
 function TradeskillInfo:GetColoredDifficulty(id)
-	if not self:CombineExists(id) then return "" end
-	local s = "";
-	if self.db.global.difficulty[id] then
-		local d = splitn(self.db.global.difficulty[id],'/');
-		for i,l in ipairs(d) do
+	local diff = self:GetCombineDifficulty(id)
+	local s = ""
+	if not diff then return end
+
+	-- assume l2, l3, l4 are either all set, or all unset
+	if #diff > 1 then
+		for i,l in ipairs(diff) do
 			if i == 1 then
-				s = self.vars.diffcolors[i]..d[i].."|r";
+				s = self.vars.diffcolors[5-i]..diff[i].."|r"
 			else
-				s = s.."/"..self.vars.diffcolors[i]..d[i].."|r";
+				s = s.."/"..self.vars.diffcolors[5-i]..diff[i].."|r"
 			end
 		end
 	else
-		local level = self:GetCombineLevel(id);
-		local knownRecipes = self.db.realm.userdata[self.vars.playername].knownRecipes;
-		if knownRecipes and
-			 knownRecipes[id] then
-			diff = knownRecipes[id];
-			s = "skill("..self.vars.diffcolors[diff]..level.."|r)";
-		else
-			s = "skill("..level..")";
-		end
+		s = "skill("..diff[1]..")"
 	end
 	return s
 end
@@ -1019,7 +1019,7 @@ function TradeskillInfo:GetItemCrafted(item, use)
 	if not item then return end
 	-- If it is a straightforward item, mark it
 	if self.vars.combines[item] then use[item] = true end
-	
+
 	-- If it is a special item, translate its item ID
 	local specialIds = self.vars.specialcases[item]
 	if specialIds then
@@ -1793,7 +1793,7 @@ end
 --[[ Databroker Stuff --]]
 
 local ldb = LibStub:GetLibrary("LibDataBroker-1.1", true)
-if ldb then 
+if ldb then
 	ldb:NewDataObject("TradeSkillInfo", {
 		type = "launcher",
 		text = "TSI",

@@ -1,4 +1,4 @@
-TradeskillInfoUI = LibStub("AceAddon-3.0"):NewAddon("TradeskillInfoUI", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0")
+﻿TradeskillInfoUI = LibStub("AceAddon-3.0"):NewAddon("TradeskillInfoUI", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("TradeskillInfoUI")
 
 TradeskillInfoUI.version = "1.0." .. string.sub("$Revision: 61 $", 12, -3);
@@ -71,10 +71,10 @@ function TradeskillInfoUI:OnEnable()
 		Skinner:removeRegions(TradeskillInfoAvailabilityDropDown);
 		Skinner:removeRegions(TradeskillInfoTradeskillsDropDown);
 		Skinner:removeRegions(TradeskillInfoListScrollFrame);
-		Skinner:skinScrollBar(TradeskillInfoListScrollFrame);	
+		Skinner:skinScrollBar(TradeskillInfoListScrollFrame);
 		Skinner:removeRegions(TradeskillInfoDetailScrollFrame);
-		Skinner:skinScrollBar(TradeskillInfoDetailScrollFrame);	
-	
+		Skinner:skinScrollBar(TradeskillInfoDetailScrollFrame);
+
 		Skinner:applySkin(TradeskillInfoFrame);
 	end
 	TradeskillInfoKnown:ClearAllPoints()
@@ -93,7 +93,7 @@ function TradeskillInfoUI:Frame_Show()
 	TradeskillInfoDetailScrollFrameScrollBarThumbTexture:Hide();
 	TradeskillInfoDetailScrollFrameTop:Hide();
 	TradeskillInfoDetailScrollFrameBottom:Hide();
-	
+
 	for key,val in pairs(self.options.buttons) do
 		local button = getglobal(key);
 		button:SetText(val.text);
@@ -106,15 +106,15 @@ function TradeskillInfoUI:Frame_Show()
 			button:UnlockHighlight();
 		end
 	end
-	
+
 	self:UpdateFramePosition();
 	self:UpdateFrameStrata()
 	ShowUIPanel(TradeskillInfoFrame);
 
 	self:RegisterMessage("TradeskillInfo_Update", "OnTradeskillInfoUpdate")
-	
+
 	FauxScrollFrame_SetOffset(TradeskillInfoListScrollFrame, 0);
-	TradeskillInfoListScrollFrameScrollBar:SetMinMaxValues(0, 0); 
+	TradeskillInfoListScrollFrameScrollBar:SetMinMaxValues(0, 0);
 	TradeskillInfoListScrollFrameScrollBar:SetValue(0);
 	TradeskillInfoUI:Search();
 	TradeskillInfoUI:Frame_SetSelection(TradeskillInfoUI.vars.selectionIndex);
@@ -141,7 +141,7 @@ function TradeskillInfoUI:UpdateFramePosition()
 		local s = TradeskillInfoFrame:GetEffectiveScale();
 		if TradeskillInfo.db.profile.PositionX and TradeskillInfo.db.profile.PositionY then
 			TradeskillInfoFrame:ClearAllPoints();
-			TradeskillInfoFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", 
+			TradeskillInfoFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT",
 						TradeskillInfo.db.profile.PositionX / s, TradeskillInfo.db.profile.PositionY / s);
 		end
 		if TradeskillInfo.db.profile.Width then
@@ -233,13 +233,13 @@ local function getSkillButton(i)
 	local skillButton = getglobal("TradeskillInfoSkill"..i)
 	if not skillButton then
 		-- Create a new button. Assume button (i-1) was already created
-        skillButton = CreateFrame("Button", "TradeskillInfoSkill"..i, TradeskillInfoListFrame, "TradeskillInfoSkillButtonTemplate")
-        skillButton:SetPoint("TOPLEFT", "TradeskillInfoSkill"..(i-1), "BOTTOMLEFT")
+		skillButton = CreateFrame("Button", "TradeskillInfoSkill"..i, TradeskillInfoListFrame, "TradeskillInfoSkillButtonTemplate")
+	skillButton:SetPoint("TOPLEFT", "TradeskillInfoSkill"..(i-1), "BOTTOMLEFT")
 		skillButton:SetFrameLevel(TradeskillInfoListFrame:GetFrameLevel() + 1)
 		skillButton:SetNormalTexture("");
 		skillButton:SetText("");
 	end
-	
+
 	TradeskillInfoUI.vars.numSkillButtons = math.max(i, TradeskillInfoUI.vars.numSkillButtons)
 
 	return skillButton
@@ -268,7 +268,7 @@ function TradeskillInfoUI.Frame_Update()
 
 	-- ScrollFrame update
 	local buttonCount = TradeskillInfoListScrollFrame:GetHeight() / TradeskillInfoUI.cons.skillHeight
-    buttonCount = math.floor(buttonCount)
+buttonCount = math.floor(buttonCount)
 
 	FauxScrollFrame_Update(TradeskillInfoListScrollFrame, numTradeSkills, buttonCount, TradeskillInfoUI.cons.skillHeight, nil, nil, nil, TradeskillInfoHighlightFrame, 293, 316 );
 
@@ -298,7 +298,7 @@ function TradeskillInfoUI.Frame_Update()
 		-- Adjust width of buttons and their texts
 		skillButton:SetWidth(TradeskillInfoListFrame:GetWidth()-34)
 		skillButtonText:SetWidth(TradeskillInfoListFrame:GetWidth()-34)
-		if ( skillIndex <= numTradeSkills ) then	
+		if ( skillIndex <= numTradeSkills ) then
 			local skillName, skillType, isExpanded = self:GetTradeSkillInfo(skillIndex);
 			skillType = self:GetTradeSkillAvailability(skillIndex);
 			-- Set button widths if scrollbar is shown or hidden
@@ -311,7 +311,7 @@ function TradeskillInfoUI.Frame_Update()
 			if ( color ) then
 				if (skillButtonText) then skillButtonText:SetVertexColor(color.r, color.g, color.b) end
 			end
-			
+
 			skillButton:SetID(skillIndex);
 			skillButton:Show();
 			local skillButtonHighlight = getglobal(skillButton:GetName() .. "Highlight")
@@ -332,7 +332,7 @@ function TradeskillInfoUI.Frame_Update()
 				skillButton:SetNormalTexture("");
 				skillButtonHighlight:SetTexture("");
 				skillButton:SetText(" "..skillName);
-				
+
 				-- Place the highlight and lock the highlight state
 				if ( self.vars.selectionIndex == skillIndex ) then
 					TradeskillInfoHighlightFrame:SetPoint("TOPLEFT", "TradeskillInfoSkill"..i, "TOPLEFT", 0, 0);
@@ -433,14 +433,14 @@ function TradeskillInfoUI:Frame_SetSelection(id)
 	else
 		TradeskillInfoSkillIconCount:SetText("");
 	end
-			
+
 	local skill,spec,level = self:GetTradeSkillSkillLevel(id)
 	local skillName = self:GetTradeSkillName(skill);
 	local specName = self:GetTradeSkillSpecializationName(spec);
 	TradeskillInfoRequirementLabel:Show();
 	if specName then
 		TradeskillInfoRequirementText:SetText(skillName.."("..level.."), "..specName);
-	else		
+	else
 		TradeskillInfoRequirementText:SetText(skillName.."("..level..")");
 	end
 
@@ -450,7 +450,7 @@ function TradeskillInfoUI:Frame_SetSelection(id)
 	else
 		TradeskillInfoDescription:SetText("");
 	end
-	
+
 	local height, skillSource = self:GetTradeSkillRecipe(id);
 	-- hack to get correct height for simplehtml frame
 	if skillSource then
@@ -467,14 +467,21 @@ function TradeskillInfoUI:Frame_SetSelection(id)
 	else
 		TradeskillInfoRecipe:SetText("");
 	end
-	
+
 	local skillAvailable = self:GetTradeSkillBy(id);
 	if skillAvailable then
 		TradeskillInfoKnown:SetText(skillAvailable);
 	else
 		TradeskillInfoKnown:SetText("");
 	end
-		
+
+	local extraData =self:GetTradeSkillExtraData(id)
+	if extraData then
+		TradeskillInfoExtraData:SetText(extraData)
+		local _, height = TradeskillInfoExtraData:GetFont()
+	else
+		TradeskillInfoExtraData:SetText("")
+	end
 	-- Reagents
 	local numReagents = self:GetTradeSkillNumReagents(id);
 	for i=1, numReagents, 1 do
@@ -497,7 +504,7 @@ function TradeskillInfoUI:Frame_SetSelection(id)
 			count:SetText(reagentCount);
 		end
 	end
-	
+
 	for i=numReagents + 1, TradeskillInfoUI.cons.maxSkillReagents, 1 do
 		local reagent = getglobal("TradeskillInfoReagent"..i);
 		reagent:Hide();
@@ -507,11 +514,18 @@ function TradeskillInfoUI:Frame_SetSelection(id)
 		reagent.name = nil;
 	end
 
+	local botLeftIdx = math.floor((numReagents-1)/2)*2 + 1
+
+	TradeskillInfoExtraData:SetPoint("TOPLEFT",
+	                                 "TradeskillInfoReagent" .. botLeftIdx,
+	                                 "BOTTOMLEFT",
+	                                 3, -6)
+
 	-- Fix for Enchants. Show tooltip if all reagents are known
 	if skillLink == nil and self:IsSafeToShowTooltip(id) then
 		TradeskillInfoSkillIcon.known = true;
 	end
-	TradeskillInfoDetailScrollFrame:UpdateScrollChildRect();		
+	TradeskillInfoDetailScrollFrame:UpdateScrollChildRect();
 end
 
 ----------------------------------------------------------------------
@@ -527,7 +541,7 @@ end
 function TradeskillInfoUI:SkillButton_OnClick(frame, button)
 	if ( button == "LeftButton" ) then
 		if IsShiftKeyDown() and ChatFrameEditBox:IsVisible() then
-			self:PasteRecipie(frame:GetID());		  
+			self:PasteRecipie(frame:GetID());
 		else
 			self:Frame_SetSelection(frame:GetID());
 			self:Frame_Update();
@@ -563,7 +577,7 @@ function TradeskillInfoUI:RecipeSource_OnHyperlinkClick(frame, link)
 		end
 	elseif ( Cartographer_Waypoints ) and ( type(Cartographer_Waypoints.AddWaypoint) == "function" ) then
 		Cartographer_Waypoints:AddWaypoint(NotePoint:new(zone, x/100, y/100, note))
-		
+
 	end
 end
 
@@ -574,16 +588,16 @@ function TradeskillInfoUI:ReagentIcon_OnClick(frame, button)
 	if self:Item_OnClick(frame, button) then return end
 	if ( button == "LeftButton" ) then
 		if ( IsControlKeyDown() ) then
-			DressUpItemLink(frame.tooltip);		
-		elseif IsShiftKeyDown() then 
+			DressUpItemLink(frame.tooltip);
+		elseif IsShiftKeyDown() then
 			if ChatFrameEditBox:IsVisible() then
 				if frame.link then
 					ChatFrameEditBox:Insert(frame.link);
 				else
 					ChatFrameEditBox:Insert(frame.name);
 				end
-			end			  
-		elseif IsAltKeyDown() then 
+			end
+		elseif IsAltKeyDown() then
 			if ChatFrameEditBox:IsVisible() then
 				self:PasteRecipie(frame.id);
 			end
@@ -608,7 +622,7 @@ function TradeskillInfoUI:ReagentIcon_OnClick(frame, button)
 				UIDropDownMenu_SetSelectedValue(BrowseDropDown, -1)
 				AuctionFrameBrowse_Search()
 				BrowseNoResultsText:SetText(BROWSE_NO_RESULTS)
-			end				
+			end
 	end
 end
 function TradeskillInfoUI:Item_OnClick(frame, button)
@@ -621,7 +635,7 @@ function TradeskillInfoUI:Item_OnClick(frame, button)
 		return true;
 	end
 end
-					
+
 ----------------------------------------------------------------------
 --- Show Reagent or Item tooltip on mouse over
 ----------------------------------------------------------------------
@@ -789,7 +803,7 @@ function TradeskillInfoUI:Old_Search()
 							components = nil;
 						end
 					end
-					if found then	
+					if found then
 						if not foundSkills[skill] then
 							foundSkills[skill] = true;
 							table.insert(self.vars.searchResult, skill);
@@ -803,7 +817,7 @@ function TradeskillInfoUI:Old_Search()
 		end
 	end
 	foundSkills = nil;
-	
+
 	table.sort(self.vars.searchResult, function(a,b)
 		local as,ap,al,bs,bp,bl;
 		if type(a) == "string" then
@@ -816,12 +830,12 @@ function TradeskillInfoUI:Old_Search()
 		else
 			bs,bp,bl = TradeskillInfo:GetCombineSkill(b);
 		end
-		if (as < bs) or (as == bs and ap < bp) or (as == bs and ap == bp and al < bl) or (as == bs and ap == bp and al == bl and a < b) then 
+		if (as < bs) or (as == bs and ap < bp) or (as == bs and ap == bp and al < bl) or (as == bs and ap == bp and al == bl and a < b) then
 			return true
 		end
 		return false
 	end);
-	
+
 	self.vars.selectionIndex = 0;
 	if oldSelection then
 		for i,v in ipairs(self.vars.searchResult) do
@@ -842,7 +856,7 @@ function TradeskillInfoUI:Search()
 	local foundSkills = {};
 	local searchArea = {};
 	self.vars.searchResult = {};
-	
+
 	local _,_,searchItem = string.find(searchText,"^id=([-]?%d+)")
 	if searchItem and searchItem ~= "" then
 		searchItem = tonumber(searchItem);
@@ -856,7 +870,7 @@ function TradeskillInfoUI:Search()
 	else
 		searchArea = TradeskillInfo.vars.combines;
 	end
-		
+
 	for i in pairs(searchArea) do
 		local skill = TradeskillInfo:GetCombineSkill(i);
 		if self.db.profile.tradeskills[skill] then
@@ -889,7 +903,7 @@ function TradeskillInfoUI:Search()
 							components = nil;
 						end
 					end
-					if found then	
+					if found then
 						if not foundSkills[skill] then
 							foundSkills[skill] = true;
 							table.insert(self.vars.searchResult, skill);
@@ -903,7 +917,7 @@ function TradeskillInfoUI:Search()
 		end
 	end
 	foundSkills = nil;
-	
+
 	table.sort(self.vars.searchResult, function(a,b)
 		local as,ap,al,bs,bp,bl;
 		if type(a) == "string" then
@@ -916,12 +930,12 @@ function TradeskillInfoUI:Search()
 		else
 			bs,bp,bl = TradeskillInfo:GetCombineSkill(b);
 		end
-		if (as < bs) or (as == bs and ap < bp) or (as == bs and ap == bp and al < bl) or (as == bs and ap == bp and al == bl and a < b) then 
+		if (as < bs) or (as == bs and ap < bp) or (as == bs and ap == bp and al < bl) or (as == bs and ap == bp and al == bl and a < b) then
 			return true
 		end
 		return false
 	end);
-	
+
 	self.vars.selectionIndex = 0;
 	if oldSelection then
 		for i,v in ipairs(self.vars.searchResult) do
@@ -1027,9 +1041,9 @@ function TradeskillInfoUI:GetTradeSkillIcon(index)
 	return TradeskillInfo:GetCombineTexture(self.vars.searchResult[index])
 end
 
-	
+
 function TradeskillInfoUI:GetTradeSkillNumReagents(index)
-	if self.vars.components then 
+	if self.vars.components then
 		self.vars.components = nil;
 	end
 	if not self.vars.searchResult[index] then return end
@@ -1040,6 +1054,11 @@ end
 function TradeskillInfoUI:GetTradeSkillReagentInfo(i)
 	if not self.vars.components[i] then return end
 	return self.vars.components[i].name, self.vars.components[i].texture, self.vars.components[i].num, self.vars.components[i].link, self.vars.components[i].itemString;
+end
+
+function TradeskillInfoUI:GetTradeSkillExtraData(index)
+	if not self.vars.searchResult[index] then return end
+	return TradeskillInfo:GetExtraItemDataText(self.vars.searchResult[index], true, true);
 end
 
 function TradeskillInfoUI:IsSafeToShowTooltip(index)
@@ -1054,8 +1073,8 @@ function TradeskillInfoUI:IsSafeToShowTooltip(index)
 	end
 	return known;
 end
-	
-		
+
+
 function TradeskillInfoUI:GetTradeSkillSkillLevel(index)
 	return TradeskillInfo:GetCombineSkill(self.vars.searchResult[index]);
 end
@@ -1131,7 +1150,7 @@ function TradeskillInfoUI:PasteRecipie(id)
 	local numReagents = self:GetTradeSkillNumReagents(id);
 	for i=1, numReagents, 1 do
 		local reagentName, reagentTexture, reagentCount, reagentLink, reagentItemString = self:GetTradeSkillReagentInfo(i);
-		if i > 1 then 
+		if i > 1 then
 			text = text .. ", ";
 		end
 --		if reagentLink then
@@ -1140,14 +1159,14 @@ function TradeskillInfoUI:PasteRecipie(id)
 			text = text .. reagentCount .. "*" .. reagentName;
 --		end
 	end
-	
+
 	skillName=profType;
 	if specName then
 		text = text .. " : " .. skillName .. "(" .. level .. "), " .. specName;
 	else
 		text = text .. " : " .. skillName .. "(" .. level .. ")";
 	end
-	
+
 	ChatFrameEditBox:Insert(text);
 end
 
@@ -1159,7 +1178,7 @@ TradeskillInfoListScrollFrameTemplate
 
 TradeskillInfoFrame
 	TradeskillInfoFrameTitleText
-	
+
 	TradeskillInfoListFrame
 		TradeskillInfoCollapseAllButton
 		TradeskillInfoAvailabilityDropDown
@@ -1182,20 +1201,20 @@ TradeskillInfoFrame
 		TradeskillInfoSkill15
 		TradeskillInfoSkill16
 		TradeskillInfoListScrollFrame
-	
+
 	TradeskillInfoDetailFrame
 		TradeskillInfoSkillName
 		TradeskillInfoRequirementLabel
 		TradeskillInfoRequirementText
-		
+
 		TradeskillInfoDescription
 		TradeskillInfoRecipe
 		TradeskillInfoKnown
 		TradeskillInfoReagentLabel
-		
+
 		TradeskillInfoSkillIcon
 		TradeskillInfoSkillIconCount
-		
+
 		TradeskillInfoReagent1
 		TradeskillInfoReagent2
 		TradeskillInfoReagent3
@@ -1204,10 +1223,10 @@ TradeskillInfoFrame
 		TradeskillInfoReagent6
 		TradeskillInfoReagent7
 		TradeskillInfoReagent8
-	
+
 	TradeskillInfoSearchButton
 	TradeskillInfoInputBox
-	
+
 	TradeskillInfoFrameCloseButton
 ]]
-	
+

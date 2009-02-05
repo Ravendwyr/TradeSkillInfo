@@ -17,7 +17,7 @@
 			</OnClick>
 		</Scripts>
 	</Button>
-	
+
 	<!-- REAGENT TEMPLATE -->
 	<Button name="TradeskillInfoItemTemplate" inherits="QuestItemTemplate" virtual="true">
 		<Scripts>
@@ -199,7 +199,7 @@
 				</FontString>
 			</Layer>
 		</Layers>
-		
+
 		<Frames>
 			<ScrollFrame name="TradeskillInfoDetailScrollFrame" inherits="TradeskillInfoDetailScrollFrameTemplate">
 				<Size>
@@ -208,7 +208,12 @@
 				<Anchors>
 					<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT">
 						<Offset>
-							<AbsDimension x="-10" y="-25"/>
+							<AbsDimension x="-30" y="-25"/>
+						</Offset>
+					</Anchor>
+					<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-30" y="25"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -217,7 +222,7 @@
 						<Size>
 							<AbsDimension x="320" y="260"/>
 						</Size>
-			
+
 		<!--				<Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground" edgeFile="Interface\ChatFrame\ChatFrameBackground" tile="false">
 							<BackgroundInsets>
 								<AbsInset left="0" right="0" top="0" bottom="0" />
@@ -226,7 +231,7 @@
 								<AbsValue val="1" />
 							</EdgeSize>
 						</Backdrop> -->
-						
+
 						<Layers>
 							<Layer level="BACKGROUND">
 								<FontString name="TradeskillInfoSkillName" inherits="GameFontNormal" text="Skill Name" justifyH="LEFT">
@@ -262,7 +267,7 @@
 										</Anchor>
 									</Anchors>
 								</FontString>
-		
+
 								<Texture name="TradeskillInfoDetailHeaderLeft" file="Interface\ClassTrainerFrame\UI-ClassTrainer-DetailHeaderLeft">
 									<Size>
 										<AbsDimension x="256" y="64"/>
@@ -325,7 +330,7 @@
 										</Anchor>
 									</Anchors>
 								</FontString>
-						
+
 								<FontString name="TradeskillInfoReagentLabel" inherits="GameFontNormalSmall" text="SPELL_REAGENTS" justifyH="LEFT">
 									<Anchors>
 										<Anchor point="TOPLEFT" relativeTo="TradeskillInfoKnown" relativePoint="BOTTOMLEFT">
@@ -337,7 +342,7 @@
 								</FontString>
 							</Layer>
 						</Layers>
-						
+
 						<Frames>
 							<Button name="TradeskillInfoSkillIcon">
 								<Size>
@@ -382,6 +387,19 @@
 									</OnUpdate>
 								</Scripts>
 							</Button>
+							<SimpleHTML name="TradeskillInfoExtraData">
+								<Size>
+									<AbsDimension x="305" y="80"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="TradeskillInfoDescription" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-3"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<FontString inherits="GameFontNormalSmall" justifyV="TOP" justifyH="LEFT"/>
+							</SimpleHTML>
 							<SimpleHTML name="TradeskillInfoRecipe">
 								<Size>
 									<AbsDimension x="305" y="1"/>
@@ -500,7 +518,7 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			
+
 			<Button name="TradeskillInfoResetButton" inherits="TradeskillInfoButtonTemplate" text="Reset">
 				<Size>
 					<AbsDimension x="80" y="22"/>
@@ -583,7 +601,7 @@
 						--if ( self:GetText() == "0" ) then
 						--	self:SetText("1");
 						--end
-					</OnTextChanged> 
+					</OnTextChanged>
 					<OnEditFocusLost>
 						self:HighlightText(0, 0);
 					</OnEditFocusLost>
@@ -593,7 +611,7 @@
 				</Scripts>
 				<FontString inherits="ChatFontNormal"/>
 			</EditBox>
-			
+
 			<Button name="TradeskillInfoReagentButton" inherits="TradeskillInfoButtonTemplate" text="Reagent">
 				<Size>
 					<AbsDimension x="80" y="22"/>
@@ -674,7 +692,7 @@
 						<AbsValue val="1" />
 					</EdgeSize>
 				</Backdrop> -->
-				<Frames>			
+				<Frames>
 
 				<!-- Collapse All Button -->
 					<Button name="TradeskillInfoCollapseAllButton" hidden="false" inherits="ClassTrainerSkillButtonTemplate">
@@ -697,7 +715,7 @@
 							</OnClick>
 						</Scripts>
 					</Button>
-					
+
 					<!-- Availability DropDown -->
 					<Frame name="TradeskillInfoAvailabilityDropDown" inherits="UIDropDownMenuTemplate" id="2">
 						<Anchors>
@@ -717,7 +735,7 @@
 							</OnShow>
 						</Scripts>
 					</Frame>
-					
+
 					<!-- Tradeskill DropDown -->
 					<Frame name="TradeskillInfoTradeskillsDropDown" inherits="UIDropDownMenuTemplate" id="1">
 						<Anchors>
@@ -736,7 +754,7 @@
 							</OnShow>
 						</Scripts>
 					</Frame>
-					
+
 					<Frame name="TradeskillInfoHighlightFrame" hidden="true">
 						<Size>
 							<AbsDimension x="293" y="16"/>
@@ -755,7 +773,7 @@
 							</Layer>
 						</Layers>
 					</Frame>
-					
+
 					<Button name="TradeskillInfoSkill1" inherits="TradeskillInfoSkillButtonTemplate">
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="TradeskillInfoListFrame">
@@ -794,7 +812,7 @@
 					</OnLoad>
 				</Scripts> -->
 			</Frame>
-			
+
 			<Button name="$parentCloseButton" inherits="UIPanelCloseButton">
 				<Anchors>
 					<Anchor point="TOPRIGHT" relativeTo="TradeskillInfoFrame" relativePoint="TOPRIGHT">
