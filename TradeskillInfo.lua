@@ -1521,7 +1521,8 @@ function TradeskillInfo:AddUsableByToTooltip(tooltip, id)
 end
 
 function TradeskillInfo:AddRecipeKnownByToTooltip(tooltip, id)
-	id = self:GetRecipeItem(id);
+	local itemId = self:GetRecipeItem(id);
+	if itemId then id = itemId end
 	if id then
 		if self:ShowingTooltipKnownBy() then
 			local knownBy = self:GetCombineKnownBy(id, tooltip)
