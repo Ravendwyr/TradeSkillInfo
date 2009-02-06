@@ -376,6 +376,7 @@ function TradeskillInfo:GetExtraItemDataText(itemId, showVendorProfit, showDiffi
 			                     self:GetMoneyString(cost),
 			                     self:GetMoneyString(profit))
 		end
+		local sep = ""
 		if showVendorProfit then
 			-- Insert item value and reagent costs
 			local value,cost,profit = self:GetCombineCost(itemId)
@@ -387,7 +388,6 @@ function TradeskillInfo:GetExtraItemDataText(itemId, showVendorProfit, showDiffi
 			                     self:GetMoneyString(profit))
 		end
 		if showDifficulty then
-			local sep = ""
 			if text then sep = "\n" else text = "" end
 			text = text .. sep .. self:GetColoredDifficulty(itemId)
 		end
@@ -1799,7 +1799,7 @@ function TradeskillInfo:ShowingSkillProfit()
 end
 
 function TradeskillInfo:ShowingSkillAuctioneerProfit()
-	return self.db.profile.ShowSkillAuctioneerProfit;
+	return self.db.profile.ShowSkillAuctioneerProfit and AucAdvanced and AucAdvanced.API;
 end
 
 function TradeskillInfo:ShowingTooltipUsedIn()
