@@ -84,7 +84,10 @@ L["Unavailable or already known"] = "Недоступен или уже изве
 L["Tooltip"] = "Подсказка"
 L["Tradeskill"] = "Ремесло"
 L["Auction"] = "Аукцион"
-L["OK"] = true	
+L["OK"] = true
 L["Tradeskill Info Config"] = "Настройки TradeskillInfo"
 L["UI Scale"] = "Масштаб UI"
 L["Change scale of user interface"] = "Изменение масштаба пользовательского интерфейса"
+-- TODO
+L["Market Value"] = "Market Value"
+L["Show the profit calculation from Auctioneer Market Value in tooltip"] = "Show the profit calculation from Auctioneer Market Value in tooltip"

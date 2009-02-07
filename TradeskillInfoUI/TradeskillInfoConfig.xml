@@ -1,4 +1,4 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   xsi:schemaLocation="http://www.blizzard.com/wow/ui/"> 
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
 	<!-- $Revision: 29145 $ -->
 
 
@@ -101,7 +101,7 @@
 		</Scripts>
 		<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
 	</Button>
-	
+
 	<!-- DROPDOWN TEMPLATE -->
 	<Frame name="TSIDropdownTemplate" inherits="UIDropDownMenuTemplate" virtual="true">
 		<Size>
@@ -135,8 +135,8 @@
 			</OnLeave>
 		</Scripts>
 	</Frame>
-	
-	
+
+
 	<Slider name="TSISliderTemplate" inherits="OptionsSliderTemplate" virtual="true">
 		<Size>
 			<AbsDimension x="148" y="16"/>
@@ -187,7 +187,7 @@
 				<AbsValue val="2" />
 			</EdgeSize>
 		</Backdrop>
-		
+
 		<Layers>
 			<Layer level="ARTWORK">
 				<FontString name="TradeskillInfoConfig_Title" inherits="GameFontNormal">
@@ -200,10 +200,10 @@
 					</Anchors>
 				</FontString>
 			</Layer>
-		</Layers>				
+		</Layers>
 
 		<Frames>
-		
+
 			<!-- Sub Frame - Holds all the different config frames -->
 			<Frame name="TradeskillInfoConfig_SubFrame">
 				<Anchors>
@@ -265,7 +265,7 @@
 									<Anchor point="LEFT" relativeTo="TradeskillInfo_Color1" relativePoint="RIGHT"/>
 								</Anchors>
 							</CheckButton>
-		
+
 							<Button name="TradeskillInfo_Color2" inherits="TSIColorSwatchTemplate">
 								<Anchors>
 									<Anchor point="LEFT" relativeTo="TradeskillInfo_Color1" relativePoint="LEFT">
@@ -280,7 +280,7 @@
 									<Anchor point="LEFT" relativeTo="TradeskillInfo_Color2" relativePoint="RIGHT"/>
 								</Anchors>
 							</CheckButton>
-		
+
 							<Button name="TradeskillInfo_Color3" inherits="TSIColorSwatchTemplate">
 								<Anchors>
 									<Anchor point="LEFT" relativeTo="TradeskillInfo_Color2" relativePoint="LEFT">
@@ -295,7 +295,7 @@
 									<Anchor point="LEFT" relativeTo="TradeskillInfo_Color3" relativePoint="RIGHT"/>
 								</Anchors>
 							</CheckButton>
-						
+
 							<Button name="TradeskillInfo_Color4" inherits="TSIColorSwatchTemplate">
 								<Anchors>
 									<Anchor point="LEFT" relativeTo="TradeskillInfo_Color3" relativePoint="LEFT">
@@ -356,6 +356,21 @@
 								</Anchors>
 							</CheckButton>
 
+							<Button name="TradeskillInfo_Color16" inherits="TSIColorSwatchTemplate">
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="TradeskillInfo_Color10" relativePoint="LEFT">
+										<Offset>
+											<AbsDimension x="0" y="-25" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<CheckButton name="TradeskillInfo_Option16" inherits="TSICheckTemplate">
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="TradeskillInfo_Color16" relativePoint="RIGHT"/>
+								</Anchors>
+							</CheckButton>
+
 							<Frame name="TradeskillInfo_Label2" inherits="TSILabelTemplate">
 								<Anchors>
 									<Anchor point="TOPLEFT">
@@ -380,7 +395,7 @@
 									<Anchor point="LEFT" relativeTo="TradeskillInfo_Color13" relativePoint="RIGHT"/>
 								</Anchors>
 							</CheckButton>
-						
+
 							<Button name="TradeskillInfo_Color14" inherits="TSIColorSwatchTemplate">
 								<Anchors>
 									<Anchor point="LEFT" relativeTo="TradeskillInfo_Color13" relativePoint="LEFT">
@@ -395,7 +410,7 @@
 									<Anchor point="LEFT" relativeTo="TradeskillInfo_Color14" relativePoint="RIGHT"/>
 								</Anchors>
 							</CheckButton>
-						
+
 							<Button name="TradeskillInfo_Color5" inherits="TSIColorSwatchTemplate">
 								<Anchors>
 									<Anchor point="LEFT" relativeTo="TradeskillInfo_Color14" relativePoint="LEFT">
@@ -410,7 +425,7 @@
 									<Anchor point="LEFT" relativeTo="TradeskillInfo_Color5" relativePoint="RIGHT"/>
 								</Anchors>
 							</CheckButton>
-						
+
 							<Button name="TradeskillInfo_Color6" inherits="TSIColorSwatchTemplate">
 								<Anchors>
 									<Anchor point="LEFT" relativeTo="TradeskillInfo_Color5" relativePoint="LEFT">
@@ -425,7 +440,7 @@
 									<Anchor point="LEFT" relativeTo="TradeskillInfo_Color6" relativePoint="RIGHT"/>
 								</Anchors>
 							</CheckButton>
-						
+
 							<Button name="TradeskillInfo_Color7" inherits="TSIColorSwatchTemplate">
 								<Anchors>
 									<Anchor point="LEFT" relativeTo="TradeskillInfo_Color6" relativePoint="LEFT">
@@ -470,7 +485,7 @@
 									</Anchor>
 								</Anchors>
 							</CheckButton>
-						
+
 							<CheckButton name="TradeskillInfo_Option12" inherits="TSICheckTemplate">
 								<Anchors>
 									<Anchor point="LEFT" relativeTo="TradeskillInfo_Option11" relativePoint="LEFT">
@@ -534,7 +549,7 @@
 									</Anchor>
 								</Anchors>
 							</CheckButton>
-						
+
 							<Frame name="TradeskillInfo_Selection1" inherits="TSIDropdownTemplate" hidden="false">
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="TradeskillInfo_Option21" relativePoint="BOTTOMLEFT">
@@ -564,7 +579,7 @@
 									</Anchor>
 								</Anchors>
 							</CheckButton>
-						
+
 							<Frame name="TradeskillInfo_Selection3" inherits="TSIDropdownTemplate" hidden="false">
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="TradeskillInfo_Option22" relativePoint="BOTTOMLEFT">
@@ -714,7 +729,7 @@
 					</Anchor>
 				</Anchors>
 			</Button>
-			
+
 			<!-- Tradeskill Tab -->
 			<Button name="TradeskillInfo_Tab2" inherits="TSITabTemplate">
 				<Anchors>
@@ -725,7 +740,7 @@
 					</Anchor>
 				</Anchors>
 			</Button>
-			
+
 			<!-- Tradeskill Tab -->
 			<Button name="TradeskillInfo_Tab3" inherits="TSITabTemplate">
 				<Anchors>
@@ -736,7 +751,7 @@
 					</Anchor>
 				</Anchors>
 			</Button>
-			
+
 			<!-- Auction House Tab -->
 			<Button name="TradeskillInfo_Tab4" inherits="TSITabTemplate">
 				<Anchors>
@@ -747,7 +762,7 @@
 					</Anchor>
 				</Anchors>
 			</Button>
-			
+
 			<!-- Ok Button -->
 			<Button name="TradeskillInfo_OkButton" inherits="TradeskillInfoButtonTemplate">
 				<Size>
@@ -781,5 +796,5 @@
 				TradeskillInfo:ConfigFrame_OnHide();
 			</OnHide>
 		</Scripts>
-	</Frame>	
+	</Frame>
 </Ui>

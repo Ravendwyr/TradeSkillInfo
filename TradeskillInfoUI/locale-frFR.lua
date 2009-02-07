@@ -87,3 +87,6 @@ L["OK"] = "OK"
 L["Tradeskill Info Config"] = "Configuration de Tradeskill Info"
 L["UI Scale"] = "Echelle de l'UI"
 L["Change scale of user interface"] = "Changer l'échelle de l'interface utilisateur"
+-- TODO
+L["Market Value"] = "Market Value"
+L["Show the profit calculation from Auctioneer Market Value in tooltip"] = "Show the profit calculation from Auctioneer Market Value in tooltip"

@@ -86,4 +86,7 @@ L["Auction"] = "拍卖"
 L["OK"] = "确定"
 L["Tradeskill Info Config"] = "专业技能资料库设定"
 L["UI Scale"] = "UI缩放"
+-- TODO
 L["Change scale of user interface"] = "Change scale of user interface"
+L["Market Value"] = "Market Value"
+L["Show the profit calculation from Auctioneer Market Value in tooltip"] = "Show the profit calculation from Auctioneer Market Value in tooltip"

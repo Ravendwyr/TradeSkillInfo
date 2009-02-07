@@ -437,3 +437,6 @@ L["Captain O'Neal"] = true
 L["Lady Palanseer"] = true
 L["Combine profit from auctioneer advanced"] = true
 L["Show cost of combine and profit from auctioneer advanced"] = true
+L["Market Value"] = true
+L["Auctioneer Market Value Profit"] = true
+L["Show the profit calculation from Auctioneer Market Value in tooltip"] = true

@@ -105,7 +105,7 @@ function TradeskillInfo:OnInitialize()
 			ShowSkillLevel = true,
 			ShowSkillProfit = true,
 			ShowSkillAuctioneerProfit = true,
-			MoneyFormat = 3,
+			MoneyFormat = 1,
 			TooltipSource = true,
 			TooltipRecipeSource = true,
 			TooltipRecipePrice = true,
@@ -116,6 +116,7 @@ function TradeskillInfo:OnInitialize()
 			TooltipAvailableTo = true,
 			TooltipBankedAmount = true,
 			TooltipAltAmount = true,
+			TooltipMarketValue = true,
 			TooltipID = false,
 			TooltipStack = false,
 			TrainerReagents = true,
@@ -132,6 +133,7 @@ function TradeskillInfo:OnInitialize()
 			ColorTrainerReagents = { r=1.0, g=1.0, b=1.0 },
 			ColorID = { r=0.75, g=0.5, b=0.5 },
 			ColorStack = { r=1.0, g=1.0, b=1.0 },
+			ColorMarketValue = {r=0.80, g=0.90, b=0.2},
 			QuickSearch = true,
 			SearchMouseButton = 2,
 			SearchShiftKey = 1,
@@ -223,6 +225,12 @@ function TradeskillInfo:OnInitialize()
 				type = 'toggle',
 				get = function() return self.db.profile.TooltipAvailableTo end,
 				set = function(val) self.db.profile.TooltipAvailableTo = val end,
+			},
+			market = {
+				name = L["Auctioneer Market Value Profit"],
+				desc = L["Show the profit calculation from Auctioneer Market Value in tooltip"],
+				get = function() return self.db.profile.TooltipMarketValue end,
+				set = function(val) self.db.profile.TooltipMarketValue = val end,
 			},
 			reagents = {
 				name = L["Reagents"],
@@ -727,7 +735,7 @@ function TradeskillInfo:GetCombineComponents(id, getVendorPrice, getAuctioneerPr
 		_,_,c.id,c.num = string.find(s,"(%d+):(%d+)");
 		c.id = tonumber(c.id) or tonumber(s);
 		c.num = tonumber(c.num) or 1;
-		c.name,c.cost,c.source,c.aucCost,c.aucSeen = self:GetComponent(c.id, getVendorPrice, getAuctioneerPrice);
+		c.name,c.cost,c.source,c.aucMvCost,c.aucMvSeen = self:GetComponent(c.id, getVendorPrice, getAuctioneerPrice);
 		c.link, c.quality, c.itemString, c.texture = getItemLink(c.id);
 		table.insert(components,c);
 	end
@@ -863,7 +871,7 @@ function TradeskillInfo:GetCombineAuctioneerCost(id)
 	end
 	local cost = 0;
 	for _,c in ipairs(components) do
-		cost = cost + (c.aucCost or 0) * c.num
+		cost = cost + (c.aucMvCost or 0) * c.num
 	end
 	components = nil;
 
@@ -925,17 +933,17 @@ function TradeskillInfo:GetComponent(id, getVendorPrice, getAuctioneerPrice)
 		end
 	end
 	-- If we have Auctioneer Advanced, also gather auction prices
-	local aucCost, aucSeen
+	local aucMvCost, aucMvSeen
 	if getAuctioneerPrice then
 		if AucAdvanced and AucAdvanced.API then
 			local itemLink = getItemLink(realId)
-			aucCost, aucSeen = AucAdvanced.API.GetMarketValue(itemLink, AucAdvanced.GetFaction())
+			aucMvCost, aucMvSeen = AucAdvanced.API.GetMarketValue(itemLink, AucAdvanced.GetFaction())
 			-- If auctioneer has no idea, plug in vendor sell value
-			if not aucCost then aucCost = cost end
-			if not aucSeen then aucSeen = 0 end
+			if not aucMvCost then aucMvCost = cost end
+			if not aucMvSeen then aucMvSeen = 0 end
 		end
 	end
-	return name,tonumber(cost),source,tonumber(aucCost),tonumber(aucSeen)
+	return name,tonumber(cost),source,tonumber(aucMvCost),tonumber(aucMvSeen)
 end
 
 function TradeskillInfo:GetComponentSource(id, tooltip)
@@ -1552,14 +1560,15 @@ end
 ---- Processing of tooltips
 
 function TradeskillInfo:AddToTooltip(tooltip, id)
-	self:AddUsedInToTooltip(tooltip, id);
-	self:AddUsableByToTooltip(tooltip, id);
-	self:AddSourceToTooltip(tooltip, id);
-	self:AddRecipeKnownByToTooltip(tooltip, id);
-	self:AddBankedAmountToTooltip(tooltip, id);
-	self:AddAltAmountToTooltip(tooltip, id);
-	self:AddIdToTooltip(tooltip, id);
-	self:AddStackToTooltip(tooltip, id);
+	self:AddUsedInToTooltip(tooltip, id)
+	self:AddUsableByToTooltip(tooltip, id)
+	self:AddSourceToTooltip(tooltip, id)
+	self:AddRecipeKnownByToTooltip(tooltip, id)
+	self:AddBankedAmountToTooltip(tooltip, id)
+	self:AddAltAmountToTooltip(tooltip, id)
+	self:AddIdToTooltip(tooltip, id)
+	self:AddStackToTooltip(tooltip, id)
+	self:AddMarketValueProfitToTooltip(tooltip, id)
 	tooltip:Show();
 end
 
@@ -1681,6 +1690,43 @@ function TradeskillInfo:AddStackToTooltip(tooltip, id)
 			if stack and stack > 1 then
 				local c = self.db.profile.ColorStack;
 				tooltip:AddDoubleLine(L["Stack size"], tostring(stack), c.r, c.g, c.b, c.r, c.g, c.b);
+			end
+		end
+	end
+end
+
+function TradeskillInfo:AddMarketValueProfitToTooltip(tooltip, id)
+	if TradeskillInfo:ShowingTooltipMarketValue() then
+		-- TODO: What are we going to do if there are more than one recipes producing item?
+		if id and self:CombineExists(id) then
+			local value,cost,profit = self:GetCombineAuctioneerCost(id)
+			local Rtext = string.format("%s - %s = %s",
+			                            self:GetMoneyString(value),
+			                            self:GetMoneyString(cost),
+			                            self:GetMoneyString(profit))
+			local c = self.db.profile.ColorMarketValue;
+			tooltip:AddDoubleLine(L["Market Value"], Rtext, c.r, c.g, c.b, c.r, c.g, c.b)
+		elseif self.vars.specialcases[id] then
+			local Ltext, Rtext;
+			local text
+			local c = self.db.profile.ColorMarketValue;
+			for i in gmatch(self.vars.specialcases[id], "(%d+)") do
+				DEFAULT_CHAT_FRAME:AddMessage(i)
+				local value,cost,profit = self:GetCombineAuctioneerCost(tonumber(i))
+				local Rtext = string.format("%s - %s = %s",
+				                            self:GetMoneyString(value),
+				                            self:GetMoneyString(cost),
+				                            self:GetMoneyString(profit))
+				if not text then
+					Ltext = L["Market Value"];
+					text = Rtext;
+				else
+					Ltext = " ";
+					text = text..", "..Rtext;
+				end
+				if tooltip then
+					tooltip:AddDoubleLine(Ltext, Rtext, c.r, c.g, c.b, c.r, c.g, c.b);
+				end
 			end
 		end
 	end
@@ -1844,6 +1890,10 @@ end
 
 function TradeskillInfo:ShowingTooltipStack()
 	return self.db.profile.TooltipStack;
+end
+
+function TradeskillInfo:ShowingTooltipMarketValue()
+	return self.db.profile.TooltipMarketValue;
 end
 
 function TradeskillInfo:ColoringAHRecipes()

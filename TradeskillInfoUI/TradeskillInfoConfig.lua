@@ -11,6 +11,7 @@ TradeskillInfo.options.CheckBoxes = {
 	[L["Alt Amount"]] = { index=8, tooltipText=L["Show how many you have on alt's  (Req CharacterInfoStorage)"], var="TooltipAltAmount"},
 	[L["ItemID"]] = { index=9, tooltipText=L["Show ItemID in tooltip"], var="TooltipID"},
 	[L["Stack Size"]] = { index=10, tooltipText=L["Show item stack size in tooltip"], var="TooltipStack"},
+	[L["Market Value"]] = { index=16, tooltipText=L["Show the profit calculation from Auctioneer Market Value in tooltip"], var="TooltipMarketValue"},
 	-- Recipe Tooltip
 	[L["Recipe Source"]] = { index=13, tooltipText=L["Show source in tooltip"], var="TooltipRecipeSource"},
 	[L["Recipe Price"]] = { index=14, tooltipText=L["Show vendor sell price in tooltip"], var="TooltipRecipePrice"},
@@ -36,6 +37,7 @@ TradeskillInfo.options.ColorSwatches = {
 	{ index=4, var="ColorBankedAmount" },
 	{ index=9, var="ColorID" },
 	{ index=10, var="ColorStack" },
+	{ index=16, var="ColorMarketValue" },
 	{ index=13, var="ColorRecipeSource" },
 	{ index=14, var="ColorRecipePrice" },
 	{ index=5, var="ColorKnownBy" },
@@ -107,14 +109,14 @@ function TradeskillInfo:ConfigFrame_OnShow()
 			text:SetText(value);
 		end
 	end
-	
+
 	for key in pairs(self.options.Frames) do
 		tab = getglobal(key);
 		if tab then
 			PanelTemplates_TabResize(tab, -17);
 		end
 	end
-	
+
 	-- Checkboxes
 	for key, value in pairs(self.options.CheckBoxes) do
 		option = getglobal("TradeskillInfo_Option"..value.index);
@@ -160,7 +162,7 @@ function TradeskillInfo:ConfigFrame_OnShow()
 			option2:SetText(key);
 		end
 	end
-	
+
 	--Sliders
 	for key, value in pairs(self.options.Sliders) do
 		local name = "TradeskillInfo_Slider"..value.index
@@ -188,7 +190,7 @@ end
 function TradeskillInfo:OptionsRadioButtonOnClick()
 end
 
-function TradeskillInfo:OptionsSliderValueChanged()	
+function TradeskillInfo:OptionsSliderValueChanged()
 	self.db.profile[this.var] = this:GetValue()
 end
 
@@ -213,7 +215,7 @@ function TradeskillInfo:ToggleTab(frameName)
 			getglobal(value):Hide();
 			PanelTemplates_DeselectTab(getglobal(key));
 			getglobal(key):UnlockHighlight();
-		end	
+		end
 	end
 end
 
