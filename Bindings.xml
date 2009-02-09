@@ -4,6 +4,6 @@
        	TradeskillInfo:UI_Toggle();
 	</Binding>
 	<Binding name="TOGGLE_TRADESKILLINFOCONFIG">
-       	TradeskillInfo:Config_Toggle();
+       	TradeskillInfo:ConfigShow();
 	</Binding>
 </Bindings>

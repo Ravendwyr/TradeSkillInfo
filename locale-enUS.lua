@@ -1,5 +1,6 @@
 ﻿local L = LibStub("AceLocale-3.0"):NewLocale("TradeskillInfo", "enUS", true)
 if not L then return end
+
 -- The translations I pinched from Babble-Tradeskill-2.2
 L["Alchemy"]                    = true
 L["Blacksmithing"]              = true
@@ -50,40 +51,20 @@ L["Not Currently Obtainable"] = true
 L["Unknown"] = true
 -- Other strings
 L["TradeskillInfo"] = true
-L["Complete Tradeskill Info"] = true
 L["Source"] = true
 L["Vendor sell price"] = true
 L["ItemID"] = true
 L["Stack size"] = true
-L["Combine profit"] = true
-L["Show cost of combine and profit"] = true
-L["Combine level"] = true
-L["Show skill level of the combines"] = true
-L["Show the source of the item"] = true
 L["Used in"] = true
-L["Show what tradeskill an item is used in in it's tooltip"] = true
 L["Usable by"] = true
-L["Show who can use an item in it's tooltip"] = true
 L["Known by"] = true
-L["Show who knows a recipe in it's tooltip"] = true
 L["Learnable by"] = true
-L["Show who can learn a recipe in it's tooltip"] = true
 L["Will be able to learn"] = true
-L["Show who will be able to learn a recipe in it's tooltip"] = true
 L["Reagents"] = true
-L["Show what reagents a recipe takes at the trainer"] = true
-L["Config"] = true
-L["Show config screen"] = true
-L["Menu"] = true
-L["Show TradeskillInfo UI"] = true
-L["Banked"] = true
-L["Alts have"] = true
 L["Found unknown skill"] = true
 L["Found unknown source"] = true
-L["Unknown source. Please report it. Source="] = true
 L["Unknown NPC. Please report it. Source="] = true
 L["Could not load the UI. Reason: "] = true
-L["Search"] = true
 L["Seasonal"] = true
 L["Intermittent"] = true
 L["Roving"] = true
@@ -338,7 +319,6 @@ L["Mari Stonehand"] = true
 L["Rohok"] = true
 L["Quartermaster Urgronn"] = true
 L["Logistics Officer Ulrike"] = true
-L["Halruun"] = true
 L["Haalrun"] = true
 L["Seer Janidi"] = true
 L["Daga Ramba"] = true
@@ -429,14 +409,9 @@ L["Lillehoff"] = true
 L["Cielstrasza"] = true
 L["Veteran Crusader Aliocha Segard"] = true
 L["Knight Dameron"] = true
-L["Morgan Day"] = true
 L["Stone Guard Mukar"] = true
 L["Braeg Stoutbeard"] = true
 L["Bryan Landers"] = true
 L["Captain O'Neal"] = true
 L["Lady Palanseer"] = true
-L["Combine profit from auctioneer advanced"] = true
-L["Show cost of combine and profit from auctioneer advanced"] = true
 L["Market Value"] = true
-L["Auctioneer Market Value Profit"] = true
-L["Show the profit calculation from Auctioneer Market Value in tooltip"] = true

@@ -136,7 +136,6 @@ end
 
 function TradeskillInfoUI:UpdateFramePosition()
 	TradeskillInfoFrame:SetScale(TradeskillInfo.db.profile["UIScale"]);
-	TradeskillInfoConfigFrame:SetScale(TradeskillInfo.db.profile["UIScale"]);
 	if TradeskillInfo.db.profile.SavePosition then
 		local s = TradeskillInfoFrame:GetEffectiveScale();
 		if TradeskillInfo.db.profile.PositionX and TradeskillInfo.db.profile.PositionY then
@@ -166,19 +165,6 @@ function TradeskillInfoUI:SetUiScale(scale)
 	TradeskillInfoFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x/s, y/s)
 	TradeskillInfoFrame:SetWidth(w)
 	TradeskillInfoFrame:SetHeight(h)
-
-	-- rescale config frame
-	local s = TradeskillInfoConfigFrame:GetEffectiveScale()
-	local x = TradeskillInfoConfigFrame:GetLeft() * s
-	local y = TradeskillInfoConfigFrame:GetTop() * s
-	local w = TradeskillInfoConfigFrame:GetWidth()
-	local h = TradeskillInfoConfigFrame:GetHeight()
-	TradeskillInfoConfigFrame:SetScale(scale)
-	s = TradeskillInfoConfigFrame:GetEffectiveScale()
-	TradeskillInfoConfigFrame:ClearAllPoints()
-	TradeskillInfoConfigFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x/s, y/s)
-	TradeskillInfoConfigFrame:SetWidth(w)
-	TradeskillInfoConfigFrame:SetHeight(h)
 end
 
 function TradeskillInfoUI:SaveFramePosition()

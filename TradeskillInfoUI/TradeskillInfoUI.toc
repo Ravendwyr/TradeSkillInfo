@@ -1,5 +1,5 @@
 ## Interface: 30000
-## Title: Tradeskill Info UI |cff7fff7f-Ace2-|r
+## Title: TradeskillInfo UI
 ## Author: wmrojer
 ## Notes: Complete Tradeskill Info UI
 ## Notes-zhCN: 商业技能资料库设置窗口
@@ -9,7 +9,7 @@
 ## Version: 1.1.$Revision: 63 $
 ## SavedVariables: TradeskillInfoUIDB
 ## Dependencies: TradeskillInfo
-## OptionalDeps: 
+## OptionalDeps:
 ## X-Category: Tradeskill
 ## X-eMail: evenue.wow@gmail.com
 ## X-Credits Evenue (updates), Fieroivan (updates)
@@ -24,5 +24,4 @@ locale-zhTW.lua
 locale-koKR.lua
 TradeskillInfoUI.lua
 TradeskillInfoUI.xml
-TradeskillInfoConfig.lua
-TradeskillInfoConfig.xml
+TradeskillInfoOptions.lua

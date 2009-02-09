@@ -5,7 +5,7 @@ TradeskillInfo.date = string.sub("$Date$", 8, 17);
 
 BINDING_HEADER_TRADESKILLINFO = "Tradeskill Info";
 BINDING_NAME_TOGGLE_TRADESKILLINFO = "Toggle Tradeskill Info Window";
-BINDING_NAME_TOGGLE_TRADESKILLINFOCONFIG = "Toggle Tradeskill Info Config Window";
+BINDING_NAME_TOGGLE_TRADESKILLINFOCONFIG = "Show Tradeskill Info Config Window";
 
 TradeskillInfo.vars = {};
 TradeskillInfo.vars.MouseButtons = { "LeftButton", "RightButton" };
@@ -114,8 +114,6 @@ function TradeskillInfo:OnInitialize()
 			TooltipKnownBy = true,
 			TooltipLearnableBy = true,
 			TooltipAvailableTo = true,
-			TooltipBankedAmount = true,
-			TooltipAltAmount = true,
 			TooltipMarketValue = true,
 			TooltipID = false,
 			TooltipStack = false,
@@ -128,8 +126,6 @@ function TradeskillInfo:OnInitialize()
 			ColorKnownBy = { r=1.0, g=0.0, b=0.0 },
 			ColorLearnableBy = { r=0.25, g=0.75, b=0.25 },
 			ColorAvailableTo = { r=1.0, g=0.50, b=0.25 },
-			ColorBankedAmount = { r=0.5, g=0.6, b=0.7 },
-			ColorAltAmount = { r=0.5, g=0.6, b=0.7 },
 			ColorTrainerReagents = { r=1.0, g=1.0, b=1.0 },
 			ColorID = { r=0.75, g=0.5, b=0.5 },
 			ColorStack = { r=1.0, g=1.0, b=1.0 },
@@ -155,110 +151,13 @@ function TradeskillInfo:OnInitialize()
 		}
 	}
 
-
 	self.db = LibStub("AceDB-3.0"):New("TradeskillInfoDB", dbDefaults)
 
-	local options = {
-		desc = L["Complete Tradeskill Info"],
-		handler = TradeskillInfo,
-		type = 'group',
-		args = {
-			profit = {
-				name = L["Combine profit"],
-				desc = L["Show cost of combine and profit"],
-				type = 'toggle',
-				get = function() return self.db.profile.ShowSkillProfit end,
-				set = function(val) self.db.profile.ShowSkillProfit = val end,
-			},
-			auctioneer = {
-				name = L["Combine profit from auctioneer advanced"],
-				desc = L["Show cost of combine and profit from auctioneer advanced"],
-				type = 'toggle',
-				get = function() return self.db.profile.ShowSkillAuctioneerProfit end,
-				set = function(val) self.db.profile.ShowSkillAuctioneerProfit = val end,
-			},
-			level = {
-				name = L["Combine level"],
-				desc = L["Show skill level of the combines"],
-				type = 'toggle',
-				get = function() return self.db.profile.ShowSkillLevel end,
-				set = function(val) self.db.profile.ShowSkillLevel = val end,
-			},
-			source = {
-				name = L["Source"],
-				desc = L["Show the source of the item"],
-				type = 'toggle',
-				get = function() return self.db.profile.TooltipSource end,
-				set = function(val) self.db.profile.TooltipSource = val end,
-			},
-			usedin = {
-				name = L["Used in"],
-				desc = L["Show what tradeskill an item is used in in it's tooltip"],
-				type = 'toggle',
-				get = function() return self.db.profile.TooltipUsedIn end,
-				set = function(val) self.db.profile.TooltipUsedIn = val end,
-			},
-			useableby = {
-				name = L["Usable by"],
-				desc = L["Show who can use an item in it's tooltip"],
-				type = 'toggle',
-				get = function() return self.db.profile.TooltipUsableBy end,
-				set = function(val) self.db.profile.TooltipUsableBy = val end,
-			},
-			known = {
-				name = L["Known by"],
-				desc = L["Show who knows a recipe in it's tooltip"],
-				type = 'toggle',
-				get = function() return self.db.profile.TooltipKnownBy end,
-				set = function(val) self.db.profile.TooltipKnownBy = val end,
-			},
-			learn = {
-				name = L["Learnable by"],
-				desc = L["Show who can learn a recipe in it's tooltip"],
-				type = 'toggle',
-				get = function() return self.db.profile.TooltipLearnableBy end,
-				set = function(val) self.db.profile.TooltipLearnableBy = val end,
-			},
-			willbe = {
-				name = L["Will be able to learn"],
-				desc = L["Show who will be able to learn a recipe in it's tooltip"],
-				type = 'toggle',
-				get = function() return self.db.profile.TooltipAvailableTo end,
-				set = function(val) self.db.profile.TooltipAvailableTo = val end,
-			},
-			market = {
-				name = L["Auctioneer Market Value Profit"],
-				desc = L["Show the profit calculation from Auctioneer Market Value in tooltip"],
-				get = function() return self.db.profile.TooltipMarketValue end,
-				set = function(val) self.db.profile.TooltipMarketValue = val end,
-			},
-			reagents = {
-				name = L["Reagents"],
-				desc = L["Show what reagents a recipe takes at the trainer"],
-				type = 'toggle',
-				get = function() return self.db.profile.TrainerReagents end,
-				set = function(val) self.db.profile.TrainerReagents = val end,
-			},
-			config = {
-				name = L["Config"],
-				desc = L["Show config screen"],
-				type = 'execute',
-				func = function() TradeskillInfo:Config_Toggle() end,
-			},
-			menu = {
-				name = L["Menu"],
-				desc = L["Show TradeskillInfo UI"],
-				type = 'execute',
-				func = function() TradeskillInfo:UI_Toggle() end,
-			},
-		},
-	}
+	self:RegisterChatCommand("tsi", "ChatCommand")
+	self:RegisterChatCommand("tradeskillinfo", "ChatCommand")
 
-
-	LibStub("AceConfig-3.0"):RegisterOptionsTable("TradeskillInfo", options, {"tsi", "tradeskillinfo"})
 
 	self:BuildWhereUsed();
---	self:BuildRecipeTable();
 	if ( EarthFeature_AddButton ) then   --add by Isler
 		EarthFeature_AddButton(
 			{
@@ -321,6 +220,18 @@ function TradeskillInfo:OnTradeShow()
 	end
 end
 
+function TradeskillInfo:ChatCommand(input)
+	-- Open About panel if there's no parameters or if we do /arl about
+	if (not input) or (input and string.trim(input) == "") then
+		self:ConfigShow()
+	elseif input == "menu" then
+		self:UI_Toggle()
+	else
+		-- What happens when we get here?
+		LibStub("AceConfigCmd-3.0"):HandleCommand("tsi", "TradeskillInfo", input)
+	end
+end
+
 function TradeskillInfo:OnSkillUpdate()
 	if not self.UpdateInProgress then
 		self.UpdateInProgress = true
@@ -376,7 +287,7 @@ function TradeskillInfo:GetExtraItemDataText(itemId, showVendorProfit, showDiffi
 	local text = nil
 
 	if self:CombineExists(itemId) then
-		if showAuctioneerProfit then
+		if showAuctioneerProfit and AucAdvanced and AucAdvanced.API then
 			-- Insert item value and reagent costs from auctioneer
 			local value,cost,profit = self:GetCombineAuctioneerCost(itemId)
 			text = string.format("A: %s - %s = %s",
@@ -1564,8 +1475,6 @@ function TradeskillInfo:AddToTooltip(tooltip, id)
 	self:AddUsableByToTooltip(tooltip, id)
 	self:AddSourceToTooltip(tooltip, id)
 	self:AddRecipeKnownByToTooltip(tooltip, id)
-	self:AddBankedAmountToTooltip(tooltip, id)
-	self:AddAltAmountToTooltip(tooltip, id)
 	self:AddIdToTooltip(tooltip, id)
 	self:AddStackToTooltip(tooltip, id)
 	self:AddMarketValueProfitToTooltip(tooltip, id)
@@ -1605,43 +1514,6 @@ function TradeskillInfo:AddRecipeKnownByToTooltip(tooltip, id)
 		end
 		if self:ShowingTooltipAvailableTo() then
 			local availableTo = self:GetCombineAvailableTo(id, tooltip)
-		end
-	end
-end
-
-function TradeskillInfo:AddBankedAmountToTooltip(tooltip, id)
-	if self:ShowingTooltipBankedAmount() and CharacterInfoStorage then
-		local amount = CharacterInfoStorage:GetNumItemsBank(self.vars.playername,id);
-		if amount > 0 then
-			local c = self.db.profile.ColorBankedAmount;
-			tooltip:AddDoubleLine(L["Banked"], tostring(amount), c.r, c.g, c.b, c.r, c.g, c.b);
-		end
-	end
-end
-
-function TradeskillInfo:AddAltAmountToTooltip(tooltip, id)
-	if self:ShowingTooltipAltAmount() and CharacterInfoStorage then
-		local chars = CharacterInfoStorage:GetCharacters();
-		local c = self.db.profile.ColorAltAmount;
-		local Ltext, Rtext;
-		local text = "";
-		for _,name in ipairs(chars) do
-			if name ~= self.vars.playername then
-				local amount = CharacterInfoStorage:GetNumItems(name,id);
-				if amount > 0 then
-					Rtext = name.." ("..tostring(amount)..")";
-					if text ~= "" then
-						Ltext = " ";
-						text = text..", ";
-					else
-						Ltext = L["Alts have"];
-					end
-					text = text..Rtext;
-					if tooltip then
-						tooltip:AddDoubleLine(Ltext, Rtext, c.r, c.g, c.b, c.r, c.g, c.b/1.2);
-					end
-				end
-			end
 		end
 	end
 end
@@ -1711,7 +1583,6 @@ function TradeskillInfo:AddMarketValueProfitToTooltip(tooltip, id)
 			local text
 			local c = self.db.profile.ColorMarketValue;
 			for i in gmatch(self.vars.specialcases[id], "(%d+)") do
-				DEFAULT_CHAT_FRAME:AddMessage(i)
 				local value,cost,profit = self:GetCombineAuctioneerCost(tonumber(i))
 				local Rtext = string.format("%s - %s = %s",
 				                            self:GetMoneyString(value),
@@ -1741,8 +1612,6 @@ function TradeskillInfo:LoadUI(quiet)
 		loaded,reason = LoadAddOn("TradeskillInfoUI");
 		if not loaded then
 			if not quiet then self:Print(L["Could not load the UI. Reason: "],reason) end
-		else
-			self:Config_Init();
 		end
 		return loaded
 	end
@@ -1755,13 +1624,11 @@ function TradeskillInfo:UI_Toggle()
 	end
 end
 
-function TradeskillInfo:Config_Toggle()
-	if self:LoadUI() then
-		if TradeskillInfoConfigFrame:IsVisible() then
-			self:Config_Hide();
-		else
-			self:Config_Show();
-		end
+function TradeskillInfo:ConfigShow()
+	self:LoadUI()
+
+	if (self.OptionsPanel) then
+		InterfaceOptionsFrame_OpenToCategory(self.OptionsPanel)
 	end
 end
 
@@ -1893,19 +1760,11 @@ function TradeskillInfo:ShowingTooltipStack()
 end
 
 function TradeskillInfo:ShowingTooltipMarketValue()
-	return self.db.profile.TooltipMarketValue;
+	return self.db.profile.TooltipMarketValue and AucAdvanced and AucAdvanced.API;
 end
 
 function TradeskillInfo:ColoringAHRecipes()
 	return self.db.profile.ColorAHRecipes;
-end
-
-function TradeskillInfo:ShowingTooltipBankedAmount()
-	return self.db.profile.TooltipBankedAmount;
-end
-
-function TradeskillInfo:ShowingTooltipAltAmount()
-	return self.db.profile.TooltipAltAmount;
 end
 
 --[[ Databroker Stuff --]]
@@ -1920,7 +1779,7 @@ if ldb then
 			if button == "LeftButton" then
 				TradeskillInfo:UI_Toggle()
 			elseif button == "RightButton" then
-				TradeskillInfo:Config_Toggle()
+				TradeskillInfo:ConfigShow()
 			end
 		end,
 		OnTooltipShow = function(tooltip)
