@@ -111,9 +111,9 @@ function TradeskillInfo:OnInitialize()
 			TooltipRecipePrice = true,
 			TooltipUsedIn = true,
 			TooltipUsableBy = true,
-			TooltipKnownBy = true,
-			TooltipLearnableBy = true,
-			TooltipAvailableTo = true,
+			TooltipKnownBy = {R=true,A=true,B=true,D=true,E=true,J=true,L=true,T=true,W=false,X=false,Z=true,Y=true,I=true},
+			TooltipLearnableBy = {R=true,A=true,B=true,D=true,E=true,J=true,L=true,T=true,W=false,X=false,Z=true,Y=true,I=true},
+			TooltipAvailableTo = {R=true,A=true,B=true,D=true,E=true,J=true,L=true,T=true,W=false,X=false,Z=true,Y=true,I=true},
 			TooltipMarketValue = true,
 			TooltipID = false,
 			TooltipStack = false,
@@ -199,8 +199,19 @@ function TradeskillInfo:OnEnable()
 	self:RegisterEvent("SKILL_LINES_CHANGED", "OnSkillUpdate");
 	self:RegisterEvent("ADDON_LOADED", "OnAddonLoaded");
 	self:HookTooltips();
-	-- Get rid of legacy diffculty data
+	-- Get rid of legacy difficulty data
 	self.db.global.difficulty = nil
+	-- Migrate the TooltipKnownBy, etc fields
+	if type(self.db.profile.TooltipKnownBy) == "boolean" then
+		self.db.profile.TooltipKnownBy = self.db.defaults.profile.TooltipKnownBy
+	end
+	if type(self.db.profile.TooltipLearnableBy) == "boolean" then
+		self.db.profile.TooltipLearnableBy = self.db.defaults.profile.TooltipLearnableBy
+	end
+	if type(self.db.profile.TooltipAvailableTo) == "boolean" then
+		self.db.profile.TooltipAvailableTo = self.db.defaults.profile.TooltipAvailableTo
+	end
+
 end
 
 function TradeskillInfo:OnDisable()
@@ -1504,15 +1515,21 @@ end
 
 function TradeskillInfo:AddRecipeKnownByToTooltip(tooltip, id)
 	local itemId = self:GetRecipeItem(id);
-	if itemId then id = itemId end
+	local kind
+	if itemId then
+		kind = "R" -- Recipe
+		id = itemId
+	else
+		kind = self:GetCombineSkill(id)
+	end
 	if id then
-		if self:ShowingTooltipKnownBy() then
+		if self:ShowingTooltipKnownBy(kind) then
 			local knownBy = self:GetCombineKnownBy(id, tooltip)
 		end
-		if self:ShowingTooltipLearnableBy() then
+		if self:ShowingTooltipLearnableBy(kind) then
 			local learnableBy = self:GetCombineLearnableBy(id, tooltip)
 		end
-		if self:ShowingTooltipAvailableTo() then
+		if self:ShowingTooltipAvailableTo(kind) then
 			local availableTo = self:GetCombineAvailableTo(id, tooltip)
 		end
 	end
@@ -1731,16 +1748,16 @@ function TradeskillInfo:ShowingTooltipRecipePrice()
 	return self.db.profile.TooltipRecipePrice;
 end
 
-function TradeskillInfo:ShowingTooltipKnownBy()
-	return self.db.profile.TooltipKnownBy;
+function TradeskillInfo:ShowingTooltipKnownBy(kind)
+	return kind and self.db.profile.TooltipKnownBy[kind];
 end
 
-function TradeskillInfo:ShowingTooltipLearnableBy()
-	return self.db.profile.TooltipLearnableBy;
+function TradeskillInfo:ShowingTooltipLearnableBy(kind)
+	return kind and self.db.profile.TooltipLearnableBy[kind];
 end
 
-function TradeskillInfo:ShowingTooltipAvailableTo()
-	return self.db.profile.TooltipAvailableTo;
+function TradeskillInfo:ShowingTooltipAvailableTo(kind)
+	return kind and self.db.profile.TooltipAvailableTo[kind];
 end
 
 function TradeskillInfo:ShowingTrainerReagents()

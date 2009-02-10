@@ -100,3 +100,4 @@ L["Show the item's ID"] = true
 L["Show the item's stack size"] = true
 L["Show the source of recipes"] = true
 L["Show the price of recipes sold by vendors"] = true
+L["Recipes"] = true

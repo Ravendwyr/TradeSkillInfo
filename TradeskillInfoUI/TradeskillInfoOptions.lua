@@ -31,6 +31,16 @@ local function setSelect(info, value)
 	TradeskillInfo.db.profile[key] = value
 end
 
+local function getMultiSelect(info, val)
+	local key = info.arg
+	return TradeskillInfo.db.profile[key][val]
+end
+
+local function setMultiSelect(info, val, state)
+	local key = info.arg
+	TradeskillInfo.db.profile[key][val] = state
+end
+
 local function getRange(info)
 	local key = info.arg
 	return TradeskillInfo.db.profile[key]
@@ -39,6 +49,16 @@ end
 local function setRange(info, value)
 	local key = info.arg
 	TradeskillInfo.db.profile[key] = value
+end
+
+-- The multiselect value for "Known by", "Learnable by", etc.
+-- It is all the skills we know about, plus recipes.
+local knownSelect = {
+	R = L["Recipes"],
+}
+
+for x, y in pairs(TradeskillInfo.vars.tradeskills) do
+	knownSelect[x] = y
 end
 
 local tooltipOptions = {
@@ -73,22 +93,42 @@ local tooltipOptions = {
 					type = "toggle",
 					arg = "TooltipUsableBy",
 				},
+				sep1 = {
+					name = "",
+					type = "description",
+					order = 899,
+				},
 				known = {
 					name = L["Known by"],
 					desc = L["Show who knows a recipe"],
-					type = "toggle",
+					type = "multiselect",
+					control = "Dropdown",
+					values = knownSelect,
+					order = 900,
+					get = getMultiSelect,
+					set = setMultiSelect,
 					arg = "TooltipKnownBy",
 				},
 				learn = {
 					name = L["Learnable by"],
 					desc = L["Show who can learn a recipe"],
-					type = "toggle",
+					type = "multiselect",
+					control = "Dropdown",
+					values = knownSelect,
+					order = 910,
+					get = getMultiSelect,
+					set = setMultiSelect,
 					arg = "TooltipLearnableBy",
 				},
 				willbe = {
 					name = L["Will be able to learn"],
 					desc = L["Show who will be able to learn a recipe"],
-					type = "toggle",
+					type = "multiselect",
+					control = "Dropdown",
+					values = knownSelect,
+					order = 920,
+					get = getMultiSelect,
+					set = setMultiSelect,
 					arg = "TooltipAvailableTo",
 				},
 				itemid = {
