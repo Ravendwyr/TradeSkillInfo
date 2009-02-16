@@ -2359,8 +2359,8 @@ TradeskillInfo.vars.combines = {
 	[43464] = "58483|I420/425/430/435|43126 39502:2||2", -- Scroll of Agility VIII
 	[44315] = "60337|I350/350/350/355|43126 39502", -- Scroll of Recall III
 	-- Inscription (Special)
-	[37] = "61288|I75/125/137/150|43126:3 43127 39502:5", -- Minor Inscription Research
-	[38] = "61177|I385/425/437/450|43126:3 43127 39502:5", -- Northrend Inscription Research
+	[37] = "61288|I75/125/137/150|43126:3 43127 39502:5|||44680", -- Minor Inscription Research
+	[38] = "61177|I385/425/437/450|43126:3 43127 39502:5|||44680", -- Northrend Inscription Research
 	[43515] = "58565|I110/125/137/150|39354:10 43115:5 39774:2", -- Mystic Tome
 	[43655] = "59478|I125/150/162/175|43117:5 10648:10 43116:2", -- Book of Survival
 	[43654] = "59475|I125/150/162/175|43117:5 10648:10 43116:2", -- Tome of the Dawn
