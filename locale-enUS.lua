@@ -61,6 +61,8 @@ L["Known by"] = true
 L["Learnable by"] = true
 L["Will be able to learn"] = true
 L["Reagents"] = true
+L["Banked"] = true
+L["Alts have"] = true
 L["Found unknown skill"] = true
 L["Found unknown source"] = true
 L["Unknown NPC. Please report it. Source="] = true
