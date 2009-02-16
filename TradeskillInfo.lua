@@ -211,7 +211,7 @@ function TradeskillInfo:OnEnable()
 	if type(self.db.profile.TooltipAvailableTo) == "boolean" then
 		self.db.profile.TooltipAvailableTo = self.db.defaults.profile.TooltipAvailableTo
 	end
-
+	self:ScheduleTimer("OnSkillUpdate",1);
 end
 
 function TradeskillInfo:OnDisable()
@@ -227,7 +227,7 @@ end
 
 function TradeskillInfo:OnTradeShow()
 	if not IsTradeSkillLinked() then
-		self:ScheduleTimer(self.UpdateKnownRecipes,1,self);
+		self:ScheduleTimer("UpdateKnownRecipes",1);
 	end
 end
 
