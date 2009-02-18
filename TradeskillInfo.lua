@@ -207,13 +207,13 @@ function TradeskillInfo:OnEnable()
 	-- Get rid of legacy difficulty data
 	self.db.global.difficulty = nil
 	-- Migrate the TooltipKnownBy, etc fields
-	if type(self.db.profile.TooltipKnownBy) == "boolean" then
+	if type(self.db.profile.TooltipKnownBy) ~= "table" then
 		self.db.profile.TooltipKnownBy = self.db.defaults.profile.TooltipKnownBy
 	end
-	if type(self.db.profile.TooltipLearnableBy) == "boolean" then
+	if type(self.db.profile.TooltipLearnableBy) ~= "table" then
 		self.db.profile.TooltipLearnableBy = self.db.defaults.profile.TooltipLearnableBy
 	end
-	if type(self.db.profile.TooltipAvailableTo) == "boolean" then
+	if type(self.db.profile.TooltipAvailableTo) ~= "table" then
 		self.db.profile.TooltipAvailableTo = self.db.defaults.profile.TooltipAvailableTo
 	end
 	self:ScheduleTimer("OnSkillUpdate",1);
