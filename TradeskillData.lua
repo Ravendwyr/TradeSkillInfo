@@ -3,68 +3,36 @@ local L = LibStub("AceLocale-3.0"):GetLocale("TradeskillInfo")
 local BZ = LibStub("LibBabble-Zone-3.0"):GetLookupTable()
 local BF = LibStub("LibBabble-Faction-3.0"):GetLookupTable()
 
-TradeskillInfo.vars.tradeskills = {
-	['A'] = L["Alchemy"],
-	['B'] = L["Blacksmithing"],
-	['D'] = L["Enchanting"],
-	['E'] = L["Engineering"],
-	['J'] = L["Jewelcrafting"],
-	['L'] = L["Leatherworking"],
-	['T'] = L["Tailoring"],
-	['W'] = L["Cooking"],
-	['X'] = L["First Aid"],
-	['Y'] = L["Mining"],
-	['Z'] = L["Poisons"],
-	-- New in 3.0.2
-	['I'] = L["Inscription"],
+TradeskillInfo.vars.tradeskillspells = {
+	['A'] = 2259,  -- Alchemy
+	['B'] = 2018,  -- BlackSmithing
+	['D'] = 7411,  -- Enchanting
+	['E'] = 4036,  -- Engineering
+	['J'] = 25229, -- Jewelcrafting
+	['L'] = 2108,  -- Leatherworking
+	['T'] = 3908,  -- Tailoring
+	['W'] = 2550,  -- Cooking
+	['X'] = 3273,  -- First Aid
+	['Y'] = 2575,  -- Mining
+	['I'] = 45357, -- Inscription
 }
 
-TradeskillInfo.vars.skillnames = {
-	[TradeskillInfo.vars.tradeskills['A']] = 'A',
-	[TradeskillInfo.vars.tradeskills['B']] = 'B',
-	[TradeskillInfo.vars.tradeskills['D']] = 'D',
-	[TradeskillInfo.vars.tradeskills['E']] = 'E',
-	[TradeskillInfo.vars.tradeskills['J']] = 'J',
-	[TradeskillInfo.vars.tradeskills['L']] = 'L',
-	[TradeskillInfo.vars.tradeskills['T']] = 'T',
-	[TradeskillInfo.vars.tradeskills['W']] = 'W',
-	[TradeskillInfo.vars.tradeskills['X']] = 'X',
-	[TradeskillInfo.vars.tradeskills['Y']] = 'Y',
-	[TradeskillInfo.vars.tradeskills['Z']] = 'Z',
-	-- New in 3.0.2
-	[TradeskillInfo.vars.tradeskills['I']] = 'I',
+TradeskillInfo.vars.specializationspells = {
+	['a']  = 9788,  -- Armorsmith
+	['w']  = 9787,  -- Weaponsmith
+	['ws'] = 17039, -- Master Swordsmith
+	['wh'] = 17040, -- Master Hammersmith
+	['wx'] = 17041, -- Master Axesmith
+	['d']  = 10656, -- Dragonscale Leatherworking
+	['e']  = 10658, -- Elemental Leatherworking
+	['t']  = 10660, -- Tribal Leatherworking
+	['g']  = 20219, -- Gnomish Engineer
+	['b']  = 20222, -- Goblin Engineer
+	['p']  = 26797, -- Spellfire Tailoring
+	['s']  = 26801, -- Shadoweave Tailoring
+	['m']  = 26798, -- Mooncloth Tailoring
 }
 
-TradeskillInfo.vars.specializations = {
-	['a'] = L["Armorsmith"],
-	['w'] = L["Weaponsmith"],
-	['ws'] = L["Master Swordsmith"],
-	['wh'] = L["Master Hammersmith"],
-	['wx'] = L["Master Axesmith"],
-	['d'] = L["Dragonscale Leatherworking"],
-	['e'] = L["Elemental Leatherworking"],
-	['t'] = L["Tribal Leatherworking"],
-	['g'] = L["Gnomish Engineer"],
-	['b'] = L["Goblin Engineer"],
-	['p'] = L["Spellfire Tailoring"],
-	['s'] = L["Shadoweave Tailoring"],
-	['m'] = L["Mooncloth Tailoring"],
-}
-TradeskillInfo.vars.specializationnames = {
-	[TradeskillInfo.vars.specializations['a']] = "a",
-	[TradeskillInfo.vars.specializations['w']] = "w",
-	[TradeskillInfo.vars.specializations['ws']] = "ws",
-	[TradeskillInfo.vars.specializations['wh']] = "wh",
-	[TradeskillInfo.vars.specializations['wx']] = "wx",
-	[TradeskillInfo.vars.specializations['d']] = "d",
-	[TradeskillInfo.vars.specializations['e']] = "e",
-	[TradeskillInfo.vars.specializations['t']] = "t",
-	[TradeskillInfo.vars.specializations['g']] = "g",
-	[TradeskillInfo.vars.specializations['b']] = "b",
-	[TradeskillInfo.vars.specializations['p']] = "p",
-	[TradeskillInfo.vars.specializations['s']] = "s",
-	[TradeskillInfo.vars.specializations['m']] = "m",
-}
 TradeskillInfo.vars.sources = {
 	['V'] = L["Vendor"],
 	['Va'] = L["Alliance Vendor"],
@@ -155,7 +123,7 @@ TradeskillInfo.vars.zones = {
 	[50] = BZ["Winterspring"],
 	[51] = BZ["Stratholme"],
 	[52] = BZ["Scholomance"],
--- Burning Crusade	
+-- Burning Crusade
 	[53] = BZ["Hellfire Peninsula"],
 	[54] = BZ["Eversong Woods"],
 	[55] = BZ["Silvermoon City"],

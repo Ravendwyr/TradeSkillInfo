@@ -193,6 +193,7 @@ function TradeskillInfo:InitPlayer()
 end
 
 function TradeskillInfo:OnEnable()
+	self:PopulateProfessionNames();
 	self:InitPlayer();
 	self:HookTradeSkillUI();
 	self:SecureHook("ContainerFrameItemButton_OnModifiedClick");
@@ -1834,6 +1835,66 @@ end
 
 function TradeskillInfo:ShowingTooltipAltAmount()
 	return self.db.profile.TooltipAltAmount;
+end
+
+local defaultNames = {
+	[2259] = L["Alchemy"],
+	[2018] = L["Blacksmithing"],
+	[7411] = L["Enchanting"],
+	[4036] = L["Engineering"],
+	[25229] = L["Jewelcrafting"],
+	[2108] = L["Leatherworking"],
+	[3908] = L["Tailoring"],
+	[2550] = L["Cooking"],
+	[3273] = L["First Aid"],
+	[2575] = L["Mining"],
+	[45357] = L["Inscription"],
+	[9788] = L["Armorsmith"],
+	[9787] = L["Weaponsmith"],
+	[17039] = L["Master Swordsmith"],
+	[17040] = L["Master Hammersmith"],
+	[17041] = L["Master Axesmith"],
+	[10656] = L["Dragonscale Leatherworking"],
+	[10658] = L["Elemental Leatherworking"],
+	[10660] = L["Tribal Leatherworking"],
+	[20219] = L["Gnomish Engineer"],
+	[20222] = L["Goblin Engineer"],
+	[26797] = L["Spellfire Tailoring"],
+	[26801] = L["Shadoweave Tailoring"],
+	[26798] = L["Mooncloth Tailoring"],
+}
+
+function TradeskillInfo:PopulateProfessionNames()
+	if not ( self.vars.tradeskills and
+	         self.vars.skillnames) or
+	   not ( self.vars.specializations and
+	         self.vars.specializationnames)
+	then
+		self.vars.tradeskills = {}
+		self.vars.skillnames = {}
+		for l, v in pairs(self.vars.tradeskillspells) do
+			local name = GetSpellInfo(v)
+			if not name then
+				name = defaultNames[v]
+			end
+			self.vars.tradeskills[l] = name
+			self.vars.skillnames[name] = l
+		end
+
+		self.vars.specializations = {}
+		self.vars.specializationnames = {}
+		for l, v in pairs(self.vars.specializationspells) do
+			local name = GetSpellInfo(v)
+			if not name then
+				name = defaultNames[v]
+			end
+			self.vars.specializations[l] = name
+			self.vars.specializationnames[name] = l
+		end
+		-- We won't ever come here again until the UI is reloaded.
+		-- Free up a little memory
+		defaultNames = nil
+	end
 end
 
 --[[ Databroker Stuff --]]
