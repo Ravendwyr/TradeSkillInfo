@@ -3502,7 +3502,7 @@ TradeskillInfo.vars.combines = {
 	[-44483] = "D400/415/425/435|34054:6 34055:3 36860|37332", -- Enchant Cloak - Superior Frost Resistance
 	[44452] = "60619|D425/435/445/455|41745 34054:40 34055:12 34052:8 22463", -- Runed Titanium Rod
 	-- WotLK Cooking combines
-	[33004] = "64054|W0/250/275/300|7974", -- Clamlette Magnifique (FIXME: quest)
+	[33004] = "64054|W250/250/275/300|7974", -- Clamlette Magnifique (FIXME: quest)
 	[34747] = "57421|W320/350/365/380|43013", -- Northern Stew
 	[34748] = "45549|W350/350/382/415|34736", -- Mammoth Meal
 	[34749] = "45550|W350/350/382/415|43009", -- Shoveltusk Steak
