@@ -244,8 +244,9 @@ function TradeskillInfo:ChatCommand(input)
 	elseif input == "menu" then
 		self:UI_Toggle()
 	else
-		-- What happens when we get here?
-		LibStub("AceConfigCmd-3.0"):HandleCommand("tsi", "TradeskillInfo", input)
+		-- Do not call the default command handler - we do not have any
+		-- registered commands.
+		-- LibStub("AceConfigCmd-3.0"):HandleCommand("tsi", "TradeskillInfo", input)
 	end
 end
 
