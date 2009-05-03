@@ -114,8 +114,8 @@ function TradeskillInfo:OnInitialize()
 			TooltipKnownBy = {R=true,A=true,B=true,D=true,E=true,J=true,L=true,T=true,W=false,X=false,Z=true,Y=true,I=true},
 			TooltipLearnableBy = {R=true,A=true,B=true,D=true,E=true,J=true,L=true,T=true,W=false,X=false,Z=true,Y=true,I=true},
 			TooltipAvailableTo = {R=true,A=true,B=true,D=true,E=true,J=true,L=true,T=true,W=false,X=false,Z=true,Y=true,I=true},
-			TooltipBankedAmount = true,
-			TooltipAltAmount = true,
+			TooltipBankedAmount = false,
+			TooltipAltAmount = false,
 			TooltipMarketValue = true,
 			TooltipID = false,
 			TooltipStack = false,
@@ -193,7 +193,7 @@ function TradeskillInfo:InitPlayer()
 end
 
 function TradeskillInfo:OnEnable()
-	self:PopulateProfessionNames();
+	self:PopulateProfessionNames()
 	self:InitPlayer();
 	self:HookTradeSkillUI();
 	self:SecureHook("ContainerFrameItemButton_OnModifiedClick");
@@ -773,10 +773,14 @@ function TradeskillInfo:GetCombineCost(id)
 	local components = self:GetCombineComponents(id, true);
 	local value = 0;
 	local item = self:GetCombineItem(id);
+	local yield = self:GetCombineYield(id)
 	if item then id = item end
 
 	if id > 0 then
 		_,value = self:GetComponent(id, true)
+		if yield > 1 then
+			value = value * yield
+		end
 	end
 	local cost = 0;
 	for _,c in ipairs(components) do
@@ -793,9 +797,13 @@ function TradeskillInfo:GetCombineAuctioneerCost(id)
 	local components = self:GetCombineComponents(id, false, true)
 	local value = 0
 	local item = self:GetCombineItem(id)
+	local yield = self:GetCombineYield(id)
 	if item then id = item end
 	if id > 0 then
 		_,_,_,value = self:GetComponent(id, false, true)
+		if yield > 1 then
+			value = value * yield
+		end
 	end
 	local cost = 0;
 	for _,c in ipairs(components) do
@@ -1634,12 +1642,17 @@ function TradeskillInfo:AddMarketValueProfitToTooltip(tooltip, id)
 		-- TODO: What are we going to do if there are more than one recipes producing item?
 		if id and self:CombineExists(id) then
 			local value,cost,profit = self:GetCombineAuctioneerCost(id)
+			local yield = self:GetCombineYield(id)
 			local Rtext = string.format("%s - %s = %s",
 			                            self:GetMoneyString(value),
 			                            self:GetMoneyString(cost),
 			                            self:GetMoneyString(profit))
 			local c = self.db.profile.ColorMarketValue;
-			tooltip:AddDoubleLine(L["Market Value"], Rtext, c.r, c.g, c.b, c.r, c.g, c.b)
+			local Ltext = L["Market Value"]
+			if (yield > 1) then
+				Ltext = Ltext .. " (x" .. yield .. ")"
+			end
+			tooltip:AddDoubleLine(Ltext, Rtext, c.r, c.g, c.b, c.r, c.g, c.b)
 		elseif self.vars.specialcases[id] then
 			local Ltext, Rtext;
 			local text
@@ -1656,6 +1669,11 @@ function TradeskillInfo:AddMarketValueProfitToTooltip(tooltip, id)
 				else
 					Ltext = " ";
 					text = text..", "..Rtext;
+				end
+				local Ltext = L["Market Value"]
+				local yield = self:GetCombineYield(tonumber(i))
+				if (yield > 1) then
+					Ltext = Ltext .. " (x" .. yield .. ")"
 				end
 				if tooltip then
 					tooltip:AddDoubleLine(Ltext, Rtext, c.r, c.g, c.b, c.r, c.g, c.b);
