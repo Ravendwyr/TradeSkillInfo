@@ -1922,7 +1922,7 @@ local ldb = LibStub:GetLibrary("LibDataBroker-1.1", true)
 if ldb then
 	ldb:NewDataObject("TradeSkillInfo", {
 		type = "launcher",
-		text = "TSI",
+		label = "TSI",
 		icon = "Interface\\Icons\\INV_Elemental_Mote_Nether",
 		OnClick = function(frame, button)
 			if button == "LeftButton" then
