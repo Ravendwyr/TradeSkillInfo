@@ -305,7 +305,7 @@ function TradeskillInfo:GetExtraItemDataText(itemId, showVendorProfit, showDiffi
 	local text = nil
 
 	if self:CombineExists(itemId) then
-		if showAuctioneerProfit and AucAdvanced and AucAdvanced.API then
+		if showAuctioneerProfit then
 			-- Insert item value and reagent costs from auctioneer
 			local value,cost,profit = self:GetCombineAuctioneerCost(itemId)
 			text = string.format("A: %s - %s = %s",
@@ -793,7 +793,7 @@ end
 
 function TradeskillInfo:GetCombineAuctioneerCost(id)
 	if not self:CombineExists(id) then return end
-	if not AucAdvanced then return end
+	if not (AucAdvanced and AucAdvanced.API or GetAuctionBuyout) then return end
 
 	local components = self:GetCombineComponents(id, false, true)
 	local value = 0
@@ -860,17 +860,16 @@ function TradeskillInfo:GetComponent(id, getVendorPrice, getAuctioneerPrice)
 	local name = GetItemInfo(realId)
 	if not name then name="????" end
 	local _,_,cost,source = string.find(self.vars.components[realId],"(%d+)/(%a+)")
-	if getVendorPrice then
-		-- If we have the GetSellValue API, trust it over our internal data
-		if GetSellValue then
-			local gsvCost = GetSellValue(realId)
-			if gsvCost and gsvCost > 0 then
-				cost = gsvCost
-			end
+	-- If we have the GetSellValue API, trust it over our internal data
+	if GetSellValue then
+		local gsvCost = GetSellValue(realId)
+		if gsvCost and gsvCost > 0 then
+			cost = gsvCost
 		end
 	end
+
 	-- If we have Auctioneer Advanced, also gather auction prices
-	local aucMvCost, aucMvSeen
+	local aucMvCost, aucMvSeen = 0, 0
 	if getAuctioneerPrice then
 		if AucAdvanced and AucAdvanced.API then
 			local itemLink = getItemLink(realId)
@@ -878,6 +877,11 @@ function TradeskillInfo:GetComponent(id, getVendorPrice, getAuctioneerPrice)
 			-- If auctioneer has no idea, plug in vendor sell value
 			if not aucMvCost then aucMvCost = cost end
 			if not aucMvSeen then aucMvSeen = 0 end
+		elseif GetAuctionBuyout then
+			local itemLink = getItemLink(realId)
+			aucMvCost = GetAuctionBuyout(realId)
+			-- If auctioneer has no idea, plug in vendor sell value
+			if not aucMvCost then aucMvCost = cost end
 		end
 	end
 	return name,tonumber(cost),source,tonumber(aucMvCost),tonumber(aucMvSeen)
@@ -1793,7 +1797,7 @@ function TradeskillInfo:ShowingSkillProfit()
 end
 
 function TradeskillInfo:ShowingSkillAuctioneerProfit()
-	return self.db.profile.ShowSkillAuctioneerProfit and AucAdvanced and AucAdvanced.API;
+	return self.db.profile.ShowSkillAuctioneerProfit and AucAdvanced and AucAdvanced.API or GetAuctionBuyout;
 end
 
 function TradeskillInfo:ShowingTooltipUsedIn()
@@ -1841,7 +1845,7 @@ function TradeskillInfo:ShowingTooltipStack()
 end
 
 function TradeskillInfo:ShowingTooltipMarketValue()
-	return self.db.profile.TooltipMarketValue and AucAdvanced and AucAdvanced.API;
+	return self.db.profile.TooltipMarketValue and AucAdvanced and AucAdvanced.API or GetAuctionBuyout;
 end
 
 function TradeskillInfo:ColoringAHRecipes()
