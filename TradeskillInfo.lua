@@ -861,10 +861,12 @@ function TradeskillInfo:GetComponent(id, getVendorPrice, getAuctioneerPrice)
 	if not name then name="????" end
 	local _,_,cost,source = string.find(self.vars.components[realId],"(%d+)/(%a+)")
 	-- If we have the GetSellValue API, trust it over our internal data
-	if GetSellValue then
-		local gsvCost = GetSellValue(realId)
-		if gsvCost and gsvCost > 0 then
-			cost = gsvCost
+	if getVendorPrice or getAuctioneerPrice then
+		if GetSellValue then
+			local gsvCost = GetSellValue(realId)
+			if gsvCost and gsvCost > 0 then
+				cost = gsvCost
+			end
 		end
 	end
 
