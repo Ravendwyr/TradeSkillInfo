@@ -13,7 +13,7 @@
 ## X-Revision: $Rev$
 ## X-Date: $Date$
 
-## X-Credits Evenue (updates), Fieroivan (updates), Coani (Titan Plugin)
+## X-Credits Evenue (updates), Fieroivan (updates), Dys (updates)
 
 ## X-Category: Tradeskill
 ## LoadManagers: AddonLoader
@@ -21,7 +21,7 @@
 ## X-LoadOn-Slash: /tsi
 
 ## Dependencies:
-## OptionalDeps: Ace3, LibStub, CallbackHandler-1.0, LibAbacus-3.0, LibBabble-Zone-3.0, LibBabble-Faction-3.0, LibDataBroker-1.1, Titan, Auc-Advanced
+## OptionalDeps: Ace3, LibStub, CallbackHandler-1.0, LibAbacus-3.0, LibBabble-Zone-3.0, LibBabble-Faction-3.0, LibDataBroker-1.1, Auc-Advanced
 
 ## SavedVariables: TradeskillInfoDB
 
