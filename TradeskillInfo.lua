@@ -226,7 +226,7 @@ end
 function TradeskillInfo:OnAddonLoaded(event, addon)
 	if addon == "Blizzard_AuctionUI" then
 		self:HookAuctionUI();
-	elseif addon == "Blizzard_TradeSkillUI" then
+	elseif addon == "Blizzard_TradeSkillUI" or addon == "Skillet" then
 		self:HookTradeSkillUI();
 	end
 end
@@ -339,7 +339,7 @@ function TradeskillInfo:HookTradeSkillUI()
 	end
 
 	if Skillet and not self:IsHooked(Skillet, "GetExtraItemDetailText") then
-		self:Hook(Skillet, "GetExtraItemDetailText")
+		self:RawHook(Skillet, "GetExtraItemDetailText")
 	end
 end
 
