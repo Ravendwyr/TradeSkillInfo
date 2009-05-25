@@ -22,6 +22,7 @@ locale-frFR.lua
 locale-zhCN.lua
 locale-zhTW.lua
 locale-koKR.lua
+locale-deDE.lua
 TradeskillInfoUI.lua
 TradeskillInfoUI.xml
 TradeskillInfoOptions.lua
