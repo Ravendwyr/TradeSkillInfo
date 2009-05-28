@@ -1,4 +1,4 @@
-﻿local L = LibStub("AceLocale-3.0"):NewLocale("TradeskillInfo", "zhTW", false)
+local L = LibStub("AceLocale-3.0"):NewLocale("TradeskillInfo", "zhTW", false)
 if not L then return end
 -- The translations I pinched from Babble-Tradeskill-2.2
 L["Alchemy"]                    = "鍊金術"
@@ -417,7 +417,7 @@ L["Captain O'Neal"] = "奧尼爾上尉"
 L["Lady Palanseer"] = "帕蘭蒂爾女士"
 L["Market Value"] = "市場價值"
 -- TODO
-L["Left Click"] = "Left Click"
-L["Right Click"] = "Right Click"
-L["Open main window"] = "Open main window"
-L["Open configuration window"] = "Open configuration window"
+L["Left Click"] = "左擊"
+L["Right Click"] = "右擊"
+L["Open main window"] = "打開主視窗"
+L["Open configuration window"] = "打開設定視窗"
