@@ -6,7 +6,7 @@
 ## Notes-zhTW: 商業技能資料庫設置窗口
 ## Notes-esES: UI con Info Completa de las Habilidades de Comercio
 ## Notes-koKR: 전문기술 정보 UI
-## Version: 1.4.3
+## Version: 1.4.4
 ## SavedVariables: TradeskillInfoUIDB
 ## Dependencies: TradeskillInfo
 ## OptionalDeps:
