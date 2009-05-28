@@ -239,10 +239,13 @@ end
 
 function TradeskillInfo:ChatCommand(input)
 	-- Open About panel if there's no parameters or if we do /arl about
-	if (not input) or (input and string.trim(input) == "") then
-		self:ConfigShow()
-	elseif input == "menu" then
+	if (not input) or
+	   string.trim(input) == "" or
+	   string.trim(input) == "menu"
+	then
 		self:UI_Toggle()
+	elseif string.trim(input) == "config" then
+		self:ConfigToggle()
 	else
 		-- Do not call the default command handler - we do not have any
 		-- registered commands.
@@ -1728,7 +1731,7 @@ function TradeskillInfo:ScrollToConfig()
 	end
 end
 
-function TradeskillInfo:ConfigShow()
+function TradeskillInfo:ConfigToggle()
 	self:LoadUI()
 
 	if InterfaceOptionsFrame:IsVisible() and
@@ -1960,7 +1963,7 @@ if ldb then
 			if button == "LeftButton" then
 				TradeskillInfo:UI_Toggle()
 			elseif button == "RightButton" then
-				TradeskillInfo:ConfigShow()
+				TradeskillInfo:ConfigToggle()
 			end
 		end,
 		OnTooltipShow = function(tooltip)
