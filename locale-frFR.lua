@@ -417,3 +417,8 @@ L["Bryan Landers"] = "Bryan Landers"
 L["Captain O'Neal"] = "Captain O'Neal"
 L["Lady Palanseer"] = "Lady Palanseer"
 L["Market Value"] = "Market Value"
+-- TODO
+L["Left Click"] = "Left Click"
+L["Right Click"] = "Right Click"
+L["Open main window"] = "Open main window"
+L["Open configuration window"] = "Open configuration window"

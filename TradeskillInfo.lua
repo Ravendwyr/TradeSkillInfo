@@ -1,6 +1,6 @@
 ﻿TradeskillInfo = LibStub("AceAddon-3.0"):NewAddon("TradeskillInfo", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0", "AceHook-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("TradeskillInfo")
-TradeskillInfo.version = "1.0." .. string.sub("$Revision$", 12, -3);
+TradeskillInfo.version = GetAddOnMetadata("TradeskillInfo", "Version")
 TradeskillInfo.date = string.sub("$Date$", 8, 17);
 
 BINDING_HEADER_TRADESKILLINFO = "Tradeskill Info";
@@ -1711,11 +1711,37 @@ function TradeskillInfo:UI_Toggle()
 	end
 end
 
+function TradeskillInfo:ScrollToConfig()
+	local buttons = InterfaceOptionsFrameAddOns.buttons;
+	local offset = 0
+	local maxScroll = floor(select(2,InterfaceOptionsFrameAddOnsListScrollBar:GetMinMaxValues())/buttons[1]:GetHeight()+0.5)
+	while offset <= maxScroll do
+		InterfaceOptionsFrameAddOnsListScrollBar:SetValue(offset*buttons[1]:GetHeight());
+		for i = 1, #buttons do
+			if buttons[i].element == self.OptionsPanel then
+				InterfaceOptionsFrame_OpenToCategory(self.OptionsPanel)
+				return
+			end
+		end
+		offset = offset + #buttons
+		if offset > maxScroll then offset = maxScroll end
+	end
+end
+
 function TradeskillInfo:ConfigShow()
 	self:LoadUI()
 
-	if (self.OptionsPanel) then
-		InterfaceOptionsFrame_OpenToCategory(self.OptionsPanel)
+	if InterfaceOptionsFrame:IsVisible() and
+	   InterfaceOptionsFramePanelContainer.displayedPanel == self.OptionsPanel
+	then
+		InterfaceOptionsFrame:Hide();
+	else
+		if self.OptionsPanel then
+			InterfaceOptionsFrame_OpenToCategory(self.OptionsPanel)
+			if InterfaceOptionsFramePanelContainer.displayedPanel ~= self.OptionsPanel then
+				self:ScrollToConfig()
+			end
+		end
 	end
 end
 
@@ -1938,7 +1964,11 @@ if ldb then
 			end
 		end,
 		OnTooltipShow = function(tooltip)
-			tooltip:AddLine("TradeskillInfo " .. TradeskillInfo.version)
+			tooltip:AddLine("|cffe0e0e0TradeskillInfo " .. TradeskillInfo.version .. "|r")
+			if (select(4, GetAddOnInfo("TradeskillInfoUI"))) then
+				tooltip:AddLine("|cff30e030" .. L["Left Click"] .. "|r: " .. L["Open main window"])
+				tooltip:AddLine("|cff30e030" .. L["Right Click"] .. "|r: " .. L["Open configuration window"])
+			end
 		end,
 	})
 end

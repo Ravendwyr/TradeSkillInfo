@@ -416,3 +416,8 @@ L["Bryan Landers"] = "布萊恩·蘭德森"
 L["Captain O'Neal"] = "奧尼爾上尉"
 L["Lady Palanseer"] = "帕蘭蒂爾女士"
 L["Market Value"] = "市場價值"
+-- TODO
+L["Left Click"] = "Left Click"
+L["Right Click"] = "Right Click"
+L["Open main window"] = "Open main window"
+L["Open configuration window"] = "Open configuration window"

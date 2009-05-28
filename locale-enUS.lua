@@ -417,3 +417,7 @@ L["Bryan Landers"] = true
 L["Captain O'Neal"] = true
 L["Lady Palanseer"] = true
 L["Market Value"] = true
+L["Left Click"] = true
+L["Right Click"] = true
+L["Open main window"] = true
+L["Open configuration window"] = true
