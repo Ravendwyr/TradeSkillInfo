@@ -852,7 +852,7 @@
 						self:GetParent():StopMovingOrSizing()
 					</OnHide>
 				</Scripts>
-				<NormalTexture file="Interface\AddOns\WowLua\images\resize"/>
+				<NormalTexture file="Interface\AddOns\TradeskillInfoUI\images\resize"/>
 			</Button>
 		</Frames>
 		<Scripts>
