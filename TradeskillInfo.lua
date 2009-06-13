@@ -226,7 +226,9 @@ end
 function TradeskillInfo:OnAddonLoaded(event, addon)
 	if addon == "Blizzard_AuctionUI" then
 		self:HookAuctionUI();
-	elseif addon == "Blizzard_TradeSkillUI" or addon == "Skillet" then
+	elseif addon == "Blizzard_TradeSkillUI" or
+	       addon == "Skillet" or
+	       addon == "TradeskillHD" then
 		self:HookTradeSkillUI();
 	end
 end
@@ -343,6 +345,10 @@ function TradeskillInfo:HookTradeSkillUI()
 
 	if Skillet and not self:IsHooked(Skillet, "GetExtraItemDetailText") then
 		self:RawHook(Skillet, "GetExtraItemDetailText")
+	end
+
+	if IsAddOnLoaded("TradeSkillHD") then
+		self:SecureHook("TradeSkillFrameSSOverride", "TradeSkillFrame_SetSelection");
 	end
 end
 
