@@ -228,7 +228,8 @@ function TradeskillInfo:OnAddonLoaded(event, addon)
 		self:HookAuctionUI();
 	elseif addon == "Blizzard_TradeSkillUI" or
 	       addon == "Skillet" or
-	       addon == "TradeskillHD" then
+	       addon == "TradeskillHD" or
+		   addon == "AdvancedTradeSkillWindow" then
 		self:HookTradeSkillUI();
 	end
 end
@@ -347,8 +348,12 @@ function TradeskillInfo:HookTradeSkillUI()
 		self:RawHook(Skillet, "GetExtraItemDetailText")
 	end
 
-	if IsAddOnLoaded("TradeSkillHD") then
+	if IsAddOnLoaded("TradeSkillHD") and not self:IsHooked("TradeSkillFrameSSOverride") then
 		self:SecureHook("TradeSkillFrameSSOverride", "TradeSkillFrame_SetSelection");
+	end
+
+	if IsAddOnLoaded("AdvancedTradeSkillWindow") and not self:IsHooked("ATSWFrame_SetSelection") then
+		self:SecureHook("ATSWFrame_SetSelection")
 	end
 end
 
@@ -498,6 +503,52 @@ function TradeskillInfo:TradeSkillFrame_SetSelection(id)
 				self:GetMoneyString(value), self:GetMoneyString(cost), self:GetMoneyString(profit)));
 		else
 			--TradeSkillReagentLabel:SetText(SPELL_REAGENTS);
+		end
+
+	end
+end
+
+function TradeskillInfo:ATSWFrame_SetSelection(id, wasClicked)
+	local skillName, skillType, numAvailable, isExpanded = GetTradeSkillInfo(id);
+	if not skillName then return end
+	if ( skillType == "header" ) then return end
+	if ( GetTradeSkillSelectionIndex() > GetNumTradeSkills() ) then return end
+
+	local link = GetTradeSkillItemLink(id)
+	local itemId = getIdFromLink(link)
+
+	if not self:CombineExists(itemId) then
+		local spellLink = GetTradeSkillRecipeLink(id)
+		local spellId = getIdFromLink(spellLink)
+		itemId = self:MakeSpecialCase(itemId, spellId)
+	end
+
+	if self:CombineExists(itemId) then
+
+		if self:ShowingSkillLevel() then
+			-- Insert skill required.
+			local text = "";
+			if ATSWRequirementLabel:IsVisible() then
+				text = ATSWRequirementText:GetText() .. ", ";
+			end
+			local skillLineName = GetTradeSkillLine();
+			text = text .. self:GetColoredDifficulty(itemId)
+			ATSWRequirementLabel:Show();
+			ATSWRequirementText:SetText(text);
+		end
+
+		if self:ShowingSkillAuctioneerProfit() then
+			-- Insert item value and reagent costs
+			local value,cost,profit = self:GetCombineAuctioneerCost(itemId);
+			ATSWReagentLabel:SetText(string.format("%s %s - %s = %s", SPELL_REAGENTS,
+				self:GetMoneyString(value), self:GetMoneyString(cost), self:GetMoneyString(profit)));
+		elseif self:ShowingSkillProfit() then
+			-- Insert item value and reagent costs
+			local value,cost,profit = self:GetCombineCost(itemId);
+			ATSWReagentLabel:SetText(string.format("%s %s - %s = %s", SPELL_REAGENTS,
+				self:GetMoneyString(value), self:GetMoneyString(cost), self:GetMoneyString(profit)));
+		else
+			--ATSWReagentLabel:SetText(SPELL_REAGENTS);
 		end
 
 	end
