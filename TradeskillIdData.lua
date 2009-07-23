@@ -2729,7 +2729,6 @@ TradeskillInfo.vars.combines = {
 	[45806] = "64300|I425/430/435/440|43124 39502", -- Glyph of Howling Blast
 	[45849] = "64053|I350/375/387/400|43126:5 39502:10 35625:2", -- Twilight Tome
 	[45854] = "64051|I350/375/387/400|43126:5 39502:10 35627:3|46108", -- Rituals of the New Moon
-	[45908] = "64301|I425/430/435/440|43124 39502", -- Glyph of Envenom
 	[46372] = "65245|I425/430/435/440|43126 39354", -- Glyph of Survival Instincts
 	[-61120] = "I400/400/400/405|43127", -- Master's Inscription of the Storm
 	[-61119] = "I400/400/400/405|43127", -- Master's Inscription of the Pinnacle
