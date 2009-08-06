@@ -549,4 +549,5 @@ TradeskillInfo.vars.vendors = {
 	[344] =  L["Bryan Landers"] .. "|73|25|38.9,25.2",
 	[345] =  L["Captain O'Neal"] .. "|34|1|75.1,66.8",
 	[346] =  L["Lady Palanseer"] .. "|28|2|37.0,64.9",
+	[347] =  L["Timothy Jones"] .. "|73|25|40S,35",
 }
