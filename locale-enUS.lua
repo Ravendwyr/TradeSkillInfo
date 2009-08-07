@@ -422,3 +422,4 @@ L["Right Click"] = true
 L["Open main window"] = true
 L["Open configuration window"] = true
 L["Timothy Jones"] = true
+L["SpellID"] = true
