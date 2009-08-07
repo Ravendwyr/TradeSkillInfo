@@ -752,90 +752,6 @@ end
 --- UI support functions
 ----------------------------------------------------------------------
 
-function TradeskillInfoUI:Old_Search()
-	local oldSelection = self.vars.searchResult[self.vars.selectionIndex];
-	local searchText = string.lower(TradeskillInfoInputBox:GetText());
-	local foundSkills = {};
-	self.vars.searchResult = {};
-	for i in pairs(TradeskillInfo.vars.combines) do
-		local skill = TradeskillInfo:GetCombineSkill(i);
-		if self.db.profile.tradeskills[skill] then
-			local player,alt = TradeskillInfo:GetCombineAvailability(i);
-			if (self.db.profile.availability[1] and player==1) or
-				 (self.db.profile.availability[2] and player==2) or
-				 (self.db.profile.availability[3] and player==3) or
-				 (self.db.profile.availability[4] and alt==1) or
-				 (self.db.profile.availability[5] and alt==2) or
-				 (self.db.profile.availability[6] and alt==3) or
-				 (self.db.profile.availability[7] and player==0 and alt==0) then
-				if self.db.profile.ShowOpposing or TradeskillInfo:GetCombineFactionAvailable(i) then
-					local found = true;
-					if searchText ~= "" then
-						found = false;
-						if self.db.profile.SearchName then
-							skillName = TradeskillInfo:GetCombineName(-TradeskillInfo:GetCombineEnchantId(i));
-							if string.find(string.lower(skillName), searchText) then
-								found = true;
-							end
-						end
-						if self.db.profile.SearchReagent then
-							local components = TradeskillInfo:GetCombineComponents(i);
-							for _,c in ipairs(components) do
-								if string.find(string.lower(c.name), searchText) then
-									found = true;
-									break;
-								end
-							end
-							components = nil;
-						end
-					end
-					if found then
-						if not foundSkills[skill] then
-							foundSkills[skill] = true;
-							table.insert(self.vars.searchResult, skill);
-						end
-						if self.db.profile.expanded[skill] then
-							table.insert(self.vars.searchResult, i);
-						end
-					end
-				end
-			end
-		end
-	end
-	foundSkills = nil;
-
-	table.sort(self.vars.searchResult, function(a,b)
-		local as,ap,al,bs,bp,bl;
-		if type(a) == "string" then
-			as,ap,al = a,"",0;
-		else
-			as,ap,al = TradeskillInfo:GetCombineSkill(a);
-		end
-		if type(b) == "string" then
-			bs,bp,bl	= b,"",0;
-		else
-			bs,bp,bl = TradeskillInfo:GetCombineSkill(b);
-		end
-		if (as < bs) or (as == bs and ap < bp) or (as == bs and ap == bp and al < bl) or (as == bs and ap == bp and al == bl and type(a) == type(b) and a < b) then
-			return true
-		end
-		return false
-	end);
-
-	self.vars.selectionIndex = 0;
-	if oldSelection then
-		for i,v in ipairs(self.vars.searchResult) do
-			if v == oldSelection then
-				self.vars.selectionIndex = i;
-				break;
-			end
-		end
-	end
-	if self.vars.selectionIndex == 0 then
-		self.vars.selectionIndex = self:GetFirstTradeSkill();
-	end
-end
-
 function TradeskillInfoUI:Search()
 	local oldSelection = self.vars.searchResult[self.vars.selectionIndex];
 	local searchText = string.lower(TradeskillInfoInputBox:GetText());
@@ -907,12 +823,12 @@ function TradeskillInfoUI:Search()
 	table.sort(self.vars.searchResult, function(a,b)
 		local as,ap,al,bs,bp,bl;
 		if type(a) == "string" then
-			as,ap,al = a,"",0;
+			as,ap,al = a,"",-1;
 		else
 			as,ap,al = TradeskillInfo:GetCombineSkill(a);
 		end
 		if type(b) == "string" then
-			bs,bp,bl	= b,"",0;
+			bs,bp,bl	= b,"",-1;
 		else
 			bs,bp,bl = TradeskillInfo:GetCombineSkill(b);
 		end
