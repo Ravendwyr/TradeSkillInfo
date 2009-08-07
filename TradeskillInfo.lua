@@ -1697,10 +1697,12 @@ end
 function TradeskillInfo:AddIdToTooltip(tooltip, id)
 	if self:ShowingTooltipID() then
 		local c = self.db.profile.ColorID;
-		if id > 0 then
-			tooltip:AddDoubleLine(L["ItemID"], tostring(id), c.r, c.g, c.b, c.r, c.g, c.b);
-		else
-			tooltip:AddDoubleLine(L["SpellID"], tostring(-id), c.r, c.g, c.b, c.r, c.g, c.b);
+		if id then
+			if id > 0 then
+				tooltip:AddDoubleLine(L["ItemID"], tostring(id), c.r, c.g, c.b, c.r, c.g, c.b);
+			else
+				tooltip:AddDoubleLine(L["SpellID"], tostring(-id), c.r, c.g, c.b, c.r, c.g, c.b);
+			end
 		end
 	end
 end
