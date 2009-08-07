@@ -919,15 +919,20 @@ function TradeskillInfo:GetComponent(id, getVendorPrice, getAuctioneerPrice)
 	end
 	local name = GetItemInfo(realId)
 	if not name then name="????" end
-	local _,_,cost,source = string.find(self.vars.components[realId],"(%d+)/(%a+)")
-	-- If we have the GetSellValue API, trust it over our internal data
+	local _,_,source = string.find(self.vars.components[realId],"(%a+)")
+	-- If we need the price, get the value from Blizzard
 	if getVendorPrice or getAuctioneerPrice then
-		if GetSellValue then
+		cost = select(11, GetItemInfo(realId))
+		-- If Blizzard doesn't supply a sell value, and we have
+		-- GetSellValue() API provider, use it.
+		if not cost and GetSellValue then
 			local gsvCost = GetSellValue(realId)
 			if gsvCost and gsvCost > 0 then
 				cost = gsvCost
 			end
 		end
+		-- If everything fails, set cost to 0.
+		if not cost then cost = 0 end
 	end
 
 	-- If we have Auctioneer Advanced, also gather auction prices
