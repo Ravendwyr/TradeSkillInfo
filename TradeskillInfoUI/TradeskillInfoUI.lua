@@ -816,7 +816,7 @@ function TradeskillInfoUI:Old_Search()
 		else
 			bs,bp,bl = TradeskillInfo:GetCombineSkill(b);
 		end
-		if (as < bs) or (as == bs and ap < bp) or (as == bs and ap == bp and al < bl) or (as == bs and ap == bp and al == bl and a < b) then
+		if (as < bs) or (as == bs and ap < bp) or (as == bs and ap == bp and al < bl) or (as == bs and ap == bp and al == bl and type(a) == type(b) and a < b) then
 			return true
 		end
 		return false
