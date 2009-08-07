@@ -44,11 +44,18 @@ local function getItemLink(id,combineName)
 			return nil, 1, "item:"..id..":0:0:0:0:0:0:0", "Interface\\Icons\\INV_Misc_QuestionMark.blp";
 		end
 	else
-		if combineName then
+		local spellName, _, spellTexture = GetSpellInfo(-id)
+		if not spellTexture then
+			spellTexture = "Interface\\Icons\\Spell_Holy_GreaterHeal.blp"
+		end
+		if not spellName and combineName then
+			spellName = combineName
+		end
+		if spellName then
 			local _, _, _, hexColor = GetItemQualityColor(1);
-			return hexColor.."|Henchant:"..-id.."|h["..combineName.."]|h|r", 1, "enchant:"..-id, "Interface\\Icons\\Spell_Holy_GreaterHeal.blp"
+			return hexColor.."|Henchant:"..-id.."|h["..spellName.."]|h|r", 1, "enchant:"..-id, spellTexture
 		else
-			return nil, 1, "enchant:"..-id, "Interface\\Icons\\Spell_Holy_GreaterHeal.blp"
+			return nil, 1, "enchant:"..-id, spellTexture
 		end
 	end
 end

@@ -153,9 +153,6 @@ TradeskillInfo.vars.specialcases = {
 	[41163] = "35,36",
 	[35] = "41163",
 	[36] = "41163",
-	[44680] = "37,38",
-	[37] = "44680",
-	[38] = "44680"
 }
 
 TradeskillInfo.vars.combines = {
@@ -2359,8 +2356,8 @@ TradeskillInfo.vars.combines = {
 	[43464] = "58483|I420/425/430/435|43126 39502:2||2", -- Scroll of Agility VIII
 	[44315] = "60337|I350/350/350/355|43126 39502", -- Scroll of Recall III
 	-- Inscription (Special)
-	[37] = "61288|I75/125/137/150|43126:3 43127 39502:5|||44680", -- Minor Inscription Research
-	[38] = "61177|I385/425/437/450|43126:3 43127 39502:5|||44680", -- Northrend Inscription Research
+	[-61288] = "I75/125/137/150|43126:3 43127 39502:5", -- Minor Inscription Research
+	[-61177] = "I385/425/437/450|43126:3 43127 39502:5", -- Northrend Inscription Research
 	[43515] = "58565|I110/125/137/150|39354:10 43115:5 39774:2", -- Mystic Tome
 	[43655] = "59478|I125/150/162/175|43117:5 10648:10 43116:2", -- Book of Survival
 	[43654] = "59475|I125/150/162/175|43117:5 10648:10 43116:2", -- Tome of the Dawn
@@ -2802,7 +2799,7 @@ TradeskillInfo.vars.combines = {
 	[44330] = "60365|A400/415/422/430|36904:2 18256", -- Elixir of Armor Piercing
 	[44331] = "60366|A400/415/422/430|37921 37704 18256", -- Elixir of Lightning Speed
 	[44332] = "60367|A395/400/407/415|37921:2 36907 18256", -- Elixir of Mighty Thoughts
-	[44508] = "60893|A400/415/422/430|36901:10 36903:10 36907:4 40411:4||0", -- Northrend Alchemy Research
+	[-60893] = "A400/415/422/430|36901:10 36903:10 36907:4 40411:4", -- Northrend Alchemy Research
 	[44939] = "62213|A999/390/395/400|39970:4 18256||", -- Lesser Flask of Resistance
 	[44958] = "62409|A999/380/385/390|41814:2||", -- Ethereal Oil
 	[45621] = "63732|A135/160/180/200|6371 2453 3371||", -- Elixir of Minor Accuracy
