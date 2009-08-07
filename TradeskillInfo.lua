@@ -633,7 +633,7 @@ function TradeskillInfo:GetCombine(id)
 	if not self:CombineExists(id) then return end
 	local combine = {};
 	local found, _, skill, spec, level, l2, l3, l4, components, recipe, yield, item =
-		string.find(a,"%d*|?(%u)(%l*)(%d+)/?(%d*)/?(%d*)/?(%d*)|([^|]+)[|]?(%d*)[|]?([^|]*)[|]?(%d*)")
+		string.find(self.vars.combines[id], "%d*|?(%u)(%l*)(%d+)/?(%d*)/?(%d*)/?(%d*)|([^|]+)[|]?(%d*)[|]?([^|]*)[|]?(%d*)")
 	combine.skill = skill;
 	combine.spec = spec;
 	combine.level = tonumber(level);
