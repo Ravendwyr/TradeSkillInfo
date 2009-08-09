@@ -651,6 +651,212 @@ function TradeskillInfoUI:CollapseAllButton_OnClick(frame)
 end
 
 ----------------------------------------------------------------------
+--- Sort Drop Down Menu functions
+----------------------------------------------------------------------
+function TradeskillInfoUI:SortDropDown_OnLoad()
+	UIDropDownMenu_SetWidth(TradeskillInfoSortDropDown, 120);
+end
+
+function TradeskillInfoUI:SortDropDown_OnShow(frame)
+	UIDropDownMenu_SetSelectedValue(frame, 1)
+	UIDropDownMenu_Initialize(frame, TradeskillInfoUI.SortDropDown_Initialize);
+	UIDropDownMenu_SetText(TradeskillInfoSortDropDown, L["Sort by"]);
+end
+
+local sortInfoCache = {}
+local searchSortInitFunc = nil
+local searchSortCleanFunc = nil
+local searchSortSortFunc = nil
+
+function TradeskillInfoUI:SetFuncSet(info)
+	searchSortInitFunc = info.initfunc
+	searchSortCleanFunc = info.cleanfunc
+	searchSortSortFunc = info.sortfunc
+end
+
+function TradeskillInfoUI.SortDropDown_Initialize()
+	-- Information for sorting the search results correctly.
+	-- The caching is used to bring the sorting speed down to acceptable levels
+	-- The weird way the caching is used is to make better use of arrays to minimize the
+	-- garbage collection of arrays.
+	local sortInfo = {
+		{
+			name = L["Difficulty"],
+			initfunc = function(searchResult)
+				local skill, spec, level
+				for i, v in ipairs(searchResult) do
+					if type(v) == "string" then
+						skill, spec, level = v,"",-1;
+					else
+						skill, spec, level = TradeskillInfo:GetCombineSkill(v);
+					end
+					if not sortInfoCache[v] then sortInfoCache[v] = {} end
+					sortInfoCache[v].skill = skill
+					sortInfoCache[v].spec = spec
+					sortInfoCache[v].level = level
+				end
+			end,
+			cleanfunc = function()
+				for _, v in pairs(sortInfoCache) do
+					v.skill = nil
+					v.spec = nil
+					v.level = nil
+				end
+			end,
+			sortfunc = function(a,b)
+				local as,ap,al,bs,bp,bl;
+				as = sortInfoCache[a].skill
+				ap = sortInfoCache[a].spec
+				al = sortInfoCache[a].level
+				bs = sortInfoCache[b].skill
+				bp = sortInfoCache[b].spec
+				bl = sortInfoCache[b].level
+				if (as < bs) or (as == bs and ap < bp) or (as == bs and ap == bp and al < bl) or (as == bs and ap == bp and al == bl and a < b) then
+					return true
+				end
+				return false
+			end
+		},
+		{
+			name = L["Name"],
+			initfunc = function(searchResult)
+				local skill, name
+				for i, v in ipairs(searchResult) do
+					if type(v) == "string" then
+						skill = v
+						name = ""
+					else
+						skill = TradeskillInfo:GetCombineSkill(v)
+						-- TODO: Need to do some GetTradeSkillInfo magic to keep it in sync
+						name = TradeskillInfo:GetCombineName(-TradeskillInfo:GetCombineEnchantId(v));
+						if not name then name = "" end
+					end
+					if not sortInfoCache[v] then sortInfoCache[v] = {} end
+					sortInfoCache[v].skill = skill
+					sortInfoCache[v].name = name
+				end
+			end,
+			cleanfunc = function()
+				for _, v in pairs(sortInfoCache) do
+					v.skill = nil
+					v.name = nil
+				end
+			end,
+			sortfunc = function(a,b)
+				local as,an,bs,bn
+				as = sortInfoCache[a].skill
+				an = sortInfoCache[a].name
+				bs = sortInfoCache[b].skill
+				bn = sortInfoCache[b].name
+
+				if (as < bs) or (as == bs and an < bn) then
+					return true
+				end
+				return false
+			end
+		},
+		{
+			name = L["Auction Profit"],
+			initfunc = function(searchResult)
+				local skill, profit
+				for i, v in ipairs(searchResult) do
+					if type(v) == "string" then
+						skill = v
+						profit = -1
+					else
+						skill = TradeskillInfo:GetCombineSkill(v)
+						profit = select(3,TradeskillInfo:GetCombineAuctioneerCost(v))
+						if not profit then
+							profit = select(3,TradeskillInfo:GetCombineCost(v))
+						end
+					end
+					if not sortInfoCache[v] then sortInfoCache[v] = {} end
+					sortInfoCache[v].skill = skill
+					sortInfoCache[v].profit = profit
+				end
+			end,
+			cleanfunc = function()
+				for _, v in pairs(sortInfoCache) do
+					v.skill = nil
+					v.profit = nil
+				end
+			end,
+			sortfunc = function(a,b)
+				local as,ap,bs,bp
+				as = sortInfoCache[a].skill
+				ap = sortInfoCache[a].profit
+				bs = sortInfoCache[b].skill
+				bp = sortInfoCache[b].profit
+				if (as < bs) or (as == bs and bp ~= -1 and ap > bp) then
+					return true
+				end
+				if as == bs and ap == -1 then return true end
+				return false
+			end,
+		},
+		{
+			name = L["Vendor Profit"],
+			initfunc = function(searchResult)
+				local skill, profit
+				for i, v in ipairs(searchResult) do
+					if type(v) == "string" then
+						skill = v
+						profit = -1
+					else
+						skill = TradeskillInfo:GetCombineSkill(v)
+						profit = select(3,TradeskillInfo:GetCombineCost(v))
+					end
+					if not sortInfoCache[v] then sortInfoCache[v] = {} end
+					sortInfoCache[v].skill = skill
+					sortInfoCache[v].profit = profit
+				end
+			end,
+			cleanfunc = function()
+				for _, v in pairs(sortInfoCache) do
+					v.skill = nil
+					v.profit = nil
+				end
+			end,
+			sortfunc = function(a,b)
+				local as,ap,bs,bp
+				as = sortInfoCache[a].skill
+				ap = sortInfoCache[a].profit
+				bs = sortInfoCache[b].skill
+				bp = sortInfoCache[b].profit
+				if (as < bs) or (as == bs and bp ~= -1 and ap > bp) then
+					return true
+				end
+				if as == bs and ap == -1 then return true end
+				return false
+			end
+		},
+	}
+	local self = TradeskillInfoUI
+	local selectedValue = UIDropDownMenu_GetSelectedValue(TradeskillInfoSortDropDown)
+	local info = {}
+	for i,n in ipairs(sortInfo) do
+		info.text = n.name
+		info.value = i
+		info.func = function(frame, self, val) self:SortDropDown_OnClick(frame, val) end
+		info.arg1 = self
+		info.arg2 = n
+		if selectedValue == i then
+			info.checked = true
+		else
+			info.checked = false
+		end
+		UIDropDownMenu_AddButton(info)
+	end
+	TradeskillInfoUI:SetFuncSet(sortInfo[1])
+end
+
+function TradeskillInfoUI:SortDropDown_OnClick(button, info)
+	TradeskillInfoUI:SetFuncSet(info)
+	UIDropDownMenu_SetSelectedValue(TradeskillInfoSortDropDown, button.value)
+	self:SendMessage("TradeskillInfo_Update")
+end
+
+----------------------------------------------------------------------
 --- Availablity Drop Down Menu functions
 ----------------------------------------------------------------------
 function TradeskillInfoUI:AvailabilityDropDown_OnLoad()
@@ -820,23 +1026,12 @@ function TradeskillInfoUI:Search()
 	end
 	foundSkills = nil;
 
-	table.sort(self.vars.searchResult, function(a,b)
-		local as,ap,al,bs,bp,bl;
-		if type(a) == "string" then
-			as,ap,al = a,"",-1;
-		else
-			as,ap,al = TradeskillInfo:GetCombineSkill(a);
-		end
-		if type(b) == "string" then
-			bs,bp,bl	= b,"",-1;
-		else
-			bs,bp,bl = TradeskillInfo:GetCombineSkill(b);
-		end
-		if (as < bs) or (as == bs and ap < bp) or (as == bs and ap == bp and al < bl) or (as == bs and ap == bp and al == bl and a < b) then
-			return true
-		end
-		return false
-	end);
+	-- Init cache for the sort
+	searchSortInitFunc(self.vars.searchResult)
+	-- sort search results
+	table.sort(self.vars.searchResult, searchSortSortFunc)
+	-- Cleanup cache
+	searchSortCleanFunc()
 
 	self.vars.selectionIndex = 0;
 	if oldSelection then

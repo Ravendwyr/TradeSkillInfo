@@ -105,3 +105,8 @@ L["Show the item's stack size"] = "顯示物品堆疊大小"
 L["Show the source of recipes"] = "顯示配方來源"
 L["Show the price of recipes sold by vendors"] = "顯示配方的賣價"
 L["Recipes"] = "配方"
+-- TODO
+L["Sort by"] = "Sort by"
+L["Difficulty"] = "Difficulty"
+L["Auction Profit"] = "Auction Profit"
+L["Vendor Profit"] = "Vendor Profit"

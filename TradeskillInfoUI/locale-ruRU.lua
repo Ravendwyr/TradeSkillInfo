@@ -104,3 +104,8 @@ L["Show the item's stack size"] = "Отображать размер пачки"
 L["Show the source of recipes"] = "Отображать источник рецепта"
 L["Show the price of recipes sold by vendors"] = "Отображать сбыточную цену рецепта торговцам"
 L["Recipes"] = "Recipes"
+-- TODO
+L["Sort by"] = "Sort by"
+L["Difficulty"] = "Difficulty"
+L["Auction Profit"] = "Auction Profit"
+L["Vendor Profit"] = "Vendor Profit"
