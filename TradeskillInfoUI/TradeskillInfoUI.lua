@@ -787,10 +787,11 @@ function TradeskillInfoUI.SortDropDown_Initialize()
 				ap = sortInfoCache[a].profit
 				bs = sortInfoCache[b].skill
 				bp = sortInfoCache[b].profit
-				if (as < bs) or (as == bs and bp ~= -1 and ap > bp) then
+				if as == bs and bp == -1 then return false end
+				if as == bs and ap == -1 then return true end
+				if (as < bs) or (as == bs and ap > bp) then
 					return true
 				end
-				if as == bs and ap == -1 then return true end
 				return false
 			end,
 		},
@@ -823,10 +824,14 @@ function TradeskillInfoUI.SortDropDown_Initialize()
 				ap = sortInfoCache[a].profit
 				bs = sortInfoCache[b].skill
 				bp = sortInfoCache[b].profit
-				if (as < bs) or (as == bs and bp ~= -1 and ap > bp) then
+				if as == bs and bp == -1 then return false end
+				if as == bs and ap == -1 then return true end
+				if (as < bs) or (as == bs and ap > bp) then
 					return true
 				end
-				if as == bs and ap == -1 then return true end
+				if (as < bs) or (as == bs and ap > bp) then
+					return true
+				end
 				return false
 			end
 		},
