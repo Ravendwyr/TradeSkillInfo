@@ -208,7 +208,7 @@
 				<Anchors>
 					<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT">
 						<Offset>
-							<AbsDimension x="-30" y="-50"/>
+							<AbsDimension x="-30" y="-75"/>
 						</Offset>
 					</Anchor>
 					<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT">
