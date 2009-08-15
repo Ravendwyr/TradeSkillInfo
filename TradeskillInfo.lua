@@ -415,7 +415,8 @@ function TradeskillInfo:MakeSpecialCase(id, spellId)
 	local specialIds=self.vars.specialcases[id]
 	for i in string.gmatch(specialIds, "(%d+)") do
 		i = tonumber(i)
-		if -self:GetCombineEnchantId(i) == spellId then
+		local spellId2 = self:GetCombineEnchantId(i)
+		if spellId2 == spellId or spellId2 == -spellId then
 			return i
 		end
 	end
@@ -640,7 +641,7 @@ function TradeskillInfo:GetCombine(id)
 	if not self:CombineExists(id) then return end
 	local combine = {};
 	local found, _, skill, spec, level, l2, l3, l4, components, recipe, yield, item =
-		string.find(self.vars.combines[id], "%d*|?(%u)(%l*)(%d+)/?(%d*)/?(%d*)/?(%d*)|([^|]+)[|]?(%d*)[|]?([^|]*)[|]?(%d*)")
+		string.find(self.vars.combines[id], "-?%d*|?(%u)(%l*)(%d+)/?(%d*)/?(%d*)/?(%d*)|([^|]+)[|]?(%d*)[|]?([^|]*)[|]?(%d*)")
 	combine.skill = skill;
 	combine.spec = spec;
 	combine.level = tonumber(level);
@@ -659,7 +660,13 @@ end
 function TradeskillInfo:GetCombineName(id)
 	local name
 	if id > 0 then
-		name = self:GetComponent(id);
+		local enchantId = self:GetCombineEnchantId(id)
+		-- Hack Alert: If enchant id < 0, then use item name, otherwise ise spell name
+		if (enchantId < 0) then
+			name = self:GetComponent(id);
+		else
+			name = GetSpellInfo(enchantId)
+		end
 	else
 		name = GetSpellInfo(-id)
 	end
@@ -671,7 +678,7 @@ function TradeskillInfo:GetCombineEnchantId(id)
 	if not self:CombineExists(id) then return 0 end
 	local enchantId
 	if id > 0 then
-		_,_,enchantId = string.find(self.vars.combines[id],"(%d*)|?%a+%d+");
+		_,_,enchantId = string.find(self.vars.combines[id],"(-?%d*)|?%a+%d+");
 	else
 		enchantId = -1 * id
 	end
@@ -680,13 +687,13 @@ end
 
 function TradeskillInfo:GetCombineLevel(id)
 	if not self:CombineExists(id) then return 0 end
-	local _,_,level = string.find(self.vars.combines[id],"%d*|?%a+(%d+)");
+	local _,_,level = string.find(self.vars.combines[id],"-?%d*|?%a+(%d+)");
 	return tonumber(level)
 end
 
 function TradeskillInfo:GetCombineDifficulty(id)
 	if not self:CombineExists(id) then return 0 end
-	local _,_,l1,l2,l3,l4 = string.find(self.vars.combines[id],"%d*|?%a+(%d+)/?(%d*)/?(%d*)/?(%d*)");
+	local _,_,l1,l2,l3,l4 = string.find(self.vars.combines[id],"-?%d*|?%a+(%d+)/?(%d*)/?(%d*)/?(%d*)");
 	if l2 == "" then l2=nil end
 	if l3 == "" then l3=nil end
 	if l4 == "" then l4=nil end
@@ -695,14 +702,14 @@ end
 
 function TradeskillInfo:GetCombineSkill(id)
 	if not self:CombineExists(id) then return end
-	local _,_,skill,spec,level = string.find(self.vars.combines[id],"%d*|?(%u)(%l*)(%d+)");
+	local _,_,skill,spec,level = string.find(self.vars.combines[id],"-?%d*|?(%u)(%l*)(%d+)");
 	if not spec then spec = "" end
 	return skill,spec,tonumber(level)
 end
 
 function TradeskillInfo:GetCombineRecipe(id)
 	if not self:CombineExists(id) then return end
-	local _, _, recipe = string.find(self.vars.combines[id],"%d*|?[^|]+|[^|]+[|]?(%d*)");
+	local _, _, recipe = string.find(self.vars.combines[id],"-?%d*|?[^|]+|[^|]+[|]?(%d*)");
 	if recipe and recipe ~= "" then recipe = tonumber(recipe) end
 	if not self.vars.recipes[recipe] then recipe = "" end
 	return recipe;
@@ -710,14 +717,14 @@ end
 
 function TradeskillInfo:GetCombineYield(id)
 	if not self:CombineExists(id) then return end
-	local _, _, yield = string.find(self.vars.combines[id],"%d*|?[^|]+|[^|]+[|]?%d*[|]?([^|]*)");
+	local _, _, yield = string.find(self.vars.combines[id],"-?%d*|?[^|]+|[^|]+[|]?%d*[|]?([^|]*)");
 	if yield and yield ~= "" then yield = tonumber(yield) else yield = 1 end
 	return yield
 end
 
 function TradeskillInfo:GetCombineItem(id)
 	if not self:CombineExists(id) then return end
-	local _, _, item = string.find(self.vars.combines[id],"%d*|?[^|]+|[^|]+[|]?%d*[|]?[^|]*[|]?(%d*)");
+	local _, _, item = string.find(self.vars.combines[id],"-?%d*|?[^|]+|[^|]+[|]?%d*[|]?[^|]*[|]?(%d*)");
 	if item and item ~= "" then item = tonumber(item) else item = nil end
 	return item
 end
@@ -725,7 +732,7 @@ end
 function TradeskillInfo:GetCombineComponents(id, getVendorPrice, getAuctioneerPrice)
 	if not self:CombineExists(id) then return end
 	local components = {};
-	local _, _, compstring = string.find(self.vars.combines[id],"%d*|?[^|]+|([^|]+)");
+	local _, _, compstring = string.find(self.vars.combines[id],"-?%d*|?[^|]+|([^|]+)");
 	for s in string.gmatch(compstring,"%S+") do
 		local c = {};
 		_,_,c.id,c.num = string.find(s,"(%d+):(%d+)");
@@ -1340,7 +1347,10 @@ function TradeskillInfo:CharSkills(name)
 end
 
 function TradeskillInfo:IsCombineKnowByChar(name,id)
-	return self.db.realm.userdata[name].knownRecipes[id];
+	local spellId = self:GetCombineEnchantId(id)
+	-- Hack alert! Using negative spellId to indicate recipes whose item name instead of spell name is used.
+	if (spellId < 0) then spellId = -spellId end
+	return self.db.realm.userdata[name].knownRecipes[id] or self.db.realm.userdata[name].knownRecipes[-spellId];
 end
 
 function TradeskillInfo:GetCombineKnownBy(id, tooltip)
