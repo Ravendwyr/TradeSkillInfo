@@ -278,14 +278,17 @@ function TradeskillInfo:OnSkillUpdate()
 	end
 end
 
+local hookedAuctionUi = false
+
 function TradeskillInfo:HookAuctionUI()
-	if AuctionFrame then
+	if AuctionFrame and not hookedAuctionUi then
 		for j=1,8 do
 			local button = getglobal("BrowseButton"..j.."Item");
 			self:HookScript(button,"OnClick","AuctionItemButton_OnClick");
 			button:RegisterForClicks("LeftButtonUp", "RightButtonUp");
 		end
 		self:SecureHook("AuctionFrameBrowse_Update");
+		hookedAuctionUi = true
 	end
 --	if Auc-Advanced and not self:IsHooked(Auc-Advanced, "lib.ListUpdate")
 --		self:Hook (Auc-Advanced, "lib.ListUpdate")
