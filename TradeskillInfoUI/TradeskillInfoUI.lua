@@ -727,8 +727,7 @@ function TradeskillInfoUI.SortDropDown_Initialize()
 						name = ""
 					else
 						skill = TradeskillInfo:GetCombineSkill(v)
-						-- TODO: Need to do some GetTradeSkillInfo magic to keep it in sync
-						name = TradeskillInfo:GetCombineName(-TradeskillInfo:GetCombineEnchantId(v));
+						name = TradeskillInfo:GetCombineName(v)
 						if not name then name = "" end
 					end
 					if not sortInfoCache[v] then sortInfoCache[v] = {} end
@@ -1000,7 +999,7 @@ function TradeskillInfoUI:Search()
 					if searchText ~= "" then
 						found = false;
 						if self.db.profile.SearchName then
-							skillName = TradeskillInfo:GetCombineName(-TradeskillInfo:GetCombineEnchantId(i));
+							skillName = TradeskillInfo:GetCombineName(i);
 							if string.find(string.lower(skillName), searchText) then
 								found = true;
 							end
@@ -1077,7 +1076,7 @@ function TradeskillInfoUI:GetTradeSkillInfo(index)
 		local isExpanded = self.db.profile.expanded[self.vars.searchResult[index]];
 		return skillName, "header", isExpanded;
 	end
-	skillName = TradeskillInfo:GetCombineName(-TradeskillInfo:GetCombineEnchantId(self.vars.searchResult[index]));
+	skillName = TradeskillInfo:GetCombineName(self.vars.searchResult[index]);
 	return skillName, "combine", true;
 end
 
