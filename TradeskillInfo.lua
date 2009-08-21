@@ -1914,7 +1914,7 @@ function TradeskillInfo:ShowingSkillProfit()
 end
 
 function TradeskillInfo:ShowingSkillAuctioneerProfit()
-	return self.db.profile.ShowSkillAuctioneerProfit and AucAdvanced and AucAdvanced.API or GetAuctionBuyout;
+	return self.db.profile.ShowSkillAuctioneerProfit and (AucAdvanced and AucAdvanced.API or GetAuctionBuyout);
 end
 
 function TradeskillInfo:ShowingTooltipUsedIn()
@@ -1962,7 +1962,7 @@ function TradeskillInfo:ShowingTooltipStack()
 end
 
 function TradeskillInfo:ShowingTooltipMarketValue()
-	return self.db.profile.TooltipMarketValue and AucAdvanced and AucAdvanced.API or GetAuctionBuyout;
+	return self.db.profile.TooltipMarketValue and (AucAdvanced and AucAdvanced.API or GetAuctionBuyout);
 end
 
 function TradeskillInfo:ColoringAHRecipes()
