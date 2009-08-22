@@ -116,9 +116,9 @@ function TradeskillInfoUI:Frame_Show()
 	FauxScrollFrame_SetOffset(TradeskillInfoListScrollFrame, 0);
 	TradeskillInfoListScrollFrameScrollBar:SetMinMaxValues(0, 0);
 	TradeskillInfoListScrollFrameScrollBar:SetValue(0);
-	TradeskillInfoUI:Search();
-	TradeskillInfoUI:Frame_SetSelection(TradeskillInfoUI.vars.selectionIndex);
-	TradeskillInfoUI.Frame_Update();
+	self:Search();
+	self:Frame_SetSelection(TradeskillInfoUI.vars.selectionIndex);
+	self:Frame_Update();
 end
 
 function TradeskillInfoUI:Frame_Hide()
@@ -192,7 +192,6 @@ function TradeskillInfoUI:OnTradeskillInfoUpdate()
 		selectionIndex = self.vars.selectionIndex;
 	end
 	if ( self.vars.selectionIndex > 1 and self.vars.selectionIndex <= self:GetNumTradeSkills() ) then
---		self:Print("OnTradeskillInfoUpdate 1)",selectionIndex,FauxScrollFrame_GetOffset(TradeskillInfoListScrollFrame));
 		self:Frame_SetSelection(selectionIndex);
 		if selectionIndex < FauxScrollFrame_GetOffset(TradeskillInfoListScrollFrame) then
 			FauxScrollFrame_SetOffset(TradeskillInfoListScrollFrame, selectionIndex-1);
@@ -201,12 +200,11 @@ function TradeskillInfoUI:OnTradeskillInfoUpdate()
 			FauxScrollFrame_SetOffset(TradeskillInfoListScrollFrame, selectionIndex-TradeskillInfoUI.cons.skillsDisplayed);
 			TradeskillInfoListScrollFrameScrollBar:SetValue((selectionIndex-TradeskillInfoUI.cons.skillsDisplayed)*TradeskillInfoUI.cons.skillHeight);
 		end
---		self:Print("OnTradeskillInfoUpdate 2)",selectionIndex,FauxScrollFrame_GetOffset(TradeskillInfoListScrollFrame));
 	else
 		FauxScrollFrame_SetOffset(TradeskillInfoListScrollFrame, 0);
 		TradeskillInfoListScrollFrameScrollBar:SetValue(0);
 	end
-	self.Frame_Update();
+	self:Frame_Update();
 end
 
 ----------------------------------------------------------------------
@@ -231,8 +229,39 @@ local function getSkillButton(i)
 	return skillButton
 end
 
-function TradeskillInfoUI.Frame_Update()
--- Draw frame with tradeskill info
+function TradeskillInfoUI:Frame_Update()
+	local self = TradeskillInfoUI
+	if self.vars.coUpdate_Frame and coroutine.status(self.vars.coUpdate_Frame) ~= "dead" then
+		-- Tell the running coroutine to restart drawing
+		self.vars.coUpdate_FrameRestart = true
+		-- We'll redraw. No need to wait for the operation to complete properly.
+		coroutine.resume(self.vars.coUpdate_Frame)
+		return
+	end
+	self.vars.coUpdate_Frame = coroutine.create(self.CoroutineFrame_Update)
+	if self.vars.coUpdate_Frame then
+		local status, err = coroutine.resume(self.vars.coUpdate_Frame, self)
+		if not status then
+			self:Print("Cannot update the recipe list - " .. (err or "<no reason>"))
+		end
+	else
+		self:Print("Cannot update the recipe list")
+	end
+end
+
+function TradeskillInfoUI:CoroutineFrame_Update()
+	local finished = false
+	repeat
+		self:DoFrameUpdate()
+
+		-- If we need to restart ... go back to the beginning of loop
+		finished = not self.vars.coUpdate_FrameRestart
+		self.vars.coUpdate_FrameRestart = false
+	until finished
+end
+
+function TradeskillInfoUI:DoFrameUpdate()
+	-- Draw frame with tradeskill info
 	local self = TradeskillInfoUI;
 	local numTradeSkills = self:GetNumTradeSkills();
 	local skillOffset = FauxScrollFrame_GetOffset(TradeskillInfoListScrollFrame);
@@ -254,7 +283,7 @@ function TradeskillInfoUI.Frame_Update()
 
 	-- ScrollFrame update
 	local buttonCount = TradeskillInfoListScrollFrame:GetHeight() / TradeskillInfoUI.cons.skillHeight
-buttonCount = math.floor(buttonCount)
+	buttonCount = math.floor(buttonCount)
 
 	FauxScrollFrame_Update(TradeskillInfoListScrollFrame, numTradeSkills, buttonCount, TradeskillInfoUI.cons.skillHeight, nil, nil, nil, TradeskillInfoHighlightFrame, 293, 316 );
 
@@ -278,6 +307,10 @@ buttonCount = math.floor(buttonCount)
 
 	TradeskillInfoHighlightFrame:Hide();
 	for i=1, buttonCount do
+		local skillButton = getSkillButton(i)
+		skillButton:SetText("***");
+	end
+	for i=1, buttonCount do
 		local skillIndex = i + skillOffset;
 		local skillButton = getSkillButton(i)
 		local skillButtonText = getglobal(skillButton:GetName() .. "Text")
@@ -285,7 +318,19 @@ buttonCount = math.floor(buttonCount)
 		skillButton:SetWidth(TradeskillInfoListFrame:GetWidth()-34)
 		skillButtonText:SetWidth(TradeskillInfoListFrame:GetWidth()-34)
 		if ( skillIndex <= numTradeSkills ) then
-			local skillName, skillType, isExpanded = self:GetTradeSkillInfo(skillIndex);
+			local skillName, skillType, isExpanded = self:GetTradeSkillInfo(skillIndex)
+			-- If we got ???? or an ID instead of a skill name ...
+			if skillName == "????" or
+			   string.match(skillName, "-?%d+") == skillName then
+				-- ... update the local cache ...
+				self:UpdateCacheIndex(self.vars.searchResult[skillIndex], self.vars.coUpdate_Frame)
+				-- .. If we need to restart drawing, return early. We'll be called again ...
+				if self.vars.coUpdate_FrameRestart then
+					return
+				end
+				-- ... otherwise try to obtain the infgo again. It should be there now.
+				skillName, skillType, isExpanded = self:GetTradeSkillInfo(skillIndex);
+			end
 			skillType = self:GetTradeSkillAvailability(skillIndex);
 			-- Set button widths if scrollbar is shown or hidden
 			if ( TradeskillInfoListScrollFrame:IsVisible() ) then
@@ -359,8 +404,48 @@ end
 --- Draw selected tradeskill info. Item + reagents
 ----------------------------------------------------------------------
 function TradeskillInfoUI:Frame_SetSelection(id)
+	if self.vars.coFrame_SetSelection and coroutine.status(self.vars.coFrame_SetSelection) ~= "dead" then
+		-- Tell the coroutine to restart using a new ID
+		self.vars.coFrame_SetSelectionNewId = id
+		-- We're changing data. No need to wait for operation to complete properly.
+		coroutine.resume(self.vars.coFrame_SetSelection)
+		return
+	end
+	self.vars.coFrame_SetSelection = coroutine.create(self.CoroutineFrame_SetSelection)
+	if self.vars.coFrame_SetSelection then
+		local status, err = coroutine.resume(self.vars.coFrame_SetSelection, self, id)
+		if not status then
+			self:Print("Cannot update recipe details - " .. (err or "<no reason>"))
+		end
+	else
+		self:Print("Cannot update the recipe details")
+	end
+end
+
+function TradeskillInfoUI:CoroutineFrame_SetSelection(id)
+	while id do
+		self:DoFrameSetSelection(id)
+
+		-- If we have an update id, then we probably returned early from
+		-- DoFrameSetSelection(). We'll just need to call it with the updated id.
+		id = self.vars.coFrame_SetSelectionNewId
+		self.vars.coFrame_SetSelectionNewId = nil
+	end
+end
+
+function TradeskillInfoUI:DoFrameSetSelection(id)
 	if ( id > self:GetNumTradeSkills() ) then
 		return;
+	end
+	-- Hide all reagents at start.
+	-- When there is a cache update, misleading information appears on screen.
+	for i=1, TradeskillInfoUI.cons.maxSkillReagents, 1 do
+		local reagent = getglobal("TradeskillInfoReagent"..i);
+		reagent:Hide();
+		reagent.tooltip = nil;
+		reagent.known = nil;
+		reagent.link = nil;
+		reagent.name = nil;
 	end
 	if id == 0 then
 		TradeskillInfoSkillName:Hide();
@@ -374,14 +459,6 @@ function TradeskillInfoUI:Frame_SetSelection(id)
 		TradeskillInfoDescription:SetText("");
 		TradeskillInfoRecipe:SetText("");
 		TradeskillInfoKnown:SetText("");
-		for i=1, TradeskillInfoUI.cons.maxSkillReagents, 1 do
-			local reagent = getglobal("TradeskillInfoReagent"..i);
-			reagent:Hide();
-			reagent.tooltip = nil;
-			reagent.known = nil;
-			reagent.link = nil;
-			reagent.name = nil;
-		end
 		return;
 	end
 	local skillName, skillType, isExpanded = self:GetTradeSkillInfo(id);
@@ -405,6 +482,16 @@ function TradeskillInfoUI:Frame_SetSelection(id)
 	TradeskillInfoSkillName:SetText(skillName);
 	TradeskillInfoSkillName:Show();
 	local skillTexture,skillLink,skillItemString = self:GetTradeSkillIcon(id)
+	if not skillLink then
+		-- ... update the local cache ...
+		self:UpdateCacheIndex(self.vars.searchResult[id], self.vars.coFrame_SetSelection)
+		-- ... if we need to draw a new selection, return early. We'll be called again ...
+		if self.vars.coFrame_SetSelectionNewId then
+			return
+		end
+		-- ... therwise try to get info again. It should succeed
+		skillTexture,skillLink,skillItemString = self:GetTradeSkillIcon(id)
+	end
 	TradeskillInfoSkillIcon:SetNormalTexture(skillTexture);
 	TradeskillInfoSkillIcon.tooltip = skillItemString;
 	TradeskillInfoSkillIcon.known = skillLink ~= nil;
@@ -471,7 +558,21 @@ function TradeskillInfoUI:Frame_SetSelection(id)
 	-- Reagents
 	local numReagents = self:GetTradeSkillNumReagents(id);
 	for i=1, numReagents, 1 do
-		local reagentName, reagentTexture, reagentCount, reagentLink, reagentItemString = self:GetTradeSkillReagentInfo(i);
+		local reagentName, reagentTexture, reagentCount, reagentLink, reagentItemString = self:GetTradeSkillReagentInfo(i)
+
+		if not reagentLink then
+			-- ... update the local cache ...
+			self:UpdateCacheIndex(self:GetTradeSkillReagentId(i), self.vars.coFrame_SetSelection)
+			-- ... if we need to draw a new selection, return early. We'll be called again ...
+			if self.vars.coFrame_SetSelectionNewId then
+				return
+			end
+			-- ... therwise try to get info again. It should succeed.
+			-- We need to call GetTradeSkillNumReagents() to obtain new local cache.
+			self:GetTradeSkillNumReagents(id)
+			reagentName, reagentTexture, reagentCount, reagentLink, reagentItemString = self:GetTradeSkillReagentInfo(i)
+		end
+
 		local reagent = getglobal("TradeskillInfoReagent"..i)
 		local name = getglobal("TradeskillInfoReagent"..i.."Name");
 		local count = getglobal("TradeskillInfoReagent"..i.."Count");
@@ -489,15 +590,6 @@ function TradeskillInfoUI:Frame_SetSelection(id)
 			name:SetTextColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
 			count:SetText(reagentCount);
 		end
-	end
-
-	for i=numReagents + 1, TradeskillInfoUI.cons.maxSkillReagents, 1 do
-		local reagent = getglobal("TradeskillInfoReagent"..i);
-		reagent:Hide();
-		reagent.tooltip = nil;
-		reagent.known = nil;
-		reagent.link = nil;
-		reagent.name = nil;
 	end
 
 	local botLeftIdx = math.floor((numReagents-1)/2)*2 + 1
@@ -588,9 +680,7 @@ function TradeskillInfoUI:ReagentIcon_OnClick(frame, button)
 				self:PasteRecipie(frame.id);
 			end
 		else
-			GameTooltip:SetOwner(frame, "ANCHOR_TOPLEFT");
-			GameTooltip:SetHyperlink(frame.tooltip);
-			self:ScheduleTimer(self.Frame_Refresh, 1, self);
+			TradeskillInfoUI:UpdateCacheItem(frame.tooltip)
 		end
 	elseif ( button == "RightButton" ) then
 			if AuctionFrameBrowse and AuctionFrameBrowse:IsVisible() then
@@ -634,7 +724,6 @@ function TradeskillInfoUI:ShowReagentTooltip(frame)
 		GameTooltip:SetText(frame.name);
 		GameTooltip:AddLine(L["Item not in local cache."]);
 		GameTooltip:AddLine(L["Click to try to update local cache."]);
-		GameTooltip:AddLine(L["Warning! You can be disconnected."]);
 		GameTooltip:Show()
 	end
 end
@@ -1154,8 +1243,14 @@ end
 
 function TradeskillInfoUI:GetTradeSkillReagentInfo(i)
 	if not self.vars.components[i] then return end
-	return self.vars.components[i].name, self.vars.components[i].texture, self.vars.components[i].num, self.vars.components[i].link, self.vars.components[i].itemString;
+	return self.vars.components[i].name, self.vars.components[i].texture, self.vars.components[i].num, self.vars.components[i].link, self.vars.components[i].itemString, self.vars.components[i].id;
 end
+
+function TradeskillInfoUI:GetTradeSkillReagentId(i)
+	if not self.vars.components[i] then return end
+	return self.vars.components[i].id;
+end
+
 
 function TradeskillInfoUI:GetTradeSkillExtraData(index)
 	if not self.vars.searchResult[index] then return end
@@ -1271,63 +1366,93 @@ function TradeskillInfoUI:PasteRecipie(id)
 	ChatFrameEditBox:Insert(text);
 end
 
---[[
-TradeskillInfoSkillButtonTemplate
-TradeskillInfoItemTemplate
-TradeskillInfoButtonTemplate
-TradeskillInfoListScrollFrameTemplate
+do
+	-- tooltip frame for forcing a local cache update
+	local tipframe = CreateFrame("GameTooltip", "TSI_Tooltip", nil, "GameTooltipTemplate")
+	-- Action table. Indexes are item (positive) or spell (negative) ids. Values are either
+	-- functions or threads. When a tooltip information is updated, functions are called,
+	-- and threads are resumed for the id of the tooltip.
+	local idAction = {}
 
-TradeskillInfoFrame
-	TradeskillInfoFrameTitleText
+	-- Perform the action of an item or spell Id. Uses idAction table.
+	local performIdAction = function(id)
+		if type(idAction[id]) == "thread" then
+			if coroutine.status(idAction[id]) == "suspended" then
+				coroutine.resume(idAction[id])
+			end
+		elseif type(idAction[id]) == "function" then
+			idAction[id]()
+		end
+	end
 
-	TradeskillInfoListFrame
-		TradeskillInfoCollapseAllButton
-		TradeskillInfoAvailabilityDropDown
-		TradeskillInfoTradeskillsDropDown
-		TradeskillInfoHighlightFrame
-		TradeskillInfoSkill1
-		TradeskillInfoSkill2
-		TradeskillInfoSkill3
-		TradeskillInfoSkill4
-		TradeskillInfoSkill5
-		TradeskillInfoSkill6
-		TradeskillInfoSkill7
-		TradeskillInfoSkill8
-		TradeskillInfoSkill9
-		TradeskillInfoSkill10
-		TradeskillInfoSkill11
-		TradeskillInfoSkill12
-		TradeskillInfoSkill13
-		TradeskillInfoSkill14
-		TradeskillInfoSkill15
-		TradeskillInfoSkill16
-		TradeskillInfoListScrollFrame
+	tipframe:SetOwner(UIParent, "ANCHOR_NONE")
 
-	TradeskillInfoDetailFrame
-		TradeskillInfoSkillName
-		TradeskillInfoRequirementLabel
-		TradeskillInfoRequirementText
+	tipframe:SetScript("OnTooltipSetItem", function()
+		local _, itemLink = tipframe:GetItem()
+		local itemId = tonumber(string.match(itemLink, "item:(%d+):"))
+		performIdAction(itemId)
+	end)
 
-		TradeskillInfoDescription
-		TradeskillInfoRecipe
-		TradeskillInfoKnown
-		TradeskillInfoReagentLabel
+	tipframe:SetScript("OnTooltipSetSpell", function()
+		local _, _, spellId = tipframe:GetSpell()
+		performIdAction(-spellId)
+	end)
 
-		TradeskillInfoSkillIcon
-		TradeskillInfoSkillIconCount
+	-- Update the cache of the specified item or spell, and refresh the details frame.
+	-- TODO: Not sure this will be needed anymore.
+	function TradeskillInfoUI:UpdateCacheItem(itemLink)
+		-- extract id from a link. The link may be an item, spell, or enchant link.
+		local id = tonumber(string.match(itemLink, "item:(%d+):"))
+		if not id then
+			id = tonumber(string.match(itemLink, "spell:(%d+):"))
+		end
+		if not id then
+			id = tonumber(string.match(itemLink, "enchant:(%d+):"))
+		end
+		if not id then return end
 
-		TradeskillInfoReagent1
-		TradeskillInfoReagent2
-		TradeskillInfoReagent3
-		TradeskillInfoReagent4
-		TradeskillInfoReagent5
-		TradeskillInfoReagent6
-		TradeskillInfoReagent7
-		TradeskillInfoReagent8
+		-- Update local cache, and redraw details frame.
+		idAction[id] = function()
+			idAction[id] = nil
+			self:Frame_Refresh()
+		end
+		tipframe:SetHyperlink(itemLink)
+	end
 
-	TradeskillInfoSearchButton
-	TradeskillInfoInputBox
+	-- Update local cache for the specified index, and wait until update is complete.
+	-- NOTE: This must be called from within a coroutine.
+	function TradeskillInfoUI:UpdateCacheIndex(id, coObj)
+		tipframe:SetOwner(UIParent, "ANCHOR_NONE")
+		idAction[id] = coObj
+		local skillLink
 
-	TradeskillInfoFrameCloseButton
-]]
-
+		if id > 0 then
+			-- it could be a specialcase ID. Get the real item ID.
+			id = TradeskillInfo:GetSpecialCase(id)
+			skillLink = "item:" .. id .. ":0:0:0:0:0:0:0"
+		else
+			skillLink = "spell:" .. -id
+		end
+		-- Try up to three times to get the info before giving up.
+		-- For some reason blizzard calls the script even when the local cache is not updated
+		-- once or twice. The retries handle these cases.
+		for retries = 1,3 do
+			-- deadlock prevention: Assume update will complete in 2 seconds.
+			-- This should be unnecessary, but better than risking
+			-- locking down the coroutine forever.
+			local hTimer = self:ScheduleTimer(performIdAction, 2, id)
+			tipframe:SetHyperlink(skillLink)
+			coroutine.yield()
+			self:CancelTimer(hTimer)
+			local name
+			if id > 0 then
+				name = GetItemInfo(id)
+			else
+				name = GetSpellInfo(id)
+			end
+			-- If we update successfully, stop. Otherwise, try again.
+			if name then break end
+		end
+		idAction[id] = nil
+    end
+end
