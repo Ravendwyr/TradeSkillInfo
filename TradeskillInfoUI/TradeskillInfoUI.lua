@@ -772,17 +772,21 @@ function TradeskillInfoUI.SortDropDown_Initialize()
 		{
 			name = L["Difficulty"],
 			initfunc = function(searchResult)
-				local skill, spec, level
+				local skill, spec, level, subgrp
 				for i, v in ipairs(searchResult) do
 					if type(v) == "string" then
-						skill, spec, level = v,"",-1;
+						skill, spec, level, subgrp = v,"",-1,0
 					else
 						skill, spec, level = TradeskillInfo:GetCombineSkill(v);
+						subgrp = TradeskillInfo:GetCombineEnchantId(v)
+						if subgrp < 0 then subgrp = 2
+						else subgrp = 1 end
 					end
 					if not sortInfoCache[v] then sortInfoCache[v] = {} end
 					sortInfoCache[v].skill = skill
 					sortInfoCache[v].spec = spec
 					sortInfoCache[v].level = level
+					sortInfoCache[v].subgrp = subgrp
 				end
 			end,
 			cleanfunc = function()
@@ -790,17 +794,26 @@ function TradeskillInfoUI.SortDropDown_Initialize()
 					v.skill = nil
 					v.spec = nil
 					v.level = nil
+					v.subgrp = nil
 				end
 			end,
 			sortfunc = function(a,b)
-				local as,ap,al,bs,bp,bl;
-				as = sortInfoCache[a].skill
-				ap = sortInfoCache[a].spec
-				al = sortInfoCache[a].level
-				bs = sortInfoCache[b].skill
-				bp = sortInfoCache[b].spec
-				bl = sortInfoCache[b].level
-				if (as < bs) or (as == bs and ap < bp) or (as == bs and ap == bp and al < bl) or (as == bs and ap == bp and al == bl and a < b) then
+				local ac, bc;
+				ac = sortInfoCache[a].skill
+				bc = sortInfoCache[b].skill
+				if ac == bc then
+					ac = sortInfoCache[a].spec
+					bc = sortInfoCache[b].spec
+				end
+				if ac == bc then
+					ac = sortInfoCache[a].subgrp
+					bc = sortInfoCache[b].subgrp
+				end
+				if ac == bc then
+					ac = sortInfoCache[a].level
+					bc = sortInfoCache[b].level
+				end
+				if (ac < bc) then
 					return true
 				end
 				return false
@@ -809,35 +822,46 @@ function TradeskillInfoUI.SortDropDown_Initialize()
 		{
 			name = L["Name"],
 			initfunc = function(searchResult)
-				local skill, name
+				local skill, name, subgrp
 				for i, v in ipairs(searchResult) do
 					if type(v) == "string" then
-						skill = v
-						name = ""
+						skill, name, subgrp = v, "", 0
 					else
 						skill = TradeskillInfo:GetCombineSkill(v)
 						name = TradeskillInfo:GetCombineName(v)
 						if not name then name = "" end
+						subgrp = TradeskillInfo:GetCombineEnchantId(v)
+						if subgrp < 0 then subgrp = 2
+						else subgrp = 1 end
 					end
 					if not sortInfoCache[v] then sortInfoCache[v] = {} end
 					sortInfoCache[v].skill = skill
 					sortInfoCache[v].name = name
+					sortInfoCache[v].subgrp = subgrp
 				end
 			end,
 			cleanfunc = function()
 				for _, v in pairs(sortInfoCache) do
 					v.skill = nil
 					v.name = nil
+					v.subgrp = nil
 				end
 			end,
 			sortfunc = function(a,b)
-				local as,an,bs,bn
-				as = sortInfoCache[a].skill
-				an = sortInfoCache[a].name
-				bs = sortInfoCache[b].skill
+				local ac,bc
+				ac = sortInfoCache[a].skill
+				bc = sortInfoCache[b].skill
+				if ac == bc then
+					ac = sortInfoCache[a].subgrp
+					bc = sortInfoCache[b].subgrp
+				end
+				if ac == bc then
+					ac = sortInfoCache[a].name
+					bc = sortInfoCache[b].name
+				end
 				bn = sortInfoCache[b].name
 
-				if (as < bs) or (as == bs and an < bn) then
+				if ac < bc then
 					return true
 				end
 				return false
@@ -846,38 +870,46 @@ function TradeskillInfoUI.SortDropDown_Initialize()
 		{
 			name = L["Auction Profit"],
 			initfunc = function(searchResult)
-				local skill, profit
+				local skill, profit, subgrp
 				for i, v in ipairs(searchResult) do
 					if type(v) == "string" then
-						skill = v
-						profit = -1
+						skill, profit, subgrp = v, -1, 0
 					else
 						skill = TradeskillInfo:GetCombineSkill(v)
 						profit = select(3,TradeskillInfo:GetCombineAuctioneerCost(v))
 						if not profit then
 							profit = select(3,TradeskillInfo:GetCombineCost(v))
 						end
+						subgrp = TradeskillInfo:GetCombineEnchantId(v)
+						if subgrp < 0 then subgrp = 2
+						else subgrp = 1 end
 					end
 					if not sortInfoCache[v] then sortInfoCache[v] = {} end
 					sortInfoCache[v].skill = skill
 					sortInfoCache[v].profit = profit
+					sortInfoCache[v].subgrp = subgrp
 				end
 			end,
 			cleanfunc = function()
 				for _, v in pairs(sortInfoCache) do
 					v.skill = nil
 					v.profit = nil
+					v.subgrp = nil
 				end
 			end,
 			sortfunc = function(a,b)
-				local as,ap,bs,bp
-				as = sortInfoCache[a].skill
-				ap = sortInfoCache[a].profit
-				bs = sortInfoCache[b].skill
-				bp = sortInfoCache[b].profit
-				if as == bs and bp == -1 then return false end
-				if as == bs and ap == -1 then return true end
-				if (as < bs) or (as == bs and ap > bp) then
+				local ac,bc
+				ac = sortInfoCache[a].skill
+				bc = sortInfoCache[b].skill
+				if ac == bc then
+					ac = sortInfoCache[a].subgrp
+					bc = sortInfoCache[b].subgrp
+				end
+				if ac == bc then
+					ac = -sortInfoCache[a].profit
+					bc = -sortInfoCache[b].profit
+				end
+				if ac < bc then
 					return true
 				end
 				return false
@@ -886,38 +918,43 @@ function TradeskillInfoUI.SortDropDown_Initialize()
 		{
 			name = L["Vendor Profit"],
 			initfunc = function(searchResult)
-				local skill, profit
+				local skill, profit, subgrp
 				for i, v in ipairs(searchResult) do
 					if type(v) == "string" then
-						skill = v
-						profit = -1
+						skill, profit, subgrp = v, -1, 0
 					else
 						skill = TradeskillInfo:GetCombineSkill(v)
 						profit = select(3,TradeskillInfo:GetCombineCost(v))
+						subgrp = TradeskillInfo:GetCombineEnchantId(v)
+						if subgrp < 0 then subgrp = 2
+						else subgrp = 1 end
 					end
 					if not sortInfoCache[v] then sortInfoCache[v] = {} end
 					sortInfoCache[v].skill = skill
 					sortInfoCache[v].profit = profit
+					sortInfoCache[v].subgrp = subgrp
 				end
 			end,
 			cleanfunc = function()
 				for _, v in pairs(sortInfoCache) do
 					v.skill = nil
 					v.profit = nil
+					v.subgrp = nil
 				end
 			end,
 			sortfunc = function(a,b)
-				local as,ap,bs,bp
-				as = sortInfoCache[a].skill
-				ap = sortInfoCache[a].profit
-				bs = sortInfoCache[b].skill
-				bp = sortInfoCache[b].profit
-				if as == bs and bp == -1 then return false end
-				if as == bs and ap == -1 then return true end
-				if (as < bs) or (as == bs and ap > bp) then
-					return true
+				local ac,bc
+				ac = sortInfoCache[a].skill
+				bc = sortInfoCache[b].skill
+				if ac == bc then
+					ac = sortInfoCache[a].subgrp
+					bc = sortInfoCache[b].subgrp
 				end
-				if (as < bs) or (as == bs and ap > bp) then
+				if ac == bc then
+					ac = -sortInfoCache[a].profit
+					bc = -sortInfoCache[b].profit
+				end
+				if ac > bc then
 					return true
 				end
 				return false
