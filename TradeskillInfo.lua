@@ -791,12 +791,10 @@ function TradeskillInfo:GetCombineAvailability(id)
 	local playerSkillLevel = self:GetCharSkillLevel(self.vars.playername,combineSkill);
 	local playerSpec = self:GetCharSkillLevel(self.vars.playername,combineSpec);
 	if playerSkillLevel and (combineSpec=="" or playerSpec) then
-		if playerSkillLevel >= combineLevel then
-			if self:IsCombineKnowByChar(self.vars.playername,id) then
-				player = 1;
-			else
-				player = 2;
-			end
+		if self:IsCombineKnowByChar(self.vars.playername,id) then
+			player = 1;
+		elseif playerSkillLevel >= combineLevel then
+			player = 2;
 		else
 			player = 3;
 		end
@@ -807,15 +805,13 @@ function TradeskillInfo:GetCombineAvailability(id)
 			local skillLevel = self:GetCharSkillLevel(name,combineSkill);
 			local charSpec = self:GetCharSkillLevel(name,combineSpec);
 			if skillLevel and (combineSpec=="" or charSpec) then
-				if skillLevel >= combineLevel then
-					if alt == 0 and self:IsCombineKnowByChar(name,id) then
-						-- Known by alt has lowest priority
-						alt = 1;
-					else
-						-- Alt can learn has highest priority. Stop if we have one of these
-						alt = 2;
-						break;
-					end
+				if alt == 0 and self:IsCombineKnowByChar(name,id) then
+					-- Known by alt has lowest priority
+					alt = 1;
+				elseif skillLevel >= combineLevel then
+					-- Alt can learn has highest priority. Stop if we have one of these
+					alt = 2;
+					break;
 				else
 					-- Alt will be able to learn: keep searching for alts who can learn
 					alt = 3
@@ -1411,11 +1407,14 @@ function TradeskillInfo:GetCombineLearnableBy(id, tooltip)
 	return text;
 end
 
-function TradeskillInfo:IsCombineAvailableToChar(name,id)
+function TradeskillInfo:IsCombineAvailableToChar(name, id)
 	local combineSkill,combineSpec,combineLevel = self:GetCombineSkill(id);
 	local charLevel = self:GetCharSkillLevel(name,combineSkill);
 	local charSpec = self:GetCharSkillLevel(name,combineSpec);
-	if charLevel and charLevel < combineLevel and (combineSpec=="" or charSpec) then
+	if charLevel and
+	   charLevel < combineLevel and
+	   (combineSpec=="" or charSpec) and
+	   not self:IsCombineKnowByChar(name, id) then
 		return charLevel;
 	end
 end
