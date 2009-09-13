@@ -422,4 +422,7 @@ L["Right Click"] = "Правый клик"
 L["Open main window"] = "Открыть главное окно"
 L["Open configuration window"] = "Открыть окно настроек"
 L["Timothy Jones"] = "Тимоти Джонс"
+-- TODO
 L["SpellID"] = "SpellID"
+L["Dropped for Alliance"] = "Dropped for Alliance"
+L["Dropped for Horde"] = "Dropped for Horde"

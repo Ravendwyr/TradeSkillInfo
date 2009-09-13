@@ -416,10 +416,12 @@ L["Bryan Landers"] = "布萊恩·蘭德森"
 L["Captain O'Neal"] = "奧尼爾上尉"
 L["Lady Palanseer"] = "帕蘭蒂爾女士"
 L["Market Value"] = "市場價值"
--- TODO
 L["Left Click"] = "左擊"
 L["Right Click"] = "右擊"
 L["Open main window"] = "打開主視窗"
 L["Open configuration window"] = "打開設定視窗"
 L["Timothy Jones"] = "提摩西·瓊斯"
+-- TODO
 L["SpellID"] = "SpellID"
+L["Dropped for Alliance"] = "Dropped for Alliance"
+L["Dropped for Horde"] = "Dropped for Horde"
