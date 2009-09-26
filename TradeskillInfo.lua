@@ -118,6 +118,7 @@ function TradeskillInfo:OnInitialize()
 			TooltipRecipePrice = true,
 			TooltipUsedIn = true,
 			TooltipUsableBy = true,
+			TooltipColorUsableBy = true,
 			TooltipKnownBy = {R=true,A=true,B=true,D=true,E=true,J=true,L=true,T=true,W=false,X=false,Z=true,Y=true,I=true},
 			TooltipLearnableBy = {R=true,A=true,B=true,D=true,E=true,J=true,L=true,T=true,W=false,X=false,Z=true,Y=true,I=true},
 			TooltipAvailableTo = {R=true,A=true,B=true,D=true,E=true,J=true,L=true,T=true,W=false,X=false,Z=true,Y=true,I=true},
@@ -1445,16 +1446,20 @@ end
 function TradeskillInfo:GetItemUsableByChar(name,id,deep)
 	if not deep then deep = 1 end
 	local num = 0;
+	local maxDiff = 1 -- assume gray
 	if self.vars.whereUsed[id] and deep < 5 then
 		for s in string.gmatch(self.vars.whereUsed[id],"%S+") do
 			local _,_,skill,combine = string.find(s, "(%u)([-]?%d+)");
 			local known = self:IsCombineKnowByChar(name,tonumber(combine));
 			if known then
-				num = num + 1 + self:GetItemUsableByChar(name,tonumber(combine),deep+1)
+				maxDiff = max(maxDiff, known)
+				local subNum, subMaxDiff = self:GetItemUsableByChar(name,tonumber(combine),deep+1)
+				num = num + 1 + subNum
+				maxDiff = max(maxDiff, subMaxDiff)
 			end
 		end
 	end
-	return num
+	return num, maxDiff
 end
 
 function TradeskillInfo:GetItemUsableBy(id, tooltip)
@@ -1463,9 +1468,13 @@ function TradeskillInfo:GetItemUsableBy(id, tooltip)
 	local c = self.db.profile.ColorUsableBy;
 	local Ltext, Rtext;
 	for name,userdata in pairs(self.db.realm.userdata) do
-		local num = self:GetItemUsableByChar(name,id);
+		local num, diff = self:GetItemUsableByChar(name,id);
 		if num > 0 then
-			rText = name.." ("..num..")";
+			if self:ShowColoredUsableByAltNames() then
+				rText = self.vars.diffcolors[diff] .. name.." ("..num..")|r";
+			else
+				rText = name.." ("..num..")";
+			end
 			if text then
 				Ltext = " ";
 				text = text..", "..rText;
@@ -1974,6 +1983,10 @@ end
 
 function TradeskillInfo:ShowingTooltipAltAmount()
 	return self.db.profile.TooltipAltAmount;
+end
+
+function TradeskillInfo:ShowColoredUsableByAltNames()
+	return self.db.profile.TooltipColorUsableBy;
 end
 
 local defaultNames = {

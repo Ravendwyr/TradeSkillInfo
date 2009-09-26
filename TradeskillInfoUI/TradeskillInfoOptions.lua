@@ -92,6 +92,15 @@ local tooltipOptions = {
 					desc = L["Show who can use an item"],
 					type = "toggle",
 					arg = "TooltipUsableBy",
+					order = 800,
+				},
+				colorusableby = {
+					name = L["Color usable by"],
+					desc = L["Color the alt names in tooltip according to maximum combine difficulty"],
+					type = "toggle",
+					arg = "TooltipColorUsableBy",
+					disabled = function() return not TradeskillInfo.db.profile["TooltipUsableBy"] end,
+					order = 801,
 				},
 				sep1 = {
 					name = "",

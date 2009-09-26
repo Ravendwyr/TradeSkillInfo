@@ -108,3 +108,5 @@ L["Sort by"] = true
 L["Difficulty"] = true
 L["Auction Profit"] = true
 L["Vendor Profit"] = true
+L["Color usable by"] = true
+L["Color the alt names in tooltip according to maximum combine difficulty"] = true

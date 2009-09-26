@@ -105,8 +105,10 @@ L["Show the item's stack size"] = "顯示物品堆疊大小"
 L["Show the source of recipes"] = "顯示配方來源"
 L["Show the price of recipes sold by vendors"] = "顯示配方的賣價"
 L["Recipes"] = "配方"
--- TODO
 L["Sort by"] = "依序排列"
 L["Difficulty"] = "難度"
 L["Auction Profit"] = "拍賣利益"
 L["Vendor Profit"] = "商店利益"
+-- TODO
+L["Color usable by"] = "Color usable by"
+L["Color the alt names in tooltip according to maximum combine difficulty"] = "Color the alt names in tooltip according to maximum combine difficulty"

@@ -108,3 +108,6 @@ L["Sort by"] = "Сортировать"
 L["Difficulty"] = "Сложность"
 L["Auction Profit"] = "Прибыль с аука"
 L["Vendor Profit"] = "Прибыль с торговца"
+-- TODO
+L["Color usable by"] = "Color usable by"
+L["Color the alt names in tooltip according to maximum combine difficulty"] = "Color the alt names in tooltip according to maximum combine difficulty"
