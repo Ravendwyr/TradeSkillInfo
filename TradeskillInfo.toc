@@ -9,7 +9,7 @@
 ## eMail: evenue.wow@gmail.com
 ## X-eMail: evenue.wow@gmail.com
 
-## Version: 1.5.4
+## Version: 1.6.0
 ## X-Revision: $Rev$
 ## X-Date: $Date$
 
