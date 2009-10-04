@@ -425,4 +425,4 @@ L["SpellID"] = "Zauber-ID"
 -- TODO
 L["Dropped for Alliance"] = "Dropped for Alliance"
 L["Dropped for Horde"] = "Dropped for Horde"
-
+L["Skill Level"] = "Skill Level"

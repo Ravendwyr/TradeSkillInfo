@@ -425,3 +425,4 @@ L["Timothy Jones"] = true
 L["SpellID"] = true
 L["Dropped for Alliance"] = true
 L["Dropped for Horde"] = true
+L["Skill Level"] = true

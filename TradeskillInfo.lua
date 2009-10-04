@@ -541,7 +541,7 @@ function TradeskillInfo:ATSWFrame_SetSelection(id, wasClicked)
 			-- Insert skill required.
 			local text = "";
 			if ATSWRequirementLabel:IsVisible() then
-				text = ATSWRequirementText:GetText() .. ", ";
+				text = ATSWRequirementText:GetText() .. "\n\n" .. L["Skill Level"] .. ": ";
 			end
 			local skillLineName = GetTradeSkillLine();
 			text = text .. self:GetColoredDifficulty(itemId)
