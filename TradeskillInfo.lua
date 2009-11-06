@@ -351,8 +351,14 @@ function TradeskillInfo:GetExtraItemDataText(itemId, showVendorProfit, showDiffi
 end
 
 function TradeskillInfo:HookTradeSkillUI()
-	if TradeSkillFrame and not self:IsHooked("TradeSkillFrame_SetSelection") then
-		self:SecureHook("TradeSkillFrame_SetSelection");
+	if TradeSkillFrame then
+		local fsLabel = TradeSkillDetailScrollChildFrame:CreateFontString("TradeskillInfoSkillLabel", "BACKGROUND", "GameFontHighlightSmall")
+		local fsText = TradeSkillDetailScrollChildFrame:CreateFontString("TradeskillInfoSkillText", "BACKGROUND", "GameFontHighlightSmall")
+		fsLabel:SetPoint("TOPLEFT", TradeSkillSkillCooldown, "BOTTOMLEFT")
+		fsText:SetPoint("TOPLEFT", fsLabel, "TOPRIGHT")
+		if not self:IsHooked("TradeSkillFrame_SetSelection") then
+			self:SecureHook("TradeSkillFrame_SetSelection");
+		end
 	end
 
 	if Skillet and not self:IsHooked(Skillet, "GetExtraItemDetailText") then
@@ -492,15 +498,12 @@ function TradeskillInfo:TradeSkillFrame_SetSelection(id)
 
 		if self:ShowingSkillLevel() then
 			-- Insert skill required.
-			local text = "";
-			if TradeSkillRequirementLabel:IsVisible() then
-				text = TradeSkillRequirementText:GetText() .. ", ";
+			if TradeskillInfoSkillLabel then
+				TradeskillInfoSkillLabel:SetText(L["Skill Level"] .. ": ");
+				TradeskillInfoSkillText:SetText(self:GetColoredDifficulty(itemId));
+				TradeskillInfoSkillLabel:Show();
+				TradeskillInfoSkillText:Show();
 			end
-			local skillLineName = GetTradeSkillLine();
---			text = text .. "skill(" .. self:GetCombineLevel(itemId) .. ")"
-			text = text .. self:GetColoredDifficulty(itemId)
-			TradeSkillRequirementLabel:Show();
-			TradeSkillRequirementText:SetText(text);
 		end
 
 		if self:ShowingSkillAuctioneerProfit() then
