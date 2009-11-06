@@ -315,8 +315,8 @@ function TradeskillInfoUI:DoFrameUpdate()
 		local skillButton = getSkillButton(i)
 		local skillButtonText = getglobal(skillButton:GetName() .. "Text")
 		-- Adjust width of buttons and their texts
-		skillButton:SetWidth(TradeskillInfoListFrame:GetWidth()-34)
-		skillButtonText:SetWidth(TradeskillInfoListFrame:GetWidth()-34)
+		skillButton:SetWidth(TradeskillInfoListScrollFrame:GetWidth()-34)
+		skillButtonText:SetWidth(TradeskillInfoListScrollFrame:GetWidth()-34)
 		if ( skillIndex <= numTradeSkills ) then
 			local skillName, skillType, isExpanded = self:GetTradeSkillInfo(skillIndex)
 			-- If we got ???? or an ID instead of a skill name ...
