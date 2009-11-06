@@ -369,8 +369,14 @@ function TradeskillInfo:HookTradeSkillUI()
 		self:SecureHook("TradeSkillFrameSSOverride", "TradeSkillFrame_SetSelection");
 	end
 
-	if IsAddOnLoaded("AdvancedTradeSkillWindow") and not self:IsHooked("ATSWFrame_SetSelection") then
-		self:SecureHook("ATSWFrame_SetSelection")
+	if IsAddOnLoaded("AdvancedTradeSkillWindow") then
+		local fsLabel = ATSWFrame:CreateFontString("TradeskillInfoATSWSkillLabel", "OVERLAY", "GameFontHighlightSmall")
+		local fsText = ATSWFrame:CreateFontString("TradeskillInfoATSWSkillText", "OVERLAY", "GameFontHighlightSmall")
+		fsLabel:SetPoint("TOPLEFT", ATSWSkillCooldown, "BOTTOMLEFT")
+		fsText:SetPoint("TOPLEFT", fsLabel, "TOPRIGHT")
+		if not self:IsHooked("ATSWFrame_SetSelection") then
+			self:SecureHook("ATSWFrame_SetSelection")
+		end
 	end
 end
 
@@ -504,6 +510,9 @@ function TradeskillInfo:TradeSkillFrame_SetSelection(id)
 				TradeskillInfoSkillLabel:Show();
 				TradeskillInfoSkillText:Show();
 			end
+		else
+			TradeskillInfoSkillLabel:Hide();
+			TradeskillInfoSkillText:Hide();
 		end
 
 		if self:ShowingSkillAuctioneerProfit() then
@@ -542,14 +551,15 @@ function TradeskillInfo:ATSWFrame_SetSelection(id, wasClicked)
 
 		if self:ShowingSkillLevel() then
 			-- Insert skill required.
-			local text = "";
-			if ATSWRequirementLabel:IsVisible() then
-				text = ATSWRequirementText:GetText() .. "\n\n" .. L["Skill Level"] .. ": ";
+			if TradeskillInfoATSWSkillLabel then
+				TradeskillInfoATSWSkillLabel:SetText(L["Skill Level"] .. ": ");
+				TradeskillInfoATSWSkillText:SetText(self:GetColoredDifficulty(itemId));
+				TradeskillInfoATSWSkillLabel:Show();
+				TradeskillInfoATSWSkillText:Show();
 			end
-			local skillLineName = GetTradeSkillLine();
-			text = text .. self:GetColoredDifficulty(itemId)
-			ATSWRequirementLabel:Show();
-			ATSWRequirementText:SetText(text);
+		else
+			TradeskillInfoATSWSkillLabel:Hide();
+			TradeskillInfoATSWSkillText:Hide();
 		end
 
 		if self:ShowingSkillAuctioneerProfit() then
