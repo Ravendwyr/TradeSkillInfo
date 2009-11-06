@@ -703,12 +703,22 @@ function TradeskillInfoUI:ReagentIcon_OnClick(frame, button)
 end
 function TradeskillInfoUI:Item_OnClick(frame, button)
 	if not TradeskillInfo.db.profile.QuickSearch then return end
-	if ( button == TradeskillInfo.vars.MouseButtons[TradeskillInfo.db.profile.SearchMouseButton] and
-			 TradeskillInfo.vars.ShiftKeys[TradeskillInfo.db.profile.SearchShiftKey]() ) then
-		local _,_,item = string.find(frame.tooltip,":(%d+):");
-		self:SetSearchText("id="..item.." "..frame.name);
-		self:Search_OnClick();
-		return true;
+	if button == TradeskillInfo.vars.MouseButtons[TradeskillInfo.db.profile.SearchMouseButton] then
+		local accept = true
+		for i, func in ipairs(TradeskillInfo.vars.ShiftKeys) do
+			if i == TradeskillInfo.db.profile.SearchShiftKey then
+				accept = accept and func()
+			else
+				accept = accept and not func()
+			end
+		end
+
+		if accept then
+			local _,_,item = string.find(frame.tooltip,":(%d+):");
+			self:SetSearchText("id="..item.." "..frame.name);
+			self:Search_OnClick();
+			return true;
+		end
 	end
 end
 

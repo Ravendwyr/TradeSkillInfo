@@ -611,16 +611,26 @@ end
 
 function TradeskillInfo:Item_OnClick(button,link)
 	if self.db.profile.QuickSearch then
-		if ( button == self.vars.MouseButtons[self.db.profile.SearchMouseButton] and
-				 self.vars.ShiftKeys[self.db.profile.SearchShiftKey]() ) then
-			local id = getIdFromLink(link);
-			if not self:ComponentExists(id) then return end
-			if self:LoadUI(true) then -- Have TradeskillInfoUI
-				local name = getNameFromLink(link);
-				TradeskillInfoUI:SetSearchText("id="..id.." "..name);
-				TradeskillInfoUI:Frame_Show();
-			else
-				self:PrintWhereUsed(id);
+		if button == self.vars.MouseButtons[self.db.profile.SearchMouseButton] then
+			local accept = true
+			for i, func in ipairs(self.vars.ShiftKeys) do
+				if i == self.db.profile.SearchShiftKey then
+					accept = accept and func()
+				else
+					accept = accept and not func()
+				end
+			end
+
+			if accept then
+				local id = getIdFromLink(link);
+				if not self:ComponentExists(id) then return end
+				if self:LoadUI(true) then -- Have TradeskillInfoUI
+					local name = getNameFromLink(link);
+					TradeskillInfoUI:SetSearchText("id="..id.." "..name);
+					TradeskillInfoUI:Frame_Show();
+				else
+					self:PrintWhereUsed(id);
+				end
 			end
 		end
 	end

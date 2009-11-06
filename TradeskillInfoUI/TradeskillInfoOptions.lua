@@ -361,6 +361,11 @@ local uiOptions = {
 			set = setOption,
 			order = 10
 		},
+		sep1 = {
+			name = "",
+			type = "description",
+			order = 19,
+		},
 		mouse = {
 			name = L["Search Mouse Button"],
 			desc = L["Mouse button that does a quick search"],
@@ -391,6 +396,11 @@ local uiOptions = {
 			get = getOption,
 			set = setOption,
 			order = 40
+		},
+		sep2 = {
+			name = "",
+			type = "description",
+			order = 49,
 		},
 		strata = {
 			name = L["Frame Strata"],
