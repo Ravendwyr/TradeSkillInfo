@@ -155,6 +155,7 @@ TradeskillInfo.vars.zones = {
 	[78] = BZ["Dragonblight"],
 	[79] = BZ["The Storm Peaks"],
 	[80] = BZ["Wintergrasp"],
+	[81] = BZ["Icecrown Citadel"],
 }
 
 TradeskillInfo.vars.factions = {
@@ -195,6 +196,7 @@ TradeskillInfo.vars.factions = {
 	[33] = BF["The Sons of Hodir"],
 	[34] = BF["The Wyrmrest Accord"],
 	[35] = BF["Argent Crusade"],
+	[36] = BF["Ashen Verdict"],
 }
 -- Kurenai / The Mag'har
 -- Honor Hold / Thrallmar
@@ -551,5 +553,7 @@ TradeskillInfo.vars.vendors = {
 	[344] =  L["Bryan Landers"] .. "|73|25|38.9,25.2",
 	[345] =  L["Captain O'Neal"] .. "|34|1|75.1,66.8",
 	[346] =  L["Lady Palanseer"] .. "|28|2|37.0,64.9",
-	[347] =  L["Timothy Jones"] .. "|73|25|40S,35",
+	[347] =  L["Timothy Jones"] .. "|73|25|40.5,35.2",
+	[348] =  L["Alchemist Finklestein"] .. "|81|36|36.2,20.4",
+	[349] =  L["Larana Drome"] .. "73|25|42.3,37.5",
 }

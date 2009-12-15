@@ -421,8 +421,10 @@ L["Right Click"] = "右擊"
 L["Open main window"] = "打開主視窗"
 L["Open configuration window"] = "打開設定視窗"
 L["Timothy Jones"] = "提摩西·瓊斯"
--- TODO
 L["SpellID"] = "法術編號"
 L["Dropped for Alliance"] = "取消聯盟"
 L["Dropped for Horde"] = "取消部落"
 L["Skill Level"] = "技能等級"
+-- TODO
+L["Alchemist Finklestein"] = "Alchemist Finklestein"
+L["Larana Drome"] = "Larana Drome"

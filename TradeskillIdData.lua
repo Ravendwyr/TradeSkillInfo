@@ -263,7 +263,7 @@ TradeskillInfo.vars.combines = {
 	[28103] = "33740|A300/315/322/330|13463 22785 18256",	-- Adept's Elixir
 	[13513] = "17638|A300/315/322/330|13467:7 13465:3 13468 8925|13522",	-- Flask of Chromatic Resistance
 	[13511] = "17636|A300/315/322/330|13463:7 13467:3 13468 8925|13520",	-- Flask of Distilled Wisdom
-	[13506] = "17634|A300/315/322/330|13423:7 13465:3 13468 8925|13518",	-- Flask of Petrification
+	[13506] = "17634|A300/315/322/330|13423:7 8925|13518",	-- Potion of Petrification
 	[13512] = "17637|A300/315/322/330|13463:7 13465:3 13468 8925|13521",	-- Flask of Supreme Power
 	[13510] = "17635|A300/315/322/330|8846:7 13423:3 13468 8925|13519",	-- Flask of the Titans
 	[18253] = "22732|A300/310/320/330|10286 13464:4 13463:4 18256|18257",	-- Major Rejuvenation Potion
@@ -275,7 +275,7 @@ TradeskillInfo.vars.combines = {
 	[22825] = "28545|A310/325/332/340|13464 22786 18256",	-- Elixir of Healing Power
 	[32062] = "39636|A310/325/332/340|22787:2 22785 18256",	-- Elixir of Major Fortitude
 	[28101] = "33733|A310/325/332/340|22787:2 22785 18256",	-- Unstable Mana Potion
-	[28104] = "33741|A315/330/337/345|22789:3 22785 18256",	-- Elixir of Mastery
+	[28104] = "33741|A315/330/337/345|22789 22785 18256",	-- Elixir of Mastery
 	[22826] = "28546|A315/330/337/345|22787:2 22785 18256|22901",	-- Sneaking Potion
 	[34440] = "45061|A325/335/342/350|8925 22787:2", -- Mad Alchemist's Potion
 	[32063] = "39637|A320/335/342/350|22786 22787:2 18256|32070",	-- Earthen Elixir
@@ -294,9 +294,9 @@ TradeskillInfo.vars.combines = {
 	[22833] = "28556|A345/360/367/375|22574:2 22790 18256|22908",	-- Elixir of Major Firepower
 	[31676] = "38962|A345/360/367/375|22785:2 22792:3 18256|31681",	-- Fel Regeneration Potion
 	[13503] = "17632|A350/365/372/380|9149 25867 25868 22794:2 23571:5|13517",	-- Alchemist's Stone
-	[25867] = "32765|A350|23079:3 23107:3 23112:3 22452:2 21885:2|25869||25867",	-- Transmute: Earthstorm Diamond
-	[23571] = "29688|A350/365/372/380|22452 21885 22451 21884 22457|23574||23571",	-- Transmute: Primal Might
-	[25868] = "32766|A350|23077:3 21929:3 23117:3 21884:2 22451:2|29232||25868",	-- Transmute: Skyfire Diamond
+	[25867] = "32765|A350/365/372/380|23079:3 23107:3 23112:3 22452:2 21885:2|25869",	-- Transmute: Earthstorm Diamond
+	[23571] = "29688|A350/365/372/380|22452 21885 22451 21884 22457|23574",	-- Transmute: Primal Might
+	[25868] = "32766|A350/365/372/380|23077:3 21929:3 23117:3 21884:2 22451:2|29232",	-- Transmute: Skyfire Diamond
 	[9] = "28566|A350/365/372/380|22451|22915||21884",	-- Transmute: Primal Air to Fire
 	[10] = "28582|A375/375/377/380|22457|||21884",	-- Transmute: Primal Mana to Fire
 	[11] = "28567|A350/365/372/380|22452|22916||21885",	-- Transmute: Primal Earth to Water
@@ -2729,6 +2729,9 @@ TradeskillInfo.vars.combines = {
 	[48720] = "67600|I100/105/110/115|39774 39354", -- Glyph of Claw
 	[49084] = "68166|I75/355/360/365|43126 39502", -- Glyph of Command
 	[49632] = "69385|I440/440/442/460|43127 39502:5||5", -- Runescroll of Fortitude
+	[50045] = "71101|I250/255/260/265|43124 39502|50166", -- Glyph of Eternal Water
+	[50077] = "71102|I375/380/382/385|43126 39502|50168", -- Glyph of Quick Decay
+	[50125] = "71015|I375/380/382/385|43126 39502|50167", -- Glyph of Rapid Rejuvenation
 	[-61120] = "I400/400/400/405|43127", -- Master's Inscription of the Storm
 	[-61119] = "I400/400/400/405|43127", -- Master's Inscription of the Pinnacle
 	[-61118] = "I400/400/400/405|43127", -- Master's Inscription of the Crag
@@ -2930,6 +2933,12 @@ TradeskillInfo.vars.combines = {
 	[47592] = "67130|B450/460/467/475|37663:12 35625:8 36925:2 47556:8|47640", -- Breastplate of the White Knight
 	[47593] = "67095|B450/460/467/475|37663:10 35625:20 47556:8|47626", -- Sunforged Breastplate
 	[47594] = "67134|B450/460/467/475|37663:10 35625:20 47556:8|47643", -- Sunforged Breastplate
+	[49902] = "70562|B450/475/487/500|37663:12 35623:20 49908:8|49969", -- Puresteel Legplates
+	[49903] = "70565|B450/475/487/500|37663:12 35627:20 49908:8|49971", -- Legplates of Painful Death
+	[49904] = "70567|B450/475/487/500|37663:12 35624:20 49908:8|49973", -- Pillars of Might
+	[49905] = "70563|B450/475/487/500|37663:8 35624:12 49908:5|49970", -- Protectors of Life
+	[49906] = "70566|B450/475/487/500|37663:8 35622:6 36860:6 49908:5|49972", -- Hellfrozen Bonegrinders
+	[49907] = "70568|B450/475/487/500|37663:8 35624:12 49908:5|49974", -- Boots of Kingly Upheaval
 	-- WotLK Engineering combines
 	[23769] = "30342|E315/335/345/355|23781 21877 2604||3", -- Red Smoke Flare
 	[23775] = "30349|E405/425/432/440|36913:8 41163:8 39681:4|23817", -- Titanium Toolbox
@@ -3447,6 +3456,14 @@ TradeskillInfo.vars.combines = {
 	[47602] = "67084|L450/460/467/475|38425:24 35625:20 44128:8 47556:8|47632", -- Lunar Eclipse Chestguard
 	[49633] = "69386|L450/450/455/470|38425:8 38557:8||", -- Drums of Forgotten Kings
 	[49634] = "69388|L450/450/455/470|38425:8 38561:8||", -- Drums of the Wild
+	[49894] = "70555|L450/475/487/500|38561:12 44128:5 35625:10 49908:5|49958", -- Blessed Cenarion Boots
+	[49895] = "70557|L450/475/487/500|38558:12 44128:8 35627:10 49908:5|49961", -- Footpads of Impending Death
+	[49896] = "70559|L450/475/487/500|38557:12 44128:5 35623:10 49908:5|49963", -- Earthsoul Boots
+	[49897] = "70561|L450/475/487/500|38557:12 44128:8 35624:10 49908:5|49966", -- Rock-Steady Treads
+	[49898] = "70554|L450/475/487/500|38561:20 44128:8 35625:16 49908:8|49957", -- Legwraps of Unleashed Nature
+	[49899] = "70556|L450/475/487/500|38558:20 44128:8 35627:16 49908:8|49959", -- Bladeborn Leggings
+	[49900] = "70558|L450/475/487/500|38557:20 44128:8 35623:16 49908:8|49962", -- Lightning-Infused Leggings
+	[49901] = "70560|L450/475/487/500|38557:20 44128:8 35624:16 49908:8|49965", -- Draconic Bonesplinter Legguards
 	-- WotLK Tailoring combines
 	[6836] = "49677|T250/255/270/285|4339:4 4304:2|37915", -- Dress Shoes
 	[38225] = "50194|T375/385/390/395|21845:4 22794:2|38229", -- Mycah's Botanical Bag
@@ -3523,7 +3540,7 @@ TradeskillInfo.vars.combines = {
 	[43974] = "59583|T415/425/435/445|41511:3 37702:3 37701:3 38426:2", -- Frostsavage Bracers
 	[43975] = "59588|T420/430/440/450|41511:4 37702:5 37701:5 38426:2", -- Frostsavage Leggings
 	[44211] = "55904|T360/370/380/390|41510:3 38426", -- Frostwoven Gloves
-	[44554] = "60969|T410/420/425/430|41511:4 36920:4 2605:4 4341:2 42253:2", -- Flying Carpet
+	[44554] = "60969|T410/420/425/430|21840:6 23112:4 22445:4 8343:5", -- Flying Carpet
 	[44558] = "60971|T425/435/445/455|41511:12 36930:4 2604:4 4341:2 42253:4", -- Magnificent Flying Carpet
 	[45557] = "63203|T450/455/460/465|41595:10 41593:10 45087:6|45102", -- Sash of Ancient Power
 	[45558] = "63205|T450/455/460/465|41594:20 45087:6|45104", -- Cord of the White Dawn
@@ -3541,12 +3558,17 @@ TradeskillInfo.vars.combines = {
 	[47604] = "67146|T450/460/467/475|41593:8 41595:8 34052:8 47556:8|47638", -- Merlin's Robe
 	[47605] = "67064|T450/460/467/475|41594:20 36922:2 47556:8|47657", -- Royal Moonshroud Robe
 	[47606] = "67144|T450/460/467/475|41594:20 36922:2 47556:8|47636", -- Royal Moonshroud Robe
+	[49890] = "70551|T450/475/487/500|41595:6 41593:6 49908:5|49954", -- Deathfrost Boots
+	[49891] = "70550|T450/475/487/500|41595:10 41593:10 49908:8|49953", -- Leggings of Woven Death
+	[49892] = "70552|T450/475/487/500|41594:20 49908:8|49955", -- Lightweave Leggings
+	[49893] = "70553|T450/475/487/500|41594:10 49908:5|49956", -- Sandals of Consecration
 	[-55769] = "T420/0/0/420|41593 38426", -- Darkglow Embroidery
 	[-55642] = "T420/0/0/420|41594 38426", -- Lightweave Embroidery
 	[-55777] = "T420/0/0/420|41595 38426", -- Swordguard Embroidery
 	[-56034] = "T405/0/0/405|38426", -- Master's spellthread
 	[-56039] = "T405/0/0/405|38426", -- Sanctified spellthread
 	-- WotLK Enchanting combines
+	[-71692] = "D375/385/392/400|34054 44958:3|50406", -- Enchant Gloves - Angler
 	[-64579] = "D450/455/460/465|34057:4 34054:40 36918|46348", -- Enchant Weapon - Blood Draining
 	[-64441] = "D450/455/460/465|34057:4 34055:8 37663|46027", -- Enchant Weapon - Blade Ward
 	[-63746] = "D225/245/265/285|11137:4 11174", -- Enchant Boots - Lesser Accuracy
@@ -3669,6 +3691,14 @@ TradeskillInfo.vars.combines = {
 	[43492] = "58525|W350/350/357/365|41810 12808|43510|5", -- Haunted Herring
 	[44953] = "62350|W400/400/405/460|43011:2 43007|44954", -- Worg Tartare
 	[45932] = "64358|W400/400/412/425|41805:3", -- Black Jelly
+	--[[ FIXME: Get data for these...
+	[44836] = "66036|W100/150/162/175|46796 44853|<FINDDROPRECIPE>|", -- Pumpkin Pie
+	[44837] = "66038|W1/90/102/115|30816 44835|<FINDDROPRECIPE>|", -- Spice Bread Stuffing
+	[44838] = "66037|W280/330/342/355|44834 44853:2 44835|<FINDDROPRECIPE>|", -- Slow-Roasted Turkey
+	[44839] = "66034|W220/270/282/295|46797 44853 44835|<FINDDROPRECIPE>|", -- Candied Sweet Potato
+	[44840] = "66035|W160/210/222/235|46793 44853|<FINDDROPRECIPE>|0", -- Cranberry Chutney
+	[46691] = "65454|W1/30/35/40|30817 1179|<FINDVENDORRECIPE>|", -- Bread of the Dead
+	]]--
 	-- WotLK Smelting combines
 	[36] = "55211|Y450/0/0/450|36910:2|||41163", -- Smelt Titanium
 	[36913] = "49258|Y400/0/0/400|36912:2", -- Smelt Saronite
@@ -4534,11 +4564,9 @@ TradeskillInfo.vars.components = {
 	[40404] = "V", -- Mixture of Pure Mojo (not crafted)
 	[40411] = "V",
 	[41814] = "F",
-	-- WotLK Blacksmithing components
 	[37700] = "D",
 	[45087] = "VD",
 	[47556] = "M",
-	-- WotLK Engineering components
 	[2901] = "V",
 	[5956] = "V",
 	[7005] = "V",
@@ -4552,7 +4580,6 @@ TradeskillInfo.vars.components = {
 	[44499] = "V",
 	[44500] = "V",
 	[44501] = "V",
-	-- WotLK Jewelcrafting components
 	[34054] = "E",
 	[36783] = "DFV",
 	[36784] = "DFV",
@@ -4566,20 +4593,16 @@ TradeskillInfo.vars.components = {
 	[36932] = "MR",
 	[36933] = "MR",
 	[42225] = "V",
-	-- WotLK Leatherworking components
 	[33567] = "S",
 	[38557] = "DS",
 	[38558] = "DS",
 	[38561] = "S",
-	-- WotLK Tailoring components
 	[38426] = "V",
 	[42253] = "D",
-	-- WotLK Enchanting components
 	[22572] = "E",
 	[34055] = "EC",
 	[34056] = "E",
 	[34057] = "E",
-	-- WotLK Cooking components
 	[2594] = "DV",
 	[22577] = "DV",
 	[34736] = "D",
@@ -4605,11 +4628,10 @@ TradeskillInfo.vars.components = {
 	[43013] = "D",
 	[43501] = "D",
 	[41805] = "F",
-	-- WotLK Smelting components
 	[36909] = "M",
 	[36910] = "M",
 	[36912] = "M",
-	-- WotLK First Aid components
+	[49908] = "DV",
 }
 
 -- Skill Translation table. It is used for converting skill names
@@ -6548,4 +6570,26 @@ TradeskillInfo.vars.recipes = {
 	[47640] = "47592|Dh", -- Breastplate of the White Knight
 	[47626] = "47593|Da", -- Sunforged Breastplate
 	[47643] = "47594|Dh", -- Sunforged Breastplate
+	[49969] = "49902|V348||7", -- Puresteel Legplates
+	[49971] = "49903|V348||7", -- Legplates of Painful Death
+	[49973] = "49904|V348||7", -- Pillars of Might
+	[49970] = "49905|V348||6", -- Protectors of Life
+	[49972] = "49906|V348||6", -- Hellfrozen Bonegrinders
+	[49974] = "49907|V348||6", -- Boots of Kingly Upheaval
+	[50406] = "-71692|D", -- Enchant Gloves - Angler
+	[50166] = "50045|V349|7500", -- Glyph of Eternal Water
+	[50168] = "50077|V349|20000", -- Glyph of Quick Decay
+	[50167] = "50125|V349|20000", -- Glyph of Rapid Rejuvenation
+	[49958] = "49894|V348||6", -- Blessed Cenarion Boots
+	[49961] = "49895|V348||6", -- Footpads of Impending Death
+	[49963] = "49896|V348||6", -- Earthsoul Boots
+	[49966] = "49897|V348||6", -- Rock-Steady Treads
+	[49957] = "49898|V348||7", -- Legwraps of Unleashed Nature
+	[49959] = "49899|V348||7", -- Bladeborn Leggings
+	[49962] = "49900|V348||7", -- Lightning-Infused Leggings
+	[49965] = "49901|V348||7", -- Draconic Bonesplinter Legguards
+	[49954] = "49890|V348||6", -- Deathfrost Boots
+	[49953] = "49891|V348||7", -- Leggings of Woven Death
+	[49955] = "49892|V348||7", -- Lightweave Leggings
+	[49956] = "49893|V348||6", -- Sandals of Consecration
 }

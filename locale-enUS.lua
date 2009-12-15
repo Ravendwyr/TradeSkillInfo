@@ -426,3 +426,5 @@ L["SpellID"] = true
 L["Dropped for Alliance"] = true
 L["Dropped for Horde"] = true
 L["Skill Level"] = true
+L["Alchemist Finklestein"] = true
+L["Larana Drome"] = true
