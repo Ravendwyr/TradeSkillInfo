@@ -196,7 +196,7 @@ TradeskillInfo.vars.factions = {
 	[33] = BF["The Sons of Hodir"],
 	[34] = BF["The Wyrmrest Accord"],
 	[35] = BF["Argent Crusade"],
-	[36] = BF["Ashen Verdict"],
+	[36] = BF["The Ashen Verdict"],
 }
 -- Kurenai / The Mag'har
 -- Honor Hold / Thrallmar
