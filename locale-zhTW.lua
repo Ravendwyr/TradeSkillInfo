@@ -426,5 +426,5 @@ L["Dropped for Alliance"] = "取消聯盟"
 L["Dropped for Horde"] = "取消部落"
 L["Skill Level"] = "技能等級"
 -- TODO
-L["Alchemist Finklestein"] = "Alchemist Finklestein"
-L["Larana Drome"] = "Larana Drome"
+L["Alchemist Finklestein"] = "鍊金師芬克斯坦"
+L["Larana Drome"] = "拉蕾娜·德羅姆"
