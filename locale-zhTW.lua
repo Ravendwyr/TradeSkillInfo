@@ -428,3 +428,4 @@ L["Skill Level"] = "技能等級"
 -- TODO
 L["Alchemist Finklestein"] = "鍊金師芬克斯坦"
 L["Larana Drome"] = "拉蕾娜·德羅姆"
+L["Frozo the Renowned"] = "Frozo the Renowned"

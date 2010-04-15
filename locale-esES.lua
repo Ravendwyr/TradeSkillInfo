@@ -386,6 +386,7 @@ L["Okuno"] = "Okuno"
 L["Indormi"] = "Indormi"
 L["Eldara Dawnrunner"] = "Eldara Dawnrunner"
 L["Shaani"] = "Shaani"
+L["Frozo the Renowned"] = "El famoso Frozo"
 -- TODO
 L["Arille Azuregaze"] = "Arille Azuregaze"
 L["Derek Odds"] = "Derek Odds"

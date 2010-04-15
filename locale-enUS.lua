@@ -428,3 +428,4 @@ L["Dropped for Horde"] = true
 L["Skill Level"] = true
 L["Alchemist Finklestein"] = true
 L["Larana Drome"] = true
+L["Frozo the Renowned"] = true
