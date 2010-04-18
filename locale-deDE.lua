@@ -422,7 +422,7 @@ L["Open main window"] = "Hauptfenster öffnen"
 L["Open configuration window"] = "Konfigurationsfenster öffnen"
 L["Timothy Jones"] = "Jonas Timotheus"
 L["SpellID"] = "Zauber-ID"
-L["Frozo the Renowned"] = "Frozo der renommierten"
+L["Frozo the Renowned"] = "Frozo der Wohlbekannte"
 -- TODO
 L["Dropped for Alliance"] = "Dropped for Alliance"
 L["Dropped for Horde"] = "Dropped for Horde"

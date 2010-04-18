@@ -390,7 +390,7 @@ L["Arille Azuregaze"] 											= "Arille Mirazur"
 L["Derek Odds"] 												= "Derek Chance"
 L["Misensi"] 													= "Misensi"
 L["Haughty Modiste"] 											= "Hautaine Lamodiste"
-L["Frozo the Renowned"] = "Frozo le célèbre"
+L["Frozo the Renowned"] = "Frozo l'Illustre"
 -- TODO
 L["Quartermaster Davian Vaclav"] = "Quartermaster Davian Vaclav"
 L["Quartermaster Jaffrey Noreliqe"] = "Quartermaster Jaffrey Noreliqe"
