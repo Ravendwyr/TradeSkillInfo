@@ -2,7 +2,7 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("TradeskillInfoUI")
 
 TradeskillInfoUI.version = GetAddOnMetadata("TradeskillInfoUI", "Version")
-TradeskillInfoUI.date = string.sub("$Date: 2008-11-05 16:45:52 +0200 (Wed, 05 Nov 2008) $", 8, 17);
+TradeskillInfoUI.date = string.sub("$Date$", 8, 17);
 
 
 TradeskillInfoUI.cons = {};
