@@ -284,7 +284,7 @@ local hookedAuctionUi = false
 function TradeskillInfo:HookAuctionUI()
 	if AuctionFrame and not hookedAuctionUi then
 		for j=1,8 do
-			local button = getglobal("BrowseButton"..j.."Item");
+			local button = _G["BrowseButton"..j.."Item"]
 			self:HookScript(button,"OnClick","AuctionItemButton_OnClick");
 			button:RegisterForClicks("LeftButtonUp", "RightButtonUp");
 		end
@@ -787,7 +787,7 @@ function TradeskillInfo:GetCombineDescription(id)
 
 		TSIScanTooltip:ClearLines()
 		TSIScanTooltip:SetHyperlink(GetSpellLink(-id))
-		description = getglobal("TSIScanTooltipTextLeft3")
+		description = _G["TSIScanTooltipTextLeft3"]
 		if description then description = description:GetText() end
 	end
 	return description
@@ -1225,7 +1225,7 @@ function TradeskillInfo:GetRecipeSources(recipe,opposing, tooltip, ShowRecipeSou
 					end
 					Rtext = self.vars.sources[s .. (f or "")]..": "..vname..", "..zone..pos..note
 					if level ~= "" then
-						local rep = getglobal("FACTION_STANDING_LABEL"..level);
+						local rep = _G["FACTION_STANDING_LABEL"..level]
 						Rtext = Rtext.." "..faction.."-"..rep;
 					end
 					res = res .. Rtext;
@@ -1875,14 +1875,14 @@ function TradeskillInfo:AuctionFrameBrowse_Update()
 
 	for i=1, NUM_BROWSE_TO_DISPLAY do
 		local index = offset + i;
-		local button = getglobal("BrowseButton"..i);
+		local button = _G["BrowseButton"..i]
 		if button:IsVisible() then
 			local iconTexture
 			local recipeLink
 			if button.Icon then  -- cached or from Auc-Advanced Compact-UI
 				iconTexture = button.Icon
 			else
-				button.Icon = getglobal("BrowseButton"..i.."ItemIconTexture"); -- cache the icon texture
+				button.Icon = _G["BrowseButton"..i.."ItemIconTexture"] -- cache the icon texture
 				iconTexture = button.Icon
 			end
 			if button.id then  -- contains real index when sorted in Compact-UI level
