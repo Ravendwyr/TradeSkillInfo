@@ -2302,9 +2302,8 @@ TradeskillInfo.vars.combines = {
 	[43126] = "57715|I350/350/350/355|39343:2", -- Ink of the Sea
 	[43127] = "57716|I375/375/375/380|43109:2", -- Snowfall Ink
 	-- Insciption (Enchant)
-	-- TODO: Levels for Vellum III
-	[38682] = "52739|I35/75/87/100|39469 39354:2", -- Armor Vellum
-	[39349] = "52840|I75/100/112/125|39774:3 39354:2||2", -- Weapon Vellum
+	-- There is only one vellum now. One size fits all.
+	[38682] = "52739|I35/75/87/100|39469 39354:2", -- Vellum
 	-- Inscription (Scrolls)
 	-- TODO: verify levels for scrolls VII and VIII.  Also, Recall III.
 	[1180] = "45382|I1/35/40/45|37101 39354", -- Scroll of Stamina
