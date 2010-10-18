@@ -1,4 +1,4 @@
-## Interface: 30200
+## Interface: 40000
 ## Title: TradeskillInfo UI
 ## Author: wmrojer
 ## Notes: Complete Tradeskill Info UI

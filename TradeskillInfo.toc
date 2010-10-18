@@ -1,4 +1,4 @@
-﻿## Interface: 30200
+﻿## Interface: 40000
 ## Title: Tradeskill Info
 ## Notes: Complete Tradeskill Info
 ## Notes-zhTW: 完整的商業技能百科
