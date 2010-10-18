@@ -1817,18 +1817,21 @@ end
 
 function TradeskillInfo:LoadUI(quiet)
 	if not IsAddOnLoaded("TradeskillInfoUI") then
-		loaded,reason = LoadAddOn("TradeskillInfoUI");
+		loaded, reason = LoadAddOn("TradeskillInfoUI")
+
 		if not loaded then
-			if not quiet then self:Print(L["Could not load the UI. Reason: "],reason) end
+			if not quiet then self:Print(L["Could not load the UI. Reason: "], reason) end
 		end
+
 		return loaded
 	end
+
 	return true
 end
 
 function TradeskillInfo:UI_Toggle()
 	if self:LoadUI() then
-		TradeskillInfoUI:Frame_Toggle();
+		TradeskillInfoUI:Frame_Toggle()
 	end
 end
 
