@@ -391,7 +391,7 @@ function TradeskillInfo:UpdateKnownRecipes()
 end
 
 function TradeskillInfo:UpdateSkills(startLine, endLine)
-	local numSkills = GetNumSkillLines()
+	local numSkills = GetNumTradeSkills()
 	-- If the cache is still not initialized, return, and hope that another
 	-- SKILL_LINES_CHANGED event will get fired
 	if not numSkills or numSkills == 0 then return end
@@ -415,7 +415,7 @@ end
 function TradeskillInfo:UpdateSpecializations()
 	local i = 1
 	while true do
-		local spellName = GetSpellName(i, BOOKTYPE_SPELL)
+		local spellName = GetSpellInfo(i, BOOKTYPE_SPELL)
 		if not spellName then do break end end
 		if self.vars.specializationnames[spellName] then
 			self.db.realm.userdata[self.vars.playername].skills[self.vars.specializationnames[spellName]] = 1;
