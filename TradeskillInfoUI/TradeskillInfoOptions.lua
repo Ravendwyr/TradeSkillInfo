@@ -57,9 +57,6 @@ local knownSelect = {
 	R = L["Recipes"],
 }
 
-for x, y in pairs(TradeskillInfo.vars.tradeskills) do
-	knownSelect[x] = y
-end
 
 local tooltipOptions = {
 	name = L["Tooltip"],
@@ -494,36 +491,41 @@ local ahOptions = {
 	}
 }
 
-local options = {
-	name = "TradeskillInfo",
-	type = "group",
-	childGroups = "tab",
-	args = {
-		tooltip = tooltipOptions,
-		tradeskill = tradeskillOptions,
-		trainer = trainerOptions,
-		ui = uiOptions,
-		auction = ahOptions,
-	},
-}
 
--- Start registering the tables
-local AceConfigRegistry = LibStub("AceConfig-3.0")
-local AceConfigDialog = LibStub("AceConfigDialog-3.0")
+function TradeskillInfo:CreateConfig()
+	for x, y in pairs(TradeskillInfo.vars.tradeskills) do
+		knownSelect[x] = y
+	end
 
-options.args.profile = LibStub("AceDBOptions-3.0"):GetOptionsTable(TradeskillInfo.db)
+	local options = {
+		name = "TradeSkill Info",
+		type = "group",
+		childGroups = "tab",
+		args = {
+			tooltip = tooltipOptions,
+			tradeskill = tradeskillOptions,
+			trainer = trainerOptions,
+			ui = uiOptions,
+			auction = ahOptions,
+		},
+	}
 
-AceConfigRegistry:RegisterOptionsTable("TradeskillInfo", options)
-TradeskillInfo.OptionsPanel =
-	AceConfigDialog:AddToBlizOptions("TradeskillInfo", "TradeskillInfo")
+	-- Start registering the tables
+	local AceConfigRegistry = LibStub("AceConfig-3.0")
+	local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 
---[[
-TradeskillInfo.OptionsPanel =
-	AceConfigDialog:AddToBlizOptions("TradeskillInfo", "TradeskillInfo", nil, "general")
-AceConfigDialog:AddToBlizOptions("TradeskillInfo", L["Tooltip"], "TradeskillInfo", "tooltip")
-AceConfigDialog:AddToBlizOptions("TradeskillInfo", L["Tradeskill"], "TradeskillInfo", "tradeskill")
-AceConfigDialog:AddToBlizOptions("TradeskillInfo", L["Trainer"], "TradeskillInfo", "trainer")
-AceConfigDialog:AddToBlizOptions("TradeskillInfo", L["UI"], "TradeskillInfo", "ui")
-AceConfigDialog:AddToBlizOptions("TradeskillInfo", L["Auction House"], "TradeskillInfo", "auction")
-AceConfigDialog:AddToBlizOptions("TradeskillInfo", L["Profile"], "TradeskillInfo", "profile")
-]]--
+	options.args.profile = LibStub("AceDBOptions-3.0"):GetOptionsTable(TradeskillInfo.db)
+
+	AceConfigRegistry:RegisterOptionsTable("TradeskillInfo", options)
+	TradeskillInfo.OptionsPanel = AceConfigDialog:AddToBlizOptions("TradeskillInfo", "TradeSkill Info")
+
+	--[[
+	TradeskillInfo.OptionsPanel = AceConfigDialog:AddToBlizOptions("TradeskillInfo", "TradeskillInfo", nil, "general")
+	AceConfigDialog:AddToBlizOptions("TradeskillInfo", L["Tooltip"], "TradeskillInfo", "tooltip")
+	AceConfigDialog:AddToBlizOptions("TradeskillInfo", L["Tradeskill"], "TradeskillInfo", "tradeskill")
+	AceConfigDialog:AddToBlizOptions("TradeskillInfo", L["Trainer"], "TradeskillInfo", "trainer")
+	AceConfigDialog:AddToBlizOptions("TradeskillInfo", L["UI"], "TradeskillInfo", "ui")
+	AceConfigDialog:AddToBlizOptions("TradeskillInfo", L["Auction House"], "TradeskillInfo", "auction")
+	AceConfigDialog:AddToBlizOptions("TradeskillInfo", L["Profile"], "TradeskillInfo", "profile")
+	]]--
+end

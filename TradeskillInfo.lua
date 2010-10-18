@@ -228,8 +228,6 @@ function TradeskillInfo:OnEnable()
 	self:ScheduleTimer("OnSkillUpdate",1);
 end
 
-function TradeskillInfo:OnDisable()
-end
 
 function TradeskillInfo:OnAddonLoaded(event, addon)
 	if addon == "Blizzard_AuctionUI" then
@@ -1816,8 +1814,10 @@ end
 ----------------------------------------------------------------------
 
 function TradeskillInfo:LoadUI(quiet)
-	if not IsAddOnLoaded("TradeskillInfoUI") then
-		loaded, reason = LoadAddOn("TradeskillInfoUI")
+	if TradeskillInfoUI then
+		return true
+	else
+		local loaded, reason = LoadAddOn("TradeskillInfoUI")
 
 		if not loaded then
 			if not quiet then self:Print(L["Could not load the UI. Reason: "], reason) end
@@ -1825,8 +1825,6 @@ function TradeskillInfo:LoadUI(quiet)
 
 		return loaded
 	end
-
-	return true
 end
 
 function TradeskillInfo:UI_Toggle()
@@ -1853,15 +1851,16 @@ function TradeskillInfo:ScrollToConfig()
 end
 
 function TradeskillInfo:ConfigToggle()
-	self:LoadUI()
+	if not self:LoadUI() then return end
 
-	if InterfaceOptionsFrame:IsVisible() and
-	   InterfaceOptionsFramePanelContainer.displayedPanel == self.OptionsPanel
-	then
-		InterfaceOptionsFrame:Hide();
+	if not self.OptionsPanel then self:CreateConfig() end
+
+	if InterfaceOptionsFrame:IsVisible() and InterfaceOptionsFramePanelContainer.displayedPanel == self.OptionsPanel then
+		InterfaceOptionsFrame:Hide()
 	else
 		if self.OptionsPanel then
 			InterfaceOptionsFrame_OpenToCategory(self.OptionsPanel)
+
 			if InterfaceOptionsFramePanelContainer.displayedPanel ~= self.OptionsPanel then
 				self:ScrollToConfig()
 			end
