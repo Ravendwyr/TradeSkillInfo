@@ -739,13 +739,13 @@ function TradeskillInfoUI:ShowReagentTooltip(frame)
 end
 
 function TradeskillInfoUI:CollapseAllButton_OnClick(frame)
-	if (frame.collapsed) then
-		frame.collapsed = nil;
-		self:ExpandHeader(0);
+	if frame.collapsed then
+		frame.collapsed = nil
+		self:ExpandHeader(0)
 	else
-		frame.collapsed = true;
-		TradeskillInfoListScrollFrameScrollBar:SetValue(0);
-		self:CollapseHeader(0);
+		frame.collapsed = 1
+		TradeskillInfoListScrollFrameScrollBar:SetValue(0)
+		self:CollapseHeader(0)
 	end
 end
 

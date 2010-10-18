@@ -758,6 +758,55 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<NormalTexture urgency="5" file="Interface\Buttons\UI-MinusButton-UP">
+							<Size>
+								<AbsDimension x="16" y="16"/>
+							</Size>
+							<Anchors>
+								<Anchor point="LEFT">
+									<Offset>
+										<AbsDimension x="3" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</NormalTexture>
+						<HighlightTexture name="$parentHighlight" file="Interface\Buttons\UI-PlusButton-Hilight" alphaMode="ADD">
+							<Size>
+								<AbsDimension x="16" y="16"/>
+							</Size>
+							<Anchors>
+								<Anchor point="LEFT">
+									<Offset>
+										<AbsDimension x="3" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</HighlightTexture>
+						<DisabledTexture file="Interface\Buttons\UI-PlusButton-Disabled">
+							<Size>
+								<AbsDimension x="16" y="16"/>
+							</Size>
+							<Anchors>
+								<Anchor point="LEFT">
+									<Offset>
+										<AbsDimension x="3" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</DisabledTexture>
+						<ButtonText name="$parentText">
+							<Size x="270" y="13"/>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="$parentHighlight" relativePoint="RIGHT">
+									<Offset>
+										<AbsDimension x="2" y="1"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</ButtonText>
+						<NormalFont style="GameFontNormalLeft"/>
+						<HighlightFont style="GameFontHighlightLeft"/>
+						<DisabledFont style="GameFontDisableLeft"/>
 						<Scripts>
 							<OnLoad>
 								_G[self:GetName()]:SetText(ALL)
