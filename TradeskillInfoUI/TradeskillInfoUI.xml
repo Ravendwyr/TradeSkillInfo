@@ -10,7 +10,7 @@
 	</Font>
 
 	<!-- SKILL TEMPLATE -->
-	<Button name="TradeskillInfoSkillButtonTemplate" inherits="ClassTrainerSkillButtonTemplate" hidden="false" virtual="true">
+	<Button name="TradeskillInfoSkillButtonTemplate" inherits="TradeSkillSkillButtonTemplate" hidden="false" virtual="true">
 		<Scripts>
 			<OnClick>
 				TradeskillInfoUI:SkillButton_OnClick(self, button, down);
@@ -708,10 +708,10 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(self:GetName()):SetText(ALL);
+								_G[self:GetName()]:SetText(ALL)
 							</OnLoad>
 							<OnClick>
-								TradeskillInfoUI:CollapseAllButton_OnClick(self);
+								TradeskillInfoUI:CollapseAllButton_OnClick(self)
 							</OnClick>
 						</Scripts>
 					</Button>
