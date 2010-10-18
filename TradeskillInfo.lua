@@ -401,8 +401,9 @@ function TradeskillInfo:UpdateSkills(startLine, endLine)
 		endLine = numSkills;
 	end
 	for i = startLine, endLine do
-		local skillName, isHeader, isExpanded, skillRank, numTempPoints, skillModifier = GetSkillLineInfo(i)
-		if isHeader and not isExpanded then
+		local skillName, skillType, numAvailable, isExpanded, altVerb = GetTradeSkillInfo(i);
+--		local skillName, isHeader, isExpanded, skillRank, numTempPoints, skillModifier = GetTradeSkillInfo(i)
+		if skillType == "header" and not isExpanded then
 			ExpandSkillHeader(i);
 			self:UpdateSkills(i+1, i+GetNumSkillLines()-numSkills);
 			CollapseSkillHeader(i);
