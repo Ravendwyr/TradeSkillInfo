@@ -19,7 +19,6 @@
 ## X-LoadOn-Slash: /tsi
 
 ## Dependencies: TradeskillInfo
-## SavedVariables: TradeskillInfoUIDB
 ## LoadOnDemand: 1
 
 locale-enUS.lua
