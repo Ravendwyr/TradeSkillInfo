@@ -95,7 +95,7 @@ function TradeskillInfoUI:Frame_Show()
 	TradeskillInfoDetailScrollFrameBottom:Hide();
 
 	for key,val in pairs(self.options.buttons) do
-		local button = getglobal(key);
+		local button = _G[key]
 		button:SetText(val.text);
 		if val.tooltip then
 			button.tooltipText = val.tooltip;
@@ -214,7 +214,7 @@ end
 TradeskillInfoUI.vars.numSkillButtons = 0
 
 local function getSkillButton(i)
-	local skillButton = getglobal("TradeskillInfoSkill"..i)
+	local skillButton = _G["TradeskillInfoSkill"..i]
 	if not skillButton then
 		-- Create a new button. Assume button (i-1) was already created
 		skillButton = CreateFrame("Button", "TradeskillInfoSkill"..i, TradeskillInfoListFrame, "TradeskillInfoSkillButtonTemplate")
@@ -275,7 +275,7 @@ function TradeskillInfoUI:DoFrameUpdate()
 		TradeskillInfoKnown:SetText("");
 		TradeskillInfoCollapseAllButton:Disable();
 		for i=1, TradeskillInfoUI.cons.maxSkillReagents, 1 do
-			getglobal("TradeskillInfoReagent"..i):Hide();
+			_G["TradeskillInfoReagent"..i]:Hide()
 		end
 	else
 		TradeskillInfoCollapseAllButton:Enable();
@@ -313,7 +313,7 @@ function TradeskillInfoUI:DoFrameUpdate()
 	for i=1, buttonCount do
 		local skillIndex = i + skillOffset;
 		local skillButton = getSkillButton(i)
-		local skillButtonText = getglobal(skillButton:GetName() .. "Text")
+		local skillButtonText = _G[skillButton:GetName() .. "Text"]
 		-- Adjust width of buttons and their texts
 		skillButton:SetWidth(TradeskillInfoListScrollFrame:GetWidth()-34)
 		skillButtonText:SetWidth(TradeskillInfoListScrollFrame:GetWidth()-34)
@@ -345,7 +345,7 @@ function TradeskillInfoUI:DoFrameUpdate()
 
 			skillButton:SetID(skillIndex);
 			skillButton:Show();
-			local skillButtonHighlight = getglobal(skillButton:GetName() .. "Highlight")
+			local skillButtonHighlight = _G[skillButton:GetName() .. "Highlight"]
 			-- Handle headers
 			if ( skillType == "header" ) then
 				skillButton:SetText(skillName);
@@ -440,7 +440,7 @@ function TradeskillInfoUI:DoFrameSetSelection(id)
 	-- Hide all reagents at start.
 	-- When there is a cache update, misleading information appears on screen.
 	for i=1, TradeskillInfoUI.cons.maxSkillReagents, 1 do
-		local reagent = getglobal("TradeskillInfoReagent"..i);
+		local reagent = _G["TradeskillInfoReagent"..i]
 		reagent:Hide();
 		reagent.tooltip = nil;
 		reagent.known = nil;
@@ -573,9 +573,9 @@ function TradeskillInfoUI:DoFrameSetSelection(id)
 			reagentName, reagentTexture, reagentCount, reagentLink, reagentItemString = self:GetTradeSkillReagentInfo(i)
 		end
 
-		local reagent = getglobal("TradeskillInfoReagent"..i)
-		local name = getglobal("TradeskillInfoReagent"..i.."Name");
-		local count = getglobal("TradeskillInfoReagent"..i.."Count");
+		local reagent = _G["TradeskillInfoReagent"..i]
+		local name = _G["TradeskillInfoReagent"..i.."Name"]
+		local count = _G["TradeskillInfoReagent"..i.."Count"]
 		if ( not reagentName or not reagentTexture ) then
 			reagent:Hide();
 		else
