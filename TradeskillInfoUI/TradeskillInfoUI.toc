@@ -30,3 +30,5 @@ locale-deDE.lua
 
 TradeskillInfoUI.lua
 TradeskillInfoUI.xml
+
+TradeskillInfoOptions.lua

@@ -1816,10 +1816,10 @@ function TradeskillInfo:UI_Toggle()
 end
 
 function TradeskillInfo:ConfigToggle()
-	if not self:LoadUI() then return end
+	if not self:LoadUI() then return end -- missing
 
 	if not self.optionsLoaded then self:LoadAndCreateConfig() end
-	if not self.optionsLoaded then return end -- LoD UI module missing
+	if not self.optionsLoaded then return end -- still missing
 
 	if InterfaceOptionsFrame:IsShown() then
 		InterfaceOptionsFrame:Hide()
