@@ -558,33 +558,35 @@ end
 -- OnClick hooks
 ----------------------------------------------------------------------
 function TradeskillInfo:ContainerFrameItemButton_OnModifiedClick(object, button)
-	local link = GetContainerItemLink(this:GetParent():GetID(),this:GetID())
-	if self:Item_OnClick(button,link) then return end
+	local link = GetContainerItemLink(object:GetParent():GetID(), object:GetID())
+	if self:Item_OnClick(button, link) then return end
 end
 
 function TradeskillInfo:BankFrameItemButtonGeneric_OnModifiedClick(object, button)
-	local link = GetContainerItemLink(BANK_CONTAINER,this:GetID())
-	if self:Item_OnClick(button,link) then return end
+	local link = GetContainerItemLink(BANK_CONTAINER, object:GetID())
+	if self:Item_OnClick(button, link) then return end
 end
 
 function TradeskillInfo:MerchantItemButton_OnModifiedClick(object, button)
-	local link = GetMerchantItemLink(this:GetID())
-	if self:Item_OnClick(button,link) then return end
+	local link = GetMerchantItemLink(object:GetID())
+	if self:Item_OnClick(button, link) then return end
 end
 
 function TradeskillInfo:ChatFrame_OnHyperlinkShow(object, link, text, button)
-	if self:Item_OnClick(button,text) then return end
+	if self:Item_OnClick(button, text) then return end
 end
 
 function TradeskillInfo:AuctionItemButton_OnClick(object, button)
 	local offset = FauxScrollFrame_GetOffset(BrowseScrollFrame)
-	local itemID = this:GetParent():GetID()+offset
-	local link = GetAuctionItemLink("list",itemID)
-	if self:Item_OnClick(arg1,link) then return end
-	self.hooks[object].OnClick(object,button)
+	local itemID = button:GetParent():GetID() + offset
+	local link = GetAuctionItemLink("list", itemID)
+
+	if self:Item_OnClick(object, link) then return end
+
+	self.hooks[object].OnClick(object, button)
 end
 
-function TradeskillInfo:Item_OnClick(button,link)
+function TradeskillInfo:Item_OnClick(button, link)
 	if self.db.profile.QuickSearch then
 		if button == self.vars.MouseButtons[self.db.profile.SearchMouseButton] then
 			local accept = true
@@ -597,7 +599,7 @@ function TradeskillInfo:Item_OnClick(button,link)
 			end
 
 			if accept then
-				local id = getIdFromLink(link);
+				local id = getIdFromLink(link)
 				if not self:ComponentExists(id) then return end
 				if self:LoadUI(true) then -- Have TradeskillInfoUI
 					local name = getNameFromLink(link);
