@@ -251,19 +251,10 @@ function TradeskillInfo:OnTradeShow()
 end
 
 function TradeskillInfo:ChatCommand(input)
-	-- Open About panel if there's no parameters or if we do /arl about
-	if (not input) or
-	   string.trim(input) == "" or
-	   string.trim(input) == "menu"
-	then
-		self:UI_Toggle()
-	elseif string.trim(input) == "config" then
-		self:ConfigToggle()
-	else
-		-- Do not call the default command handler - we do not have any
-		-- registered commands.
-		-- LibStub("AceConfigCmd-3.0"):HandleCommand("tsi", "TradeskillInfo", input)
-	end
+	input = input:lower():trim()
+
+	if input == "config" then self:ConfigToggle()
+	else self:UI_Toggle() end
 end
 
 function TradeskillInfo:OnSkillUpdate()
