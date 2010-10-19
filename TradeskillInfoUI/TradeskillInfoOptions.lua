@@ -507,17 +507,13 @@ function TradeskillInfo:CreateConfig()
 			trainer = trainerOptions,
 			ui = uiOptions,
 			auction = ahOptions,
+			profile = LibStub("AceDBOptions-3.0"):GetOptionsTable(TradeskillInfo.db),
 		},
 	}
 
-	-- Start registering the tables
-	local AceConfigRegistry = LibStub("AceConfig-3.0")
-	local AceConfigDialog = LibStub("AceConfigDialog-3.0")
+	self.optionsLoaded = true
 
-	options.args.profile = LibStub("AceDBOptions-3.0"):GetOptionsTable(TradeskillInfo.db)
-
-	AceConfigRegistry:RegisterOptionsTable("TradeskillInfo", options)
-	TradeskillInfo.OptionsPanel = AceConfigDialog:AddToBlizOptions("TradeskillInfo", "TradeSkill Info")
+	return options
 
 	--[[
 	TradeskillInfo.OptionsPanel = AceConfigDialog:AddToBlizOptions("TradeskillInfo", "TradeskillInfo", nil, "general")

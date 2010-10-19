@@ -15,8 +15,6 @@
 
 ## X-Credits Evenue (updates), Fieroivan (updates), Dys (updates)
 ## X-Category: Tradeskill
-## LoadManagers: AddonLoader
-## X-LoadOn-Slash: /tsi
 
 ## Dependencies: TradeskillInfo
 ## LoadOnDemand: 1
@@ -32,5 +30,3 @@ locale-deDE.lua
 
 TradeskillInfoUI.lua
 TradeskillInfoUI.xml
-
-TradeskillInfoOptions.lua

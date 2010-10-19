@@ -225,6 +225,10 @@ function TradeskillInfo:OnEnable()
 	if type(self.db.profile.TooltipAvailableTo) ~= "table" then
 		self.db.profile.TooltipAvailableTo = self.db.defaults.profile.TooltipAvailableTo
 	end
+
+	LibStub("AceConfig-3.0"):RegisterOptionsTable("TradeSkillInfo", TradeskillInfo.LoadAndCreateConfig)
+	LibStub("AceConfigDialog-3.0"):AddToBlizOptions("TradeSkillInfo", "TradeSkill Info")
+
 	self:ScheduleTimer("OnSkillUpdate",1);
 end
 
@@ -273,6 +277,12 @@ function TradeskillInfo:OnSkillUpdate()
 			end
 		end
 		self.UpdateInProgress = false
+	end
+end
+
+function TradeskillInfo:LoadAndCreateConfig()
+	if TradeskillInfo:LoadUI() then
+		return TradeskillInfo:CreateConfig()
 	end
 end
 
@@ -1793,12 +1803,15 @@ end
 
 function TradeskillInfo:LoadUI(quiet)
 	if TradeskillInfoUI then
-		return true
+		return true -- good news everyone! the UI module is loaded again!
 	else
 		local loaded, reason = LoadAddOn("TradeskillInfoUI")
 
 		if not loaded then
-			if not quiet then self:Print(L["Could not load the UI. Reason: "], reason) end
+			if not quiet then
+				-- bad news everyone! I don't think it's going to make it...
+				self:Print(L["Could not load the UI. Reason: "], reason)
+			end
 		end
 
 		return loaded
@@ -1811,38 +1824,16 @@ function TradeskillInfo:UI_Toggle()
 	end
 end
 
-function TradeskillInfo:ScrollToConfig()
-	local buttons = InterfaceOptionsFrameAddOns.buttons;
-	local offset = 0
-	local maxScroll = floor(select(2,InterfaceOptionsFrameAddOnsListScrollBar:GetMinMaxValues())/buttons[1]:GetHeight()+0.5)
-	while offset <= maxScroll do
-		InterfaceOptionsFrameAddOnsListScrollBar:SetValue(offset*buttons[1]:GetHeight());
-		for i = 1, #buttons do
-			if buttons[i].element == self.OptionsPanel then
-				InterfaceOptionsFrame_OpenToCategory(self.OptionsPanel)
-				return
-			end
-		end
-		offset = offset + #buttons
-		if offset > maxScroll then offset = maxScroll end
-	end
-end
-
 function TradeskillInfo:ConfigToggle()
 	if not self:LoadUI() then return end
 
-	if not self.OptionsPanel then self:CreateConfig() end
+	if not self.optionsLoaded then self:LoadAndCreateConfig() end
+	if not self.optionsLoaded then return end -- LoD UI module missing
 
-	if InterfaceOptionsFrame:IsVisible() and InterfaceOptionsFramePanelContainer.displayedPanel == self.OptionsPanel then
+	if InterfaceOptionsFrame:IsShown() then
 		InterfaceOptionsFrame:Hide()
 	else
-		if self.OptionsPanel then
-			InterfaceOptionsFrame_OpenToCategory(self.OptionsPanel)
-
-			if InterfaceOptionsFramePanelContainer.displayedPanel ~= self.OptionsPanel then
-				self:ScrollToConfig()
-			end
-		end
+		InterfaceOptionsFrame_OpenToCategory("TradeSkill Info")
 	end
 end
 
