@@ -266,7 +266,6 @@ function TradeskillInfo:OnSkillUpdate()
 	if not self.UpdateInProgress then
 		self.UpdateInProgress = true
 		self:UpdateSkills();
-		self:UpdateSpecializations();
 
 		if not IsTradeSkillLinked() then
 			if (GetTradeSkillLine() ~= "UNKNOWN") then
@@ -389,37 +388,14 @@ function TradeskillInfo:UpdateKnownRecipes()
 end
 
 function TradeskillInfo:UpdateSkills(startLine, endLine)
-	local numSkills = GetNumTradeSkills()
-	-- If the cache is still not initialized, return, and hope that another
-	-- SKILL_LINES_CHANGED event will get fired
-	if not numSkills or numSkills == 0 then return end
-	if not startLine then
-		self.db.realm.userdata[self.vars.playername].skills = {};
-		startLine = 1;
-		endLine = numSkills;
-	end
-	for i = startLine, endLine do
-		local skillName, skillType, numAvailable, isExpanded, altVerb = GetTradeSkillInfo(i);
---		local skillName, isHeader, isExpanded, skillRank, numTempPoints, skillModifier = GetTradeSkillInfo(i)
-		if skillType == "header" and not isExpanded then
-			ExpandSkillHeader(i);
-			self:UpdateSkills(i+1, i+GetNumSkillLines()-numSkills);
-			CollapseSkillHeader(i);
-		elseif not isHeader and self.vars.skillnames[skillName] then
-			self.db.realm.userdata[self.vars.playername].skills[self.vars.skillnames[skillName]] = skillRank;
+	local prof1, prof2, _, _, cook, firstAid = GetProfessions();
+	local professions = {prof1, prof2, cook, firstAid}
+	local userData = self.db.realm.userdata[self.vars.playername]
+	for _,idx in ipairs(professions) do
+		local name, _, rank, _, _, spelloffset, skillLine = GetProfessionInfo(idx);
+		if self.vars.skillnames[name] then
+			userData.skills[self.vars.skillnames[name]] = rank;
 		end
-	end
-end
-
-function TradeskillInfo:UpdateSpecializations()
-	local i = 1
-	while true do
-		local spellName = GetSpellInfo(i, BOOKTYPE_SPELL)
-		if not spellName then do break end end
-		if self.vars.specializationnames[spellName] then
-			self.db.realm.userdata[self.vars.playername].skills[self.vars.specializationnames[spellName]] = 1;
-		end
-		i = i + 1
 	end
 end
 
