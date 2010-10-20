@@ -52,4 +52,4 @@ TradeskillInfoUI\TradeskillInfoUI.lua
 TradeskillInfoUI\TradeskillInfoUI.xml
 
 TradeskillInfoUI\TradeskillInfoOptions.lua
-#@end-debug
+#@end-debug@
