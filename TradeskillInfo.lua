@@ -582,7 +582,7 @@ function TradeskillInfo:AuctionItemButton_OnClick(object, button)
 	local itemID = object:GetParent():GetID() + offset
 	local link = GetAuctionItemLink("list", itemID)
 
-	if self:Item_OnClick(object, link) then return end
+	if self:Item_OnClick(button, link) then return end
 
 	self.hooks[object].OnClick(object, button)
 end
