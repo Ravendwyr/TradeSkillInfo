@@ -579,7 +579,7 @@ end
 
 function TradeskillInfo:AuctionItemButton_OnClick(object, button)
 	local offset = FauxScrollFrame_GetOffset(BrowseScrollFrame)
-	local itemID = button:GetParent():GetID() + offset
+	local itemID = object:GetParent():GetID() + offset
 	local link = GetAuctionItemLink("list", itemID)
 
 	if self:Item_OnClick(object, link) then return end
