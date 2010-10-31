@@ -245,8 +245,8 @@ function TradeskillInfo:OnAddonLoaded(event, addon)
 end
 
 function TradeskillInfo:OnTradeShow()
-	if not IsTradeSkillLinked() then
-		self:ScheduleTimer("UpdateKnownRecipes",1);
+	if not IsTradeSkillLinked() and not IsTradeSkillGuild() then
+		self:ScheduleTimer("UpdateKnownRecipes", 1)
 	end
 end
 
@@ -260,13 +260,14 @@ end
 function TradeskillInfo:OnSkillUpdate()
 	if not self.UpdateInProgress then
 		self.UpdateInProgress = true
-		self:UpdateSkills();
+		self:UpdateSkills()
 
-		if not IsTradeSkillLinked() then
+		if not IsTradeSkillLinked() and not IsTradeSkillGuild() then
 			if (GetTradeSkillLine() ~= "UNKNOWN") then
-				self:ScheduleTimer(self.UpdateKnownRecipes,1,self);
+				self:ScheduleTimer(self.UpdateKnownRecipes, 1, self)
 			end
 		end
+
 		self.UpdateInProgress = false
 	end
 end
