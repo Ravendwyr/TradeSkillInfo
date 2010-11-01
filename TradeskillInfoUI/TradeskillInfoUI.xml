@@ -2,7 +2,7 @@
 ..\..\FrameXML\UI.xsd">
 	<!-- $Revision$ -->
 
-	<Font name="TSIRecipeFont" inherits="MasterFont" font="Fonts\FRIZQT__.TTF" virtual="true">
+	<Font name="TSIRecipeFont" font="Fonts\FRIZQT__.TTF" virtual="true">
 		<FontHeight>
 			<AbsValue val="10"/>
 		</FontHeight>
