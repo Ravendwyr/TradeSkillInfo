@@ -357,7 +357,7 @@
 									</Anchors>
 								</FontString>
 
-								<FontString name="TradeskillInfoRecipe1" inherits="GameFontNormalSmall" justifyV="TOP" justifyH="LEFT" hidden="true">
+								<FontString name="TradeskillInfoRecipe" inherits="GameFontNormalSmall" justifyV="TOP" justifyH="LEFT" hidden="true">
 									<Size>
 										<AbsDimension x="305" y="0"/>
 									</Size>
