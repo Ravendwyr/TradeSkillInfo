@@ -357,7 +357,7 @@
 									</Anchors>
 								</FontString>
 
-								<FontString name="TradeskillInfoRecipe" inherits="GameFontNormalSmall" justifyV="TOP" justifyH="LEFT" hidden="true">
+								<FontString name="TradeskillInfoRecipe1" inherits="GameFontNormalSmall" justifyV="TOP" justifyH="LEFT" hidden="true">
 									<Size>
 										<AbsDimension x="305" y="0"/>
 									</Size>
@@ -375,7 +375,7 @@
 										<AbsDimension x="305" y="0"/>
 									</Size>
 									<Anchors>
-										<Anchor point="TOPLEFT" relativeTo="TradeskillInfoRecipe" relativePoint="BOTTOMLEFT">
+										<Anchor point="TOPLEFT" relativeTo="TradeskillInfoRecipe1" relativePoint="BOTTOMLEFT">
 											<Offset>
 												<AbsDimension x="0" y="-3"/>
 											</Offset>
