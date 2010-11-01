@@ -747,7 +747,7 @@
 				<Frames>
 
 				<!-- Collapse All Button -->
-					<Button name="TradeskillInfoCollapseAllButton" hidden="false" inherits="ClassTrainerSkillButtonTemplate">
+					<Button name="TradeskillInfoCollapseAllButton">
 						<Size>
 							<AbsDimension x="40" y="22"/>
 						</Size>
