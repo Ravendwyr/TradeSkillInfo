@@ -889,7 +889,7 @@
 				<Size x="16" y="16"/>
 				<Anchors>
 					<Anchor point="BOTTOMRIGHT">
-						<Offset x="-3" y="3"/>
+						<Offset x="-2" y="2"/>
 					</Anchor>
 				</Anchors>
 				<Scripts>
@@ -900,7 +900,10 @@
 						end
 					</OnMouseDown>
 					<OnLoad>
-						self:GetNormalTexture():SetVertexColor(0.6, 0.6, 0.6)
+						local tex = self:GetNormalTexture()
+
+						tex:SetTexCoord(0.619, 0.760, 0.612, 0.762)
+						tex:SetDesaturated(true)
 					</OnLoad>
 					<OnMouseUp>
 						if button == "LeftButton" then
@@ -913,8 +916,14 @@
 					<OnHide>
 						self:GetParent():StopMovingOrSizing()
 					</OnHide>
+					<OnEnter>
+						self:GetNormalTexture():SetDesaturated(false)
+					</OnEnter>
+					<OnLeave>
+						self:GetNormalTexture():SetDesaturated(true)
+					</OnLeave>
 				</Scripts>
-				<NormalTexture file="Interface\AddOns\TradeskillInfoUI\images\resize"/>
+				<NormalTexture file="Interface\BUTTONS\UI-AutoCastableOverlay"/>
 			</Button>
 
 			<!-- Sort DropDown -->
