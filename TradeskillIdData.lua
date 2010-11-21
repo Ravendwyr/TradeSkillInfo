@@ -6126,7 +6126,7 @@ TradeskillInfo.vars.recipes = {
 	[35325] = "35319|V315|250000|8",
 	[35322] = "35315|V315|250000|8",
 	[35323] = "35316|V315|250000|8",
--- WotLK recipes
+	-- WotLK recipes
 	[39644] = "39520|Q",
 	[43017] = "43015|V318V319",
 	[43018] = "34754|V318V319",
@@ -6266,7 +6266,7 @@ TradeskillInfo.vars.recipes = {
 	[41692] = "40105|V335", -- Design: Energized Forest Emerald
 	[41693] = "40091|V335", -- Design: Forceful Forest Emerald
 	[41694] = "40104|V335", -- Design: Intricate Forest Emerald
-	[41696] = "40100|V335", -- Design: Lambent Forest Emerald
+	[41696] = "40100|V335", -- Design: Lightning Forest Emerald (BoP bought)
 	[41697] = "40089|V335", -- Design: Enduring Forest Emerald
 	[41698] = "40088|V335", -- Design: Vivid Forest Emerald
 	[41699] = "40092|V335", -- Design: Seer's Forest Emerald
@@ -6309,7 +6309,7 @@ TradeskillInfo.vars.recipes = {
 	[41779] = "40056|D", -- Design: Stalwart Monarch Topaz
 	[41780] = "40039|D", -- Design: Champion's Monarch Topaz
 	[41781] = "40095|D", -- Design: Misty Forest Emerald
-	[41782] = "40099|D", -- Design: Shining Forest Emerald
+	[41782] = "40100|D", -- Design: Lightning Forest Emerald (BoE drop)
 	[41783] = "40026|D", -- Design: Purified Twilight Opal
 	[41784] = "40022|D", -- Design: Sovereign Twilight Opal
 	[41785] = "40024|D", -- Design: Tenuous Twilight Opal
@@ -6562,4 +6562,6 @@ TradeskillInfo.vars.recipes = {
 	[49955] = "49892|V348||7", -- Lightweave Leggings
 	[49956] = "49893|V348||6", -- Sandals of Consecration
 	[54798] = "54797|V350||4", -- Frosty Flying Carpet
+	[45089] = "45559|D",	-- Plans: Battlelord's Plate Boots
+	[45091] = "45561|D",	-- Plans: Treads of Destiny
 }
