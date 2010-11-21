@@ -1,4 +1,4 @@
-﻿-- $Revision$
+-- $Revision$
 --[[
 TODO: (Updated 10/25/2007
 
@@ -707,6 +707,7 @@ TradeskillInfo.vars.combines = {
 	[24105] = "33277|W1/45/65/85|23676|27686",	-- Roasted Moongraze Tenderloin
 	[787] = "7752|W1/45/65/85|6303|6326",	-- Slitherskin Mackerel
 	[30816] = "37836|W1/30/35/40|30817 2678",	-- Spice Bread
+	[44837] = "62050|W1/90/100/110|30816 44835|44860",	-- Spice Bread Stuffing (alliance)
 	[2888] = "2795|W10/60/80/100|2886|2889",	-- Beer Basted Boar Ribs
 	[5472] = "6412|W10/50/70/90|5465|5482",	-- Kaldorei Spider Kabob
 	[2680] = "2539|W10/50/70/90|2672",	-- Spiced Wolf Meat
@@ -740,6 +741,7 @@ TradeskillInfo.vars.combines = {
 	[5479] = "6418|W100/140/160/180|5470|5488|2",	-- Crispy Lizard Tail
 	[1082] = "2547|W100/135/155/175|1081 1080|2699",	-- Redridge Goulash
 	[1017] = "2549|W100/140/160/180|1015:2|2701|3",	-- Seasoned Wolf Kabob
+	[44836] = "62044|W100/150/160/170|46784 44853|44862",	-- Pumpkin Pie (alliance)
 	[3726] = "3397|W110/150/170/190|3730|3734",	-- Big Bear Steak
 	[3666] = "3377|W110/150/170/190|2251:2|3683",	-- Gooey Spider Cake
 	[5480] = "6419|W110/150/170/190|5471|5489|2",	-- Lean Venison
@@ -751,6 +753,7 @@ TradeskillInfo.vars.combines = {
 	[3665] = "3376|W130/170/190/210|3685|3682",	-- Curiously Tasty Omelet
 	[20074] = "24418|W150/160/180/200|3667:2|20075",	-- Heavy Crocolisk Stew
 	[3728] = "3399|W150/190/210/230|3731:2|3736",	-- Tasty Lion Steak
+	[44840] = "62049|W160/210/220/230|44854 44853|44858",	-- Cranberry Chutney (alliance)
 	[4457] = "4094|W175/215/235/255|3404|4609",	-- Barbecued Buzzard Wing
 	[12213] = "15863|W175/215/235/255|12037|12232",	-- Carrion Surprise
 	[6038] = "7213|W175/215/235/255|4655|6039",	-- Giant Clam Scorcho
@@ -766,6 +769,7 @@ TradeskillInfo.vars.combines = {
 	[12217] = "15906|W200/225/237/250|12037 4402|12239",	-- Dragonbreath Chili
 	[12215] = "15910|W200/225/237/250|12204:2|12240|2",	-- Heavy Kodo Stew
 	[17222] = "21175|W200/225/237/250|12205:2",	-- Spider Sausage
+	[44839] = "62051|W220/270/280/290|44855 44853 44835|44859",	-- Candied Sweet Potato (alliance)
 	[13927] = "18239|W225/250/262/275|13754|13940",	-- Cooked Glossy Mightfish
 	[13930] = "18241|W225/250/262/275|13758|13941",	-- Filet of Redgill
 	[12218] = "15933|W225/250/262/275|12207|16110",	-- Monster Omelet
@@ -781,6 +785,7 @@ TradeskillInfo.vars.combines = {
 	[13933] = "18245|W275/300/312/325|13888 159|13947",	-- Lobster Stew
 	[13934] = "18246|W275/300/312/325|13893|13948",	-- Mightfish Steak
 	[18254] = "22761|W275/300/312/325|18255|18267",	-- Runn Tum Tuber Surprise
+	[44838] = "62045|W280/320/330/340|44834 44853:2 44835|44861",	-- Slow-Roasted Turkey (alliance)
 	[20452] = "24801|W285/310/322/335|20424",	-- Smoked Desert Dumplings
 	[27661] = "33290|W300/320/330/340|27422|27694",	-- Blackened Trout
 	[27651] = "33279|W300/320/330/340|27671|27684",	-- Buzzard Bites
@@ -4590,6 +4595,14 @@ TradeskillInfo.vars.components = {
 	[36910] = "M",
 	[36912] = "M",
 	[49908] = "DV",
+--	Pilgrim's Bounty ingedients
+	[30816] = "C",
+	[44834] = "D",
+	[44835] = "V",
+	[44853] = "V",
+	[44854] = "V",
+	[44855] = "V",
+	[46784] = "V",
 }
 
 -- Skill Translation table. It is used for converting skill names
@@ -6548,5 +6561,5 @@ TradeskillInfo.vars.recipes = {
 	[49953] = "49891|V348||7", -- Leggings of Woven Death
 	[49955] = "49892|V348||7", -- Lightweave Leggings
 	[49956] = "49893|V348||6", -- Sandals of Consecration
-  [54798] = "54797|V350||4", -- Frosty Flying Carpet
+	[54798] = "54797|V350||4", -- Frosty Flying Carpet
 }
