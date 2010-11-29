@@ -2765,8 +2765,8 @@ TradeskillInfo.vars.combines = {
 	[44331] = "60366|A400/415/422/430|37921 37704 3371", -- Elixir of Lightning Speed
 	[44332] = "60367|A395/400/407/415|37921:2 36907 3371", -- Elixir of Mighty Thoughts
 	[-60893] = "A400/415/422/430|36901:10 36903:10 36907:4 3371:4", -- Northrend Alchemy Research
-	[44939] = "62213|A999/390/395/400|39970:4 3371||", -- Lesser Flask of Resistance
-	[44958] = "62409|A999/380/385/390|41814:2||", -- Ethereal Oil
+	[44939] = "62213|A385/390/395/400|39970:4 3371||", -- Lesser Flask of Resistance
+	[44958] = "62409|A375/380/385/390|41814:2||", -- Ethereal Oil
 	[45621] = "63732|A135/160/180/200|6371 2453 3371||", -- Elixir of Minor Accuracy
 	[47499] = "67025|A440/440/445/450|36908:4 3371||", -- Flask of the North
 	-- WotLK Blacksmithing combines
