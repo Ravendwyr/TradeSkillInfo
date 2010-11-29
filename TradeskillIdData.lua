@@ -2699,7 +2699,7 @@ TradeskillInfo.vars.combines = {
 	[-61118] = "I400/400/400/405|43127", -- Master's Inscription of the Crag
 	[-61117] = "I400/400/400/405|43127", -- Master's Inscription of the Axe
 	-- WotLK Alchemy combines
-	[8827] = "62410|A999/415/422/430|44958:3 3371", -- Elixir of Water Walking
+	[8827] = "62410|A400/415/422/430|44958:3 3371", -- Elixir of Water Walking
 	[33447] = "53836|A405/410/417/425|36901 36906:2 3371", -- Runic Healing Potion
 	[33448] = "53837|A410/415/422/430|36905:2 36901 3371", -- Runic Mana Potion
 	[25] = "53776|A385/405/415/425|35623|||35622",	-- Transmute: Eternal Air to Water
