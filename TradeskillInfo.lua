@@ -353,7 +353,7 @@ function TradeskillInfo:HookTradeSkillUI()
 	if TradeSkillFrame then
 		local fsLabel = TradeSkillDetailScrollChildFrame:CreateFontString("TradeskillInfoSkillLabel", "BACKGROUND", "GameFontHighlightSmall")
 		local fsText = TradeSkillDetailScrollChildFrame:CreateFontString("TradeskillInfoSkillText", "BACKGROUND", "GameFontHighlightSmall")
-		fsLabel:SetPoint("TOPLEFT", TradeSkillRequirementText, "BOTTOMLEFT", -52, 0)
+		fsLabel:SetPoint("TOPLEFT", TradeSkillRequirementText, "BOTTOMLEFT", -55, -11)
 		fsText:SetPoint("TOPLEFT", fsLabel, "TOPRIGHT")
 		if not self:IsHooked("TradeSkillFrame_SetSelection") then
 			self:SecureHook("TradeSkillFrame_SetSelection");
