@@ -108,6 +108,7 @@ TradeskillInfo.vars.specialcases = {
 	[41163] = "35,36",
 	[51950] = "37, 38",
 	[54440] = "39, 40, 41, 42, 43, 44",
+	[53051] = "45, 46",
 }
 
 -- Add the reverse mappings to specialcases
@@ -4175,6 +4176,10 @@ TradeskillInfo.vars.combines = {
 	-- WotLK First Aid Recipes
 	[34721] = "45545|X350/375/392/410|33470", -- Frostweave Bandage
 	[34722] = "45546|X400/400/430/470|33470:2|39152", -- Manual: Heavy Frostweave Bandage
+	[53049] = "74556|X425/450/467/485|53010", -- Embersilk Bandage
+	[53050] = "74557|X475/485/505/525|53010:2", -- Heavy Embersilk Bandage
+	[45] = "88893|X525/525/530/535|53010:3|||53051", -- Dense Embersilk Bandage
+	[46] = "74558|X525/525/530/535|53050:2|||53051", -- Field Bandage: Dense Embersilk
 	-- Permanent enchant scrolls
 	-- TODO: Now, they share the same vellum.
 	-- Can generate programmatically from enchant formulas if I record only
