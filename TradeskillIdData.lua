@@ -89,63 +89,41 @@ TradeskillInfo.vars.diffcolors = {
 
 TradeskillInfo.vars.specialcases = {
 	[3577] = "1,2",
-	[1] = "3577",
-	[2] = "3577",
 	[6037] = "3,4",
-	[3] = "6037",
-	[4] = "6037",
 	[7080] = "5,6",
-	[5] = "7080",
-	[6] = "7080",
 	[7076] = "7,8",
-	[7] = "7076",
-	[8] = "7076",
 	[21884] = "9,10",
-	[9] = "21884",
-	[10] = "21884",
 	[21885] = "11,12",
-	[11] = "21885",
-	[12] = "21885",
 	[22452] = "13,14",
-	[13] = "22452",
-	[14] = "22452",
 	[10577] = "15,16",
-	[15] = "10577",
-	[16] = "10577",
 	[18258] = "17,18",
-	[17] = "18258",
-	[18] = "18258",
 	[22448] = "19,20",
-	[19] = "22448",
-	[20] = "22448",
 	[22449] = "21,22",
-	[21] = "22449",
-	[22] = "22449",
 	[35624] = "23,24",
-	[23] = "35624",
-	[24] = "35624",
 	[35622] = "25,26",
-	[25] = "35622",
-	[26] = "35622",
 	[35623] = "27,28",
-	[27] = "35623",
-	[28] = "35623",
 	[35627] = "29,30",
-	[29] = "35627",
-	[30] = "35627",
 	[35625] = "31,32",
-	[31] = "35625",
-	[32] = "35625",
 	[36860] = "33,34",
-	[33] = "36860",
-	[34] = "36860",
 	[41163] = "35,36",
-	[35] = "41163",
-	[36] = "41163",
 	[51950] = "37, 38",
-	[37] = "51950",
-	[38] = "51950",
+	[54440] = "39, 40, 41, 42, 43, 44",
 }
+
+-- Add the reverse mappings to specialcases
+do
+	local tmpTbl = {}
+	for i, v in pairs(TradeskillInfo.vars.specialcases) do
+		i = tostring(i)
+		for idx in v:gmatch("(%d+),?%s*") do
+			tmpTbl[tonumber(idx)]=i
+		end
+	end
+
+	for i, v in pairs(tmpTbl) do
+		TradeskillInfo.vars.specialcases[i]=v
+	end
+end
 
 TradeskillInfo.vars.combines = {
 --[[ Alchemy --]]
@@ -3925,7 +3903,12 @@ TradeskillInfo.vars.combines = {
 	[-56034] = "T405/405/405/405|38426", -- Master's spellthread
 	[-56039] = "T405/405/405/405|38426", -- Sanctified spellthread
 	[53643] = "74964|T425/440/445/450|53010:5", -- Bolt of Embersilk Cloth
-	[54440] = "94743|T525/525/530/535|53643:8 52078:5", -- Dream of Destruction
+	[39] = "75146|T500/525/530/535|53643:8 52326:30|||54440", -- Dream of Azshara
+	[40] = "75142|T505/525/530/535|53643:8 52327:30|||54440", -- Dream of Deepholm
+	[41] = "94743|T525/525/530/535|53643:8 52078:5|||54440", -- Dream of Destruction
+	[42] = "75144|T500/525/530/535|53643:8 52329:30|||54440", -- Dream of Hyjal
+	[43] = "75145|T510/525/530/535|53643:8 52325:30|||54440", -- Dream of Ragnaros
+	[44] = "75141|T515/525/530/535|53643:8 52328:30|||54440", -- Dream of Skywall
 	[54441] = "75288|T500/505/510/515|53643:8 52325:8 38426:8 52078", -- Black Embersilk Gown
 	[54442] = "75247|T425/435/445/455|53010:6||3", -- Embersilk Net
 	[54443] = "75264|T480/490/492/495|53643:15 52555:15", -- Embersilk Bag
@@ -4452,58 +4435,51 @@ TradeskillInfo.vars.combines = {
 	[38953] = "-44488|D410/420/430/440|34055:4 38682", -- Scroll of Enchant Gloves - Precision
 	[38951] = "-44484|D405/415/425/435|34054:12 38682", -- Scroll of Enchant Gloves - Expertise
 	[38950] = "-44483|D400/415/425/435|34054:6 34055:3 36860 38682|37332", -- Scroll of Enchant Cloak - Superior Frost Resistance
---[[
-	Wowhead couldn't find information on these. Add later.
-	[] = "-95471|D470/480/490/500|52555:3 52719:3 52721:3  38682", -- Scroll of Enchant 2H Weapon - Mighty Agility
-	[] = "-74256|D525/525/532/540|52555:12 52719:4 52721:2 52722 38682", -- Scroll of Enchant Bracer - Greater Speed
-	[] = "-74255|D525/525/532/540|52555:10 52719:5 52722:2 38682", -- Scroll of Enchant Gloves - Greater Mastery
-	[] = "-74254|D525/525/532/540|52555:4 52719:8 52722:2 38682", -- Scroll of Enchant Gloves - Mighty Strength
-	[] = "-74253|D525/525/532/540|52719:10 52721:2 52722 38682", -- Scroll of Enchant Boots - Lavawalker
-	[] = "-74252|D525/525/532/540|52555:5 52719:7 52721:2 52722 38682", -- Scroll of Enchant Boots - Assassin's Step
-	[] = "-74251|D525/525/532/540|52555:10 52721:4 52722:2 38682", -- Scroll of Enchant Chest - Greater Stamina
-	[] = "-74250|D525/525/532/540|52721:3 52722:3 38682", -- Scroll of Enchant Chest - Peerless Stats
-	[] = "-74248|D525/525/532/540|52555:15 52719:3 52721:2 52722 38682", -- Scroll of Enchant Bracer - Greater Critical Strike
-	[] = "-74247|D525/525/532/540|52722:5 38682", -- Scroll of Enchant Cloak - Greater Critical Strike
-	[] = "-74246|D525/525/532/540|52555:6 52719:5 52721:5 52722:5 38682", -- Scroll of Enchant Weapon - Landslide
-	[] = "-74244|D525/525/532/540|52719:4 52721:6 52722:6 38682", -- Scroll of Enchant Weapon - Windwalk
-	[] = "-74242|D525/525/532/540|52555:14 52721:8 52722:4 38682", -- Scroll of Enchant Weapon - Power Torrent
-	[] = "-74240|D510/520/530/540|52555:9 52719:4 38682", -- Scroll of Enchant Cloak - Greater Intellect
-	[] = "-74239|D510/520/530/540|52555:4 52719:6 38682", -- Scroll of Enchant Bracer - Greater Expertise
-	[] = "-74238|D510/520/530/540|52555:10 52719:3 38682", -- Scroll of Enchant Boots - Mastery
-	[] = "-74237|D505/515/525/535|52555:9 52719:3 38682", -- Scroll of Enchant Bracer - Exceptional Spirit
-	[] = "-74236|D505/510/512/515|52555:2 52719:2 58094 38682", -- Scroll of Enchant Boots - Precision
-	[] = "-74235|D500/510/520/530|52555:6 52719:4 38682", -- Scroll of Enchant Off-Hand - Superior Intellect
-	[] = "-74234|D500/510/520/530|52555:8 52719:3 38682", -- Scroll of Enchant Cloak - Protection
-	[] = "-74232|D495/505/515/525|52555:12 52719 38682", -- Scroll of Enchant Bracer - Precision
-	[] = "-74231|D495/505/515/525|52555:10 52719:2 38682", -- Scroll of Enchant Chest - Exceptional Spirit
-	[] = "-74230|D490/500/510/520|52555:8 52719:2 38682", -- Scroll of Enchant Cloak - Critical Strike
-	[] = "-74229|D490/500/510/520|52719:5 52328 38682", -- Scroll of Enchant Bracer - Dodge
-	[] = "-74226|D485/495/505/515|52555:12 38682", -- Scroll of Enchant Shield - Blocking
-	[] = "-74225|D485/495/505/515|52555:9 52719:3 52721:3 52329:3 38682", -- Scroll of Enchant Weapon - Heartsong
-	[] = "-74223|D480/490/500/510|52721:6 52328:6 38682", -- Scroll of Enchant Weapon - Hurricane
-	[] = "-74220|D480/490/500/510|52555:5 52719:2 38682", -- Scroll of Enchant Gloves - Greater Expertise
-	[] = "-74218|D475/475/475/495|52721 38682", -- Scroll of Enchant Ring - Greater Stamina
-	[] = "-74217|D475/475/475/495|52721 38682", -- Scroll of Enchant Ring - Intellect
-	[] = "-74216|D475/475/475/495|52721 38682", -- Scroll of Enchant Ring - Agility
-	[] = "-74215|D475/475/475/495|52721 38682", -- Scroll of Enchant Ring - Strength
-	[] = "-74214|D475/485/495/505|52555:9 38682", -- Scroll of Enchant Chest - Mighty Resilience
-	[] = "-74213|D475/485/495/505|52555:4 52719:2 38682", -- Scroll of Enchant Boots - Major Agility
-	[] = "-74212|D470/480/490/500|52555:3 52719:2 38682", -- Scroll of Enchant Gloves - Exceptional Strength
-	[] = "-74211|D470/480/490/500|52555:7 52719:2 52721 38682", -- Scroll of Enchant Weapon - Elemental Slayer
-	[] = "-74207|D465/475/485/495|52719 52327:15 38682", -- Scroll of Enchant Shield - Protection
-	[] = "-74202|D465/475/485/495|52555:6 38682", -- Scroll of Enchant Cloak - Intellect
-	[] = "-74201|D460/470/480/490|52555:4 52718:2 38682", -- Scroll of Enchant Bracer - Critical Strike
-	[] = "-74200|D460/470/480/490|52555:5 52718 38682", -- Scroll of Enchant Chest - Stamina
-	[] = "-74199|D455/465/475/485|52555:2 52719 38682", -- Scroll of Enchant Boots - Haste
-	[] = "-74198|D455/465/475/485|52555:4 52718 38682", -- Scroll of Enchant Gloves - Haste
-	[] = "-74197|D450/460/462/465|52555:4 52719:6 38682", -- Scroll of Enchant Weapon - Avalanche
-	[] = "-74195|D450/460/462/465|52555:11 52719:3 38682", -- Scroll of Enchant Weapon - Mending
-	[] = "-74193|D435/450/460/470|52555:2 52718 38682", -- Scroll of Enchant Bracer - Speed
-	[] = "-74192|D435/450/460/470|52555:3 38682", -- Scroll of Enchant Cloak - Greater Spell Piercing
-	[] = "-74191|D425/440/450/460|52718:2 38682", -- Scroll of Enchant Chest - Mighty Stats
-	[] = "-74189|D425/440/450/460|52555:2 38682", -- Scroll of Enchant Boots - Earthen Vitality
-	[] = "-74132|D425/440/450/460|52555 52718 38682", -- Scroll of Enchant Gloves - Mastery
---]]
+	[68134] = "-95471|D470/480/490/500|52555:3 52719:3 52721:3  38682", -- Enchant 2H Weapon - Mighty Agility
+	[52785] = "-74256|D525/525/532/540|52555:12 52719:4 52721:2 52722 38682", -- Enchant Bracer - Greater Speed
+	[52784] = "-74255|D525/525/532/540|52555:10 52719:5 52722:2 38682", -- Enchant Gloves - Greater Mastery
+	[52783] = "-74254|D525/525/532/540|52555:4 52719:8 52722:2 38682", -- Enchant Gloves - Mighty Strength
+	[52782] = "-74253|D525/525/532/540|52719:10 52721:2 52722 38682", -- Enchant Boots - Lavawalker
+	[52781] = "-74252|D525/525/532/540|52555:5 52719:7 52721:2 52722 38682", -- Enchant Boots - Assassin's Step
+	[52780] = "-74251|D525/525/532/540|52555:10 52721:4 52722:2 38682", -- Enchant Chest - Greater Stamina
+	[52779] = "-74250|D525/525/532/540|52721:3 52722:3 38682", -- Enchant Chest - Peerless Stats
+	[52778] = "-74248|D525/525/532/540|52555:15 52719:3 52721:2 52722 38682", -- Enchant Bracer - Greater Critical Strike
+	[52777] = "-74247|D525/525/532/540|52722:5 38682", -- Enchant Cloak - Greater Critical Strike
+	[52776] = "-74246|D525/525/532/540|52555:6 52719:5 52721:5 52722:5 38682", -- Enchant Weapon - Landslide
+	[52775] = "-74244|D525/525/532/540|52719:4 52721:6 52722:6 38682", -- Enchant Weapon - Windwalk
+	[52774] = "-74242|D525/525/532/540|52555:14 52721:8 52722:4 38682", -- Enchant Weapon - Power Torrent
+	[52773] = "-74240|D510/520/530/540|52555:9 52719:4 38682", -- Enchant Cloak - Greater Intellect
+	[52772] = "-74239|D510/520/530/540|52555:4 52719:6 38682", -- Enchant Bracer - Greater Expertise
+	[52771] = "-74238|D510/520/530/540|52555:10 52719:3 38682", -- Enchant Boots - Mastery
+	[52770] = "-74237|D505/515/525/535|52555:9 52719:3 38682", -- Enchant Bracer - Exceptional Spirit
+	[52769] = "-74236|D505/510/512/515|52555:2 52719:2 58094 38682", -- Enchant Boots - Precision
+	[52768] = "-74235|D500/510/520/530|52555:6 52719:4 38682", -- Enchant Off-Hand - Superior Intellect
+	[52767] = "-74234|D500/510/520/530|52555:8 52719:3 38682", -- Enchant Cloak - Protection
+	[52766] = "-74232|D495/505/515/525|52555:12 52719 38682", -- Enchant Bracer - Precision
+	[52765] = "-74231|D495/505/515/525|52555:10 52719:2 38682", -- Enchant Chest - Exceptional Spirit
+	[52764] = "-74230|D490/500/510/520|52555:8 52719:2 38682", -- Enchant Cloak - Critical Strike
+	[52763] = "-74229|D490/500/510/520|52719:5 52328 38682", -- Enchant Bracer - Dodge
+	[52762] = "-74226|D485/495/505/515|52555:12 38682", -- Enchant Shield - Blocking
+	[52761] = "-74225|D485/495/505/515|52555:9 52719:3 52721:3 52329:3 38682", -- Enchant Weapon - Heartsong
+	[52760] = "-74223|D480/490/500/510|52721:6 52328:6 38682", -- Enchant Weapon - Hurricane
+	[52759] = "-74220|D480/490/500/510|52555:5 52719:2 38682", -- Enchant Gloves - Greater Expertise
+	[52758] = "-74214|D475/485/495/505|52555:9 38682", -- Enchant Chest - Mighty Resilience
+	[52757] = "-74213|D475/485/495/505|52555:4 52719:2 38682", -- Enchant Boots - Major Agility
+	[52756] = "-74212|D470/480/490/500|52555:3 52719:2 38682", -- Enchant Gloves - Exceptional Strength
+	[52755] = "-74211|D470/480/490/500|52555:7 52719:2 52721 38682", -- Enchant Weapon - Elemental Slayer
+	[52754] = "-74207|D465/475/485/495|52719 52327:15 38682", -- Enchant Shield - Protection
+	[52753] = "-74202|D465/475/485/495|52555:6 38682", -- Enchant Cloak - Intellect
+	[52752] = "-74201|D460/470/480/490|52555:4 52718:2 38682", -- Enchant Bracer - Critical Strike
+	[52751] = "-74200|D460/470/480/490|52555:5 52718 38682", -- Enchant Chest - Stamina
+	[52750] = "-74199|D455/465/475/485|52555:2 52719 38682", -- Enchant Boots - Haste
+	[52749] = "-74198|D455/465/475/485|52555:4 52718 38682", -- Enchant Gloves - Haste
+	[52748] = "-74197|D450/460/462/465|52555:4 52719:6 38682", -- Enchant Weapon - Avalanche
+	[52747] = "-74195|D450/460/462/465|52555:11 52719:3 38682", -- Enchant Weapon - Mending
+	[52746] = "-74193|D435/450/460/470|52555:2 52718 38682", -- Enchant Bracer - Speed
+	[52745] = "-74192|D435/450/460/470|52555:3 38682", -- Enchant Cloak - Greater Spell Piercing
+	[52744] = "-74191|D425/440/450/460|52718:2 38682", -- Enchant Chest - Mighty Stats
+	[52743] = "-74189|D425/440/450/460|52555:2 38682", -- Enchant Boots - Earthen Vitality
+	[52687] = "-74132|D425/440/450/460|52555 52718 38682", -- Enchant Gloves - Mastery
 }
 
 TradeskillInfo.vars.components = {
