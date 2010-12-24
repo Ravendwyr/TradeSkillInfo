@@ -351,10 +351,12 @@ end
 
 function TradeskillInfo:HookTradeSkillUI()
 	if TradeSkillFrame then
-		local fsLabel = TradeSkillDetailScrollChildFrame:CreateFontString("TradeskillInfoSkillLabel", "BACKGROUND", "GameFontHighlightSmall")
-		local fsText = TradeSkillDetailScrollChildFrame:CreateFontString("TradeskillInfoSkillText", "BACKGROUND", "GameFontHighlightSmall")
-		fsLabel:SetPoint("TOPLEFT", TradeSkillRequirementText, "BOTTOMLEFT", -55, -11)
-		fsText:SetPoint("TOPLEFT", fsLabel, "TOPRIGHT")
+		-- Add our text fields
+		local fsSkillText = TradeSkillDetailScrollChildFrame:CreateFontString("TradeskillInfoSkillText", "BACKGROUND", "GameFontHighlightSmall")
+		fsSkillText:SetPoint("TOPLEFT", 5, -52)
+		local fsProfitText = TradeSkillDetailScrollChildFrame:CreateFontString("TradeskillInfoProfitText", "BACKGROUND", "GameFontHighlightSmall")
+		fsProfitText:SetPoint("TOPLEFT", fsProfitLabel, "TOPRIGHT")
+
 		if not self:IsHooked("TradeSkillFrame_SetSelection") then
 			self:SecureHook("TradeSkillFrame_SetSelection");
 		end
@@ -478,34 +480,44 @@ function TradeskillInfo:TradeSkillFrame_SetSelection(id)
 	end
 
 	if self:CombineExists(itemId) then
+		local yPos = 50
 
 		if self:ShowingSkillLevel() then
 			-- Insert skill required.
-			if TradeskillInfoSkillLabel then
-				TradeskillInfoSkillLabel:SetText(L["Skill Level"] .. ": ");
-				TradeskillInfoSkillText:SetText(self:GetColoredDifficulty(itemId));
-				TradeskillInfoSkillLabel:Show();
-				TradeskillInfoSkillText:Show();
+			if TradeskillInfoSkillText then
+				TradeskillInfoSkillText:SetText(L["Skill Level"] .. ": " ..
+												self:GetColoredDifficulty(itemId))
+				TradeskillInfoSkillText:Show()
+				yPos = yPos + 4 + TradeskillInfoSkillText:GetHeight()
 			end
 		else
-			TradeskillInfoSkillLabel:Hide();
-			TradeskillInfoSkillText:Hide();
+			TradeskillInfoSkillText:Hide()
 		end
 
-		if self:ShowingSkillAuctioneerProfit() then
+		if self:ShowingSkillProfit() then
+			local profitLabel
+			local value, cost, profit
+
+			if self:ShowingSkillAuctioneerProfit() then
+				value,cost,profit = self:GetCombineAuctioneerCost(itemId)
+				profitLabel = L["Auction"]
+			else
+				value,cost,profit = self:GetCombineCost(itemId)
+				profitLabel = L["Vendor"]
+			end
+
 			-- Insert item value and reagent costs
-			local value,cost,profit = self:GetCombineAuctioneerCost(itemId);
-			TradeSkillReagentLabel:SetText(string.format("%s %s - %s = %s", SPELL_REAGENTS,
-				self:GetMoneyString(value), self:GetMoneyString(cost), self:GetMoneyString(profit)));
-		elseif self:ShowingSkillProfit() then
-			-- Insert item value and reagent costs
-			local value,cost,profit = self:GetCombineCost(itemId);
-			TradeSkillReagentLabel:SetText(string.format("%s %s - %s = %s", SPELL_REAGENTS,
-				self:GetMoneyString(value), self:GetMoneyString(cost), self:GetMoneyString(profit)));
+			TradeskillInfoProfitText:SetText(profitLabel .. ": " ..
+				string.format("%s - %s = %s",
+							  self:GetMoneyString(value), self:GetMoneyString(cost), self:GetMoneyString(profit)))
+			TradeskillInfoProfitText:SetPoint("TOPLEFT", 5, -yPos)
+			TradeskillInfoProfitText:Show()
+			yPos = yPos + 4 + TradeskillInfoProfitText:GetHeight()
 		else
-			--TradeSkillReagentLabel:SetText(SPELL_REAGENTS);
+			TradeskillInfoProfitText:Hide()
 		end
 
+		TradeSkillDescription:SetPoint("TOPLEFT", 5, -yPos)
 	end
 end
 

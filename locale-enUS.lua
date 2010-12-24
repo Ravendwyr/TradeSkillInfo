@@ -429,3 +429,4 @@ L["Skill Level"] = true
 L["Alchemist Finklestein"] = true
 L["Larana Drome"] = true
 L["Frozo the Renowned"] = true
+L["Auction"] = true
