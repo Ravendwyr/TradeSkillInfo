@@ -723,7 +723,7 @@ end
 
 function TradeskillInfo:GetCombineYield(id)
 	if not self:CombineExists(id) then return end
-	local _, _, yield = string.find(self.vars.combines[id],"-?%d*|?[^|]+|[^|]+[|]?%d*[|]?([^|]*)");
+	local _, _, yield = string.find(self.vars.combines[id],"-?%d*|?[^|]+|[^|]+|[^|]*|([^|]*)");
 	if yield and yield ~= "" then yield = tonumber(yield) else yield = 1 end
 	return yield
 end
