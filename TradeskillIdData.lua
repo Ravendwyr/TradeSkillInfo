@@ -2765,8 +2765,8 @@ TradeskillInfo.vars.combines = {
 	[62235] = "86642|I510/520/525/530|39502:10 61981:8 52329:24 52328:6", -- Divine Companion
 	[62236] = "86643|I510/520/525/530|39502:10 61981:8 52329:24 52325:6", -- Battle Tome
 	[62237] = "89367|I460/475/480/485|39502:4 61978", -- Adventurer's Journal
-	[62238] = "86645|I490/490/490/500|39502:3|R|", -- Origami Rock
-	[62239] = "86644|I480/480/480/490|39502:3|R|", -- Origami Slime
+	[62238] = "86645|I490/490/490/500|39502:3|65650", -- Origami Rock
+	[62239] = "86644|I480/480/480/490|39502:3|65649", -- Origami Slime
 	[62240] = "86647|I480/500/502/505|61981:4 68047", -- Etched Horn
 	[62241] = "86648|I480/500/502/505|39502:10 61981:2 52326:2 52328:2 52327:2 52325:2", -- Manual of the Planes
 	[62242] = "86649|I505/515/520/525|61981:8 52329:24 52325:6 62323", -- Runed Dragonscale
@@ -2774,7 +2774,7 @@ TradeskillInfo.vars.combines = {
 	[62244] = "86652|I515/525/530/535|61981:12 52329:36 52326:12 67319", -- Tattooed Eyeball
 	[62245] = "86653|I515/525/530/535|61981:12 52329:36 52328:12 67335", -- Silver Inlaid Leaf
 	[62251] = "85785|I500/505/510/515|61981:5 39502:5||5", -- Runescroll of Fortitude II
-	[63246] = "86646|I500/500/500/510|39502:3", -- Origami Beetle
+	[63246] = "86646|I500/500/500/510|39502:3|65651", -- Origami Beetle
 	[63276] = "86654|I500/510/522/535|39502 61978:3", -- Forged Documents
 	[63303] = "89370|I470/475/480/485|39502:2 61978||5", -- Scroll of Agility IX
 	[63304] = "89369|I465/470/475/480|39502:2 61978||5", -- Scroll of Strength IX
@@ -6857,6 +6857,9 @@ TradeskillInfo.vars.recipes = {
 	[22729] = "22728|Va49Vh174Q", -- Schematic: Steam Tonk Controller
 	-- WotLK Inscription Recipes
 	[46108] = "45854|D", -- Technique: Rituals of the New Moon
+	[65649] = "62239|D", -- Technique: Origami Slime
+	[65650] = "62238|D", -- Technique: Origami Rock
+	[65651] = "63246|D", -- Technique: Origami Beetle
 	-- WotLK First Aid Recipes
 	[39152] = "34722|D", -- Manual: Heavy Frostweave Bandage
 	-- WotLK Jewelcrafting Recipes
