@@ -3568,6 +3568,7 @@ TradeskillInfo.vars.combines = {
 	[68357] = "95755|J465/999/999/999|52193", -- Lucent Ember Topaz
 	[68358] = "95756|J465/500/507/515|52193", -- Resplendent Ember Topaz
 	-- WotLK Leatherworking combines
+	[33568] = "64661|L350/350/362/375|33567:5", -- Borean Leather
 	[38347] = "50971|L415/420/422/425|38425:8|44510", -- Mammoth Mining Bag
 	[38371] = "50964|L405/410/415/420|38425:3 38561:12", -- Jormungar Leg Armor
 	[38372] = "50966|L400/405/410/415|38425:4 38558", -- Nerubian Leg Armor
