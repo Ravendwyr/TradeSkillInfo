@@ -9,7 +9,7 @@
 ## eMail: evenue.wow@gmail.com
 ## X-eMail: evenue.wow@gmail.com
 
-## Version: 2.0.0
+## Version: 2.1.2
 ## X-Revision: $Rev: 375 $
 ## X-Date: $Date: 2010-10-18 13:36:27 +0100 (Mon, 18 Oct 2010) $
 
