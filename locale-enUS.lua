@@ -430,3 +430,10 @@ L["Alchemist Finklestein"] = true
 L["Larana Drome"] = true
 L["Frozo the Renowned"] = true
 L["Auction"] = true
+--Cata 4.2
+L["Damek Bloombeard"] = true
+L["Ayla Shadowstorm"] = true
+L["Varlan Highbough"] = true
+-- Cata 4.3
+L["Farrah Facet"] = true
+L["Taryssa Lazuria"] = true

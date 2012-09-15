@@ -1,4 +1,6 @@
-﻿TradeskillInfo = LibStub("AceAddon-3.0"):NewAddon("TradeskillInfo", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0", "AceHook-3.0")
+﻿local _;
+
+TradeskillInfo = LibStub("AceAddon-3.0"):NewAddon("TradeskillInfo", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0", "AceHook-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("TradeskillInfo")
 TradeskillInfo.version = GetAddOnMetadata("TradeskillInfo", "Version")
 TradeskillInfo.date = string.sub("$Date$", 8, 17);

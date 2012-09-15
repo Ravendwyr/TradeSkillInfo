@@ -430,3 +430,10 @@ L["Alchemist Finklestein"] = "Alchemist Finklestein"
 L["Larana Drome"] = "Larana Drome"
 L["Frozo the Renowned"] = "Frozo the Renowned"
 L["Auction"] = "Auction"
+-- Cata 4.2
+L["Damek Bloombeard"] = "达默克·冲炉"
+L["Ayla Shadowstorm"] = "艾拉·影暴"
+L["Varlan Highbough"] = "瓦尔兰·高枝"
+-- Cata 4.3
+L["Farrah Facet"] = "法拉·费斯特"
+L["Taryssa Lazuria"] = "特蕾萨·拉兹利亚"

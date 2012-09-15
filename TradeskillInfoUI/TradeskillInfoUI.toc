@@ -1,4 +1,4 @@
-## Interface: 40000
+## Interface: 50001
 ## Title: TradeSkill Info UI
 ## Notes: Complete Tradeskill Info UI
 ## Notes-zhCN: 商业技能资料库设置窗口
@@ -8,12 +8,16 @@
 ## Author: wmrojer
 ## eMail: evenue.wow@gmail.com
 ## X-eMail: evenue.wow@gmail.com
+## X-Curse-Packaged-Version: v2.2.0
+## X-Curse-Project-Name: TradeskillInfo
+## X-Curse-Project-ID: tradeskill-info
+## X-Curse-Repository-ID: wow/tradeskill-info/mainline
 
-## Version: 2.1.2
+## Version: 2.2.0
 ## X-Revision: $Rev: 375 $
-## X-Date: $Date: 2010-10-18 13:36:27 +0100 (Mon, 18 Oct 2010) $
+## X-Date: $Date: 2012-09-15 10:34:28 +0000 (Sat, 9 Sep 2012) $
 
-## X-Credits Evenue (updates), Fieroivan (updates), Dys (updates)
+## X-Credits Evenue (updates), Fieroivan (updates), Dys (updates), Viruscamp (updates)
 ## X-Category: Tradeskill
 
 ## Dependencies: TradeskillInfo

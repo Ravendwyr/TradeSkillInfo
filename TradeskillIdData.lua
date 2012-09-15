@@ -4503,6 +4503,157 @@ TradeskillInfo.vars.combines = {
 	[68784] = "-96264|D515/525/532/540|52555:12 52722:2 52328:15 38682", -- Enchant Bracer - Agility
 	[68786] = "-96262|D515/525/532/540|52555:4 52719:4 52722:2 52326:15 38682", -- Enchant Bracer - Mighty Intellect
 	[68785] = "-96261|D515/525/532/540|52555:6 52722:2 52327:25 38682", -- Enchant Bracer - Major Strength
+-- Cata 4.1
+	[52113] = "73266|J425/450/467/485|52181|69820", -- Design: Reckless Hessonite
+	[69852] = "98921|J525/525/525/525|52186:4 52196:4 52195:4 52327:75|69853", -- Design: Punisher's Band
+-- Cata 4.2
+	--[-13882] = "N225/245/265/285|11174:2|71714", -- Formula: Enchant Cloak - Lesser Agility --TODO update old recipe
+	[71720] = "101599|L525/530/535/540|52980 52327:20|71721", -- Pattern: Drakehide Leg Armor
+
+	[70155] = "99652|B525/525/527/530|58480:8 52190:2 53039:3 52078:5|70166", -- Plans: Brainsplinter
+	[70156] = "99653|B525/525/527/530|58480:8 52191 52182:2 53039 52078:5|70167", -- Plans: Masterwork Elementium Spellblade
+	[70157] = "99654|B525/525/527/530|58480:8 52326:30 52078:5|70168", -- Plans: Lightforged Elementium Hammer
+	[70158] = "99655|B525/525/527/530|58480:8 52325:8 53039:4 52078:5|70169", -- Plans: Elementium-Edged Scalper
+	[70162] = "99656|B525/525/527/530|58480:8 52193 53039:3 52078:5|70170", -- Plans: Pyrium Spellward
+	[70163] = "99657|B525/525/527/530|58480:8 52178:8 56516:2 52078:5|70171", -- Plans: Unbreakable Guardian
+	[70164] = "99658|B525/525/527/530|58480:8 52191:2 53039:4 52078:5|70172", -- Plans: Masterwork Elementium Deathblade
+	[70165] = "99660|B525/525/527/530|58480:8 56516:6 53039:4 52078:5|70173", -- Plans: Witch-Hunter's Harvester
+	[70139] = "100587|E515/525/530/535|53039 67749:4 60224:5 52192:2|70177", -- Schematic: Flintlocke's Woodchucker
+	[71077] = "100687|E525/525/525/525|58480:8 39684 40533 53039:5 52078:5|71078", -- Schematic: Extreme-Impact Hole Puncher
+
+	[70136] = "100583|L510/520/527/535|52980:3 61981:3|70174", -- Pattern: Royal Scribe's Satchel
+	[70137] = "100586|L500/520/527/535|52980:3 52327:15|70175", -- Pattern: Triple-Reinforced Mining Bag
+	[70138] = "100585|T515/515/515/515|54440:3|70176", -- Pattern: Luxurious Silk Gem Bag
+
+	[69944] = "99448|T525/525/527/530|54440:8 69237:4|69965", -- Pattern: Grips of Altered Reality
+	[69945] = "99449|T525/525/527/530|54440:8 69237:4|69966", -- Pattern: Don Tayo's Inferno Mittens
+	[69953] = "99459|T525/525/527/530|54440:8 69237:4|69975", -- Pattern: Endless Dream Walkers
+	[69954] = "99460|T525/525/527/530|54440:8 69237:4|69976", -- Pattern: Boots of the Black Flame
+
+	[69936] = "99439|B525/525/527/530|52325:40 53039:10 69237:4 52078:3|69957", -- Plans: Fists of Fury
+	[69937] = "99440|B525/525/527/530|52325:40 53039:10 69237:4 52078:3|69958", -- Plans: Eternal Elementium Handguards
+	[69938] = "99441|B525/525/527/530|52325:40 53039:10 69237:4 52078:3|69959", -- Plans: Holy Flame Gauntlets
+	[69946] = "99452|B525/525/527/530|52325:40 53039:10 69237:4 52078:3|69968", -- Plans: Warboots of Mighty Lords
+	[69947] = "99453|B525/525/527/530|52325:40 53039:10 69237:4 52078:3|69969", -- Plans: Mirrored Boots
+	[69948] = "99454|B525/525/527/530|52325:40 53039:10 69237:4 52078:3|69970", -- Plans: Emberforged Elementium Boots
+
+	[69939] = "99443|L525/525/527/530|52980:8 52325:40 52326:40 69237:4 52078:3|69960", -- Pattern: Dragonfire Gloves
+	[69941] = "99445|L525/525/527/530|52980:8 52325:40 52326:40 69237:4 52078:3|69961", -- Pattern: Gloves of Unforgiving Flame
+	[69942] = "99446|L525/525/527/530|52980:8 52325:40 52326:40 69237:4 52078:3|69962", -- Pattern: Clutches of Evil
+	[69943] = "99447|L525/525/527/530|52980:8 52325:40 52326:40 69237:4 52078:3|69963", -- Pattern: Heavenly Gloves of the Moon
+
+	[69949] = "99455|L525/525/527/530|52980:8 52325:40 52326:40 69237:4 52078:3|69971", -- Pattern: Earthen Scale Sabatons
+	[69950] = "99456|L525/525/527/530|52980:8 52325:40 52326:40 69237:4 52078:3|69972", -- Pattern: Footwraps of Quenched Fire
+	[69951] = "99457|L525/525/527/530|52980:8 52325:40 52326:40 69237:4 52078:3|69973", -- Pattern: Treads of the Craft
+	[69952] = "99458|L525/525/527/530|52980:8 52325:40 52326:40 69237:4 52078:3|69974", -- Pattern: Ethereal Footfalls
+
+-- Cata 4.3
+	--[[ --TODO update old recipes
+	[15046] = "19060|L270/290/300/310|8170:20 15412:25 14341|78345", -- Pattern: Green Dragonscale Leggings
+	[15045] = "19050|L260/280/290/300|8170:20 15412:25 14341:2|78346", -- Pattern: Green Dragonscale Breastplate
+
+	[8203] = "10525|L220/240/250/260|4304:12 8154:12 4291:4|72029", -- Pattern: Tough Scorpid Breastplate
+	[8204] = "10542|L225/245/255/265|4304:6 8154:8 4291:2|72025", -- Pattern: Tough Scorpid Gloves
+	[8205] = "10533|L220/240/250/260|4304:10 8154:4 4291:2|72026", -- Pattern: Tough Scorpid Bracers
+	[8206] = "10568|L245/265/275/285|4304:14 8154:8 8343:2|72030", -- Pattern: Tough Scorpid Leggings
+	[8207] = "10564|L240/260/270/280|4304:12 8154:16 8343:2|72027", -- Pattern: Tough Scorpid Shoulders
+	[8208] = "10570|L250/270/280/290|4304:10 8154:20 8343:2|72033", -- Pattern: Tough Scorpid Helm
+	[8209] = "10554|L235/255/265/275|4304:12 8154:12 4291:6|72028", -- Pattern: Tough Scorpid Boots
+
+	[-42974] = "N375/380/385/390|22450:6 22449:10 22446:6 22445:30 22824:3|78348", -- Formula: Enchant Weapon - Executioner
+	[-13617] = "N145/170/190/210|11083 3356:3|78343", -- Formula: Enchant Gloves - Herbalism
+	--]]
+
+	[72101] = "102171|T150/170/185/200|4305:5 2325:4|72102", -- Pattern: Black Silk Vest
+	[7961] = "10007|B270/270/282/295|3860:28 7081:6 6037:8 3823:2 7909:6 7966:4 4304:2|74274", -- Plans: Phantom Blade
+
+	[52489] = "73623|J525/525/530/535|58480:2 52196:2 52555:8 52192:2|71965", -- Design: Rhinestone Sunglasses
+
+	[71986] = "101933|L525/525/530/535|52980:8 52329:40 52078:4 71998:8|71999", -- Pattern: Leggings of Nature's Champion
+	[71988] = "101934|L525/525/530/535|52980:8 52979:40 52078:4 71998:8|72005", -- Pattern: Deathscale Leggings
+	[71985] = "101935|L525/525/530/535|52980:8 52325:20 52328:20 52078:4 71998:8|72006", -- Pattern: Bladeshadow Leggings
+	[71987] = "101936|L525/525/530/535|52980:8 52979:25 52325:10 52327:10 52078:4 71998:8|72007", -- Pattern: Rended Earth Leggings
+	[71995] = "101937|L525/525/530/535|52980:4 52329:10 52326:10 52328:10 52078:2 71998:4|72008", -- Pattern: Bracers of Flowing Serenity
+	[71997] = "101939|L525/525/530/535|52980:4 52979:20 52328:30 52078:2 71998:4|72009", -- Pattern: Thundering Deathscale Wristguards
+	[71994] = "101940|L525/525/530/535|52980:4 52325:20 52328:20 52078:2 71998:4|72010", -- Pattern: Bladeshadow Wristguards
+	[71996] = "101941|L525/525/530/535|52980:4 52979:20 52329:20 52078:2 71998:4|72011", -- Pattern: Bracers of the Hunter-Killer
+	[71981] = "101920|T525/525/530/535|54440:8 71998:8|72000", -- Pattern: World Mender's Pants
+	[71980] = "101921|T525/525/530/535|54440:8 71998:8|72002", -- Pattern: Lavaquake Legwraps
+	[71990] = "101922|T525/525/530/535|54440:8 71998:4|72003", -- Pattern: Dreamwraps of the Light
+	[71989] = "101923|T525/525/530/535|54440:5 71998:4|72004", -- Pattern: Bracers of Unconquered Power
+	[71982] = "101924|B525/525/530/535|58480:8 52329:40 52078:4 71998:8|72001", -- Plans: Pyrium Legplates of Purified Evil
+	[71983] = "101925|B525/525/530/535|58480:8 52325:40 52078:4 71998:8|72012", -- Plans: Unstoppable Destroyer's Legplates
+	[71984] = "101928|B525/525/530/535|58480:8 53039:10 52078:4 71998:8|72013", -- Plans: Foundations of Courage
+	[71991] = "101929|B525/525/530/535|58480:4 52329:30 52078:2 71998:4|72014", -- Plans: Soul Redeemer Bracers
+	[71992] = "101931|B525/525/530/535|58480:4 52325:30 52078:2 71998:4|72015", -- Plans: Bracers of Destructive Strength
+	[71993] = "101932|B525/525/530/535|58480:4 53039:10 52078:2 71998:4|72016", -- Plans: Titanguard Wristplates
+
+	[71817] = "101735|J525/525/530/535|71807|71821", -- Design: Rigid Deepholm Iolite
+	[71818] = "101740|J525/525/530/535|71807|71884", -- Design: Stormy Deepholm Iolite
+	[71819] = "101741|J525/525/530/535|71807|71885", -- Design: Sparkling Deepholm Iolite
+	[71820] = "101742|J525/525/530/535|71807|71886", -- Design: Solid Deepholm Iolite
+	[71822] = "101743|J525/525/530/535|71810|71887", -- Design: Misty Elven Peridot
+	[71823] = "101744|J525/525/530/535|71810|71888", -- Design: Piercing Elven Peridot
+	[71824] = "101745|J525/525/530/535|71810|71889", -- Design: Lightning Elven Peridot
+	[71825] = "101746|J525/525/530/535|71810|71890", -- Design: Sensei's Elven Peridot
+	[71826] = "101747|J525/525/530/535|71810|71891", -- Design: Infused Elven Peridot
+	[71827] = "101748|J525/525/530/535|71810|71892", -- Design: Zen Elven Peridot
+	[71828] = "101749|J525/525/530/535|71810|71893", -- Design: Balanced Elven Peridot
+	[71829] = "101750|J525/525/530/535|71810|71894", -- Design: Vivid Elven Peridot
+	[71830] = "101751|J525/525/530/535|71810|71895", -- Design: Turbid Elven Peridot
+	[71831] = "101752|J525/525/530/535|71810|71896", -- Design: Radiant Elven Peridot
+	[71832] = "101753|J525/525/530/535|71810|71897", -- Design: Shattered Elven Peridot
+	[71833] = "101754|J525/525/530/535|71810|71898", -- Design: Energized Elven Peridot
+	[71834] = "101755|J525/525/530/535|71810|71899", -- Design: Jagged Elven Peridot
+	[71835] = "101756|J525/525/530/535|71810|71900", -- Design: Regal Elven Peridot
+	[71836] = "101757|J525/525/530/535|71810|71901", -- Design: Forceful Elven Peridot
+	[71837] = "101758|J525/525/530/535|71810|71902", -- Design: Nimble Elven Peridot
+	[71838] = "101759|J525/525/530/535|71810|71903", -- Design: Puissant Elven Peridot
+	[71839] = "101760|J525/525/530/535|71810|71904", -- Design: Steady Elven Peridot
+	[71840] = "101761|J525/525/530/535|71808|71905", -- Design: Deadly Lava Coral
+	[71841] = "101762|J525/525/530/535|71808|71906", -- Design: Crafty Lava Coral
+	[71842] = "101763|J525/525/530/535|71808|71907", -- Design: Potent Lava Coral
+	[71843] = "101764|J525/525/530/535|71808|71908", -- Design: Inscribed Lava Coral
+	[71844] = "101765|J525/525/530/535|71808|71909", -- Design: Polished Lava Coral
+	[71845] = "101766|J525/525/530/535|71808|71910", -- Design: Resolute Lava Coral
+	[71846] = "101767|J525/525/530/535|71808|71911", -- Design: Stalwart Lava Coral
+	[71847] = "101768|J525/525/530/535|71808|71912", -- Design: Champion's Lava Coral
+	[71848] = "101769|J525/525/530/535|71808|71913", -- Design: Deft Lava Coral
+	[71849] = "101770|J525/525/530/535|71808|71914", -- Design: Wicked Lava Coral
+	[71850] = "101771|J525/525/530/535|71808|71915", -- Design: Reckless Lava Coral
+	[71851] = "101772|J525/525/530/535|71808|71916", -- Design: Fierce Lava Coral
+	[71852] = "101773|J525/525/530/535|71808|71917", -- Design: Adept Lava Coral
+	[71853] = "101774|J525/525/530/535|71808|71918", -- Design: Keen Lava Coral
+	[71854] = "101775|J525/525/530/535|71808|71919", -- Design: Artful Lava Coral
+	[71855] = "101776|J525/525/530/535|71808|71920", -- Design: Fine Lava Coral
+	[71856] = "101777|J525/525/530/535|71808|71921", -- Design: Skillful Lava Coral
+	[71857] = "101778|J525/525/530/535|71808|71922", -- Design: Lucent Lava Coral
+	[71858] = "101779|J525/525/530/535|71808|71923", -- Design: Tenuous Lava Coral
+	[71859] = "101780|J525/525/530/535|71808|71924", -- Design: Willful Lava Coral
+	[71860] = "101781|J525/525/530/535|71808|71925", -- Design: Splendid Lava Coral
+	[71861] = "101782|J525/525/530/535|71808|71926", -- Design: Resplendent Lava Coral
+	[71862] = "101783|J525/525/530/535|71809|71927", -- Design: Glinting Shadow Spinel
+	[71863] = "101784|J525/525/530/535|71809|71928", -- Design: Accurate Shadow Spinel
+	[71864] = "101785|J525/525/530/535|71809|71929", -- Design: Veiled Shadow Spinel
+	[71865] = "101786|J525/525/530/535|71809|71930", -- Design: Retaliating Shadow Spinel
+	[71866] = "101787|J525/525/530/535|71809|71931", -- Design: Etched Shadow Spinel
+	[71867] = "101788|J525/525/530/535|71809|71932", -- Design: Mysterious Shadow Spinel
+	[71868] = "101789|J525/525/530/535|71809|71933", -- Design: Purified Shadow Spinel
+	[71869] = "101790|J525/525/530/535|71809|71934", -- Design: Shifting Shadow Spinel
+	[71870] = "101791|J525/525/530/535|71809|71935", -- Design: Guardian's Shadow Spinel
+	[71871] = "101792|J525/525/530/535|71809|71936", -- Design: Timeless Shadow Spinel
+	[71872] = "101793|J525/525/530/535|71809|71937", -- Design: Defender's Shadow Spinel
+	[71873] = "101794|J525/525/530/535|71809|71938", -- Design: Sovereign Shadow Spinel
+	[71879] = "101795|J525/525/530/535|71805|71939", -- Design: Delicate Queen's Garnet
+	[71880] = "101796|J525/525/530/535|71805|71940", -- Design: Precise Queen's Garnet
+	[71881] = "101797|J525/525/530/535|71805|71941", -- Design: Brilliant Queen's Garnet
+	[71882] = "101798|J525/525/530/535|71805|71942", -- Design: Flashing Queen's Garnet
+	[71883] = "101799|J525/525/530/535|71805|71943", -- Design: Bold Queen's Garnet
+	[71874] = "101800|J525/525/530/535|71806|71944", -- Design: Smooth Lightstone
+	[71875] = "101801|J525/525/530/535|71806|71945", -- Design: Subtle Lightstone
+	[71876] = "101802|J525/525/530/535|71806|71946", -- Design: Quick Lightstone
+	[71877] = "101803|J525/525/530/535|71806|71947", -- Design: Fractured Lightstone
+	[71878] = "101804|J525/525/530/535|71806|71948", -- Design: Mystic Lightstone
 }
 
 TradeskillInfo.vars.components = {
@@ -5252,6 +5403,14 @@ TradeskillInfo.vars.components = {
 	[52982] = "S",
 	[68196] = "P",
 	[53069] = "F",
+	[69237] = "D", --Living Ember Cata4.2 Firelands
+	[71998] = "D", --Essence of Destruction Cata4.3 Dragon Soul
+	[71805] = "G", --Queen's Garnet
+	[71806] = "G", --Lightstone
+	[71807] = "G", --Deepholm Iolite
+	[71808] = "G", --Lava Coral
+	[71809] = "G", --Shadow Spinel
+	[71810] = "G", --Elven Peridot	
 }
 
 -- Skill Translation table. It is used for converting skill names
@@ -7215,4 +7374,128 @@ TradeskillInfo.vars.recipes = {
 	[54798] = "54797|V350||4", -- Frosty Flying Carpet
 	[45089] = "45559|D",	-- Plans: Battlelord's Plate Boots
 	[45091] = "45561|D",	-- Plans: Treads of Destiny
+-- Cata 4.2
+	[70166] = "70155|V351|3000000",
+	[70167] = "70156|V351|3000000",
+	[70168] = "70157|V351|3000000",
+	[70169] = "70158|V351|3000000",
+	[70170] = "70162|V351|3000000",
+	[70171] = "70163|V351|3000000",
+	[70172] = "70164|V351|3000000",
+	[70173] = "70165|V351|3000000",
+	[70177] = "70139|V351|3000000",
+	[71078] = "71077|V351|3000000",
+
+	[70174] = "70136|V352|3000000",
+	[70175] = "70137|V352|3000000",
+	[70176] = "70138|V352|3000000",
+
+	[69965] = "69944|D",
+	[69966] = "69945|D",
+	[69975] = "69953|D",
+	[69976] = "69954|D",
+
+	[69957] = "69936|D",
+	[69958] = "69937|D",
+	[69959] = "69938|D",
+	[69968] = "69946|D",
+	[69969] = "69947|D",
+	[69970] = "69948|D",
+
+	[69960] = "69939|D",
+	[69961] = "69941|D",
+	[69962] = "69942|D",
+	[69963] = "69943|D",
+
+	[69971] = "69949|D",
+	[69972] = "69950|D",
+	[69973] = "69951|D",
+	[69974] = "69952|D",
+	
+-- Cata 4.3
+	[71999] = "71986|D", -- Pattern: Leggings of Nature's Champion
+	[72005] = "71988|D", -- Pattern: Deathscale Leggings
+	[72006] = "71985|D", -- Pattern: Bladeshadow Leggings
+	[72007] = "71987|D", -- Pattern: Rended Earth Leggings
+	[72008] = "71995|D", -- Pattern: Bracers of Flowing Serenity
+	[72009] = "71997|D", -- Pattern: Thundering Deathscale Wristguards
+	[72010] = "71994|D", -- Pattern: Bladeshadow Wristguards
+	[72011] = "71996|D", -- Pattern: Bracers of the Hunter-Killer
+	[72000] = "71981|D", -- Pattern: World Mender's Pants
+	[72002] = "71980|D", -- Pattern: Lavaquake Legwraps
+	[72003] = "71990|D", -- Pattern: Dreamwraps of the Light
+	[72004] = "71989|D", -- Pattern: Bracers of Unconquered Power
+	[72001] = "71982|D", -- Plans: Pyrium Legplates of Purified Evil
+	[72012] = "71983|D", -- Plans: Unstoppable Destroyer's Legplates
+	[72013] = "71984|D", -- Plans: Foundations of Courage
+	[72014] = "71991|D", -- Plans: Soul Redeemer Bracers
+	[72015] = "71992|D", -- Plans: Bracers of Destructive Strength
+	[72016] = "71993|D", -- Plans: Titanguard Wristplates
+	[71821] = "71817|V354V355", -- Design: Rigid Deepholm Iolite
+	[71884] = "71818|V354V355", -- Design: Stormy Deepholm Iolite
+	[71885] = "71819|V354V355", -- Design: Sparkling Deepholm Iolite
+	[71886] = "71820|V354V355", -- Design: Solid Deepholm Iolite
+	[71887] = "71822|V354V355", -- Design: Misty Elven Peridot
+	[71888] = "71823|V354V355", -- Design: Piercing Elven Peridot
+	[71889] = "71824|V354V355", -- Design: Lightning Elven Peridot
+	[71890] = "71825|V354V355", -- Design: Sensei's Elven Peridot
+	[71891] = "71826|V354V355", -- Design: Infused Elven Peridot
+	[71892] = "71827|V354V355", -- Design: Zen Elven Peridot
+	[71893] = "71828|V354V355", -- Design: Balanced Elven Peridot
+	[71894] = "71829|V354V355", -- Design: Vivid Elven Peridot
+	[71895] = "71830|V354V355", -- Design: Turbid Elven Peridot
+	[71896] = "71831|V354V355", -- Design: Radiant Elven Peridot
+	[71897] = "71832|V354V355", -- Design: Shattered Elven Peridot
+	[71898] = "71833|V354V355", -- Design: Energized Elven Peridot
+	[71899] = "71834|V354V355", -- Design: Jagged Elven Peridot
+	[71900] = "71835|V354V355", -- Design: Regal Elven Peridot
+	[71901] = "71836|V354V355", -- Design: Forceful Elven Peridot
+	[71902] = "71837|V354V355", -- Design: Nimble Elven Peridot
+	[71903] = "71838|V354V355", -- Design: Puissant Elven Peridot
+	[71904] = "71839|V354V355", -- Design: Steady Elven Peridot
+	[71905] = "71840|V354V355", -- Design: Deadly Lava Coral
+	[71906] = "71841|V354V355", -- Design: Crafty Lava Coral
+	[71907] = "71842|V354V355", -- Design: Potent Lava Coral
+	[71908] = "71843|V354V355", -- Design: Inscribed Lava Coral
+	[71909] = "71844|V354V355", -- Design: Polished Lava Coral
+	[71910] = "71845|V354V355", -- Design: Resolute Lava Coral
+	[71911] = "71846|V354V355", -- Design: Stalwart Lava Coral
+	[71912] = "71847|V354V355", -- Design: Champion's Lava Coral
+	[71913] = "71848|V354V355", -- Design: Deft Lava Coral
+	[71914] = "71849|V354V355", -- Design: Wicked Lava Coral
+	[71915] = "71850|V354V355", -- Design: Reckless Lava Coral
+	[71916] = "71851|V354V355", -- Design: Fierce Lava Coral
+	[71917] = "71852|V354V355", -- Design: Adept Lava Coral
+	[71918] = "71853|V354V355", -- Design: Keen Lava Coral
+	[71919] = "71854|V354V355", -- Design: Artful Lava Coral
+	[71920] = "71855|V354V355", -- Design: Fine Lava Coral
+	[71921] = "71856|V354V355", -- Design: Skillful Lava Coral
+	[71922] = "71857|V354V355", -- Design: Lucent Lava Coral
+	[71923] = "71858|V354V355", -- Design: Tenuous Lava Coral
+	[71924] = "71859|V354V355", -- Design: Willful Lava Coral
+	[71925] = "71860|V354V355", -- Design: Splendid Lava Coral
+	[71926] = "71861|V354V355", -- Design: Resplendent Lava Coral
+	[71927] = "71862|V354V355", -- Design: Glinting Shadow Spinel
+	[71928] = "71863|V354V355", -- Design: Accurate Shadow Spinel
+	[71929] = "71864|V354V355", -- Design: Veiled Shadow Spinel
+	[71930] = "71865|V354V355", -- Design: Retaliating Shadow Spinel
+	[71931] = "71866|V354V355", -- Design: Etched Shadow Spinel
+	[71932] = "71867|V354V355", -- Design: Mysterious Shadow Spinel
+	[71933] = "71868|V354V355", -- Design: Purified Shadow Spinel
+	[71934] = "71869|V354V355", -- Design: Shifting Shadow Spinel
+	[71935] = "71870|V354V355", -- Design: Guardian's Shadow Spinel
+	[71936] = "71871|V354V355", -- Design: Timeless Shadow Spinel
+	[71937] = "71872|V354V355", -- Design: Defender's Shadow Spinel
+	[71938] = "71873|V354V355", -- Design: Sovereign Shadow Spinel
+	[71939] = "71879|V354V355", -- Design: Delicate Queen's Garnet
+	[71940] = "71880|V354V355", -- Design: Precise Queen's Garnet
+	[71941] = "71881|V354V355", -- Design: Brilliant Queen's Garnet
+	[71942] = "71882|V354V355", -- Design: Flashing Queen's Garnet
+	[71943] = "71883|V354V355", -- Design: Bold Queen's Garnet
+	[71944] = "71874|V354V355", -- Design: Smooth Lightstone
+	[71945] = "71875|V354V355", -- Design: Subtle Lightstone
+	[71946] = "71876|V354V355", -- Design: Quick Lightstone
+	[71947] = "71877|V354V355", -- Design: Fractured Lightstone
+	[71948] = "71878|V354V355", -- Design: Mystic Lightstone
+	[71965] = "52489|V354V355", -- Design: Rhinestone Sunglasses
 }

@@ -156,6 +156,11 @@ TradeskillInfo.vars.zones = {
 	[79] = BZ["The Storm Peaks"],
 	[80] = BZ["Wintergrasp"],
 	[81] = BZ["Icecrown Citadel"],
+-- Cata 4.2
+	[82] = BZ["Molten Front"],
+	[83] = BZ["Firelands"],
+-- Cata 4.3
+	[84] = BZ["Dragon Soul"],
 }
 
 TradeskillInfo.vars.factions = {
@@ -197,6 +202,8 @@ TradeskillInfo.vars.factions = {
 	[34] = BF["The Wyrmrest Accord"],
 	[35] = BF["Argent Crusade"],
 	[36] = BF["The Ashen Verdict"],
+-- Cata 4.2
+	[37] = BF["Guardians of Hyjal"],
 }
 -- Kurenai / The Mag'har
 -- Honor Hold / Thrallmar
@@ -557,4 +564,11 @@ TradeskillInfo.vars.vendors = {
 	[348] =  L["Alchemist Finklestein"] .. "|81|36|36.2,20.4",
 	[349] =  L["Larana Drome"] .. "|73|25|42.3,37.5",
 	[350] =  L["Frozo the Renowned"] .. "|73|25|40.0,28.3",
+-- Cata 4.2
+	[351] =  L["Damek Bloombeard"] .. "|82|6|47.0,90.6",
+	[352] =  L["Ayla Shadowstorm"] .. "|82|37|44.6,85.4",
+	[353] =  L["Varlan Highbough"] .. "|82|37|44.6,88.6",
+-- Cata 4.3
+	[354] =  L["Farrah Facet"] .. "|34|1|63.8,61.6",
+	[355] =  L["Taryssa Lazuria"] .. "|28|2|72.4,36.4",
 }
