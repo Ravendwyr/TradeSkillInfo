@@ -300,7 +300,7 @@ end
 function TradeskillInfo:GetExtraItemDetailText(something, tradeskill, skill_index)
 --Thanks to nogudnik for providing this code!
 	local skillName, skillType, numAvailable, isExpanded = GetTradeSkillInfo(skill_index)
-	if ( skillType == "header" ) then return end
+	if ( skillType == "header" or skillType == "subheader" ) then return end
 	if ( skill_index > GetNumTradeSkills() ) then return end
 
 	local link = GetTradeSkillItemLink(skill_index)
@@ -431,32 +431,45 @@ function TradeskillInfo:GetSpecialCase(id,itemName)
 end
 
 function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
-	local skillName, currentSkillLvl, _ = GetTradeSkillLine()
-	if (skillName ~= "UNKNOWN") then
-		local numSkills = GetNumTradeSkills();
+	local skillName, currentSkillLvl = GetTradeSkillLine()
+
+	if skillName ~= "UNKNOWN" then
+		local numSkills = GetNumTradeSkills()
+
 		if not startLine then
-			startLine = 1;
-			endLine= numSkills;
+			startLine = 1
+			endLine = numSkills
 		end
-		local i;
-		for i=startLine, endLine do
-			local itemName, itemType, _,	isExpanded = GetTradeSkillInfo(i);
-			if (itemType == "header" and not isExpanded) then
-				ExpandTradeSkillSubClass(i);
-				self:UpdateKnownTradeRecipes(i+1, i+GetNumTradeSkills()-numSkills);
-				CollapseTradeSkillSubClass(i);
-			elseif (itemType ~= "header" and (GetTradeSkillLine() == skillName)) then
-				local link = GetTradeSkillItemLink(i);
-				local id = getIdFromLink(link)
-				link = GetTradeSkillRecipeLink(i)
-				local spellId = getIdFromLink(link)
-				local diff = self.vars.difficultyLevel[itemType];
-				id = self:MakeSpecialCase(id, spellId);
-				if id then
-					self.db.realm.userdata[self.vars.playername].knownRecipes[id] = diff;
-				else
-					self:Print("UpdateKnownTradeRecipes startLine=%d endLine%d line=%d name=%s type=%s link=%s",startLine,endLine,i,itemName,itemType,link);
-					return;
+
+		local i
+
+		for i = startLine, endLine do
+			local itemName, itemType, _, isExpanded = GetTradeSkillInfo(i)
+
+			if (itemType == "header" or itemType == "subheader") and not isExpanded then
+				ExpandTradeSkillSubClass(i)
+				self:UpdateKnownTradeRecipes(i + 1, i + GetNumTradeSkills() - numSkills)
+				CollapseTradeSkillSubClass(i)
+
+			elseif (itemType ~= "header" or itemType ~= "subheader") and GetTradeSkillLine() == skillName then
+				local link = GetTradeSkillItemLink(i)
+
+				if link then
+					local id = getIdFromLink(link)
+
+					link = GetTradeSkillRecipeLink(i)
+
+					local spellId = getIdFromLink(link)
+					local diff = self.vars.difficultyLevel[itemType]
+
+					id = self:MakeSpecialCase(id, spellId)
+
+					if id then
+						self.db.realm.userdata[self.vars.playername].knownRecipes[id] = diff
+					else
+						self:Print("UpdateKnownTradeRecipes startLine=%d endLine%d line=%d name=%s type=%s link=%s", startLine, endLine, i, itemName, itemType, link)
+						return
+					end
 				end
 			end
 		end
@@ -467,10 +480,11 @@ end
 -- TradeSkillFrame Hook to display recipe skill level and cost/profit
 ----------------------------------------------------------------------
 function TradeskillInfo:TradeSkillFrame_SetSelection(id)
-	local skillName, skillType, numAvailable, isExpanded = GetTradeSkillInfo(id);
+	local skillName, skillType, numAvailable, isExpanded = GetTradeSkillInfo(id)
 	if not skillName then return end
-	if ( skillType == "header" ) then return end
-	if ( GetTradeSkillSelectionIndex() > GetNumTradeSkills() ) then return end
+
+	if skillType == "header" or skillType == "subheader" then return end
+	if GetTradeSkillSelectionIndex() > GetNumTradeSkills() then return end
 
 	local link = GetTradeSkillItemLink(TradeSkillFrame.selectedSkill)
 	local itemId = getIdFromLink(link)
@@ -526,7 +540,7 @@ end
 function TradeskillInfo:ATSWFrame_SetSelection(id, wasClicked)
 	local skillName, skillType, numAvailable, isExpanded = GetTradeSkillInfo(id);
 	if not skillName then return end
-	if ( skillType == "header" ) then return end
+	if ( skillType == "header" or skillType == "subheader" ) then return end
 	if ( GetTradeSkillSelectionIndex() > GetNumTradeSkills() ) then return end
 
 	local link = GetTradeSkillItemLink(id)
@@ -1597,7 +1611,7 @@ end
 
 function TradeskillInfo:SetTrainerService(tooltip, selectedService)
 	local _, _, category = GetTrainerServiceInfo(selectedService)
-	if category ~= "header" then
+	if category ~= "header" and category ~= "subheader" then
 		local link = GetTrainerServiceItemLink(selectedService)
 		if link then
 			local id = getIdFromLink(link)
