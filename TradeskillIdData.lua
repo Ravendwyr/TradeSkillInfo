@@ -2491,7 +2491,6 @@ TradeskillInfo.vars.combines = {
 	[41103] = "57025|I265/270/275/280|43122:3 39501", -- Glyph of Exorcism
 	[42399] = "57185|I270/275/280/285|43122:3 39501", -- Glyph of Fear Ward
 	[43543] = "57216|I270/275/280/285|43122:3 39501", -- Glyph of Frost Strike
-	[42468] = "57272|I275/280/285/290|43122:3 39501", -- Glyph of Shadowburn
 	[41541] = "57251|I275/280/285/290|43122:3 39501", -- Glyph of Water Mastery
 	[43546] = "57219|I280/285/290/295|43122:3 39501", -- Glyph of Icy Touch
 	[43541] = "57213|I285/290/295/300|43122:3 39501", -- Glyph of Death Grip
@@ -5410,7 +5409,7 @@ TradeskillInfo.vars.components = {
 	[71807] = "G", --Deepholm Iolite
 	[71808] = "G", --Lava Coral
 	[71809] = "G", --Shadow Spinel
-	[71810] = "G", --Elven Peridot	
+	[71810] = "G", --Elven Peridot
 }
 
 -- Skill Translation table. It is used for converting skill names
@@ -7411,7 +7410,7 @@ TradeskillInfo.vars.recipes = {
 	[69972] = "69950|D",
 	[69973] = "69951|D",
 	[69974] = "69952|D",
-	
+
 -- Cata 4.3
 	[71999] = "71986|D", -- Pattern: Leggings of Nature's Champion
 	[72005] = "71988|D", -- Pattern: Deathscale Leggings
