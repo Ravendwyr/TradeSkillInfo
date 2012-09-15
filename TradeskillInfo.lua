@@ -451,25 +451,22 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 				self:UpdateKnownTradeRecipes(i + 1, i + GetNumTradeSkills() - numSkills)
 				CollapseTradeSkillSubClass(i)
 
-			elseif (itemType ~= "header" or itemType ~= "subheader") and GetTradeSkillLine() == skillName then
+			elseif (itemType ~= "header" and itemType ~= "subheader") and GetTradeSkillLine() == skillName then
 				local link = GetTradeSkillItemLink(i)
+				local id = getIdFromLink(link)
 
-				if link then
-					local id = getIdFromLink(link)
+				link = GetTradeSkillRecipeLink(i)
 
-					link = GetTradeSkillRecipeLink(i)
+				local spellId = getIdFromLink(link)
+				local diff = self.vars.difficultyLevel[itemType]
 
-					local spellId = getIdFromLink(link)
-					local diff = self.vars.difficultyLevel[itemType]
+				id = self:MakeSpecialCase(id, spellId)
 
-					id = self:MakeSpecialCase(id, spellId)
-
-					if id then
-						self.db.realm.userdata[self.vars.playername].knownRecipes[id] = diff
-					else
-						self:Print("UpdateKnownTradeRecipes startLine=%d endLine%d line=%d name=%s type=%s link=%s", startLine, endLine, i, itemName, itemType, link)
-						return
-					end
+				if id then
+					self.db.realm.userdata[self.vars.playername].knownRecipes[id] = diff
+				else
+					self:Print("UpdateKnownTradeRecipes startLine=%d endLine%d line=%d name=%s type=%s link=%s", startLine, endLine, i, itemName, itemType, link)
+					return
 				end
 			end
 		end
