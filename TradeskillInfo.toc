@@ -26,7 +26,22 @@
 ## SavedVariables: TradeskillInfoDB, TradeskillInfoUIDB
 
 #@no-lib-strip@
-embeds.xml
+Libs\LibStub\LibStub.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
+Libs\AceAddon-3.0\AceAddon-3.0.lua
+Libs\AceEvent-3.0\AceEvent-3.0.lua
+Libs\AceTimer-3.0\AceTimer-3.0.lua
+Libs\AceHook-3.0\AceHook-3.0.lua
+Libs\AceDB-3.0\AceDB-3.0.lua
+Libs\AceDBOptions-3.0\AceDBOptions-3.0.lua
+Libs\AceGUI-3.0\AceGUI-3.0.xml
+Libs\AceLocale-3.0\AceLocale-3.0.lua
+Libs\AceConsole-3.0\AceConsole-3.0.lua
+Libs\AceConfig-3.0\AceConfig-3.0.xml
+Libs\LibBabble-Faction-3.0\lib.xml
+Libs\LibBabble-Zone-3.0\lib.xml
+Libs\LibAbacus-3.0\LibAbacus-3.0.lua
+Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 #@end-no-lib-strip@
 
 locale-enUS.lua
@@ -53,9 +68,9 @@ TradeskillIdData-mop.lua
 # TradeskillInfoUI\locale-zhTW.lua
 # TradeskillInfoUI\locale-koKR.lua
 # TradeskillInfoUI\locale-deDE.lua
-# 
+#
 # TradeskillInfoUI\TradeskillInfoUI.lua
 # TradeskillInfoUI\TradeskillInfoUI.xml
-# 
+#
 # TradeskillInfoUI\TradeskillInfoOptions.lua
 #@end-debug@
