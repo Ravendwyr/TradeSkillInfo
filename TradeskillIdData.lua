@@ -19,15 +19,15 @@ spell = spellId of the skill to craft the itemid
 skill =
 	A = Alchemy
 	B = Blacksmithing
-	N = Enchanting
+	D = Enchanting
 	E = Engineering
+	I = Inscription
 	J = Jewelcrafting
 	L = Leatherworking
 	T = Tailoring
-	C = Cooking
+	W = Cooking
 	X = First Aid
-	P = Poisons
-	M = Mining
+	Y = Mining
 	# = level
 components =
   itemid[:num] ...
@@ -5410,7 +5410,7 @@ TradeskillInfo.vars.components = {
 	[71807] = "G", --Deepholm Iolite
 	[71808] = "G", --Lava Coral
 	[71809] = "G", --Shadow Spinel
-	[71810] = "G", --Elven Peridot	
+	[71810] = "G", --Elven Peridot
 }
 
 -- Skill Translation table. It is used for converting skill names
@@ -7411,7 +7411,7 @@ TradeskillInfo.vars.recipes = {
 	[69972] = "69950|D",
 	[69973] = "69951|D",
 	[69974] = "69952|D",
-	
+
 -- Cata 4.3
 	[71999] = "71986|D", -- Pattern: Leggings of Nature's Champion
 	[72005] = "71988|D", -- Pattern: Deathscale Leggings
