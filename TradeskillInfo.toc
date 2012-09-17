@@ -5,25 +5,14 @@
 ## Notes-zhCN: 完整的商业技能百科
 ## Notes-esES: Informarcion Completa de las Habilidades de Comercio
 ## Notes-koKR: 전문기술 정보의 모든 것!
-## Author: wmrojer
-## eMail: evenue.wow@gmail.com
-## X-eMail: evenue.wow@gmail.com
-## X-Curse-Packaged-Version: v2.2.0
-## X-Curse-Project-Name: TradeskillInfo
-## X-Curse-Project-ID: tradeskill-info
-## X-Curse-Repository-ID: wow/tradeskill-info/mainline
-
-## Version: 2.2.0
-## X-Revision: $Rev$
-## X-Date: $Date$
-
-## X-Credits Evenue (updates), Fieroivan (updates), Dys (updates), Viruscamp (updates)
-## X-Category: Tradeskill
-## LoadManagers: AddonLoader
-## X-LoadOn-Always: delayed
-
+## Author: Ethan Centaurai, Dys
+## Version: @project-version@
 ## OptionalDeps: Ace3, LibStub, CallbackHandler-1.0, LibAbacus-3.0, LibBabble-Zone-3.0, LibBabble-Faction-3.0, LibDataBroker-1.1, Auc-Advanced
 ## SavedVariables: TradeskillInfoDB, TradeskillInfoUIDB
+## LoadManagers: AddonLoader
+## X-LoadOn-Always: delayed
+## X-Credits: wmrojer, Evenue, Fieroivan, Viruscamp
+## X-Category: Professions
 
 #@no-lib-strip@
 Libs\LibStub\LibStub.lua
@@ -60,17 +49,17 @@ TradeskillData.lua
 TradeskillIdData-mop.lua
 
 #@debug@
-# TradeskillInfoUI\locale-enUS.lua
-# TradeskillInfoUI\locale-ruRU.lua
-# TradeskillInfoUI\locale-esES.lua
-# TradeskillInfoUI\locale-frFR.lua
-# TradeskillInfoUI\locale-zhCN.lua
-# TradeskillInfoUI\locale-zhTW.lua
-# TradeskillInfoUI\locale-koKR.lua
-# TradeskillInfoUI\locale-deDE.lua
-#
-# TradeskillInfoUI\TradeskillInfoUI.lua
-# TradeskillInfoUI\TradeskillInfoUI.xml
-#
-# TradeskillInfoUI\TradeskillInfoOptions.lua
+TradeskillInfoUI\locale-enUS.lua
+TradeskillInfoUI\locale-ruRU.lua
+TradeskillInfoUI\locale-esES.lua
+TradeskillInfoUI\locale-frFR.lua
+TradeskillInfoUI\locale-zhCN.lua
+TradeskillInfoUI\locale-zhTW.lua
+TradeskillInfoUI\locale-koKR.lua
+TradeskillInfoUI\locale-deDE.lua
+
+TradeskillInfoUI\TradeskillInfoUI.lua
+TradeskillInfoUI\TradeskillInfoUI.xml
+
+TradeskillInfoUI\TradeskillInfoOptions.lua
 #@end-debug@
