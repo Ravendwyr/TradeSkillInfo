@@ -35,6 +35,12 @@ L["Mining"]                     = true
 L["Skinning"]                   = true
 L["Fishing"]                    = true
 L["Pick Pocket"]                = true
+L["Way of the Grill"]           = true
+L["Way of the Wok"]             = true
+L["Way of the Pot"]             = true
+L["Way of the Steamer"]         = true
+L["Way of the Oven"]            = true
+L["Way of the Brew"]            = true
 -- Other Sources
 L["Vendor"] = true
 L["Alliance Vendor"] = true

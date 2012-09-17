@@ -2049,6 +2049,12 @@ local defaultNames = {
 	[26797] = L["Spellfire Tailoring"],
 	[26801] = L["Shadoweave Tailoring"],
 	[26798] = L["Mooncloth Tailoring"],
+	[124694] = L["Way of the Grill"],
+	[125584] = L["Way of the Wok"],
+	[125586] = L["Way of the Pot"],
+	[125587] = L["Way of the Steamer"],
+	[125588] = L["Way of the Oven"],
+	[125589] = L["Way of the Brew"],
 }
 
 function TradeskillInfo:PopulateProfessionNames()

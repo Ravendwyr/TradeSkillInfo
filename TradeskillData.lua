@@ -18,19 +18,25 @@ TradeskillInfo.vars.tradeskillspells = {
 }
 
 TradeskillInfo.vars.specializationspells = {
-	['a']  = 9788,  -- Armorsmith
-	['w']  = 9787,  -- Weaponsmith
-	['ws'] = 17039, -- Master Swordsmith
-	['wh'] = 17040, -- Master Hammersmith
-	['wx'] = 17041, -- Master Axesmith
-	['d']  = 10656, -- Dragonscale Leatherworking
-	['e']  = 10658, -- Elemental Leatherworking
-	['t']  = 10660, -- Tribal Leatherworking
-	['g']  = 20219, -- Gnomish Engineer
-	['b']  = 20222, -- Goblin Engineer
-	['p']  = 26797, -- Spellfire Tailoring
-	['s']  = 26801, -- Shadoweave Tailoring
-	['m']  = 26798, -- Mooncloth Tailoring
+	['a']  = 9788,   -- Armorsmith
+	['w']  = 9787,   -- Weaponsmith
+	['ws'] = 17039,  -- Master Swordsmith
+	['wh'] = 17040,  -- Master Hammersmith
+	['wx'] = 17041,  -- Master Axesmith
+	['d']  = 10656,  -- Dragonscale Leatherworking
+	['e']  = 10658,  -- Elemental Leatherworking
+	['t']  = 10660,  -- Tribal Leatherworking
+	['g']  = 20219,  -- Gnomish Engineer
+	['b']  = 20222,  -- Goblin Engineer
+	['p']  = 26797,  -- Spellfire Tailoring
+	['s']  = 26801,  -- Shadoweave Tailoring
+	['m']  = 26798,  -- Mooncloth Tailoring
+	['cg'] = 124694, -- Way of the Grill
+	['cw'] = 125584, -- Way of the Wok
+	['cp'] = 125586, -- Way of the Pot
+	['cs'] = 125587, -- Way of the Steamer
+	['co'] = 125588, -- Way of the Oven
+	['cb'] = 125589, -- Way of the Brew
 }
 
 TradeskillInfo.vars.sources = {
