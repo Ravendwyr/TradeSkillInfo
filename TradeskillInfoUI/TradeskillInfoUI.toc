@@ -5,23 +5,12 @@
 ## Notes-zhTW: 商業技能資料庫設置窗口
 ## Notes-esES: UI con Info Completa de las Habilidades de Comercio
 ## Notes-koKR: 전문기술 정보 UI
-## Author: wmrojer
-## eMail: evenue.wow@gmail.com
-## X-eMail: evenue.wow@gmail.com
-## X-Curse-Packaged-Version: v2.2.0
-## X-Curse-Project-Name: TradeskillInfo
-## X-Curse-Project-ID: tradeskill-info
-## X-Curse-Repository-ID: wow/tradeskill-info/mainline
-
-## Version: 2.2.0
-## X-Revision: $Rev: 375 $
-## X-Date: $Date: 2012-09-15 10:34:28 +0000 (Sat, 9 Sep 2012) $
-
-## X-Credits Evenue (updates), Fieroivan (updates), Dys (updates), Viruscamp (updates)
-## X-Category: Tradeskill
-
+## Author: Ethan Centaurai, Dys
+## Version: @project-version@
 ## Dependencies: TradeskillInfo
 ## LoadOnDemand: 1
+## X-Credits: wmrojer, Evenue, Fieroivan, Viruscamp
+## X-Category: Professions
 
 locale-enUS.lua
 locale-ruRU.lua
@@ -32,7 +21,7 @@ locale-zhTW.lua
 locale-koKR.lua
 locale-deDE.lua
 
-TradeskillInfoUI.lua
 TradeskillInfoUI.xml
+TradeskillInfoUI.lua
 
 TradeskillInfoOptions.lua
