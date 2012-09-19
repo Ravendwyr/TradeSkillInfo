@@ -114,7 +114,9 @@ function TradeskillInfo:OnInitialize()
 			ShowSkillLevel = true,
 			ShowSkillProfit = true,
 			ShowSkillAuctioneerProfit = true,
+
 			MoneyFormat = 1,
+
 			TooltipSource = true,
 			TooltipRecipeSource = true,
 			TooltipRecipePrice = true,
@@ -124,12 +126,12 @@ function TradeskillInfo:OnInitialize()
 			TooltipKnownBy = {R=true,A=true,B=true,D=true,E=true,J=true,L=true,T=true,W=false,X=false,Z=true,Y=true,I=true},
 			TooltipLearnableBy = {R=true,A=true,B=true,D=true,E=true,J=true,L=true,T=true,W=false,X=false,Z=true,Y=true,I=true},
 			TooltipAvailableTo = {R=true,A=true,B=true,D=true,E=true,J=true,L=true,T=true,W=false,X=false,Z=true,Y=true,I=true},
-			TooltipBankedAmount = false,
-			TooltipAltAmount = false,
 			TooltipMarketValue = true,
 			TooltipID = false,
 			TooltipStack = false,
+
 			TrainerReagents = true,
+
 			ColorSource = { r=0.75, g=0.75, b=0.25 },
 			ColorRecipeSource = { r=0.75, g=0.75, b=0.25 },
 			ColorRecipePrice = { r=1.0, g=1.0, b=1.0 },
@@ -138,13 +140,11 @@ function TradeskillInfo:OnInitialize()
 			ColorKnownBy = { r=1.0, g=0.0, b=0.0 },
 			ColorLearnableBy = { r=0.25, g=0.75, b=0.25 },
 			ColorAvailableTo = { r=1.0, g=0.50, b=0.25 },
-			ColorBankedAmount = { r=0.5, g=0.6, b=0.7 },
-			ColorAltAmount = { r=0.5, g=0.6, b=0.7 },
-
 			ColorTrainerReagents = { r=1.0, g=1.0, b=1.0 },
 			ColorID = { r=0.75, g=0.5, b=0.5 },
 			ColorStack = { r=1.0, g=1.0, b=1.0 },
 			ColorMarketValue = {r=0.80, g=0.90, b=0.2},
+
 			QuickSearch = true,
 			SearchMouseButton = 2,
 			SearchShiftKey = 1,
@@ -170,7 +170,6 @@ function TradeskillInfo:OnInitialize()
 
 	self:RegisterChatCommand("tsi", "ChatCommand")
 	self:RegisterChatCommand("tradeskillinfo", "ChatCommand")
-
 
 	self:BuildWhereUsed();
 	if ( EarthFeature_AddButton ) then   --add by Isler
