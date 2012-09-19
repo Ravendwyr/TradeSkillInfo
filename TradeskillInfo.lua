@@ -1613,12 +1613,11 @@ function TradeskillInfo:AddToTooltip(tooltip, id)
 	self:AddUsableByToTooltip(tooltip, id)
 	self:AddSourceToTooltip(tooltip, id)
 	self:AddRecipeKnownByToTooltip(tooltip, id)
-	self:AddBankedAmountToTooltip(tooltip, id);
-	self:AddAltAmountToTooltip(tooltip, id);
 	self:AddIdToTooltip(tooltip, id)
 	self:AddStackToTooltip(tooltip, id)
 	self:AddMarketValueProfitToTooltip(tooltip, id)
-	tooltip:Show();
+
+	tooltip:Show()
 end
 
 function TradeskillInfo:AddSourceToTooltip(tooltip, id)
