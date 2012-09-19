@@ -170,20 +170,7 @@ function TradeskillInfo:OnInitialize()
 
 	self:RegisterChatCommand("tsi", "ChatCommand")
 	self:RegisterChatCommand("tradeskillinfo", "ChatCommand")
-
-	self:BuildWhereUsed();
-	if ( EarthFeature_AddButton ) then   --add by Isler
-		EarthFeature_AddButton(
-			{
-				id= "TradeskillInfo";
-				name= L["TradeskillInfo"];
-				subtext= "TradeskillInfo";
-				tooltip = TradeskillInfo_Cosmos_Tooltip_Text;
-				icon= "Interface\\Icons\\INV_Elemental_Mote_Nether";
-				callback= function() TradeskillInfo:UI_Toggle() end;
-			}
-		);
-	end
+	self:BuildWhereUsed()
 end
 
 function TradeskillInfo:InitPlayer()
