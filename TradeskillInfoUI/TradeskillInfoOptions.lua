@@ -169,20 +169,6 @@ local tooltipOptions = {
 					type = "toggle",
 					arg = "TooltipRecipePrice",
 				},
-				banked = {
-					name = L["Banked"],
-					desc = L["Show how many you have in the bank (Req CharacterInfoStorage)"],
-					type = "toggle",
-					arg = "TooltipBankedAmount",
-					disabled = function() return not CharacterInfoStorage end,
-				},
-				altamount = {
-					name = L["Alt Amount"],
-					desc = L["Show how many you have on alt's  (Req CharacterInfoStorage)"],
-					type = "toggle",
-					arg = "TooltipAltAmount",
-					disabled = function() return not CharacterInfoStorage end,
-				},
 			}
 		},
 		colors = {
@@ -257,20 +243,6 @@ local tooltipOptions = {
 					desc = L["Show the price of recipes sold by vendors"],
 					type = "color",
 					arg = "ColorRecipePrice",
-				},
-				banked = {
-					name = L["Banked"],
-					desc = L["Show how many you have in the bank (Req CharacterInfoStorage)"],
-					type = "color",
-					arg = "ColorBankedAmount",
-					disabled = function() return not CharacterInfoStorage end,
-				},
-				altamount = {
-					name = L["Alt Amount"],
-					desc = L["Show how many you have on alt's  (Req CharacterInfoStorage)"],
-					type = "color",
-					arg = "ColorAltAmount",
-					disabled = function() return not CharacterInfoStorage end,
 				},
 			}
 		}

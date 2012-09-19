@@ -1678,43 +1678,6 @@ function TradeskillInfo:AddRecipeKnownByToTooltip(tooltip, id)
 	end
 end
 
-function TradeskillInfo:AddBankedAmountToTooltip(tooltip, id)
-	if self:ShowingTooltipBankedAmount() and CharacterInfoStorage then
-		local amount = CharacterInfoStorage:GetNumItemsBank(self.vars.playername,id);
-		if amount > 0 then
-			local c = self.db.profile.ColorBankedAmount;
-			tooltip:AddDoubleLine(L["Banked"], tostring(amount), c.r, c.g, c.b, c.r, c.g, c.b);
-		end
-	end
-end
-
-function TradeskillInfo:AddAltAmountToTooltip(tooltip, id)
-	if self:ShowingTooltipAltAmount() and CharacterInfoStorage then
-		local chars = CharacterInfoStorage:GetCharacters();
-		local c = self.db.profile.ColorAltAmount;
-		local Ltext, Rtext;
-		local text = "";
-		for _,name in ipairs(chars) do
-			if name ~= self.vars.playername then
-				local amount = CharacterInfoStorage:GetNumItems(name,id);
-				if amount > 0 then
-					Rtext = name.." ("..tostring(amount)..")";
-					if text ~= "" then
-						Ltext = " ";
-						text = text..", ";
-					else
-						Ltext = L["Alts have"];
-					end
-					text = text..Rtext;
-					if tooltip then
-						tooltip:AddDoubleLine(Ltext, Rtext, c.r, c.g, c.b, c.r, c.g, c.b/1.2);
-					end
-				end
-			end
-		end
-	end
-end
-
 function TradeskillInfo:AddReagentsToTooltip(tooltip, id)
 	if self:ShowingTrainerReagents() then
 		local components = self:GetCombineComponents(id);
@@ -2012,14 +1975,6 @@ function TradeskillInfo:ColoringAHRecipes()
 	return self.db.profile.ColorAHRecipes;
 end
 
-function TradeskillInfo:ShowingTooltipBankedAmount()
-	return self.db.profile.TooltipBankedAmount;
-end
-
-function TradeskillInfo:ShowingTooltipAltAmount()
-	return self.db.profile.TooltipAltAmount;
-end
-
 function TradeskillInfo:ShowColoredUsableByAltNames()
 	return self.db.profile.TooltipColorUsableBy;
 end
@@ -2114,4 +2069,3 @@ if ldb then
 		end,
 	})
 end
-
