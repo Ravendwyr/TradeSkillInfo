@@ -1,7 +1,7 @@
 ﻿local _
 
 TradeskillInfoUI = LibStub("AceAddon-3.0"):NewAddon("TradeskillInfoUI", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0")
-local L = LibStub("AceLocale-3.0"):GetLocale("TradeskillInfoUI")
+local L = LibStub("AceLocale-3.0"):GetLocale("TradeskillInfo")
 
 TradeskillInfoUI.version = GetAddOnMetadata("TradeskillInfoUI", "Version")
 TradeskillInfoUI.date = string.sub("$Date$", 8, 17);

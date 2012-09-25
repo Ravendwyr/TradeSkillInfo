@@ -1,6 +1,6 @@
 ﻿local _
 
-local L = LibStub("AceLocale-3.0"):GetLocale("TradeskillInfoUI", true)
+local L = LibStub("AceLocale-3.0"):GetLocale("TradeskillInfo", true)
 local TradeskillInfo = LibStub("AceAddon-3.0"):GetAddon("TradeskillInfo")
 
 local function getOption(info)
