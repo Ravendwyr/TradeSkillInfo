@@ -43,10 +43,10 @@ Locale\zhTW.lua
 Locale\frFR.lua
 
 TradeskillInfo.lua
-TradeskillIdData.lua
 TradeskillData.lua
 
-TradeskillIdData-mop.lua
+Data\TradeskillIdData.lua
+Data\TradeskillIdData-mop.lua
 
 #@debug@
 TradeskillInfoUI\locale-enUS.lua
