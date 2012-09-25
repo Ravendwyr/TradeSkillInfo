@@ -49,15 +49,6 @@ Data\TradeskillIdData.lua
 Data\TradeskillIdData-mop.lua
 
 #@debug@
-TradeskillInfoUI\locale-enUS.lua
-TradeskillInfoUI\locale-ruRU.lua
-TradeskillInfoUI\locale-esES.lua
-TradeskillInfoUI\locale-frFR.lua
-TradeskillInfoUI\locale-zhCN.lua
-TradeskillInfoUI\locale-zhTW.lua
-TradeskillInfoUI\locale-koKR.lua
-TradeskillInfoUI\locale-deDE.lua
-
 TradeskillInfoUI\TradeskillInfoUI.lua
 TradeskillInfoUI\TradeskillInfoUI.xml
 
