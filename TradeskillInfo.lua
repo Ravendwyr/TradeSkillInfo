@@ -214,7 +214,7 @@ function TradeskillInfo:OnEnable()
 		self.db.profile.TooltipAvailableTo = self.db.defaults.profile.TooltipAvailableTo
 	end
 
-	LibStub("AceConfig-3.0"):RegisterOptionsTable("TradeSkillInfo", TradeskillInfo.LoadAndCreateConfig)
+	LibStub("AceConfig-3.0"):RegisterOptionsTable("TradeSkillInfo", TradeskillInfo.CreateConfig)
 	self.OptionsPanel = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("TradeSkillInfo", "TradeSkill Info")
 
 	self:ScheduleTimer("OnSkillUpdate",1);
@@ -1767,6 +1767,8 @@ end
 ----------------------------------------------------------------------
 
 function TradeskillInfo:LoadUI(quiet)
+	print("LoadUI")
+
 	if TradeskillInfoUI then
 		return true -- good news everyone! the module is loaded again!
 	else
@@ -1807,10 +1809,7 @@ function TradeskillInfo:ScrollToConfig()
 end
 
 function TradeskillInfo:ConfigToggle()
-	if not self:LoadUI() then return end -- missing
-
-	if not self.optionsLoaded then self:LoadAndCreateConfig() end
-	if not self.optionsLoaded then return end -- still missing
+	if not self.optionsLoaded then self:CreateConfig() end
 
 	if InterfaceOptionsFrame:IsVisible() and InterfaceOptionsFramePanelContainer.displayedPanel == self.OptionsPanel then
 		InterfaceOptionsFrame:Hide()

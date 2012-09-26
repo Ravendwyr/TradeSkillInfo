@@ -48,9 +48,9 @@ TradeskillData.lua
 Data\TradeskillIdData.lua
 Data\TradeskillIdData-mop.lua
 
+TradeskillInfoOptions.lua
+
 #@debug@
 TradeskillInfoUI\TradeskillInfoUI.lua
 TradeskillInfoUI\TradeskillInfoUI.xml
-
-TradeskillInfoUI\TradeskillInfoOptions.lua
 #@end-debug@

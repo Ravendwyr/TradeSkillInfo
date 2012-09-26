@@ -467,6 +467,8 @@ local ahOptions = {
 
 
 function TradeskillInfo:CreateConfig()
+	print("CreateConfig")
+
 	for x, y in pairs(TradeskillInfo.vars.tradeskills) do
 		knownSelect[x] = y
 	end
@@ -485,7 +487,7 @@ function TradeskillInfo:CreateConfig()
 		},
 	}
 
-	self.optionsLoaded = true
+	TradeskillInfo.optionsLoaded = true
 
 	return options
 

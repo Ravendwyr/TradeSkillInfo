@@ -14,5 +14,3 @@
 
 TradeskillInfoUI.lua
 TradeskillInfoUI.xml
-
-TradeskillInfoOptions.lua
