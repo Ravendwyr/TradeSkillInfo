@@ -467,8 +467,6 @@ local ahOptions = {
 
 
 function TradeskillInfo:CreateConfig()
-	print("CreateConfig")
-
 	for x, y in pairs(TradeskillInfo.vars.tradeskills) do
 		knownSelect[x] = y
 	end

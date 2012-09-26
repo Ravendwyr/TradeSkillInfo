@@ -1767,8 +1767,6 @@ end
 ----------------------------------------------------------------------
 
 function TradeskillInfo:LoadUI(quiet)
-	print("LoadUI")
-
 	if TradeskillInfoUI then
 		return true -- good news everyone! the module is loaded again!
 	else
