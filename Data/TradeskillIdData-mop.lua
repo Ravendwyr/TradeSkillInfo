@@ -73,9 +73,9 @@ local combines = {
 	[86432] = "126655|Wcb600/600/602/605|4537 9260 74846:200 85584 74661", -- Banana Infused Rum
 
 	--firstaid
-	[72985] = "102697|X550/550/555/560|72988", -- Windwool Bandage
-	[47] = "102698|X600/600/605/610|72988:3|||72986", -- Heavy Windwool Bandage
-	[48] = "102699|X605/605/610/615|72988:2|||72986", -- Heavy Windwool Bandage
+	[72985] = "102697|X525/550/555/560|72988", -- Windwool Bandage
+	[47] = "102698|X550/600/600/600|72988:3|||72986", -- Heavy Windwool Bandage
+	[48] = "102699|X550/600/600/600|72988:2|||72986", -- Heavy Windwool Bandage
 
 	--alchemy
 	[76094] = "114751|A500/515/525/535|3371 72234|84127", -- Alchemist's Rejuvenation
