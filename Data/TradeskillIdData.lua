@@ -68,25 +68,6 @@ Level = faction rank needed (Optional)
 
 ]]
 
-if not TradeskillInfo or not TradeskillInfo.vars then return end
-
-TradeskillInfo.vars.difficultyLevel = {
-	['trivial'] = 1,
-	['easy'] = 2,
-	['medium'] = 3,
-	['optimal'] = 4,
-}
-
-
-TradeskillInfo.vars.diffcolors = {
-	[1] = '|cff777777',
-	[2] = '|cff33bb33',
-	[3] = '|cffffff00',
-	[4] = '|cffff7733',
-	[5] = '|cffffffff',
-}
-
-
 TradeskillInfo.vars.specialcases = {
 	[3577] = "1,2",
 	[6037] = "3,4",

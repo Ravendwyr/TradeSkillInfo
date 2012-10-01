@@ -1,4 +1,5 @@
-﻿local _;
+﻿
+local _
 
 TradeskillInfo = LibStub("AceAddon-3.0"):NewAddon("TradeskillInfo", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0", "AceHook-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("TradeskillInfo")
@@ -9,11 +10,15 @@ BINDING_HEADER_TRADESKILLINFO = "Tradeskill Info";
 BINDING_NAME_TOGGLE_TRADESKILLINFO = "Toggle Tradeskill Info Window";
 BINDING_NAME_TOGGLE_TRADESKILLINFOCONFIG = "Show Tradeskill Info Config Window";
 
-TradeskillInfo.vars = {};
-TradeskillInfo.vars.MouseButtons = { "LeftButton", "RightButton" };
-TradeskillInfo.vars.ShiftKeys = { IsShiftKeyDown, IsControlKeyDown, IsAltKeyDown };
-TradeskillInfo.libs = {};
-TradeskillInfo.libs.Abacus = LibStub("LibAbacus-3.0");
+TradeskillInfo.vars = {}
+TradeskillInfo.vars.combines = {}
+TradeskillInfo.vars.MouseButtons = { "LeftButton", "RightButton" }
+TradeskillInfo.vars.ShiftKeys = { IsShiftKeyDown, IsControlKeyDown, IsAltKeyDown }
+TradeskillInfo.vars.difficultyLevel = { ["trivial"] = 1, ["easy"] = 2, ["medium"] = 3, ["optimal"] = 4 }
+TradeskillInfo.vars.diffcolors = { "|cff777777", "|cff33bb33", "|cffffff00", "|cffff7733", "|cffffffff" } -- trivial, easy, medium, optimal, header
+
+TradeskillInfo.libs = {}
+TradeskillInfo.libs.Abacus = LibStub("LibAbacus-3.0")
 
 local function getIdFromLink(link)
   if not link then return end
