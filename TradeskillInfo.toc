@@ -1,5 +1,5 @@
 ## Interface: 50001
-## Title: TradeSkill Info
+## Title: Tradeskill Info
 ## Notes: Complete Tradeskill Info
 ## Notes-zhTW: 完整的商業技能百科
 ## Notes-zhCN: 完整的商业技能百科

@@ -1,5 +1,5 @@
 ## Interface: 50001
-## Title: TradeSkill Info UI
+## Title: Tradeskill Info UI
 ## Notes: Complete Tradeskill Info UI
 ## Notes-zhCN: 商业技能资料库设置窗口
 ## Notes-zhTW: 商業技能資料庫設置窗口
