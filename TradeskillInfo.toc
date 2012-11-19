@@ -58,6 +58,8 @@ Data\Professions\Jewelcrafting.lua
 Data\Professions\Mining.lua
 Data\Professions\Tailoring.lua
 
+Data\SpecialCases.lua
+
 TradeskillInfoOptions.lua
 
 #@debug@

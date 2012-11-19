@@ -1,16 +1,5 @@
 if not TradeskillInfo or not TradeskillInfo.vars then return end
 
-local specialcases = {
-	[72986] = "47, 48", -- Heavy Windwool Bandage
-	[72095] = "49, 50", -- Smelt Trillium
-	[74247] = "51, 52", -- Ethereal Shard
-	[72120] = "53, 54", -- Exotic Leather
-	[79318] = "55, 56", -- Darkmoon Card of Mists
-	[82447] = "57, 58", -- Imperial Silk
-	[72104] = "59, 60", -- Living Steel
-	[74250] = "61, 62", -- Mysterious Essence
-}
-
 local combines = {
 	--cooking
 	[74636] = "104237|W300/300/302/305|74866:2", -- Golden Carp Consomme
@@ -1419,7 +1408,6 @@ local function merge(t1, t2)
 	end
 end
 
-merge(TradeskillInfo.vars.specialcases, specialcases)
 merge(TradeskillInfo.vars.combines, combines)
 merge(TradeskillInfo.vars.components, components)
 merge(TradeskillInfo.vars.recipes, recipes)

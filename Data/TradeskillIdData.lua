@@ -68,44 +68,6 @@ Level = faction rank needed (Optional)
 
 ]]
 
-TradeskillInfo.vars.specialcases = {
-	[3577] = "1,2",
-	[6037] = "3,4",
-	[7080] = "5,6",
-	[7076] = "7,8",
-	[21884] = "9,10",
-	[21885] = "11,12",
-	[22452] = "13,14",
-	[10577] = "15,16",
-	[18258] = "17,18",
-	[22448] = "19,20",
-	[22449] = "21,22",
-	[35624] = "23,24",
-	[35622] = "25,26",
-	[35623] = "27,28",
-	[35627] = "29,30",
-	[35625] = "31,32",
-	[36860] = "33,34",
-	[41163] = "35,36",
-	[51950] = "37, 38",
-	[54440] = "39, 40, 41, 42, 43, 44",
-	[53051] = "45, 46",
-}
-
--- Add the reverse mappings to specialcases
-do
-	local tmpTbl = {}
-	for i, v in pairs(TradeskillInfo.vars.specialcases) do
-		i = tostring(i)
-		for idx in v:gmatch("(%d+),?%s*") do
-			tmpTbl[tonumber(idx)]=i
-		end
-	end
-
-	for i, v in pairs(tmpTbl) do
-		TradeskillInfo.vars.specialcases[i]=v
-	end
-end
 
 TradeskillInfo.vars.combines = {
 --[[ Alchemy --]]
