@@ -69,8 +69,6 @@ Level = faction rank needed (Optional)
 ]]
 
 
-TradeskillInfo.vars.combines = {}
-
 TradeskillInfo.vars.components = {
 	[7078] = "D",
 	[12803] = "D",
