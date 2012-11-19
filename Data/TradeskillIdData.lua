@@ -70,33 +70,6 @@ Level = faction rank needed (Optional)
 
 
 TradeskillInfo.vars.combines = {
---[[ Leatherworking --]]
-
---[[ Smelting --]]
-	[2840] = "2657|Y1/25/47/70|2770",	-- Smelt Copper
-	[2841] = "2659|Y65/65/90/115|2840 3576||2",	-- Smelt Bronze
-	[3576] = "3304|Y65/65/70/75|2771",	-- Smelt Tin
-	[2842] = "2658|Y75/115/122/130|2775",	-- Smelt Silver
-	[3575] = "3307|Y125/130/145/160|2772",	-- Smelt Iron
-	[2] = "3308|Y155/170/177/185|2776|||3577",	-- Smelt Gold
-	[3859] = "3569|Y165/165/165/165|3575 3857",	-- Smelt Steel
-	[3860] = "10097|Y175/175/202/230|3858",	-- Smelt Mithril
-	[4] = "10098|Y230/235/242/250|7911|||6037",	-- Smelt Truesilver
-	[11371] = "14891|Y230/300/305/310|11370:8",	-- Smelt Dark Iron
-	[12359] = "16153|Y250/250/270/290|10620",	-- Smelt Thorium
-	[17771] = "22967|Y300/350/362/375|18562 12360:10 17010 18567:3",	-- Smelt Elementium
-	[22573] = "35750|Y300/300/300/300|22452||10",	-- Earth Shatter
-	[22574] = "35751|Y300/300/300/300|21884||10",	-- Fire Sunder
-	[23445] = "29356|Y300/300/307/315|23424:2",	-- Smelt Fel Iron
-	[23446] = "29358|Y325/325/332/340|23425:2",	-- Smelt Adamantite
-	[23447] = "29359|Y350/350/357/365|23427:2",	-- Smelt Eternium
-	[23448] = "29360|Y350/350/357/375|23445:3 23447:2",	-- Smelt Felsteel
-	[23449] = "29361|Y375/375/375/375|23426:2",	-- Smelt Khorium
-	[23573] = "29686|Y375/375/375/375|23446:10",	-- Smelt Hardened Adamantite
-	[54849] = "84038|Y425/427/437/475|53038:2", -- Smelt Obsidium
-	[52186] = "74530|Y475/475/475/500|52185:2", -- Smelt Elementium
-	[53039] = "74537|Y500/500/500/525|52186:10 52327:4", -- Smelt Hardened Eementium
-	[37] = "74529|Y525/525/525/525|52183:2|||51950", -- Smelt Pyrite
 --[[ Tailoring --]]
 	[2996] = "2963|T1/25/37/50|2589:2",	-- Bolt of Linen Cloth
 	[4344] = "3915|T1/35/47/60|2996 2320",	-- Brown Linen Shirt
@@ -427,7 +400,6 @@ TradeskillInfo.vars.combines = {
 	[22] = "45765|D360/360/360/375|22450|34872|2|22449", -- Void Shatter, Requires Shattered Sun Offensive Honored
 	[35563] = "46684|W250/275/285/295|35562|35564", -- Charred Bear Kabobs
 	[35565] = "46688|W250/275/285/295|35562|35566", -- Juicy Bear Burger
-	[35128] = "46353|Y375/375/375/375|23449:3 23573|35273",	-- Smelt Hardened Khorium
 	[-46594] = "D360/370/385/400|22446:4 22445:8 23427:4|35500", -- Enchant Chest - Defense
 	[35751] = "47050|A375/380/385/390|13503 22456:6 30183:2|35755", -- Assassin's Alchemist Stone
 	[35748] = "47046|A375/380/385/390|13503 22451:6 30183:2|35752", -- Guardian's Alchemist Stone
@@ -1071,13 +1043,6 @@ TradeskillInfo.vars.combines = {
 	[54504] = "75298|T525/525/530/535|54440:4", -- Belt of the Depths
 	[54505] = "75300|T525/525/530/535|54440:6", -- Breeches of Mended Nightmares
 	[54506] = "75301|T525/525/530/535|54440:6", -- Flame-Ascended Pantaloons
-
-
-	-- WotLK Smelting combines
-	[36] = "55211|Y450/450/450/450|36910:2|||41163", -- Smelt Titanium
-	[36913] = "49258|Y400/400/400/400|36912:2", -- Smelt Saronite
-	[36916] = "49252|Y350/350/362/375|36909", -- Smelt Cobalt
-	[37663] = "55208|Y450/450/450/450|41163:3 36860 35624 35627", -- Smelt Titansteel
 
 
 -- Cata 4.2

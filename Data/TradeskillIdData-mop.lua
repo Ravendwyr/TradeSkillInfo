@@ -114,8 +114,7 @@ local combines = {
 
 
 	--mining
-	[72096] = "102165|Y475/475/500/525|72092:2", -- Smelt Ghost Iron
-	[50] = "102167|Y600/600/600/600|72094:2 72103:2|||72095", -- Smelt Trillium
+
 
 	--tailoring
 	[-125481] = "T1/1/1/1|38426:3", -- Lightweave Embroidery
