@@ -46,7 +46,6 @@ TradeskillInfo.lua
 TradeskillData.lua
 
 Data\TradeskillIdData.lua
-Data\TradeskillIdData-mop.lua
 
 Data\Professions\Alchemy.lua
 Data\Professions\Blacksmithing.lua
