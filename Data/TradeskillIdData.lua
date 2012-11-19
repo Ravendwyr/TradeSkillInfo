@@ -290,22 +290,7 @@ TradeskillInfo.vars.combines = {
 	[23838] = "30565|E375/375/385/395|24272:4 22457:12 22451:12",	-- Foreman's Enchanted Helmet
 	[23839] = "30566|E375/375/385/395|23573:8 22452:12 21884:12",	-- Foreman's Reinforced Helmet
 	[22728] = "28327|E275/275/280/285|3860:3 10558|22729", -- Steam Tonk Controller
---[[ First Aid --]]
-	[1251] = "3275|X1/30/45/60|2589",	-- Linen Bandage
-	[2581] = "3276|X40/50/75/100|2589:2",	-- Heavy Linen Bandage
-	[6452] = "7934|X80/80/115/150|1475||3",	-- Anti-Venom
-	[3530] = "3277|X80/80/115/150|2592",	-- Wool Bandage
-	[3531] = "3278|X115/115/150/185|2592:2",	-- Heavy Wool Bandage
-	[6453] = "7935|X130/130/165/200|1288|6454|3",	-- Strong Anti-Venom
-	[6450] = "7928|X150/150/180/210|4306",	-- Silk Bandage
-	[6451] = "7929|X180/180/210/240|4306:2|16112",	-- Heavy Silk Bandage
-	[8544] = "10840|X210/210/240/270|4338|16113",	-- Mageweave Bandage
-	[8545] = "10841|X240/240/270/300|4338:2",	-- Heavy Mageweave Bandage
-	[14529] = "18629|X260/260/290/320|14047",	-- Runecloth Bandage
-	[14530] = "18630|X290/290/320/350|14047:2",	-- Heavy Runecloth Bandage
-	[19440] = "23787|X300/300/330/360|19441|19442",	-- Powerful Anti-Venom
-	[21990] = "27032|X330/330/347/365|21877|21992",	-- Netherweave Bandage
-	[21991] = "27033|X360/360/367/375|21877:2|21993",	-- Heavy Netherweave Bandage
+
 --[[ Jewelcrafting --]]
 	[20906] = "25493|J1/30/45/60|20816:2",	-- Braided Copper Ring
 	[21931] = "26925|J1/30/45/60|20816:2 2840",	-- Woven Copper Ring
@@ -2720,13 +2705,6 @@ TradeskillInfo.vars.combines = {
 	[36913] = "49258|Y400/400/400/400|36912:2", -- Smelt Saronite
 	[36916] = "49252|Y350/350/362/375|36909", -- Smelt Cobalt
 	[37663] = "55208|Y450/450/450/450|41163:3 36860 35624 35627", -- Smelt Titansteel
-	-- WotLK First Aid Recipes
-	[34721] = "45545|X350/375/392/410|33470", -- Frostweave Bandage
-	[34722] = "45546|X400/400/430/470|33470:2|39152", -- Manual: Heavy Frostweave Bandage
-	[53049] = "74556|X425/450/467/485|53010", -- Embersilk Bandage
-	[53050] = "74557|X475/485/505/525|53010:2", -- Heavy Embersilk Bandage
-	[45] = "88893|X525/525/530/535|53010:3|||53051", -- Dense Embersilk Bandage
-	[46] = "74558|X525/525/530/535|53050:2|||53051", -- Field Bandage: Dense Embersilk
 
 -- Cata 4.1
 	[52113] = "73266|J425/450/467/485|52181|69820", -- Design: Reckless Hessonite

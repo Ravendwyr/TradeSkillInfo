@@ -5,9 +5,6 @@ local combines = {
 
 
 	--firstaid
-	[72985] = "102697|X525/550/555/560|72988", -- Windwool Bandage
-	[47] = "102698|X550/600/600/600|72988:3|||72986", -- Heavy Windwool Bandage
-	[48] = "102699|X550/600/600/600|72988:2|||72986", -- Heavy Windwool Bandage
 
 
 	--engineering
