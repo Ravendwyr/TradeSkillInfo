@@ -491,6 +491,10 @@ C[69945] = "99449|T525/525/527/530|54440:8 69237:4|69966" -- Pattern: Don Tayo's
 C[69953] = "99459|T525/525/527/530|54440:8 69237:4|69975" -- Pattern: Endless Dream Walkers
 C[69954] = "99460|T525/525/527/530|54440:8 69237:4|69976" -- Pattern: Boots of the Black Flame
 C[70138] = "100585|T515/515/515/515|54440:3|70176" -- Pattern: Luxurious Silk Gem Bag
+C[71981] = "101920|T525/525/530/535|54440:8 71998:8|72000" -- Pattern: World Mender's Pants
+C[71980] = "101921|T525/525/530/535|54440:8 71998:8|72002" -- Pattern: Lavaquake Legwraps
+C[71990] = "101922|T525/525/530/535|54440:8 71998:4|72003" -- Pattern: Dreamwraps of the Light
+C[71989] = "101923|T525/525/530/535|54440:5 71998:4|72004" -- Pattern: Bracers of Unconquered Power
 
 -- MoP
 C[-125481] = "T1/1/1/1|38426:3" -- Lightweave Embroidery
