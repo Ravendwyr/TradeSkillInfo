@@ -43,8 +43,8 @@ Locale\zhTW.lua
 Locale\frFR.lua
 
 TradeskillInfo.lua
-TradeskillData.lua
 
+Data\TradeskillData.lua
 Data\TradeskillIdData.lua
 
 Data\Professions\Alchemy.lua
