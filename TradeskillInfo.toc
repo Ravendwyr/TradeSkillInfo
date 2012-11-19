@@ -51,9 +51,11 @@ Data\Professions\Alchemy.lua
 Data\Professions\Blacksmithing.lua
 Data\Professions\Cooking.lua
 Data\Professions\Enchanting.lua
+Data\Professions\Engineering.lua
 Data\Professions\FirstAid.lua
 Data\Professions\Inscription.lua
 Data\Professions\Jewelcrafting.lua
+Data\Professions\Leatherworking.lua
 Data\Professions\Mining.lua
 Data\Professions\Tailoring.lua
 
