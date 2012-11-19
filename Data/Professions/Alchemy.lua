@@ -179,6 +179,11 @@ C[32849] = "41500|A375/360/370/380|21884:2 22793:7 23782"	-- Cauldron of Major F
 C[32850] = "41501|A375/360/370/380|21885:2 22793:7 23782"	-- Cauldron of Major Frost Protection
 C[32851] = "41502|A375/360/370/380|21886:2 22793:7 23782"	-- Cauldron of Major Nature Protection
 C[32852] = "41503|A375/360/370/380|22456:2 22793:7 23782"	-- Cauldron of Major Shadow Protection
+C[35751] = "47050|A375/380/385/390|13503 22456:6 30183:2|35755" -- Assassin's Alchemist Stone
+C[35748] = "47046|A375/380/385/390|13503 22451:6 30183:2|35752" -- Guardian's Alchemist Stone
+C[35750] = "47049|A375/380/385/390|13503 21886:6 30183:2|35754" -- Redeemer's Alchemist Stone
+C[35749] = "47048|A375/380/385/390|13503 21884:6 30183:2|35753" -- Sorcerer's Alchemist Stone
+
 	--[33208] = "42736|A375/390/397/405|22786:7 22791:3 22794 3371|33209" --Flask of Chromatic Wonder
 
 	-- WotLK Alchemy combines

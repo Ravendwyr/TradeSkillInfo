@@ -1,31 +1,3 @@
-if not TradeskillInfo or not TradeskillInfo.vars then return end
-
-local combines = {
-	--cooking
-
-
-	--firstaid
-
-
-	--engineering
-
-
-	--inscription
-
-
-	--jewelcrafting
-
-
-	--leatherworking
-
-
-	--mining
-
-
-	--tailoring
-
-}
-
 --[[
 Components
 [itemid] = "source"
@@ -41,6 +13,8 @@ Source
 	G = Gathered (No skill required)
 	P = Pickpocketed
 ]]--
+
+
 local components = {
 	[74866] = "D",
 	[74833] = "D",
@@ -712,6 +686,5 @@ local function merge(t1, t2)
 	end
 end
 
-merge(TradeskillInfo.vars.combines, combines)
 merge(TradeskillInfo.vars.components, components)
 merge(TradeskillInfo.vars.recipes, recipes)
