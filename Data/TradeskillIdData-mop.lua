@@ -10,47 +10,6 @@ local combines = {
 	[48] = "102699|X550/600/600/600|72988:2|||72986", -- Heavy Windwool Bandage
 
 
-	--enchanting
-	[-103461] = "D550/555/557/560|74249:2|84575", -- Enchant Ring - Greater Agility
-	[-103462] = "D550/555/557/560|74249:2|84576", -- Enchant Ring - Greater Intellect
-	[-103463] = "D550/555/557/560|74249:2|84577", -- Enchant Ring - Greater Stamina
-	[-103465] = "D550/555/557/560|74249:2|84578", -- Enchant Ring - Greater Strength
-	[-104338] = "D500/525/530/535|74249:4|84560", -- Enchant Bracer - Mastery
-	[-104385] = "D525/550/575/600|74249:8 74250:2|84558", -- Enchant Bracer - Major Dodge
-	[-104389] = "D600/600/600/615|74248:3|84559", -- Enchant Bracer - Super Intellect
-	[-104390] = "D600/600/600/615|74248:3|84561", -- Enchant Bracer - Exceptional Strength
-	[-104391] = "D600/600/600/615|74248:3|84557", -- Enchant Bracer - Greater Agility
-	[-104392] = "D525/550/575/600|74249:3 74250|84563", -- Enchant Chest - Super Resilience
-	[-104393] = "D525/550/575/600|74249:4|84564", -- Enchant Chest - Mighty Spirit
-	[-104395] = "D575/600/602/605|74249:2 74250:3|84562", -- Enchant Chest - Glorious Stats
-	[-104397] = "D550/575/590/605|74249:4 74250|84565", -- Enchant Chest - Superior Stamina
-	[-104398] = "D550/575/590/605|74249:7|84568", -- Enchant Cloak - Accuracy
-	[-104401] = "D575/600/602/605|74247:2|84566", -- Enchant Cloak - Greater Protection
-	[-104403] = "D525/550/575/600|74249:3 74250:3|84569", -- Enchant Cloak - Superior Intellect
-	[-104404] = "D500/525/530/535|74250|84567", -- Enchant Cloak - Superior Critical Strike
-	[-104407] = "D550/575/590/605|74249:2 74250|84554", -- Enchant Boots - Greater Haste
-	[-104408] = "D525/550/575/600|74249:2 74250|84555", -- Enchant Boots - Greater Precision
-	[-104409] = "D550/575/590/605|74247:2|84553", -- Enchant Boots - Blurred Speed
-	[-104414] = "D575/600/602/605|74249:4 74250:3|84556", -- Enchant Boots - Pandaren's Step
-	[-104416] = "D525/550/575/600|74249:4|84571", -- Enchant Gloves - Greater Haste
-	[-104417] = "D550/575/590/605|74250:2|84570", -- Enchant Gloves - Superior Expertise
-	[-104419] = "D575/600/602/605|74249:3 74250 74247|84573", -- Enchant Gloves - Super Strength
-	[-104420] = "D575/600/602/605|74250:3|84572", -- Enchant Gloves - Superior Mastery
-	[-104425] = "D550/575/590/605|74249:12 74247|84582", -- Enchant Weapon - Windsong
-	[-104427] = "D600/600/600/615|74250:4 74248:10|84583", -- Enchant Weapon - Jade Spirit
-	[-104430] = "D525/550/575/600|74250:3|84581", -- Enchant Weapon - Elemental Force
-	[-104434] = "D600/600/600/615|74249:12 74248:10|84584", -- Enchant Weapon - Dancing Steel
-	[-104440] = "D575/600/602/605|74247:3|84579", -- Enchant Weapon - Colossus
-	[-104442] = "D600/600/600/615|76138 74250:50|84580", -- Enchant Weapon - River's Song
-	[-104445] = "D575/600/602/605|74250:3|84574", -- Enchant Off-Hand - Major Intellect
-	[61] = "116497|D475/475/487/500|74249:5|||74250", -- Mysterious Essence
-	[51] = "116498|D480/480/490/500|74250:5|||74247", -- Ethereal Shard
-	[74248] = "116499|D485/485/495/505|74247:5", -- Sha Crystal
-	[74249] = "118237|D475/475/487/500|74250", -- Mysterious Diffusion
-	[62] = "118238|D485/485/492/500|74247|||74250", -- Ethereal Shatter
-	[52] = "118239|D480/480/490/500|74248|||74247", -- Sha Shatter
-	[-130758] = "D600/600/602/605|74250:3 74247", -- Enchant Shield - Greater Parry
-
 	--engineering
 	[-108789] = "E550/550/550/550|90146", -- Phase Fingers
 	[-109077] = "E550/550/550/550|90146", -- Incendiary Fireworks Launcher
