@@ -941,49 +941,52 @@ end
 
 function TradeskillInfo:GetComponent(id, getVendorPrice, getAuctioneerPrice)
 	if not self:ComponentExists(id) then return end
+
 	local realId = id
-	if realId < 100 then
+
+	if realId < 100 then -- special case
 		local specialCase = self.vars.specialcases[id]
 		if specialCase and specialCase ~= "" then
 			_, _, realId = string.find(specialCase, "(%d+)")
 			realId = tonumber(realId)
 		end
 	end
+
+	local cost = 0
 	local name = GetItemInfo(realId)
-	if not name then name="????" end
-	local _,_,source = string.find(self.vars.components[realId],"(%a+)")
-	-- If we need the price, get the value from Blizzard
+
+	if not name then name = "????" end
+
+	local _, _, source = string.find(self.vars.components[realId], "(%a+)")
+
+	-- if we need the price, get the value from Blizzard
 	if getVendorPrice or getAuctioneerPrice then
-		cost = select(11, GetItemInfo(realId))
-		-- If Blizzard doesn't supply a sell value, and we have
-		-- GetSellValue() API provider, use it.
-		if not cost and GetSellValue then
-			local gsvCost = GetSellValue(realId)
-			if gsvCost and gsvCost > 0 then
-				cost = gsvCost
-			end
-		end
-		-- If everything fails, set cost to 0.
-		if not cost then cost = 0 end
+		cost = select(11, GetItemInfo(realId)) or 0
 	end
 
-	-- If we have Auctioneer Advanced, also gather auction prices
+	-- if we have Auctioneer Advanced, also gather auction prices
 	local aucMvCost, aucMvSeen = 0, 0
+
 	if getAuctioneerPrice then
 		if AucAdvanced and AucAdvanced.API then
 			local itemLink = getItemLink(realId)
+
 			aucMvCost, aucMvSeen = AucAdvanced.API.GetMarketValue(itemLink, AucAdvanced.GetFaction())
-			-- If auctioneer has no idea, plug in vendor sell value
+
+			-- if auctioneer has no idea, plug in vendor sell value
 			if not aucMvCost then aucMvCost = cost end
 			if not aucMvSeen then aucMvSeen = 0 end
+
 		elseif GetAuctionBuyout then
 			local itemLink = getItemLink(realId)
 			aucMvCost = GetAuctionBuyout(realId)
-			-- If auctioneer has no idea, plug in vendor sell value
+
+			-- if auctioneer has no idea, plug in vendor sell value
 			if not aucMvCost then aucMvCost = cost end
 		end
 	end
-	return name,tonumber(cost),source,tonumber(aucMvCost),tonumber(aucMvSeen)
+
+	return name, tonumber(cost), source, tonumber(aucMvCost), tonumber(aucMvSeen)
 end
 
 function TradeskillInfo:GetComponentSource(id, tooltip)
