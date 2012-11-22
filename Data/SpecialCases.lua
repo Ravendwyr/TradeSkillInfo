@@ -34,7 +34,6 @@ TradeskillInfo.vars.specialcases = {
 	[72095]	= "49,50",				-- Smelt Trillium
 	[74247]	= "51,52",				-- Ethereal Shard
 	[72120]	= "53,54",				-- Exotic Leather
-	[79318]	= "55,56",				-- Darkmoon Card of Mists
 	[82447]	= "57,58",				-- Imperial Silk
 	[72104]	= "59,60",				-- Living Steel
 	[74250]	= "61,62",				-- Mysterious Essence
