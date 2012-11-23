@@ -274,31 +274,6 @@ local tradeskillOptions = {
 	}
 }
 
-local trainerOptions = {
-	name = L["Trainer Window"],
-	desc = L["Trainer Window options"],
-	type = "group",
-	order = 3,
-	args = {
-		skillreq = {
-			name = L["Reagents"],
-			desc = L["Show recipe reagents in tooltip at trainer"],
-			type = "toggle",
-			arg = "TrainerReagents",
-			get = getOption,
-			set = setOption,
-		},
-		combinecost = {
-			name = L["Reagents Color"],
-			desc = L["Color of recipe reagents in tooltip at trainer"],
-			type = "color",
-			arg = "ColorTrainerReagents",
-			disabled = function() return not TradeskillInfo.db.profile["TrainerReagents"] end,
-			get = getColor,
-			set = setColor,
-		}
-	}
-}
 
 mouseSelect = {
 	[1] = L["Left Button"],
@@ -472,13 +447,12 @@ function TradeskillInfo:CreateConfig()
 	end
 
 	local options = {
-		name = "TradeSkill Info",
+		name = "Tradeskill Info",
 		type = "group",
 		childGroups = "tab",
 		args = {
 			tooltip = tooltipOptions,
 			tradeskill = tradeskillOptions,
-			trainer = trainerOptions,
 			ui = uiOptions,
 			auction = ahOptions,
 			profile = LibStub("AceDBOptions-3.0"):GetOptionsTable(TradeskillInfo.db),
@@ -493,7 +467,6 @@ function TradeskillInfo:CreateConfig()
 	TradeskillInfo.OptionsPanel = AceConfigDialog:AddToBlizOptions("TradeskillInfo", "TradeskillInfo", nil, "general")
 	AceConfigDialog:AddToBlizOptions("TradeskillInfo", L["Tooltip"], "TradeskillInfo", "tooltip")
 	AceConfigDialog:AddToBlizOptions("TradeskillInfo", L["Tradeskill"], "TradeskillInfo", "tradeskill")
-	AceConfigDialog:AddToBlizOptions("TradeskillInfo", L["Trainer"], "TradeskillInfo", "trainer")
 	AceConfigDialog:AddToBlizOptions("TradeskillInfo", L["UI"], "TradeskillInfo", "ui")
 	AceConfigDialog:AddToBlizOptions("TradeskillInfo", L["Auction House"], "TradeskillInfo", "auction")
 	AceConfigDialog:AddToBlizOptions("TradeskillInfo", L["Profile"], "TradeskillInfo", "profile")

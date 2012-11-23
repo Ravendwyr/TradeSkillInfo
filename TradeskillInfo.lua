@@ -135,8 +135,6 @@ function TradeskillInfo:OnInitialize()
 			TooltipID = false,
 			TooltipStack = false,
 
-			TrainerReagents = true,
-
 			ColorSource = { r=0.75, g=0.75, b=0.25 },
 			ColorRecipeSource = { r=0.75, g=0.75, b=0.25 },
 			ColorRecipePrice = { r=1.0, g=1.0, b=1.0 },
@@ -145,7 +143,6 @@ function TradeskillInfo:OnInitialize()
 			ColorKnownBy = { r=1.0, g=0.0, b=0.0 },
 			ColorLearnableBy = { r=0.25, g=0.75, b=0.25 },
 			ColorAvailableTo = { r=1.0, g=0.50, b=0.25 },
-			ColorTrainerReagents = { r=1.0, g=1.0, b=1.0 },
 			ColorID = { r=0.75, g=0.5, b=0.5 },
 			ColorStack = { r=1.0, g=1.0, b=1.0 },
 			ColorMarketValue = {r=0.80, g=0.90, b=0.2},
@@ -1608,7 +1605,6 @@ function TradeskillInfo:SetTrainerService(tooltip, selectedService)
 			local id = getIdFromLink(link)
 			if id then
 				self:AddToTooltip(tooltip, id);
-				self:AddReagentsToTooltip(tooltip, id);
 			end
 		end
 	end
@@ -1668,33 +1664,6 @@ function TradeskillInfo:AddRecipeKnownByToTooltip(tooltip, id)
 		if self:ShowingTooltipAvailableTo(kind) then
 			local availableTo = self:GetCombineAvailableTo(id, tooltip)
 		end
-	end
-end
-
-function TradeskillInfo:AddReagentsToTooltip(tooltip, id)
-	if self:ShowingTrainerReagents() then
-		local components = self:GetCombineComponents(id);
-		if components then
-			local clr = self.db.profile.ColorTrainerReagents;
-			local Ltext, Rtext;
-			local text
-			for _,c in ipairs(components) do
-				if not c.quality then c.quality = 1 end
-				local _, _, _, hexColor = GetItemQualityColor(c.quality);
-				Rtext = c.num.."*"..hexColor..c.name.."|r";
-				if not text then
-					Ltext = L["Reagents"];
-					text = Rtext;
-				else
-					Ltext = " ";
-					text = text..", "..Rtext;
-				end
-				if tooltip then
-					tooltip:AddDoubleLine(Ltext, Rtext, clr.r, clr.g, clr.b, clr.r, clr.g, clr.b/1.2);
-				end
-			end
-		end
-		components = nil;
 	end
 end
 
@@ -1939,10 +1908,6 @@ end
 
 function TradeskillInfo:ShowingTooltipAvailableTo(kind)
 	return kind and self.db.profile.TooltipAvailableTo[kind];
-end
-
-function TradeskillInfo:ShowingTrainerReagents()
-	return self.db.profile.TrainerReagents;
 end
 
 function TradeskillInfo:ShowingTooltipUsableBy()
