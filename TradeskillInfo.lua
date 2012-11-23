@@ -216,8 +216,8 @@ function TradeskillInfo:OnEnable()
 		self.db.profile.TooltipAvailableTo = self.db.defaults.profile.TooltipAvailableTo
 	end
 
-	LibStub("AceConfig-3.0"):RegisterOptionsTable("TradeSkillInfo", TradeskillInfo.CreateConfig)
-	self.OptionsPanel = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("TradeSkillInfo", "TradeSkill Info")
+	LibStub("AceConfig-3.0"):RegisterOptionsTable("TradeskillInfo", TradeskillInfo.CreateConfig)
+	self.OptionsPanel = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("TradeskillInfo", "Tradeskill Info")
 
 	self:ScheduleTimer("OnSkillUpdate",1);
 end
