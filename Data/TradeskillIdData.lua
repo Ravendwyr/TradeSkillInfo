@@ -1,4 +1,3 @@
--- $Revision: 438 $
 --[[
 TODO: (Updated 10/25/2007
 

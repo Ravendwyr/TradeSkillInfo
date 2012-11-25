@@ -1,10 +1,9 @@
-﻿
+
 local _
 
 TradeskillInfo = LibStub("AceAddon-3.0"):NewAddon("TradeskillInfo", "AceConsole-3.0", "AceEvent-3.0", "AceHook-3.0", "LibShefkiTimer-1.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("TradeskillInfo")
 TradeskillInfo.version = GetAddOnMetadata("TradeskillInfo", "Version")
-TradeskillInfo.date = string.sub("$Date$", 8, 17);
 
 BINDING_HEADER_TRADESKILLINFO = "Tradeskill Info";
 BINDING_NAME_TOGGLE_TRADESKILLINFO = "Toggle Tradeskill Info Window";

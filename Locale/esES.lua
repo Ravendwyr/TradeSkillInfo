@@ -1,4 +1,4 @@
-﻿local L = LibStub("AceLocale-3.0"):NewLocale("TradeskillInfo", "esES", false)
+local L = LibStub("AceLocale-3.0"):NewLocale("TradeskillInfo", "esES", false)
 if not L then return end
 
 -- The translations I pinched from Babble-Tradeskill-2.2
