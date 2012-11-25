@@ -1,11 +1,12 @@
-Tradeskill Info
+TradeSkill Info
 ===============
 
 
 What it does
 ------------
 
-Tradeskill Info is an addon that gives you all the information that you need about tradeskills, including the ones that your character cannot craft.
+TradeSkill Info is an addon that gives you all the information that you need about tradeskills, including the ones that your character cannot craft.
+
 
 It can add the following information to the tooltip of an item:
 
@@ -29,12 +30,12 @@ In the tradeskill craft window it will show:
     For example, "40/60/80/120" means the recipe is learnable at skill level 40, will turn yellow at 60, green at 80 and grey at 120.
 
 
-Tradeskill Info also has it's own UI. It is opened with "/tsi" or by binding a key to it in the keybindings menu.
+TradeSkill Info also has it's own UI. It is opened with "/tsi" or by binding a key to it in the keybindings menu.
 
 * QuickSearch an item in the inventory will open the UI and show all recipes that use that item.
     QuickSearch key-mouse combination is configurable.  The default setting is shift-rightclick.
 
-* Right-clicking a reagent icon in the Tradeskill Info UI with the AuctionFrame open will do a search for that reagent in the auction house.
+* Right-clicking a reagent icon in the TradeSkill Info UI with the AuctionFrame open will do a search for that reagent in the auction house.
 
 * Shift-clicking on the recipe name in the list will paste the recipe link into an open chat editbox.
 
@@ -70,14 +71,14 @@ For items not yet cached by your WoW client, the icon will appear as a red "?" a
 What it does not do
 -------------------
 
-Tradeskill Info is only a browsing tool.  It does not assist you in crafting items, but there are a great selection of other addons that provide this functionality.
+TradeSkill Info is only a browsing tool.  It will not assist you in crafting items, but there are a great selection of other addons that provide this functionality.
 
 
 Known issues
 ------------
 
-* The built-in database is mostly up-to-date, but a small of the recipes will show incorrect item recipes (for example, showing Autumn's Glow as a reagent for Brilliant Scarlet Ruby).
-* Some jewelcrafting recipes show up more than once.  This is due to how Blizzard "recycled" the profession spells.
+* The built-in database is mostly up-to-date, but some of the recipes will show incorrect ingredients (for example, showing Autumn's Glow as a reagent for Brilliant Scarlet Ruby).
+* A couple of jewelcrafting and inscription recipes may appear more than once.  This is due to how Blizzard "recycled" the crafting spells.
 * Enchanting scrolls have not been added yet.
 
 
@@ -107,8 +108,14 @@ If you have any comments, bug reports or feature requests, please leave a commen
 About the Author
 ----------------
 
-This addon was lovingly created by Ethan Centaurai, who currently lives in Manningree in south-east England.
+This addon is being lovingly maintained by Ethan Centaurai, who currently lives in Manningree in south-east England.
 
 * Visit my [blog](http://www.noblewolf.net/).
 * Follow me on [Twitter](http://twitter.com/StevenBlanchard).
 * Star me on [GitHub](https://github.com/EthanCentaurai).
+
+
+Credits
+-------
+
+TradeSkill Info has been written and maintained by several authors over the years, including Dys, wmrojer and evenue.
