@@ -1998,28 +1998,3 @@ function TradeskillInfo:PopulateProfessionNames()
 		defaultNames = nil
 	end
 end
-
---[[ Databroker Stuff --]]
-
-local ldb = LibStub:GetLibrary("LibDataBroker-1.1", true)
-if ldb then
-	ldb:NewDataObject("TradeSkillInfo", {
-		type = "launcher",
-		label = "TSI",
-		icon = "Interface\\Icons\\INV_Elemental_Mote_Nether",
-		OnClick = function(frame, button)
-			if button == "LeftButton" then
-				TradeskillInfo:UI_Toggle()
-			elseif button == "RightButton" then
-				TradeskillInfo:ConfigToggle()
-			end
-		end,
-		OnTooltipShow = function(tooltip)
-			tooltip:AddLine("|cffe0e0e0TradeskillInfo " .. TradeskillInfo.version .. "|r")
-			if (select(4, GetAddOnInfo("TradeskillInfoUI"))) then
-				tooltip:AddLine("|cff30e030" .. L["Left Click"] .. "|r: " .. L["Open main window"])
-				tooltip:AddLine("|cff30e030" .. L["Right Click"] .. "|r: " .. L["Open configuration window"])
-			end
-		end,
-	})
-end

@@ -43,6 +43,7 @@ Locale\zhTW.lua
 Locale\frFR.lua
 
 TradeskillInfo.lua
+DataBroker.lua
 
 Data\TradeskillData.lua
 Data\TradeskillIdData.lua
