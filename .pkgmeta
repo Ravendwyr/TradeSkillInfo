@@ -21,4 +21,4 @@ externals:
 	Libs/tekKonfig: git://git.wowace.com/wow/tekkonfig/mainline.git
 
 move-folders:
-	TradeSkillInfo/TradeSkillInfoUI: TradeSkillInfoUI
+	TradeSkillInfo/TradeskillInfoUI: TradeSkillInfoUI
