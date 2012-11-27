@@ -1,15 +1,14 @@
-## Interface: 50001
+## Interface: 50100
 ## Title: TradeSkillInfo UI
 ## Notes: Complete tradeskill information UI.
 ## Notes-zhCN: 商业技能资料库设置窗口
 ## Notes-zhTW: 商業技能資料庫設置窗口
 ## Notes-esES: UI con Info Completa de las Habilidades de Comercio
 ## Notes-koKR: 전문기술 정보 UI
-## Author: Ethan Centaurai, Dys
+## Author: Ethan Centaurai
 ## Version: @project-version@
 ## Dependencies: TradeskillInfo
 ## LoadOnDemand: 1
-## X-Credits: wmrojer, Evenue, Fieroivan, Viruscamp
 ## X-Category: Professions
 
 TradeskillInfoUI.lua

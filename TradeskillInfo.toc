@@ -1,17 +1,17 @@
-## Interface: 50001
+## Interface: 50100
 ## Title: TradeSkillInfo
 ## Notes: Complete tradeskill information.
 ## Notes-zhTW: 完整的商業技能百科
 ## Notes-zhCN: 完整的商业技能百科
 ## Notes-esES: Informarcion Completa de las Habilidades de Comercio
 ## Notes-koKR: 전문기술 정보의 모든 것!
-## Author: Ethan Centaurai, Dys
+## Author: Ethan Centaurai
 ## Version: @project-version@
 ## OptionalDeps: LibStub, CallbackHandler-1.0, Ace3, LibAbacus-3.0, LibBabble-Zone-3.0, LibBabble-Faction-3.0, LibShefkiTimer-1.0, Auc-Advanced
-## SavedVariables: TradeskillInfoDB, TradeskillInfoUIDB
+## SavedVariables: TradeSkillInfoDB, TradeskillInfoDB, TradeskillInfoUIDB
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Always: delayed
-## X-Credits: wmrojer, Evenue, Fieroivan, Viruscamp
+## X-Credits: Dys, wmrojer, Evenue, Fieroivan, Viruscamp, CMTitan
 ## X-Category: Professions
 
 #@no-lib-strip@
