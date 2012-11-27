@@ -7,7 +7,7 @@ if LDB then
 
 	Broker.type = "launcher"
 	Broker.text = "TradeSkill Info"
-	Broker.icon = "Interface\\Icons\\INV_Elemental_Mote_Nether"
+	Broker.icon = "Interface\\Icons\\INV_Elemental_SpiritOfHarmony_2"
 
 	Broker.OnClick = function(frame, button)
 		if button == "LeftButton" then

@@ -9,6 +9,7 @@
 ## Version: @project-version@
 ## Dependencies: TradeskillInfo
 ## LoadOnDemand: 1
+## X-Icon: Interface\Icons\INV_Elemental_SpiritOfHarmony_2
 ## X-Category: Professions
 
 TradeskillInfoUI.lua
