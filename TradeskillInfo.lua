@@ -220,7 +220,7 @@ function TradeskillInfo:OnEnable()
 	end
 
 	LibStub("AceConfig-3.0"):RegisterOptionsTable("TradeSkillInfo", TradeskillInfo.CreateConfig)
-	LibStub("AceConfigDialog-3.0"):AddToBlizOptions("TradeSkillInfo", "TradeSkill Info")
+	self.OptionsPanel = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("TradeSkillInfo", "TradeSkill Info")
 
 	local AboutPanel = LibStub("tekKonfig-AboutPanel", true)
 	if AboutPanel then AboutPanel.new("TradeSkill Info", "TradeSkillInfo") end
