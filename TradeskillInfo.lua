@@ -191,34 +191,41 @@ end
 
 function TradeskillInfo:OnEnable()
 	self:PopulateProfessionNames()
-	self:InitPlayer();
-	self:HookTradeSkillUI();
-	self:SecureHook("ContainerFrameItemButton_OnModifiedClick");
-	self:SecureHook("BankFrameItemButtonGeneric_OnModifiedClick");
-	self:SecureHook("MerchantItemButton_OnModifiedClick");
-	self:SecureHook("ChatFrame_OnHyperlinkShow");
-	self:HookAuctionUI();
-	self:RegisterEvent("TRADE_SKILL_SHOW", "OnTradeShow");
-	self:RegisterEvent("SKILL_LINES_CHANGED", "OnSkillUpdate");
-	self:RegisterEvent("ADDON_LOADED", "OnAddonLoaded");
-	self:HookTooltips();
+	self:InitPlayer()
+	self:HookTradeSkillUI()
+	self:SecureHook("ContainerFrameItemButton_OnModifiedClick")
+	self:SecureHook("BankFrameItemButtonGeneric_OnModifiedClick")
+	self:SecureHook("MerchantItemButton_OnModifiedClick")
+	self:SecureHook("ChatFrame_OnHyperlinkShow")
+	self:HookAuctionUI()
+	self:RegisterEvent("TRADE_SKILL_SHOW", "OnTradeShow")
+	self:RegisterEvent("SKILL_LINES_CHANGED", "OnSkillUpdate")
+	self:RegisterEvent("ADDON_LOADED", "OnAddonLoaded")
+	self:HookTooltips()
+
 	-- Get rid of legacy difficulty data
 	self.db.global.difficulty = nil
+
 	-- Migrate the TooltipKnownBy, etc fields
 	if type(self.db.profile.TooltipKnownBy) ~= "table" then
 		self.db.profile.TooltipKnownBy = self.db.defaults.profile.TooltipKnownBy
 	end
+
 	if type(self.db.profile.TooltipLearnableBy) ~= "table" then
 		self.db.profile.TooltipLearnableBy = self.db.defaults.profile.TooltipLearnableBy
 	end
+
 	if type(self.db.profile.TooltipAvailableTo) ~= "table" then
 		self.db.profile.TooltipAvailableTo = self.db.defaults.profile.TooltipAvailableTo
 	end
 
-	LibStub("AceConfig-3.0"):RegisterOptionsTable("TradeskillInfo", TradeskillInfo.CreateConfig)
-	self.OptionsPanel = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("TradeskillInfo", "Tradeskill Info")
+	LibStub("AceConfig-3.0"):RegisterOptionsTable("TradeSkillInfo", TradeskillInfo.CreateConfig)
+	LibStub("AceConfigDialog-3.0"):AddToBlizOptions("TradeSkillInfo", "TradeSkill Info")
 
-	self:ScheduleTimer("OnSkillUpdate",1);
+	local AboutPanel = LibStub("tekKonfig-AboutPanel", true)
+	if AboutPanel then AboutPanel.new("TradeSkill Info", "TradeSkillInfo") end
+
+	self:ScheduleTimer("OnSkillUpdate", 1)
 end
 
 

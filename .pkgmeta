@@ -18,6 +18,7 @@ externals:
 	Libs/LibBabble-Zone-3.0: svn://svn.wowace.com/wow/libbabble-zone-3-0/mainline/trunk
 	Libs/LibBabble-Faction-3.0: svn://svn.wowace.com/wow/libbabble-faction-3-0/mainline/trunk
 	Libs/LibShefkiTimer-1.0: git://git.wowace.com/wow/libshefkitimer-1-0/mainline.git
+	Libs/tekKonfig: git://git.wowace.com/wow/tekkonfig/mainline.git
 
 move-folders:
 	TradeSkillInfo/TradeSkillInfoUI: TradeSkillInfoUI

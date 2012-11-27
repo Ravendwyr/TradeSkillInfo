@@ -447,7 +447,7 @@ function TradeskillInfo:CreateConfig()
 	end
 
 	local options = {
-		name = "Tradeskill Info",
+		name = "TradeSkill Info",
 		type = "group",
 		childGroups = "tab",
 		args = {

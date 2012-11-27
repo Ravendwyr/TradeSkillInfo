@@ -1,5 +1,5 @@
 ## Interface: 50001
-## Title: TradeSkill Info
+## Title: TradeSkillInfo
 ## Notes: Complete tradeskill information.
 ## Notes-zhTW: 完整的商業技能百科
 ## Notes-zhCN: 完整的商业技能百科
@@ -7,7 +7,7 @@
 ## Notes-koKR: 전문기술 정보의 모든 것!
 ## Author: Ethan Centaurai, Dys
 ## Version: @project-version@
-## OptionalDeps: LibStub, CallbackHandler-1.0, Ace3, LibAbacus-3.0, LibBabble-Zone-3.0, LibBabble-Faction-3.0, LibDataBroker-1.1, LibShefkiTimer-1.0, Auc-Advanced
+## OptionalDeps: LibStub, CallbackHandler-1.0, Ace3, LibAbacus-3.0, LibBabble-Zone-3.0, LibBabble-Faction-3.0, LibShefkiTimer-1.0, Auc-Advanced
 ## SavedVariables: TradeskillInfoDB, TradeskillInfoUIDB
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Always: delayed
@@ -26,11 +26,12 @@ Libs\AceGUI-3.0\AceGUI-3.0.xml
 Libs\AceLocale-3.0\AceLocale-3.0.lua
 Libs\AceConsole-3.0\AceConsole-3.0.lua
 Libs\AceConfig-3.0\AceConfig-3.0.xml
+Libs\LibShefkiTimer-1.0\LibShefkiTimer-1.0.lua
 Libs\LibBabble-Faction-3.0\lib.xml
 Libs\LibBabble-Zone-3.0\lib.xml
 Libs\LibAbacus-3.0\LibAbacus-3.0.lua
 Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
-Libs\LibShefkiTimer-1.0\LibShefkiTimer-1.0.lua
+Libs\tekKonfig\tekKonfig-AboutPanel.lua
 #@end-no-lib-strip@
 
 Locale\enUS.lua
@@ -45,6 +46,7 @@ Locale\frFR.lua
 TradeskillInfo.lua
 DataBroker.lua
 
+Data\SpecialCases.lua
 Data\TradeskillData.lua
 Data\TradeskillIdData.lua
 
@@ -59,8 +61,6 @@ Data\Professions\Jewelcrafting.lua
 Data\Professions\Leatherworking.lua
 Data\Professions\Mining.lua
 Data\Professions\Tailoring.lua
-
-Data\SpecialCases.lua
 
 TradeskillInfoOptions.lua
 
