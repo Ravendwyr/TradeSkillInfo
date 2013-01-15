@@ -1,7 +1,7 @@
 
 local _
 
-TradeskillInfo = LibStub("AceAddon-3.0"):NewAddon("TradeskillInfo", "AceConsole-3.0", "AceEvent-3.0", "AceHook-3.0", "LibShefkiTimer-1.0")
+TradeskillInfo = LibStub("AceAddon-3.0"):NewAddon("TradeskillInfo", "AceConsole-3.0", "AceEvent-3.0", "AceHook-3.0", "AceTimer-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("TradeskillInfo")
 TradeskillInfo.version = GetAddOnMetadata("TradeskillInfo", "Version")
 
@@ -220,10 +220,10 @@ function TradeskillInfo:OnEnable()
 	end
 
 	LibStub("AceConfig-3.0"):RegisterOptionsTable("TradeSkillInfo", TradeskillInfo.CreateConfig)
-	self.OptionsPanel = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("TradeSkillInfo", "TradeSkill Info")
+	self.OptionsPanel = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("TradeSkillInfo", "TradeSkillInfo")
 
 	local AboutPanel = LibStub("tekKonfig-AboutPanel", true)
-	if AboutPanel then AboutPanel.new("TradeSkill Info", "TradeSkillInfo") end
+	if AboutPanel then AboutPanel.new("TradeSkillInfo", "TradeSkillInfo") end
 
 	self:ScheduleTimer("OnSkillUpdate", 1)
 end

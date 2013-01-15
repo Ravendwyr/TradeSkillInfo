@@ -7,7 +7,7 @@
 ## Notes-koKR: 전문기술 정보의 모든 것!
 ## Author: Ethan Centaurai
 ## Version: @project-version@
-## OptionalDeps: LibStub, CallbackHandler-1.0, Ace3, LibAbacus-3.0, LibBabble-Zone-3.0, LibBabble-Faction-3.0, LibShefkiTimer-1.0, Auc-Advanced
+## OptionalDeps: LibStub, CallbackHandler-1.0, Ace3, LibAbacus-3.0, LibBabble-Zone-3.0, LibBabble-Faction-3.0, Auc-Advanced
 ## SavedVariables: TradeSkillInfoDB, TradeskillInfoDB, TradeskillInfoUIDB
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Always: delayed
@@ -27,7 +27,7 @@ Libs\AceGUI-3.0\AceGUI-3.0.xml
 Libs\AceLocale-3.0\AceLocale-3.0.lua
 Libs\AceConsole-3.0\AceConsole-3.0.lua
 Libs\AceConfig-3.0\AceConfig-3.0.xml
-Libs\LibShefkiTimer-1.0\LibShefkiTimer-1.0.lua
+Libs\AceTimer-3.0\AceTimer-3.0.lua
 Libs\LibBabble-Faction-3.0\lib.xml
 Libs\LibBabble-Zone-3.0\lib.xml
 Libs\LibAbacus-3.0\LibAbacus-3.0.lua
