@@ -426,6 +426,7 @@ end
 
 function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 	local skillName, currentSkillLvl = GetTradeSkillLine()
+	local newDataFound = false
 
 	if skillName ~= "UNKNOWN" then
 		local numSkills = GetNumTradeSkills()
@@ -446,23 +447,21 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 				CollapseTradeSkillSubClass(i)
 
 			elseif (itemType ~= "header" and itemType ~= "subheader") and GetTradeSkillLine() == skillName then
-				local link = GetTradeSkillItemLink(i)
-				local id = getIdFromLink(link)
-
-				link = GetTradeSkillRecipeLink(i)
-
+				local link = GetTradeSkillRecipeLink(i)
 				local spellId = getIdFromLink(link)
-				local diff = self.vars.difficultyLevel[itemType]
+				local id = self:MakeSpecialCase(getIdFromLink(GetTradeSkillItemLink(i)), spellId)
 
-				id = self:MakeSpecialCase(id, spellId)
+				self.db.realm.userdata[self.vars.playername].knownRecipes[id] = self.vars.difficultyLevel[itemType]
 
-				if id then
-					self.db.realm.userdata[self.vars.playername].knownRecipes[id] = diff
-				else
-					self:Print("UpdateKnownTradeRecipes startLine=%d endLine%d line=%d name=%s type=%s link=%s", startLine, endLine, i, itemName, itemType, link)
-					return
+				if not self.vars.combines[id] then
+					newDataFound = true
+					self:Print("New Data Found for "..CURRENT_TRADESKILL..": "..id)
 				end
 			end
+		end
+
+		if newDataFound then
+			self:Print("Please attach the above information to a support ticket at\nhttp://www.wowace.com/addons/tradeskill-info/tickets/")
 		end
 	end
 end
