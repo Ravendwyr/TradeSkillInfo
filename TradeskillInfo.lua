@@ -171,24 +171,14 @@ function TradeskillInfo:OnInitialize()
 	self:BuildWhereUsed()
 end
 
-function TradeskillInfo:InitPlayer()
-	if not self.vars.playername then
-		self.vars.playername = UnitName("player");
-		if not self.db.realm.userdata[self.vars.playername] then
-			self.db.realm.userdata[self.vars.playername] = {};
-		end
-		if not self.db.realm.userdata[self.vars.playername].knownRecipes then
-			self.db.realm.userdata[self.vars.playername].knownRecipes = {};
-		end
-		if not self.db.realm.userdata[self.vars.playername].skills then
-			self.db.realm.userdata[self.vars.playername].skills = {};
-		end
-	end
-end
-
 function TradeskillInfo:OnEnable()
+	self.vars.playername = UnitName("player")
+
+	if not self.db.realm.userdata[self.vars.playername] then
+		self.db.realm.userdata[self.vars.playername] = { knownRecipes = {}, skills = {} }
+	end
+
 	self:PopulateProfessionNames()
-	self:InitPlayer()
 
 	self:HookTradeSkillUI()
 	self:SecureHook("ContainerFrameItemButton_OnModifiedClick")
