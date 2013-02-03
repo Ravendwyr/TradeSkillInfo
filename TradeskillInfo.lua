@@ -398,6 +398,7 @@ function TradeskillInfo:GetSpecialCase(id,itemName)
 	return tonumber(id),itemName;
 end
 
+local warnedThisSession = {}
 function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 	local skillName, currentSkillLvl = GetTradeSkillLine()
 
@@ -435,9 +436,11 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 			end
 		end
 
-		if newDataFound then
+		if newDataFound and not warnedThisSession[CURRENT_TRADESKILL] then
 			self:Print("New data found for "..CURRENT_TRADESKILL..": "..newData)
 			self:Print("Please attach the above information to a support ticket at http://www.wowace.com/addons/tradeskill-info/tickets/")
+
+			warnedThisSession[CURRENT_TRADESKILL] = true
 		end
 	end
 end
