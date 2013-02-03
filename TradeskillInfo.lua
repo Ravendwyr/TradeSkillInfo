@@ -400,9 +400,10 @@ end
 
 function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 	local skillName, currentSkillLvl = GetTradeSkillLine()
-	local newDataFound = false
 
 	if skillName ~= "UNKNOWN" then
+		local newData = ""
+		local newDataFound = false
 		local numSkills = GetNumTradeSkills()
 
 		if not startLine then
@@ -428,14 +429,15 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 				self.db.realm.userdata[self.vars.playername].knownRecipes[id] = self.vars.difficultyLevel[itemType]
 
 				if not self.vars.combines[id] then
+					newData = newData..id..", "
 					newDataFound = true
-					self:Print("New Data Found for "..CURRENT_TRADESKILL..": "..id)
 				end
 			end
 		end
 
 		if newDataFound then
-			self:Print("Please attach the above information to a support ticket at\nhttp://www.wowace.com/addons/tradeskill-info/tickets/")
+			self:Print("New data found for "..CURRENT_TRADESKILL..": "..newData)
+			self:Print("Please attach the above information to a support ticket at http://www.wowace.com/addons/tradeskill-info/tickets/")
 		end
 	end
 end
