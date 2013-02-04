@@ -402,48 +402,44 @@ local warnedThisSession = {}
 function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 	if CURRENT_TRADESKILL == "Runeforging" then return end
 
-	local skillName, currentSkillLvl = GetTradeSkillLine()
+	local newData = ""
+	local newDataFound = false
+	local numSkills = GetNumTradeSkills()
 
-	if skillName ~= "UNKNOWN" then
-		local newData = ""
-		local newDataFound = false
-		local numSkills = GetNumTradeSkills()
+	if not startLine then
+		startLine = 1
+		endLine = numSkills
+	end
 
-		if not startLine then
-			startLine = 1
-			endLine = numSkills
-		end
+	local i
 
-		local i
+	for i = startLine, endLine do
+		local itemName, itemType, _, isExpanded = GetTradeSkillInfo(i)
 
-		for i = startLine, endLine do
-			local itemName, itemType, _, isExpanded = GetTradeSkillInfo(i)
+		if (itemType == "header" or itemType == "subheader") and not isExpanded then
+			ExpandTradeSkillSubClass(i)
+			self:UpdateKnownTradeRecipes(i + 1, i + GetNumTradeSkills() - numSkills)
+			CollapseTradeSkillSubClass(i)
 
-			if (itemType == "header" or itemType == "subheader") and not isExpanded then
-				ExpandTradeSkillSubClass(i)
-				self:UpdateKnownTradeRecipes(i + 1, i + GetNumTradeSkills() - numSkills)
-				CollapseTradeSkillSubClass(i)
+		elseif (itemType ~= "header" and itemType ~= "subheader") then
+			local link = GetTradeSkillRecipeLink(i)
+			local spellId = getIdFromLink(link)
+			local id = self:MakeSpecialCase(getIdFromLink(GetTradeSkillItemLink(i)), spellId)
 
-			elseif (itemType ~= "header" and itemType ~= "subheader") and GetTradeSkillLine() == skillName then
-				local link = GetTradeSkillRecipeLink(i)
-				local spellId = getIdFromLink(link)
-				local id = self:MakeSpecialCase(getIdFromLink(GetTradeSkillItemLink(i)), spellId)
+			self.db.realm.userdata[self.vars.playername].knownRecipes[id] = self.vars.difficultyLevel[itemType]
 
-				self.db.realm.userdata[self.vars.playername].knownRecipes[id] = self.vars.difficultyLevel[itemType]
-
-				if not self.vars.combines[id] then
-					newData = newData..id..", "
-					newDataFound = true
-				end
+			if not self.vars.combines[id] then
+				newData = newData..id..", "
+				newDataFound = true
 			end
 		end
+	end
 
-		if newDataFound and not warnedThisSession[CURRENT_TRADESKILL] then
-			self:Print("New data found for "..CURRENT_TRADESKILL..": "..newData)
-			self:Print("Please attach the above information to a support ticket at http://www.wowace.com/addons/tradeskill-info/tickets/")
+	if newDataFound and not warnedThisSession[CURRENT_TRADESKILL] then
+		self:Print("New data found for "..CURRENT_TRADESKILL..": "..newData)
+		self:Print("Please attach the above information to a support ticket at http://www.wowace.com/addons/tradeskill-info/tickets/")
 
-			warnedThisSession[CURRENT_TRADESKILL] = true
-		end
+		warnedThisSession[CURRENT_TRADESKILL] = true
 	end
 end
 
