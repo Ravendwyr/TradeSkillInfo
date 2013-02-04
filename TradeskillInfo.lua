@@ -400,6 +400,8 @@ end
 
 local warnedThisSession = {}
 function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
+	if CURRENT_TRADESKILL == "Runeforging" then return end
+
 	local skillName, currentSkillLvl = GetTradeSkillLine()
 
 	if skillName ~= "UNKNOWN" then
