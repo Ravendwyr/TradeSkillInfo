@@ -403,7 +403,6 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 	if CURRENT_TRADESKILL == "Runeforging" then return end
 
 	local newData = ""
-	local newDataFound = false
 	local numSkills = GetNumTradeSkills()
 
 	if not startLine then
@@ -430,12 +429,11 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 
 			if not self.vars.combines[id] then
 				newData = newData..id..", "
-				newDataFound = true
 			end
 		end
 	end
 
-	if newDataFound and not warnedThisSession[CURRENT_TRADESKILL] then
+	if newData ~= "" and not warnedThisSession[CURRENT_TRADESKILL] then
 		self:Print("New data found for "..CURRENT_TRADESKILL..": "..newData)
 		self:Print("Please attach the above information to a support ticket at http://www.wowace.com/addons/tradeskill-info/tickets/")
 
