@@ -1099,10 +1099,12 @@ end
 
 function TradeskillInfoUI:Search()
 	local oldSelection = self.vars.searchResult[self.vars.selectionIndex];
-	local searchText = string.lower(TradeskillInfoInputBox:GetText());
 	local foundSkills = {};
 	local searchArea = {};
 	self.vars.searchResult = {};
+
+	local searchText = TradeskillInfoInputBox:GetText()
+	searchText = searchText:lower():trim()
 
 	local _,_,searchItem = string.find(searchText,"^id=([-]?%d+)")
 	if searchItem and searchItem ~= "" then
