@@ -33,6 +33,7 @@ TradeskillInfo.vars.specialcases = {
 	[72986]	= "47,48",				-- Heavy Windwool Bandage
 	[72095]	= "49,50",				-- Smelt Trillium
 	[74247]	= "51,52",				-- Ethereal Shard
+	[76132] = "53,54",				-- Primal Diamond
 	[72104]	= "59,60",				-- Living Steel
 	[74250]	= "61,62",				-- Mysterious Essence
 }
