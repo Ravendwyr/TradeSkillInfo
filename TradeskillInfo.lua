@@ -445,6 +445,8 @@ end
 -- TradeSkillFrame Hook to display recipe skill level and cost/profit
 ----------------------------------------------------------------------
 function TradeskillInfo:TradeSkillFrame_SetSelection(id)
+	if not IsTradeSkillReady() then return end
+
 	local skillName, skillType, numAvailable, isExpanded = GetTradeSkillInfo(id)
 	if not skillName then return end
 
