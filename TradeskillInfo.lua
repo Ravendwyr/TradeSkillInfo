@@ -20,13 +20,18 @@ TradeskillInfo.libs = {}
 TradeskillInfo.libs.Abacus = LibStub("LibAbacus-3.0")
 
 local function getIdFromLink(link)
-  if not link then return end
---  local _,_,id,name = strfind(link,"|Hitem:(%d+):.+%[(.+)%]")
-  local _,_,id = strfind(link,"item:(%d+):")
-  if not id then
---  	local _,_,id,name = strfind(link,"|Henchant:(%d+)|h%[(.+)%]")
-  	local _,_,id = strfind(link,"enchant:(%d+)")
-  	if id then return -tonumber(id) end
+	if not link then return end
+
+-- 	local _, _, id,name = strfind(link, "|Hitem:(%d+):.+%[(.+)%]")
+	local _, _, id = strfind(link, "item:(%d+):")
+
+	if not id then
+--  	local _, _, id, name = strfind(link, "|Henchant:(%d+)|h%[(.+)%]")
+		local _, _, id = strfind(link, "enchant:(%d+)")
+
+		if id then
+			return -tonumber(id)
+		end
 	else
 		return tonumber(id)
 	end
@@ -34,29 +39,33 @@ end
 
 local function getNameFromLink(link)
 	if not link then return end
-  local _,_,name = strfind(link,"|Hitem:.+%[(.+)%]")
+
+	local _, _, name = strfind(link, "|Hitem:.+%[(.+)%]")
 	return name
 end
 
-local function getItemLink(id,combineName)
+local function getItemLink(id, combineName)
 	if id > 0 then
-		local itemName,itemLink,itemQuality,itemTexture
-		itemName,itemLink,itemQuality,_,_,_,_,_,_,itemTexture = GetItemInfo(id);
+		local itemName, itemLink, itemQuality, _, _, _, _, _, _, itemTexture = GetItemInfo(id)
+
 		if itemLink then
-			local _, _, _, hexColor = GetItemQualityColor(itemQuality);
-			return itemLink, itemQuality, "item:"..id..":0:0:0:0:0:0:0", itemTexture;
+			local _, _, _, hexColor = GetItemQualityColor(itemQuality)
+			return itemLink, itemQuality, "item:"..id..":0:0:0:0:0:0:0", itemTexture
 		else
-			local _, _, _, hexColor = GetItemQualityColor(1);
-			return nil, 1, "item:"..id..":0:0:0:0:0:0:0", "Interface\\Icons\\INV_Misc_QuestionMark.blp";
+			local _, _, _, hexColor = GetItemQualityColor(1)
+			return nil, 1, "item:"..id..":0:0:0:0:0:0:0", "Interface\\Icons\\INV_Misc_QuestionMark.blp"
 		end
 	else
 		local spellName, _, spellTexture = GetSpellInfo(-id)
+
 		if not spellTexture then
 			spellTexture = "Interface\\Icons\\Spell_Holy_GreaterHeal.blp"
 		end
+
 		if not spellName and combineName then
 			spellName = combineName
 		end
+
 		if spellName then
 			local _, _, _, hexColor = GetItemQualityColor(1);
 			return hexColor.."|Henchant:"..-id.."|h["..spellName.."]|h|r", 1, "enchant:"..-id, spellTexture
