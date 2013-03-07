@@ -1550,21 +1550,25 @@ function TradeskillInfo:SetHyperlink(tooltip, link)
 end
 
 function TradeskillInfo:SetTradeSkillItem(tooltip, itemIndex, reagentIndex)
-	local link
+	local name, link
 	local id
+
 	if reagentIndex then
-		link = GetTradeSkillReagentItemLink(itemIndex, reagentIndex);
+		name, link = tooltip:GetItem()
 		id = getIdFromLink(link)
 	else
-		link = GetTradeSkillItemLink(itemIndex);
+		link = GetTradeSkillItemLink(itemIndex)
 		id = getIdFromLink(link)
-		if not self:CombineExists(itemId) then
+
+		if not self:CombineExists(id) then
 			local spellLink = GetTradeSkillRecipeLink(itemIndex)
 			local spellId = getIdFromLink(spellLink)
+
 			id = self:MakeSpecialCase(id, spellId)
 		end
 	end
-	self:AddToTooltip(tooltip, id);
+
+	self:AddToTooltip(tooltip, id)
 end
 
 function TradeskillInfo:SetMerchantItem(tooltip, index)
