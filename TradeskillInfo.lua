@@ -1621,10 +1621,11 @@ end
 
 function TradeskillInfo:AddSourceToTooltip(tooltip, id)
 	if self:ShowingTooltipSource() then
-		local source = self:GetComponentSource(id, tooltip);
+		self:GetComponentSource(id, tooltip)
 	end
+
 	if self:ShowingTooltipRecipeSource() or self:ShowingTooltipRecipePrice() then
-		_, source, price = self:GetRecipeSources(id, nil, tooltip, self:ShowingTooltipRecipeSource(), self:ShowingTooltipRecipePrice());
+		self:GetRecipeSources(id, nil, tooltip, self:ShowingTooltipRecipeSource(), self:ShowingTooltipRecipePrice())
 	end
 end
 
@@ -1678,8 +1679,7 @@ end
 function TradeskillInfo:AddStackToTooltip(tooltip, id)
 	if self:ShowingTooltipStack() then
 		if id then
-			local stack
-			_,_,_,_,_,_,_, stack = GetItemInfo(id);
+			local _,_,_,_,_,_,_, stack = GetItemInfo(id);
 			if stack and stack > 1 then
 				local c = self.db.profile.ColorStack;
 				tooltip:AddDoubleLine(L["Stack size"], tostring(stack), c.r, c.g, c.b, c.r, c.g, c.b);
