@@ -725,7 +725,7 @@ C[95370] = "139764|B347/376/376/376|72096:50"	-- Training Project: Ghost Iron Cr
 C[95483] = "140165|B376/421/421/421|72096:100"	-- Training Project: Ghost Iron Picks
 C[95484] = "140166|B421/456/456/456|72096:75"	-- Training Project: Ghost Iron Frames
 C[95485] = "140167|B456/486/486/486|72096:25"	-- Training Project: Ghost Iron Pans
-C[95486] = "140186|B486/500/500/500|72096:80"	-- Training Project: Ghost Iron Statue
+C[95486] = "140168|B486/500/500/500|72096:80"	-- Training Project: Ghost Iron Statue
 
 C[94111] = "138646|B500/605/610/615|72096:10|94552"	-- Lightning Steel Ingot
 
