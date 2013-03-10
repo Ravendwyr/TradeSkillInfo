@@ -200,7 +200,20 @@ function TradeskillInfo:OnEnable()
 	self:RegisterEvent("SKILL_LINES_CHANGED", "OnSkillUpdate")
 	self:RegisterEvent("ADDON_LOADED", "OnAddonLoaded")
 
-	self:HookTooltips()
+	for _, method in pairs({
+		"SetAuctionItem", "SetAuctionSellItem",
+		"SetExistingSocketGem", "SetSocketGem", "SetGlyph", "SetSpellByID",
+		"SetHyperlink", "SetAction",
+		"SetBagItem", "SetGuildBankItem", "SetInventoryItem",
+		"SetTradePlayerItem", "SetTradeSkillItem",
+		"SetLootItem", "SetLootRollItem",
+		"SetMerchantItem", "SetBuybackItem",
+		"SetSendMailItem", "SetInboxItem",
+	}) do
+		self:SecureHook(GameTooltip, method, "AddTooltipInfo")
+	end
+
+	self:SecureHook("SetItemRef")
 
 	LibStub("AceConfig-3.0"):RegisterOptionsTable("TradeSkillInfo", TradeskillInfo.CreateConfig)
 	self.OptionsPanel = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("TradeSkillInfo", "TradeSkillInfo")
@@ -1503,236 +1516,132 @@ end
 --  Tooltip Functions
 ----------------------------------------------------------------
 
-function TradeskillInfo:HookTooltips()
-	self:SecureHook(GameTooltip, "SetBagItem");
-	self:SecureHook(GameTooltip, "SetInventoryItem");
-	self:SecureHook(GameTooltip, "SetLootItem");
-	self:SecureHook(GameTooltip, "SetHyperlink");
-	self:SecureHook(GameTooltip, "SetTradeSkillItem");
-	self:SecureHook(GameTooltip, "SetMerchantItem");
-	self:SecureHook(GameTooltip, "SetAuctionItem");
-	self:SecureHook(GameTooltip, "SetTrainerService");
-	self:SecureHook(GameTooltip, "SetGuildBankItem");
-	self:SecureHook("SetItemRef");
+function TradeskillInfo:SetItemRef()
+	if not IsModifiedClick() then self:AddTooltipInfo(ItemRefTooltip) end
 end
 
---- Hooks for tooltips
 
-function TradeskillInfo:SetItemRef(link, text, button)
---	if IsControlKeyDown() or IsShiftKeyDown() then return end
-	if ( IsModifiedClick() ) then return end
-	local id = getIdFromLink(link);
-	if id then
-		self:AddToTooltip(ItemRefTooltip,id);
-	end
-end
+function TradeskillInfo:AddTooltipInfo(tooltip)
+	local _, link = tooltip:GetItem()
+	local _, _, id = tooltip:GetSpell()
 
-function TradeskillInfo:SetBagItem(tooltip, bag, slot)
-	local link = GetContainerItemLink(bag, slot);
-	local id = getIdFromLink(link);
-	self:AddToTooltip(tooltip, id);
-end
+	if link then -- it's an item!
+		id = tonumber( link:match("item:(%d+):") )
+	elseif id then -- it's a spell!
+		id = -id
+	else return end -- it's an empty bag slot!
 
-function TradeskillInfo:SetGuildBankItem(tooltip, tab, slot)
-	local link = GetGuildBankItemLink(tab, slot);
-	local id = getIdFromLink(link);
-	self:AddToTooltip(tooltip, id);
-end
-
-function TradeskillInfo:SetInventoryItem(tooltip, unit, slot, nameOnly)
-	if slot > 39 and slot < 68 then
-		local link = GetContainerItemLink(BANK_CONTAINER, slot-39)
-		local id = getIdFromLink(link);
-		self:AddToTooltip(tooltip, id);
-	end
-end
-
-function TradeskillInfo:SetLootItem(tooltip, index)
-	local link = GetLootSlotLink(index);
-	local id = getIdFromLink(link);
-	self:AddToTooltip(tooltip, id);
-end
-
-function TradeskillInfo:SetHyperlink(tooltip, link)
-	local id = getIdFromLink(link)
-	self:AddToTooltip(tooltip, id);
-end
-
-function TradeskillInfo:SetTradeSkillItem(tooltip, itemIndex, reagentIndex)
-	local name, link
-	local id
-
-	if reagentIndex then
-		name, link = tooltip:GetItem()
-		id = getIdFromLink(link)
-	else
-		link = GetTradeSkillItemLink(itemIndex)
-		id = getIdFromLink(link)
-
-		if not self:CombineExists(id) then
-			local spellLink = GetTradeSkillRecipeLink(itemIndex)
-			local spellId = getIdFromLink(spellLink)
-
-			id = self:MakeSpecialCase(id, spellId)
-		end
+	-- item used in
+	if self:ShowingTooltipUsedIn() then
+		self:GetUsedIn(id, tooltip)
 	end
 
-	self:AddToTooltip(tooltip, id)
-end
-
-function TradeskillInfo:SetMerchantItem(tooltip, index)
-	local link = GetMerchantItemLink(index);
-	local id = getIdFromLink(link);
-	self:AddToTooltip(tooltip, id);
-end
-
-function TradeskillInfo:SetAuctionItem(tooltip, type, index)
-	local link = GetAuctionItemLink(type, index);
-	local id = getIdFromLink(link);
-	self:AddToTooltip(tooltip, id);
-end
-
-function TradeskillInfo:SetTrainerService(tooltip, selectedService)
-	local _, _, category = GetTrainerServiceInfo(selectedService)
-	if category ~= "header" and category ~= "subheader" then
-		local link = GetTrainerServiceItemLink(selectedService)
-		if link then
-			local id = getIdFromLink(link)
-			if id then
-				self:AddToTooltip(tooltip, id);
-			end
-		end
+	-- item usable by
+	if self:ShowingTooltipUsableBy() then
+		self:GetItemUsableBy(id, tooltip)
 	end
-end
 
----- Processing of tooltips
-
-function TradeskillInfo:AddToTooltip(tooltip, id)
-	self:AddUsedInToTooltip(tooltip, id)
-	self:AddUsableByToTooltip(tooltip, id)
-	self:AddSourceToTooltip(tooltip, id)
-	self:AddRecipeKnownByToTooltip(tooltip, id)
-	self:AddIdToTooltip(tooltip, id)
-	self:AddStackToTooltip(tooltip, id)
-	self:AddMarketValueProfitToTooltip(tooltip, id)
-
-	tooltip:Show()
-end
-
-function TradeskillInfo:AddSourceToTooltip(tooltip, id)
+	-- item source
 	if self:ShowingTooltipSource() then
 		self:GetComponentSource(id, tooltip)
 	end
 
+	-- recipe source/price
 	if self:ShowingTooltipRecipeSource() or self:ShowingTooltipRecipePrice() then
 		self:GetRecipeSources(id, nil, tooltip, self:ShowingTooltipRecipeSource(), self:ShowingTooltipRecipePrice())
 	end
-end
 
-function TradeskillInfo:AddUsedInToTooltip(tooltip, id)
-	if self:ShowingTooltipUsedIn() then
-		local usedIn = self:GetUsedIn(id, tooltip);
-	end
-end
-
-function TradeskillInfo:AddUsableByToTooltip(tooltip, id)
-	if self:ShowingTooltipUsableBy() then
-		local usableBy = self:GetItemUsableBy(id, tooltip);
-	end
-end
-
-function TradeskillInfo:AddRecipeKnownByToTooltip(tooltip, id)
-	local itemId = self:GetRecipeItem(id);
+	-- recipe known by
+	local recipeId = self:GetRecipeItem(id)
 	local kind
-	if itemId then
-		kind = "R" -- Recipe
-		id = itemId
+
+	if recipeId then
+		kind = "R" -- it's a recipe
+--		id = recipeId
 	else
 		kind = self:GetCombineSkill(id)
+		recipeId = id
 	end
-	if id then
-		if self:ShowingTooltipKnownBy(kind) then
-			local knownBy = self:GetCombineKnownBy(id, tooltip)
-		end
-		if self:ShowingTooltipLearnableBy(kind) then
-			local learnableBy = self:GetCombineLearnableBy(id, tooltip)
-		end
-		if self:ShowingTooltipAvailableTo(kind) then
-			local availableTo = self:GetCombineAvailableTo(id, tooltip)
-		end
-	end
-end
 
-function TradeskillInfo:AddIdToTooltip(tooltip, id)
+	if self:ShowingTooltipKnownBy(kind) then
+		self:GetCombineKnownBy(recipeId, tooltip)
+	end
+
+	if self:ShowingTooltipLearnableBy(kind) then
+		self:GetCombineLearnableBy(recipeId, tooltip)
+	end
+
+	if self:ShowingTooltipAvailableTo(kind) then
+		self:GetCombineAvailableTo(recipeId, tooltip)
+	end
+
+	-- item/spell id
 	if self:ShowingTooltipID() then
-		local c = self.db.profile.ColorID;
-		if id then
-			if id > 0 then
-				tooltip:AddDoubleLine(L["ItemID"], tostring(id), c.r, c.g, c.b, c.r, c.g, c.b);
-			else
-				tooltip:AddDoubleLine(L["SpellID"], tostring(-id), c.r, c.g, c.b, c.r, c.g, c.b);
-			end
+		local c = self.db.profile.ColorID
+
+		if id > 0 then
+			tooltip:AddDoubleLine(L["ItemID"], tostring(id), c.r, c.g, c.b, c.r, c.g, c.b)
+		else
+			tooltip:AddDoubleLine(L["SpellID"], tostring(-id), c.r, c.g, c.b, c.r, c.g, c.b)
 		end
 	end
-end
 
-function TradeskillInfo:AddStackToTooltip(tooltip, id)
+	-- item stack size
 	if self:ShowingTooltipStack() then
-		if id then
-			local _,_,_,_,_,_,_, stack = GetItemInfo(id);
-			if stack and stack > 1 then
-				local c = self.db.profile.ColorStack;
-				tooltip:AddDoubleLine(L["Stack size"], tostring(stack), c.r, c.g, c.b, c.r, c.g, c.b);
-			end
+		local _, _, _, _, _, _, _, stack = GetItemInfo(id)
+
+		if stack and stack > 1 then
+			local c = self.db.profile.ColorStack
+			tooltip:AddDoubleLine(L["Stack size"], tostring(stack), c.r, c.g, c.b, c.r, c.g, c.b)
 		end
 	end
-end
 
-function TradeskillInfo:AddMarketValueProfitToTooltip(tooltip, id)
-	if TradeskillInfo:ShowingTooltipMarketValue() then
-		-- TODO: What are we going to do if there are more than one recipes producing item?
-		if id and self:CombineExists(id) then
-			local value,cost,profit = self:GetCombineAuctioneerCost(id)
+	-- market value
+	if self:ShowingTooltipMarketValue() then
+		-- TODO: what are we going to do if there are more than one recipes producing item?
+		if self:CombineExists(id) then
+			local value, cost, profit = self:GetCombineAuctioneerCost(id)
 			local yield = self:GetCombineYield(id)
-			local Rtext = string.format("%s - %s = %s",
-			                            self:GetMoneyString(value),
-			                            self:GetMoneyString(cost),
-			                            self:GetMoneyString(profit))
-			local c = self.db.profile.ColorMarketValue;
+			local Rtext = ("%s - %s = %s"):format( self:GetMoneyString(value), self:GetMoneyString(cost), self:GetMoneyString(profit) )
+			local c = self.db.profile.ColorMarketValue
 			local Ltext = L["Market Value"]
-			if (yield > 1) then
-				Ltext = Ltext .. " (x" .. yield .. ")"
+
+			if yield > 1 then
+				Ltext = Ltext .." (x" .. yield .. ")"
 			end
-			tooltip:AddDoubleLine(Ltext, Rtext, c.r, c.g, c.b, c.r, c.g, c.b)
+
+			tooltip:AddDoubleLine(L["Market Value"], Rtext, c.r, c.g, c.b, c.r, c.g, c.b)
+
 		elseif self.vars.specialcases[id] then
-			local Ltext, Rtext;
-			local text
-			local c = self.db.profile.ColorMarketValue;
+			local Ltext, Rtext
+			local addedText = false
+			local c = self.db.profile.ColorMarketValue
+
 			for i in gmatch(self.vars.specialcases[id], "(%d+)") do
-				local value,cost,profit = self:GetCombineAuctioneerCost(tonumber(i))
-				local Rtext = string.format("%s - %s = %s",
-				                            self:GetMoneyString(value),
-				                            self:GetMoneyString(cost),
-				                            self:GetMoneyString(profit))
-				if not text then
-					Ltext = L["Market Value"];
-					text = Rtext;
-				else
-					Ltext = " ";
-					text = text..", "..Rtext;
-				end
-				local Ltext = L["Market Value"]
+				local value, cost, profit = self:GetCombineAuctioneerCost(tonumber(i))
 				local yield = self:GetCombineYield(tonumber(i))
-				if (yield > 1) then
+
+				Rtext = ("%s - %s = %s"):format( self:GetMoneyString(value), self:GetMoneyString(cost), self:GetMoneyString(profit) )
+
+				if not addedText then
+					Ltext = L["Market Value"]
+					addedText = true
+				else
+					Ltext = " "
+				end
+
+				if yield > 1 then
 					Ltext = Ltext .. " (x" .. yield .. ")"
 				end
-				if tooltip then
-					tooltip:AddDoubleLine(Ltext, Rtext, c.r, c.g, c.b, c.r, c.g, c.b);
-				end
+
+				tooltip:AddDoubleLine(Ltext, Rtext, c.r, c.g, c.b, c.r, c.g, c.b)
 			end
 		end
 	end
+
+	tooltip:Show()
 end
+
 
 ----------------------------------------------------------------------
 -- UI Load and Toggle
