@@ -275,18 +275,18 @@ local tradeskillOptions = {
 }
 
 
-mouseSelect = {
+local mouseSelect = {
 	[1] = L["Left Button"],
 	[2] = L["Right Button"]
 }
 
-modSelect = {
+local modSelect = {
 	[1] = L["Shift"],
 	[2] = L["Control"],
 	[3] = L["Alt"]
 }
 
-strataSelect = {
+local strataSelect = {
 	[1] = L["LOW"],
 	[2] = L["MEDIUM"],
 	[3] = L["HIGH"]

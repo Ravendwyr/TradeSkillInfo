@@ -1715,7 +1715,6 @@ function TradeskillInfo:AuctionFrameBrowse_Update()
 		local button = _G["BrowseButton"..i]
 		if button:IsVisible() then
 			local iconTexture
-			local recipeLink
 			if button.Icon then  -- cached or from Auc-Advanced Compact-UI
 				iconTexture = button.Icon
 			else
