@@ -460,7 +460,7 @@ function TradeskillInfoUI:DoFrameSetSelection(id)
 		TradeskillInfoKnown:SetText("");
 		return;
 	end
-	local skillName, skillType, isExpanded = self:GetTradeSkillInfo(id);
+	local name, skillType, isExpanded = self:GetTradeSkillInfo(id);
 	TradeskillInfoHighlightFrame:Show();
 	if ( skillType == "header" ) then
 		TradeskillInfoHighlightFrame:Hide();
@@ -478,7 +478,7 @@ function TradeskillInfoUI:DoFrameSetSelection(id)
 		TradeskillInfoHighlight:SetVertexColor(color.r, color.g, color.b);
 	end
 
-	TradeskillInfoSkillName:SetText(skillName);
+	TradeskillInfoSkillName:SetText(name);
 	TradeskillInfoSkillName:Show();
 	local skillTexture,skillLink,skillItemString = self:GetTradeSkillIcon(id)
 	if not skillLink then
@@ -495,7 +495,7 @@ function TradeskillInfoUI:DoFrameSetSelection(id)
 	TradeskillInfoSkillIcon.tooltip = skillItemString;
 	TradeskillInfoSkillIcon.known = skillLink ~= nil;
 	TradeskillInfoSkillIcon.link = skillLink;
-	TradeskillInfoSkillIcon.name = skillName;
+	TradeskillInfoSkillIcon.name = name;
 	TradeskillInfoSkillIcon.id = id; --self.vars.searchResult[id];
 	TradeskillInfoSkillIcon:Show();
 
@@ -550,7 +550,6 @@ function TradeskillInfoUI:DoFrameSetSelection(id)
 	local extraData =self:GetTradeSkillExtraData(id)
 	if extraData then
 		TradeskillInfoExtraData:SetText(extraData)
-		local _, height = TradeskillInfoExtraData:GetFont()
 	else
 		TradeskillInfoExtraData:SetText("")
 	end
@@ -629,7 +628,7 @@ end
 ----------------------------------------------------------------------
 --- Click on vendor coordinates
 ----------------------------------------------------------------------
-function TradeskillInfoUI:RecipeSource_OnHyperlinkClick(frame, link)
+function TradeskillInfoUI:RecipeSource_OnHyperlinkClick(_, link)
 	local zone,x,y,note = link:match("^tsicoord:([^:]*):([^:]+):([^:]+):(.*)")
 	x=tonumber(x)
 	y=tonumber(y)
@@ -637,10 +636,9 @@ function TradeskillInfoUI:RecipeSource_OnHyperlinkClick(frame, link)
 		if zone ~= "" then
 			local c = GetCurrentMapContinent();
 			local z = GetCurrentMapZone();
-			local contKey, contVal, zoneKey, zoneVal;
 			local continentNames = { GetMapContinents() } ;
-			for contKey, contVal in pairs(continentNames) do
-				local zoneNames= { GetMapZones(contKey) };
+			for contKey, _ in pairs(continentNames) do
+				local zoneNames = { GetMapZones(contKey) };
 					for zoneKey, zoneVal in pairs(zoneNames) do
 						if zone == zoneVal then
 							c = contKey;
@@ -782,7 +780,7 @@ function TradeskillInfoUI.SortDropDown_Initialize()
 			name = L["Difficulty"],
 			initfunc = function(searchResult)
 				local skill, spec, level, subgrp
-				for i, v in ipairs(searchResult) do
+				for _, v in ipairs(searchResult) do
 					if type(v) == "string" then
 						skill, spec, level, subgrp = v,"",-1,0
 					else
@@ -832,7 +830,7 @@ function TradeskillInfoUI.SortDropDown_Initialize()
 			name = L["Name"],
 			initfunc = function(searchResult)
 				local skill, name, subgrp
-				for i, v in ipairs(searchResult) do
+				for _, v in ipairs(searchResult) do
 					if type(v) == "string" then
 						skill, name, subgrp = v, "", 0
 					else
@@ -868,7 +866,7 @@ function TradeskillInfoUI.SortDropDown_Initialize()
 					ac = sortInfoCache[a].name
 					bc = sortInfoCache[b].name
 				end
-				bn = sortInfoCache[b].name
+--			bn = sortInfoCache[b].name
 
 				if ac < bc then
 					return true
@@ -880,7 +878,7 @@ function TradeskillInfoUI.SortDropDown_Initialize()
 			name = L["Auction Profit"],
 			initfunc = function(searchResult)
 				local skill, profit, subgrp
-				for i, v in ipairs(searchResult) do
+				for _, v in ipairs(searchResult) do
 					if type(v) == "string" then
 						skill, profit, subgrp = v, -1, 0
 					else
@@ -928,7 +926,7 @@ function TradeskillInfoUI.SortDropDown_Initialize()
 			name = L["Vendor Profit"],
 			initfunc = function(searchResult)
 				local skill, profit, subgrp
-				for i, v in ipairs(searchResult) do
+				for _, v in ipairs(searchResult) do
 					if type(v) == "string" then
 						skill, profit, subgrp = v, -1, 0
 					else
@@ -1016,7 +1014,7 @@ function TradeskillInfoUI.AvailabilityDropDown_Initialize()
 		info.value = i;
 		info.checked = self.db.profile.availability[i];
 		info.keepShownOnClick = 1;
-		info.func = function(frame, self, val) self:AvailabilityDropDown_OnClick(val) end
+		info.func = function(_, self, val) self:AvailabilityDropDown_OnClick(val) end
 		info.arg1 = self;
 		info.arg2 = i;
 		UIDropDownMenu_AddButton(info);
@@ -1049,7 +1047,7 @@ function TradeskillInfoUI.TradeskillsDropDown_Initialize()
 		info.value = i;
 		info.checked = self.db.profile.tradeskills[i];
 		info.keepShownOnClick = 1;
-		info.func = function(frame, self, val) self:TradeskillsDropDown_OnClick(val) end
+		info.func = function(_, self, val) self:TradeskillsDropDown_OnClick(val) end
 		info.arg1 = self;
 		info.arg2 = i;
 		UIDropDownMenu_AddButton(info);
@@ -1068,7 +1066,7 @@ function TradeskillInfoUI:Search_OnClick()
 	self:SendMessage("TradeskillInfo_Update");
 end
 
-function TradeskillInfoUI:ToggleButton(frame, button)
+function TradeskillInfoUI:ToggleButton(frame)
 	local var = self.options.buttons[frame:GetName()].var
 	if self.db.profile[var] then
 		frame:UnlockHighlight();
@@ -1136,7 +1134,7 @@ function TradeskillInfoUI:Search()
 					if searchText ~= "" then
 						found = false;
 						if self.db.profile.SearchName then
-							skillName = TradeskillInfo:GetCombineName(i);
+							local skillName = TradeskillInfo:GetCombineName(i);
 							if string.find(string.lower(skillName), searchText) then
 								found = true;
 							end
@@ -1309,7 +1307,7 @@ function TradeskillInfoUI:IsSafeToShowTooltip(index)
 	local known = false;
 	if self.vars.searchResult[index] < 0 then
 		known = true;
-		for i,c in ipairs(self.vars.components) do
+		for _,c in ipairs(self.vars.components) do
 			if not c.link then
 				known = false;
 			end
@@ -1393,7 +1391,7 @@ function TradeskillInfoUI:PasteRecipie(id)
 
 	local numReagents = self:GetTradeSkillNumReagents(id);
 	for i=1, numReagents, 1 do
-		local reagentName, reagentTexture, reagentCount, reagentLink, reagentItemString = self:GetTradeSkillReagentInfo(i);
+		local reagentName, _, reagentCount = self:GetTradeSkillReagentInfo(i);
 		if i > 1 then
 			text = text .. ", ";
 		end
