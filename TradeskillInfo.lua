@@ -202,8 +202,8 @@ function TradeskillInfo:OnEnable()
 
 	for _, method in pairs({
 		"SetAuctionItem", "SetAuctionSellItem",
-		"SetExistingSocketGem", "SetSocketGem", "SetGlyph", "SetSpellByID",
-		"SetHyperlink", "SetAction",
+		"SetExistingSocketGem", "SetSocketGem", "SetSpellByID",
+		"SetHyperlink", "SetAction", "SetQuestLogSpecialItem",
 		"SetBagItem", "SetGuildBankItem", "SetInventoryItem",
 		"SetTradePlayerItem", "SetTradeSkillItem",
 		"SetLootItem", "SetLootRollItem",
