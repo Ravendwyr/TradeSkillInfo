@@ -37,6 +37,7 @@ TradeskillInfo.vars.specialcases = {
 	[72163] = "55,56,57",			-- Magnificent Hide
 	[72104]	= "59,60",				-- Living Steel
 	[74250]	= "61,62",				-- Mysterious Essence
+	[12655] = "63,64",				-- Enchanted Thorium Bar
 }
 
 
