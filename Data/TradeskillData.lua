@@ -5,7 +5,7 @@ local BF = LibStub("LibBabble-Faction-3.0"):GetLookupTable()
 
 TradeskillInfo.vars.tradeskillspells = {
 	['A'] = 2259,  -- Alchemy
-	['B'] = 2018,  -- BlackSmithing
+	['B'] = 2018,  -- Blacksmithing
 	['D'] = 7411,  -- Enchanting
 	['E'] = 4036,  -- Engineering
 	['J'] = 25229, -- Jewelcrafting

@@ -1,6 +1,6 @@
 
--- factionrank: 4 Neutral, 5 Friendly, 6 Honored, 7 Revered, 8 Exalted
--- [recipe] = "result|source|price|factionrank"
+-- [recipe] = "result|source|price|factionRank"
+-- factionRank: 4 Neutral, 5 Friendly, 6 Honored, 7 Revered, 8 Exalted
 
 TradeskillInfo.vars.recipes = {
 	[728] = "733|V92Qa|200",
