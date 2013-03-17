@@ -122,7 +122,7 @@ local function CombineTable(t,c)
 end
 
 function TradeskillInfo:OnInitialize()
-	local dbDefaults = {
+	self.db = LibStub("AceDB-3.0"):New("TradeskillInfoDB", {
 		profile = {
 			ShowSkillLevel = true,
 			ShowSkillProfit = true,
@@ -136,34 +136,34 @@ function TradeskillInfo:OnInitialize()
 			TooltipUsedIn = true,
 			TooltipUsableBy = true,
 			TooltipColorUsableBy = true,
-			TooltipKnownBy = {R=true,A=true,B=true,D=true,E=true,J=true,L=true,T=true,W=false,X=false,Z=true,Y=true,I=true},
-			TooltipLearnableBy = {R=true,A=true,B=true,D=true,E=true,J=true,L=true,T=true,W=false,X=false,Z=true,Y=true,I=true},
-			TooltipAvailableTo = {R=true,A=true,B=true,D=true,E=true,J=true,L=true,T=true,W=false,X=false,Z=true,Y=true,I=true},
+			TooltipKnownBy = { R = true, A = true, B = true, D = true, E = true, J = true, L = true, T = true, W = false, X = false, Z = true, Y = true, I = true },
+			TooltipLearnableBy = { R = true, A = true, B = true, D = true, E = true, J = true, L = true, T = true, W = false, X = false, Z = true, Y = true, I = true },
+			TooltipAvailableTo = { R = true, A = true, B = true, D = true, E = true, J = true, L = true, T = true, W = false, X = false, Z = true, Y = true, I = true },
 			TooltipMarketValue = true,
 			TooltipID = false,
 			TooltipStack = false,
 
-			ColorSource = { r=0.75, g=0.75, b=0.25 },
-			ColorRecipeSource = { r=0.75, g=0.75, b=0.25 },
-			ColorRecipePrice = { r=1.0, g=1.0, b=1.0 },
-			ColorUsedIn = { r=1.0, g=1.0, b=1.0 },
-			ColorUsableBy = { r=1.0, g=1.0, b=1.0 },
-			ColorKnownBy = { r=1.0, g=0.0, b=0.0 },
-			ColorLearnableBy = { r=0.25, g=0.75, b=0.25 },
-			ColorAvailableTo = { r=1.0, g=0.50, b=0.25 },
-			ColorID = { r=0.75, g=0.5, b=0.5 },
-			ColorStack = { r=1.0, g=1.0, b=1.0 },
-			ColorMarketValue = {r=0.80, g=0.90, b=0.2},
+			ColorSource			= { r = 0.75, g = 0.75, b = 0.25 },
+			ColorRecipeSource	= { r = 0.75, g = 0.75, b = 0.25 },
+			ColorRecipePrice	= { r = 1, g = 1, b = 1 },
+			ColorUsedIn			= { r = 1, g = 1, b = 1 },
+			ColorUsableBy		= { r = 1, g = 1, b = 1 },
+			ColorKnownBy		= { r = 1, g = 0, b = 0 },
+			ColorLearnableBy	= { r = 0.25, g = 0.75, b = 0.25 },
+			ColorAvailableTo	= { r = 1, g = 0.5, b = 0.25 },
+			ColorID				= { r = 0.75, g = 0.5, b = 0.5 },
+			ColorStack			= { r = 1, g = 1, b = 1 },
+			ColorMarketValue	= { r = 0.8, g = 0.9, b = 0 },
 
 			QuickSearch = true,
 			SearchMouseButton = 2,
 			SearchShiftKey = 1,
 			ColorAHRecipes = true,
-			AHColorLearnable = { r=1.0, g=1.0, b=1.0 },
-			AHColorAltLearnable = { r=0.1, g=1.0, b=0.1 },
-			AHColorWillLearn = { r=1.0, g=0.75, b=0.1 },
-			AHColorAltWillLearn = { r=0.1, g=0.75, b=1.0 },
-			AHColorUnavailable = { r=1.0, g=0.1, b=0.1 },
+			AHColorLearnable = { r = 1, g = 1, b = 1 },
+			AHColorAltLearnable = { r = 0, g = 1, b = 0 },
+			AHColorWillLearn = { r = 1, g = 0.75, b = 0 },
+			AHColorAltWillLearn = { r = 0, g = 0.75, b = 1 },
+			AHColorUnavailable = { r = 1, g = 0, b = 0 },
 			SavePosition = true,
 			FrameStrata = 1,
 			UIScale = 1,
@@ -171,9 +171,7 @@ function TradeskillInfo:OnInitialize()
 		realm = {
 			userdata = {}, -- Stores all known characters
 		},
-	}
-
-	self.db = LibStub("AceDB-3.0"):New("TradeskillInfoDB", dbDefaults)
+	})
 
 	self:RegisterChatCommand("tsi", "ChatCommand")
 	self:RegisterChatCommand("tradeskillinfo", "ChatCommand")
@@ -1486,30 +1484,36 @@ end
 
 function TradeskillInfo:GetItemUsableBy(id, tooltip)
 	if not self.vars.whereUsed[id] then return end
+
 	local text
 	local c = self.db.profile.ColorUsableBy;
-	local Ltext, Rtext;
-	for name,userdata in pairs(self.db.realm.userdata) do
-		local num, diff = self:GetItemUsableByChar(name,id);
+	local Ltext, Rtext
+
+	for name, userdata in pairs(self.db.realm.userdata) do
+		local num, diff = self:GetItemUsableByChar(name, id)
+
 		if num > 0 then
 			if self:ShowColoredUsableByAltNames() then
-				rText = self.vars.diffcolors[diff] .. name.." ("..num..")|r";
+				rText = self.vars.diffcolors[diff] .. name.." ("..num..")|r"
 			else
-				rText = name.." ("..num..")";
+				rText = name.." ("..num..")"
 			end
+
 			if text then
-				Ltext = " ";
-				text = text..", "..rText;
+				Ltext = " "
+				text = text..", "..rText
 			else
-				Ltext = L["Usable by"];
-				text = rText;
+				Ltext = L["Usable by"]
+				text = rText
 			end
+
 			if tooltip then
-				tooltip:AddDoubleLine(Ltext, rText, c.r, c.g, c.b, c.r, c.g, c.b/1.2);
+				tooltip:AddDoubleLine(Ltext, rText, c.r, c.g, c.b, c.r, c.g, c.b/1.2)
 			end
 		end
 	end
-	return text;
+
+	return text
 end
 
 ----------------------------------------------------------------
