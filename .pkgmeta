@@ -12,7 +12,6 @@ externals:
 	Libs/AceHook-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceHook-3.0
 	Libs/AceLocale-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceLocale-3.0
 	Libs/AceTimer-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceTimer-3.0
-	Libs/LibAbacus-3.0: svn://svn.wowace.com/wow/libabacus-3-0/mainline/trunk
 	Libs/LibDataBroker-1.1: git://git.wowace.com/wow/libdatabroker-1-1/mainline.git
 	Libs/LibBabble-Zone-3.0: svn://svn.wowace.com/wow/libbabble-zone-3-0/mainline/trunk
 	Libs/LibBabble-Faction-3.0: svn://svn.wowace.com/wow/libbabble-faction-3-0/mainline/trunk

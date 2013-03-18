@@ -30,7 +30,6 @@ Libs\AceConfig-3.0\AceConfig-3.0.xml
 Libs\AceTimer-3.0\AceTimer-3.0.lua
 Libs\LibBabble-Faction-3.0\lib.xml
 Libs\LibBabble-Zone-3.0\lib.xml
-Libs\LibAbacus-3.0\LibAbacus-3.0.lua
 Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 Libs\tekKonfig\tekKonfigAboutPanel.lua
 #@end-no-lib-strip@

@@ -16,8 +16,6 @@ TradeskillInfo.vars.ShiftKeys = { IsShiftKeyDown, IsControlKeyDown, IsAltKeyDown
 TradeskillInfo.vars.difficultyLevel = { ["trivial"] = 1, ["easy"] = 2, ["medium"] = 3, ["optimal"] = 4 }
 TradeskillInfo.vars.diffcolors = { "|cff777777", "|cff33bb33", "|cffffff00", "|cffff7733", "|cffffffff" } -- trivial, easy, medium, optimal, header
 
-TradeskillInfo.libs = {}
-TradeskillInfo.libs.Abacus = LibStub("LibAbacus-3.0")
 
 local function getIdFromLink(link)
 	if not link then return end
@@ -127,8 +125,6 @@ function TradeskillInfo:OnInitialize()
 			ShowSkillLevel = true,
 			ShowSkillProfit = true,
 			ShowSkillAuctioneerProfit = true,
-
-			MoneyFormat = 1,
 
 			TooltipSource = true,
 			TooltipRecipeSource = true,
@@ -631,16 +627,20 @@ function TradeskillInfo:Item_OnClick(button, link)
 end
 
 function TradeskillInfo:GetMoneyString(value)
-	if (value == nil) then
-		return "|cffffcc00??|r"; -- No price
-	elseif ( self.db.profile.MoneyFormat == 1 ) then
-		return self.libs.Abacus:FormatMoneyCondensed(value,true,true)
-	elseif ( self.db.profile.MoneyFormat == 2 ) then
-		return self.libs.Abacus:FormatMoneyShort(value,true,true)
-	elseif ( self.db.profile.MoneyFormat == 3 ) then
-		return self.libs.Abacus:FormatMoneyFull(value,true,true)
+	if not value then return "???" end
+
+	local neg = value < 0 and "-" or ""
+
+	local gold = floor(math.abs(value) / 10000)
+	local silver = mod(floor(math.abs(value) / 100), 100)
+	local copper = mod(floor(math.abs(value)), 100)
+
+	if gold ~= 0 then
+		return format("%s%dg %ds %dc", neg, gold, silver, copper)
+	elseif silver ~= 0 then
+		return format("%s%ds %dc", neg, silver, copper)
 	else
-		return self.libs.Abacus:FormatMoneyExtended(value,true,true)
+		return format("%s%dc", neg, copper)
 	end
 end
 
