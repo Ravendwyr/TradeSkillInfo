@@ -45,7 +45,6 @@ TradeskillInfo.vars.sources = {
 	['Ct'] = L["Tailoring"],
 	['Cc'] = L["Cooking"],
 	['Cf'] = L["First Aid"],
-	['Cp'] = L["Poisons"],
 	['Cs'] = L["Smelting"],
 	['M'] = L["Mining"],
 	['H'] = L["Herbalism"],
