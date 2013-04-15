@@ -1,9 +1,7 @@
 
 local L = LibStub("AceLocale-3.0"):GetLocale("TradeskillInfo")
 
-TradeskillInfoUI = LibStub("AceAddon-3.0"):NewAddon("TradeskillInfoUI", "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0")
-TradeskillInfoUI.version = GetAddOnMetadata("TradeskillInfoUI", "Version")
-
+TradeskillInfoUI = TradeskillInfo:NewModule("Browser", "AceConsole-3.0", "AceEvent-3.0")
 
 TradeskillInfoUI.cons = {};
 TradeskillInfoUI.cons.skillsDisplayed = 16;
@@ -1478,18 +1476,12 @@ do
 		else
 			skillLink = "spell:" .. -id
 		end
-		-- Try up to three times to get the info before giving up.
-		-- For some reason blizzard calls the script even when the local cache is not updated
-		-- once or twice. The retries handle these cases.
-		for retries = 1,3 do
-			-- deadlock prevention: Assume update will complete in 2 seconds.
-			-- This should be unnecessary, but better than risking
-			-- locking down the coroutine forever.
-			local hTimer = self:ScheduleTimer(performIdAction, 2, id)
+
+		local name
+		while not name do
+			performIdAction(id)
 			tipframe:SetHyperlink(skillLink)
 			coroutine.yield()
-			self:CancelTimer(hTimer)
-			local name
 			if id > 0 then
 				name = GetItemInfo(id)
 			else

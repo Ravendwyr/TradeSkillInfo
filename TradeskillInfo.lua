@@ -1,8 +1,8 @@
 
 local L = LibStub("AceLocale-3.0"):GetLocale("TradeskillInfo")
 
-TradeskillInfo = LibStub("AceAddon-3.0"):NewAddon("TradeskillInfo", "AceConsole-3.0", "AceEvent-3.0", "AceHook-3.0", "AceTimer-3.0")
-TradeskillInfo.version = GetAddOnMetadata("TradeskillInfo", "Version")
+TradeskillInfo = LibStub("AceAddon-3.0"):NewAddon("TradeSkillInfo", "AceConsole-3.0", "AceEvent-3.0", "AceHook-3.0", "AceTimer-3.0")
+TradeskillInfo.version = GetAddOnMetadata("TradeSkillInfo", "Version")
 
 BINDING_HEADER_TRADESKILLINFO = "Tradeskill Info";
 BINDING_NAME_TOGGLE_TRADESKILLINFO = "Toggle Tradeskill Info Window";
