@@ -46,10 +46,10 @@ Locale\frFR.lua
 TradeskillInfo.lua
 DataBroker.lua
 
+Data\Components.lua
 Data\Recipes.lua
 Data\SpecialCases.lua
 Data\TradeskillData.lua
-Data\TradeskillIdData.lua
 
 Data\Professions\Alchemy.lua
 Data\Professions\Blacksmithing.lua
