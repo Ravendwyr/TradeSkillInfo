@@ -1,7 +1,7 @@
 
 local L = LibStub("AceLocale-3.0"):GetLocale("TradeskillInfo")
 
-TradeskillInfoUI = TradeskillInfo:NewModule("Browser", "AceEvent-3.0")
+TradeskillInfoUI = TradeskillInfo:NewModule("Browser")
 
 TradeskillInfoUI.cons = {};
 TradeskillInfoUI.cons.skillsDisplayed = 16;
@@ -77,8 +77,9 @@ function TradeskillInfoUI:OnEnable()
 	TradeskillInfoKnown:SetPoint("TOPLEFT", TradeskillInfoRecipe, "BOTTOMLEFT",0,-3)
 end
 
-function TradeskillInfoUI:Frame_Show()
+function TradeskillInfoUI:OnShow()
 	CloseDropDownMenus();
+
 	TradeskillInfoTradeskillsDropDown:Hide();
 	TradeskillInfoTradeskillsDropDown:Show();
 	TradeskillInfoAvailabilityDropDown:Hide();
@@ -90,12 +91,14 @@ function TradeskillInfoUI:Frame_Show()
 	TradeskillInfoDetailScrollFrameTop:Hide();
 	TradeskillInfoDetailScrollFrameBottom:Hide();
 
-	for key,val in pairs(self.options.buttons) do
+	for key, val in pairs(self.options.buttons) do
 		local button = _G[key]
 		button:SetText(val.text);
+
 		if val.tooltip then
 			button.tooltipText = val.tooltip;
 		end
+
 		if self.db.profile[val.var] then
 			button:LockHighlight();
 		else
@@ -103,30 +106,25 @@ function TradeskillInfoUI:Frame_Show()
 		end
 	end
 
-	self:UpdateFramePosition();
+	self:UpdateFramePosition()
 	self:UpdateFrameStrata()
-	ShowUIPanel(TradeskillInfoFrame);
-
-	self:RegisterMessage("TradeskillInfo_Update", "OnTradeskillInfoUpdate")
 
 	FauxScrollFrame_SetOffset(TradeskillInfoListScrollFrame, 0);
 	TradeskillInfoListScrollFrameScrollBar:SetMinMaxValues(0, 0);
 	TradeskillInfoListScrollFrameScrollBar:SetValue(0);
-	self:Search();
-	self:Frame_SetSelection(TradeskillInfoUI.vars.selectionIndex);
-	self:Frame_Update();
-end
 
-function TradeskillInfoUI:Frame_Hide()
-	self:UnregisterEvent("TradeskillInfo_Update")
-	HideUIPanel(TradeskillInfoFrame);
+	self:Search()
+	self:Frame_SetSelection(TradeskillInfoUI.vars.selectionIndex)
+	self:Frame_Update()
+
+	PlaySound("igCharacterInfoOpen")
 end
 
 function TradeskillInfoUI:Frame_Toggle()
-	if TradeskillInfoFrame:IsVisible() then
-		TradeskillInfoUI:Frame_Hide()
+	if TradeskillInfoFrame:IsShown() then
+		TradeskillInfoFrame:Hide()
 	else
-		TradeskillInfoUI:Frame_Show()
+		TradeskillInfoFrame:Show()
 	end
 end
 
@@ -180,6 +178,8 @@ function TradeskillInfoUI:UpdateFrameStrata()
 end
 
 function TradeskillInfoUI:OnTradeskillInfoUpdate()
+	if not TradeskillInfoFrame:IsShown() then return end
+
 	self:Search();
 	local selectionIndex
 	if self.vars.selectionIndex == 0 then
@@ -982,7 +982,7 @@ end
 function TradeskillInfoUI:SortDropDown_OnClick(button, info)
 	TradeskillInfoUI:SetFuncSet(info)
 	UIDropDownMenu_SetSelectedValue(TradeskillInfoSortDropDown, button.value)
-	self:SendMessage("TradeskillInfo_Update")
+	self:OnTradeskillInfoUpdate()
 end
 
 ----------------------------------------------------------------------
@@ -1015,7 +1015,7 @@ end
 
 function TradeskillInfoUI:AvailabilityDropDown_OnClick(val)
 	self.db.profile.availability[val] = not self.db.profile.availability[val];
-	self:SendMessage("TradeskillInfo_Update");
+	self:OnTradeskillInfoUpdate();
 end
 
 ----------------------------------------------------------------------
@@ -1048,16 +1048,12 @@ end
 
 function TradeskillInfoUI:TradeskillsDropDown_OnClick(val)
 	self.db.profile.tradeskills[val] = not self.db.profile.tradeskills[val];
-	self:SendMessage("TradeskillInfo_Update");
+	self:OnTradeskillInfoUpdate();
 end
 
 ----------------------------------------------------------------------
 --- Search Button
 ----------------------------------------------------------------------
-function TradeskillInfoUI:Search_OnClick()
-	self:SendMessage("TradeskillInfo_Update");
-end
-
 function TradeskillInfoUI:ToggleButton(frame)
 	local var = self.options.buttons[frame:GetName()].var
 	if self.db.profile[var] then
@@ -1067,8 +1063,9 @@ function TradeskillInfoUI:ToggleButton(frame)
 		frame:LockHighlight();
 		self.db.profile[var] = true;
 	end
-	self:SendMessage("TradeskillInfo_Update");
+	self:OnTradeskillInfoUpdate();
 end
+
 ----------------------------------------------------------------------
 --- Reset Button
 ----------------------------------------------------------------------
@@ -1080,7 +1077,7 @@ function TradeskillInfoUI:Reset_OnClick()
 	for i, _ in ipairs(self.db.profile.availability) do
 		self.db.profile.availability[i] = true
 	end
-	self:SendMessage("TradeskillInfo_Update");
+	self:OnTradeskillInfoUpdate();
 end
 
 ----------------------------------------------------------------------
@@ -1324,24 +1321,24 @@ end
 function TradeskillInfoUI:CollapseHeader(index)
 	if self.vars.searchResult[index] and type(self.vars.searchResult[index]) == "string" then
 		self.db.profile.expanded[self.vars.searchResult[index]] = false;
-		self:SendMessage("TradeskillInfo_Update");
+		self:OnTradeskillInfoUpdate();
 	elseif index == 0 then
 		for i,_ in pairs(self.db.profile.expanded) do
 			self.db.profile.expanded[i] = false;
 		end
-		self:SendMessage("TradeskillInfo_Update");
+		self:OnTradeskillInfoUpdate();
 	end
 end
 
 function TradeskillInfoUI:ExpandHeader(index)
 	if self.vars.searchResult[index] and type(self.vars.searchResult[index]) == "string" then
 		self.db.profile.expanded[self.vars.searchResult[index]] = true;
-		self:SendMessage("TradeskillInfo_Update");
+		self:OnTradeskillInfoUpdate();
 	elseif index == 0 then
 		for i,_ in pairs(self.db.profile.expanded) do
 			self.db.profile.expanded[i] = true;
 		end
-		self:SendMessage("TradeskillInfo_Update");
+		self:OnTradeskillInfoUpdate();
 	end
 end
 

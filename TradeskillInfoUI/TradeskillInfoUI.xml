@@ -565,7 +565,7 @@
 				<Scripts>
 					<OnClick>
 						TradeskillInfoInputBox:ClearFocus();
-						TradeskillInfoUI:Search_OnClick();
+						TradeskillInfoUI:OnTradeskillInfoUpdate();
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -643,7 +643,7 @@
 				<Scripts>
 					<OnEnterPressed>
 						self:ClearFocus();
-						TradeskillInfoUI:Search_OnClick();
+						TradeskillInfoUI:OnTradeskillInfoUpdate();
 					</OnEnterPressed>
 					<OnEscapePressed>
 						self:ClearFocus();
@@ -989,11 +989,10 @@
 				tinsert(UISpecialFrames,self:GetName());
 			</OnLoad>
 			<OnShow>
-				PlaySound("igCharacterInfoOpen");
+				TradeskillInfoUI:OnShow()
 			</OnShow>
 			<OnHide>
-			  --HideUIPanel(TradeskillInfoFrame);
-				PlaySound("igCharacterInfoClose");
+				PlaySound("igCharacterInfoClose")
 			</OnHide>
 			<OnMouseWheel>
 				return;
