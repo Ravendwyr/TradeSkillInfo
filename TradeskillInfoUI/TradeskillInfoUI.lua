@@ -1,7 +1,7 @@
 
 local L = LibStub("AceLocale-3.0"):GetLocale("TradeskillInfo")
 
-TradeskillInfoUI = TradeskillInfo:NewModule("Browser", "AceConsole-3.0", "AceEvent-3.0")
+TradeskillInfoUI = TradeskillInfo:NewModule("Browser", "AceEvent-3.0")
 
 TradeskillInfoUI.cons = {};
 TradeskillInfoUI.cons.skillsDisplayed = 16;
@@ -214,7 +214,7 @@ local function getSkillButton(i)
 	if not skillButton then
 		-- Create a new button. Assume button (i-1) was already created
 		skillButton = CreateFrame("Button", "TradeskillInfoSkill"..i, TradeskillInfoListFrame, "TradeskillInfoSkillButtonTemplate")
-	skillButton:SetPoint("TOPLEFT", "TradeskillInfoSkill"..(i-1), "BOTTOMLEFT")
+		skillButton:SetPoint("TOPLEFT", "TradeskillInfoSkill"..(i-1), "BOTTOMLEFT")
 		skillButton:SetFrameLevel(TradeskillInfoListFrame:GetFrameLevel() + 1)
 		skillButton:SetNormalTexture("");
 		skillButton:SetText("");
@@ -234,14 +234,12 @@ function TradeskillInfoUI:Frame_Update()
 		coroutine.resume(self.vars.coUpdate_Frame)
 		return
 	end
+
 	self.vars.coUpdate_Frame = coroutine.create(self.CoroutineFrame_Update)
-	if self.vars.coUpdate_Frame then
-		local status, err = coroutine.resume(self.vars.coUpdate_Frame, self)
-		if not status then
-			self:Print("Cannot update the recipe list - " .. (err or "<no reason>"))
-		end
-	else
-		self:Print("Cannot update the recipe list")
+
+	local status, err = coroutine.resume(self.vars.coUpdate_Frame, self)
+	if not status then
+		geterrorhandler()(err)
 	end
 end
 
@@ -408,13 +406,10 @@ function TradeskillInfoUI:Frame_SetSelection(id)
 		return
 	end
 	self.vars.coFrame_SetSelection = coroutine.create(self.CoroutineFrame_SetSelection)
-	if self.vars.coFrame_SetSelection then
-		local status, err = coroutine.resume(self.vars.coFrame_SetSelection, self, id)
-		if not status then
-			self:Print("Cannot update recipe details - " .. (err or "<no reason>"))
-		end
-	else
-		self:Print("Cannot update the recipe details")
+
+	local status, err = coroutine.resume(self.vars.coFrame_SetSelection, self, id)
+	if not status then
+		geterrorhandler()(err)
 	end
 end
 
