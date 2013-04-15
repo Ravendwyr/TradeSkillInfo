@@ -875,7 +875,7 @@ function TradeskillInfo:GetCombineCost(id)
 	end
 	local cost = 0
 	for _,c in ipairs(components) do
-		cost = cost + c.cost * c.num
+		cost = cost + c.cost or 0 * c.num
 	end
 	components = nil
 	return value, cost, value-cost
