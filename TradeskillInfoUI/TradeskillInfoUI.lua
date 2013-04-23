@@ -63,18 +63,8 @@ function TradeskillInfoUI:OnInitialize()
 end
 
 function TradeskillInfoUI:OnEnable()
-	if Skinner and Skinner.applySkin then
-		Skinner:removeRegions(TradeskillInfoAvailabilityDropDown)
-		Skinner:removeRegions(TradeskillInfoTradeskillsDropDown)
-		Skinner:removeRegions(TradeskillInfoListScrollFrame)
-		Skinner:skinScrollBar(TradeskillInfoListScrollFrame)
-		Skinner:removeRegions(TradeskillInfoDetailScrollFrame)
-		Skinner:skinScrollBar(TradeskillInfoDetailScrollFrame)
-
-		Skinner:applySkin(TradeskillInfoFrame)
-	end
 	TradeskillInfoKnown:ClearAllPoints()
-	TradeskillInfoKnown:SetPoint("TOPLEFT", TradeskillInfoRecipe, "BOTTOMLEFT",0,-3)
+	TradeskillInfoKnown:SetPoint("TOPLEFT", TradeskillInfoRecipe, "BOTTOMLEFT", 0, -3)
 end
 
 function TradeskillInfoUI:OnShow()
