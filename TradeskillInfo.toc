@@ -8,7 +8,7 @@
 ## Author: Ethan Centaurai
 ## Version: @project-version@
 ## OptionalDeps: LibStub, CallbackHandler-1.0, Ace3, LibBabble-Zone-3.0, LibBabble-Faction-3.0, Auc-Advanced
-## SavedVariables: TradeSkillInfoDB, TradeskillInfoDB, TradeskillInfoUIDB
+## SavedVariables: TradeskillInfoDB, TradeskillInfoUIDB
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Always: delayed
 ## X-Credits: Dys, wmrojer, Evenue, Fieroivan, Viruscamp, CMTitan
