@@ -616,7 +616,7 @@ function TradeskillInfo:Item_OnClick(button, link)
 				if self:LoadUI(true) then -- Have TradeskillInfoUI
 					local name = getNameFromLink(link)
 					TradeskillInfoUI:SetSearchText("id="..id.." "..name)
-					TradeskillInfoUI:Frame_Show()
+					TradeskillInfoFrame:Show()
 				else
 					self:PrintWhereUsed(id)
 				end
