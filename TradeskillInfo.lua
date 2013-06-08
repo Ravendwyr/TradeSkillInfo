@@ -173,7 +173,7 @@ function TradeskillInfo:OnEnable()
 end
 
 
-function TradeskillInfo:OnAddonLoaded(event, addon)
+function TradeskillInfo:OnAddonLoaded(_, addon)
 	if addon == "Blizzard_AuctionUI" then
 		self:HookAuctionUI()
 	elseif addon == "Blizzard_TradeSkillUI" or
@@ -362,7 +362,7 @@ function TradeskillInfo:GetSpecialCase(id,itemName)
 	if id > 100 or not self.vars.specialcases[id] then
 		return id,itemName
 	end
-	_, _, id = string.find(self.vars.specialcases[id],"(%d+)")
+	id = string.match(self.vars.specialcases[id],"(%d+)")
 	itemName = GetItemInfo(id)
 	return tonumber(id),itemName
 end
@@ -651,7 +651,7 @@ function TradeskillInfo:GetCombineEnchantId(id)
 	if not self:CombineExists(id) then return 0 end
 	local enchantId
 	if id > 0 then
-		_,_,enchantId = string.find(self.vars.combines[id],"(-?%d*)|?%a+%d+")
+		enchantId = string.match(self.vars.combines[id],"(-?%d*)|?%a+%d+")
 	else
 		enchantId = -1 * id
 	end
@@ -740,17 +740,17 @@ end
 
 function TradeskillInfo:GetCombineTexture(id)
 	if not self:CombineExists(id) then return end
-	local combineLink,combineItemString,combineTexture
+	local _, combineLink,combineItemString,combineTexture
 	local item = self:GetCombineItem(id)
 	if item and item ~= "" then
-		combineLink,_,combineItemString,combineTexture = getItemLink(tonumber(item))
+		combineLink, _, combineItemString, combineTexture = getItemLink(tonumber(item))
 	elseif id < 0 then
 		local combineName = self:GetCombineName(id)
-		combineLink,_,combineItemString,combineTexture = getItemLink(id,combineName)
+		combineLink, _, combineItemString, combineTexture = getItemLink(id, combineName)
 	else
-		combineLink,_,combineItemString,combineTexture = getItemLink(id)
+		combineLink, _, combineItemString, combineTexture = getItemLink(id)
 	end
-	return combineTexture,combineLink,combineItemString
+	return combineTexture, combineLink, combineItemString
 end
 
 function TradeskillInfo:GetCombineAvailability(id)
@@ -821,7 +821,7 @@ function TradeskillInfo:GetCombineCost(id)
 	if item then id = item end
 
 	if id > 0 then
-		_,value = self:GetComponent(id, true)
+		value = select(2, self:GetComponent(id, true))
 		if yield > 1 then
 			value = value * yield
 		end
@@ -844,7 +844,7 @@ function TradeskillInfo:GetCombineAuctioneerCost(id)
 	local yield = self:GetCombineYield(id)
 	if item then id = item end
 	if id > 0 then
-		_,_,_,value = self:GetComponent(id, false, true)
+		value = select(4, self:GetComponent(id, false, true))
 		if yield > 1 then
 			value = value * yield
 		end
@@ -898,7 +898,7 @@ function TradeskillInfo:GetComponent(id, getVendorPrice, getAuctioneerPrice)
 	if realId < 100 then -- special case
 		local specialCase = self.vars.specialcases[id]
 		if specialCase and specialCase ~= "" then
-			_, _, realId = string.find(specialCase, "(%d+)")
+			realId = string.match(specialCase, "(%d+)")
 			realId = tonumber(realId)
 		end
 	end
@@ -1441,26 +1441,26 @@ function TradeskillInfo:GetItemUsableBy(id, tooltip)
 	local c = self.db.profile.ColorUsableBy
 	local Ltext, Rtext
 
-	for name, userdata in pairs(self.db.realm.userdata) do
+	for name, _ in pairs(self.db.realm.userdata) do
 		local num, diff = self:GetItemUsableByChar(name, id)
 
 		if num > 0 then
 			if self:ShowColoredUsableByAltNames() then
-				rText = self.vars.diffcolors[diff] .. name.." ("..num..")|r"
+				Rtext = self.vars.diffcolors[diff] .. name.." ("..num..")|r"
 			else
-				rText = name.." ("..num..")"
+				Rtext = name.." ("..num..")"
 			end
 
 			if text then
 				Ltext = " "
-				text = text..", "..rText
+				text = text..", "..Rtext
 			else
 				Ltext = L["Usable by"]
-				text = rText
+				text = Rtext
 			end
 
 			if tooltip then
-				tooltip:AddDoubleLine(Ltext, rText, c.r, c.g, c.b, c.r, c.g, c.b/1.2)
+				tooltip:AddDoubleLine(Ltext, Rtext, c.r, c.g, c.b, c.r, c.g, c.b/1.2)
 			end
 		end
 	end
