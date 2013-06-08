@@ -43,13 +43,13 @@ end
 
 local function getItemLink(id, combineName)
 	if id > 0 then
-		local itemName, itemLink, itemQuality, _, _, _, _, _, _, itemTexture = GetItemInfo(id)
+		local _, itemLink, itemQuality, _, _, _, _, _, _, itemTexture = GetItemInfo(id)
 
 		if itemLink then
-			local _, _, _, hexColor = GetItemQualityColor(itemQuality)
+--			local _, _, _, hexColor = GetItemQualityColor(itemQuality)
 			return itemLink, itemQuality, "item:"..id..":0:0:0:0:0:0:0", itemTexture
 		else
-			local _, _, _, hexColor = GetItemQualityColor(1)
+--			local _, _, _, hexColor = GetItemQualityColor(1)
 			return nil, 1, "item:"..id..":0:0:0:0:0:0:0", "Interface\\Icons\\INV_Misc_QuestionMark.blp"
 		end
 	else
@@ -280,15 +280,14 @@ function TradeskillInfo:HookAuctionUI()
 --	end
 end
 
-function TradeskillInfo:GetExtraItemDetailText(something, tradeskill, skill_index)
+function TradeskillInfo:GetExtraItemDetailText(_, _, skill_index)
 --Thanks to nogudnik for providing this code!
-	local skillName, skillType, numAvailable, isExpanded = GetTradeSkillInfo(skill_index)
+	local _, skillType = GetTradeSkillInfo(skill_index)
 	if ( skillType == "header" or skillType == "subheader" ) then return end
 	if ( skill_index > GetNumTradeSkills() ) then return end
 
 	local link = GetTradeSkillItemLink(skill_index)
 	local itemId = getIdFromLink(link)
-	local text = nil
 
 	if not self:CombineExists(itemId) then
 		local spellLink = GetTradeSkillRecipeLink(skill_index)
@@ -376,12 +375,12 @@ function TradeskillInfo:UpdateKnownRecipes()
 	end
 end
 
-function TradeskillInfo:UpdateSkills(startLine, endLine)
+function TradeskillInfo:UpdateSkills()
 	local prof1, prof2, _, _, cook, firstAid = GetProfessions()
 	local professions = {prof1, prof2, cook, firstAid}
 	local userData = self.db.realm.userdata[self.vars.playername]
 	for _,idx in ipairs(professions) do
-		local name, _, rank, _, _, spelloffset, skillLine = GetProfessionInfo(idx)
+		local name, _, rank = GetProfessionInfo(idx)
 		if self.vars.skillnames[name] then
 			userData.skills[self.vars.skillnames[name]] = rank
 		end
@@ -425,10 +424,8 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 		endLine = numSkills
 	end
 
-	local i
-
 	for i = startLine, endLine do
-		local itemName, itemType, _, isExpanded = GetTradeSkillInfo(i)
+		local _, itemType, _, isExpanded = GetTradeSkillInfo(i)
 
 		if (itemType == "header" or itemType == "subheader") and not isExpanded then
 			ExpandTradeSkillSubClass(i)
@@ -462,7 +459,7 @@ end
 function TradeskillInfo:TradeSkillFrame_SetSelection(id)
 	if not IsTradeSkillReady() then return end
 
-	local skillName, skillType, numAvailable, isExpanded = GetTradeSkillInfo(id)
+	local skillName, skillType = GetTradeSkillInfo(id)
 	if not skillName then return end
 
 	if skillType == "header" or skillType == "subheader" then return end
@@ -519,8 +516,9 @@ function TradeskillInfo:TradeSkillFrame_SetSelection(id)
 	end
 end
 
-function TradeskillInfo:ATSWFrame_SetSelection(id, wasClicked)
-	local skillName, skillType, numAvailable, isExpanded = GetTradeSkillInfo(id)
+function TradeskillInfo:ATSWFrame_SetSelection(id)
+	local skillName, skillType = GetTradeSkillInfo(id)
+
 	if not skillName then return end
 	if ( skillType == "header" or skillType == "subheader" ) then return end
 	if ( GetTradeSkillSelectionIndex() > GetNumTradeSkills() ) then return end
@@ -584,7 +582,7 @@ function TradeskillInfo:MerchantItemButton_OnModifiedClick(object, button)
 	if self:Item_OnClick(button, link) then return end
 end
 
-function TradeskillInfo:ChatFrame_OnHyperlinkShow(object, link, text, button)
+function TradeskillInfo:ChatFrame_OnHyperlinkShow(_, _, text, button)
 	if self:Item_OnClick(button, text) then return end
 end
 
@@ -660,7 +658,7 @@ end
 function TradeskillInfo:GetCombine(id)
 	if not self:CombineExists(id) then return end
 	local combine = {}
-	local found, _, skill, spec, level, l2, l3, l4, components, recipe, yield, item =
+	local _, _, skill, spec, level, _, _, _, _, recipe, yield, item =
 		string.find(self.vars.combines[id], "-?%d*|?(%u)(%l*)(%d+)/?(%d*)/?(%d*)/?(%d*)|([^|]+)[|]?(%d*)[|]?([^|]*)[|]?(%d*)")
 	combine.skill = skill
 	combine.spec = spec
@@ -846,7 +844,7 @@ function TradeskillInfo:GetColoredDifficulty(id)
 
 	-- assume l2, l3, l4 are either all set, or all unset
 	if #diff > 1 then
-		for i,l in ipairs(diff) do
+		for i, _ in ipairs(diff) do
 			if i == 1 then
 				s = self.vars.diffcolors[5-i]..diff[i].."|r"
 			else
@@ -909,7 +907,7 @@ function TradeskillInfo:PrintCombine(id)
 	if not self:CombineExists(id) then return end
 	local combine = self:GetCombine(id)
 	local text = string.format("%s : %s(%d) %s ", combine.link or combine.name, self.vars.tradeskills[combine.skill], combine.level, self.vars.specializations[combine.spec] or "" )
-	for i,c in ipairs(combine.components) do
+	for _, c in ipairs(combine.components) do
 		text = text .. string.format("x%d*%s ", c.num, c.link or c.name)
 	end
 	combine = nil
@@ -976,7 +974,7 @@ function TradeskillInfo:GetComponent(id, getVendorPrice, getAuctioneerPrice)
 			if not aucMvSeen then aucMvSeen = 0 end
 
 		elseif GetAuctionBuyout then
-			local itemLink = getItemLink(realId)
+--			local itemLink = getItemLink(realId)
 			aucMvCost = GetAuctionBuyout(realId)
 
 			-- if auctioneer has no idea, plug in vendor sell value
@@ -991,7 +989,7 @@ function TradeskillInfo:GetComponentSource(id, tooltip)
 	if not self:ComponentExists(id) then return end
 	local c = self.db.profile.ColorSource
 	local Ltext
-	local name,cost,source = self:GetComponent(id)
+	local _, _, source = self:GetComponent(id)
 	local ret
 	for s in string.gmatch(source,"%u%l*") do
 		if self.vars.sources[s] then
@@ -1074,7 +1072,7 @@ end
 function TradeskillInfo:BuildWhereUsed()
 	self.vars.whereUsed = {}
 	for i,_ in pairs(self.vars.combines) do
-		local skill,spec,level = self:GetCombineSkill(i)
+		local skill = self:GetCombineSkill(i)
 		local components = self:GetCombineComponents(i)
 		for _,c in ipairs(components) do
 			if not self.vars.whereUsed[c.id] then
@@ -1148,7 +1146,7 @@ function TradeskillInfo:GetItemUsedIn(item,use)
 	if not use then use = {} end
 	if self.vars.whereUsed[item] then
 		for s in string.gmatch(self.vars.whereUsed[item],"%S+") do
-			local _,_,skill,item2 = string.find(s,"(%u)([-]?%d+)")
+			local _, _, _, item2 = string.find(s,"(%u)([-]?%d+)")
 			item2 = tonumber(item2)
 			if not use[item2] then
 				use[item2] = true
@@ -1408,7 +1406,7 @@ function TradeskillInfo:GetCombineLearnableBy(id, tooltip)
 	local text
 	local c = self.db.profile.ColorLearnableBy
 	local Ltext, Rtext
-	for name,userdata in pairs(self.db.realm.userdata) do
+	for name, _ in pairs(self.db.realm.userdata) do
 		local charLevel = self:IsCombineLearnableByChar(name,id)
 		if charLevel then
 			Rtext = name.." ("..charLevel..")"
@@ -1443,7 +1441,7 @@ function TradeskillInfo:GetCombineAvailableTo(id, tooltip)
 	local text
 	local c = self.db.profile.ColorAvailableTo
 	local Ltext, Rtext
-	for name,userdata in pairs(self.db.realm.userdata) do
+	for name, _ in pairs(self.db.realm.userdata) do
 		local charLevel = self:IsCombineAvailableToChar(name,id)
 		if charLevel then
 			Rtext = name.." ("..charLevel..")"
@@ -1468,7 +1466,7 @@ function TradeskillInfo:GetItemUsableByChar(name,id,deep)
 	local maxDiff = 1 -- assume gray
 	if self.vars.whereUsed[id] and deep < 5 then
 		for s in string.gmatch(self.vars.whereUsed[id],"%S+") do
-			local _,_,skill,combine = string.find(s, "(%u)([-]?%d+)")
+			local _, _, _, combine = string.find(s, "(%u)([-]?%d+)")
 			local known = self:IsCombineKnowByChar(name,tonumber(combine))
 			if known then
 				maxDiff = max(maxDiff, known)
