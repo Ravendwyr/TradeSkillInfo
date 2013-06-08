@@ -72,51 +72,6 @@ local function getItemLink(id, combineName)
 	end
 end
 
--- Splits a partioned string into a table with numbers
-local function splitn(s,c)
-	local r = {}
-	for m,n in string.gmatch(s,"(%d+)(%"..c.."?)") do
-		table.insert(r,tonumber(m))
-		if n == '' then break end
-	end
-	return r
-end
-
--- Splits a partioned string into a table with strings
-local function splits(s,c)
-	local r = {}
-	for m,n in string.gmatch(s,"([^"..c.."]*)(%"..c.."?)") do
-		table.insert(r,m)
-		if n == '' then break end
-	end
-	return r
-end
-
--- Combines a table into a partioned string
-local function ICombineTable(t,c)
-	local s = ""
-	for i,d in ipairs(t) do
-		if i == 1 then
-			s = s .. d
-		else
-			s = s .. c .. d
-		end
-	end
-	return s
-end
-
--- Combines a table into a partioned string
-local function CombineTable(t,c)
-	local s = ""
-	for i,d in pairs(t) do
-		if s == "" then
-			s = s .. i .. d
-		else
-			s = s .. c .. i .. d
-		end
-	end
-	return s
-end
 
 function TradeskillInfo:OnInitialize()
 	self.db = LibStub("AceDB-3.0"):New("TradeskillInfoDB", {
