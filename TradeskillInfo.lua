@@ -257,7 +257,7 @@ function TradeskillInfo:GetExtraItemDetailText(_, _, skill_index)
 end
 
 function TradeskillInfo:GetExtraItemDataText(itemId, showVendorProfit, showDifficulty, showAuctioneerProfit)
-	local text = nil
+	local text
 
 	if self:CombineExists(itemId) then
 		if showAuctioneerProfit then
@@ -830,7 +830,6 @@ function TradeskillInfo:GetCombineCost(id)
 	for _,c in ipairs(components) do
 		cost = cost + c.cost or 0 * c.num
 	end
-	components = nil
 	return value, cost, value-cost
 end
 
@@ -853,7 +852,6 @@ function TradeskillInfo:GetCombineAuctioneerCost(id)
 	for _,c in ipairs(components) do
 		cost = cost + (c.aucMvCost or 0) * c.num
 	end
-	components = nil
 
 	return value, cost, value-cost
 end
@@ -865,7 +863,6 @@ function TradeskillInfo:PrintCombine(id)
 	for _, c in ipairs(combine.components) do
 		text = text .. string.format("x%d*%s ", c.num, c.link or c.name)
 	end
-	combine = nil
 	self:Print(text)
 end
 
@@ -993,7 +990,6 @@ function TradeskillInfo:PrintWhereUsed(id)
 			self:PrintCombine(i)
 		end
 	end
-	skills = nil
 end
 
 function TradeskillInfo:GetUsedIn(id, tooltip)
@@ -1036,7 +1032,6 @@ function TradeskillInfo:BuildWhereUsed()
 				self.vars.whereUsed[c.id]=self.vars.whereUsed[c.id].." "..skill..tostring(i)
 			end
 		end
-		components = nil
 	end
 
 	self.vars.whereUsedOverview = {}
@@ -1842,8 +1837,5 @@ function TradeskillInfo:PopulateProfessionNames()
 			self.vars.specializations[l] = name
 			self.vars.specializationnames[name] = l
 		end
-		-- We won't ever come here again until the UI is reloaded.
-		-- Free up a little memory
-		defaultNames = nil
 	end
 end
