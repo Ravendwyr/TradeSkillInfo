@@ -814,23 +814,29 @@ end
 
 function TradeskillInfo:GetCombineCost(id)
 	if not self:CombineExists(id) then return end
+
 	local components = self:GetCombineComponents(id, true)
 	local value = 0
 	local item = self:GetCombineItem(id)
 	local yield = self:GetCombineYield(id)
+
 	if item then id = item end
 
 	if id > 0 then
 		value = select(2, self:GetComponent(id, true))
+
 		if yield > 1 then
 			value = value * yield
 		end
 	end
+
 	local cost = 0
-	for _,c in ipairs(components) do
-		cost = cost + c.cost or 0 * c.num
+
+	for _, c in ipairs(components) do
+		cost = cost + ((c.cost or 0) * c.num)
 	end
-	return value, cost, value-cost
+
+	return value, cost, value - cost
 end
 
 function TradeskillInfo:GetCombineAuctioneerCost(id)
@@ -841,19 +847,24 @@ function TradeskillInfo:GetCombineAuctioneerCost(id)
 	local value = 0
 	local item = self:GetCombineItem(id)
 	local yield = self:GetCombineYield(id)
+
 	if item then id = item end
+
 	if id > 0 then
 		value = select(4, self:GetComponent(id, false, true))
+
 		if yield > 1 then
 			value = value * yield
 		end
 	end
+
 	local cost = 0
-	for _,c in ipairs(components) do
-		cost = cost + (c.aucMvCost or 0) * c.num
+
+	for _, c in ipairs(components) do
+		cost = cost + ((c.aucMvCost or 0) * c.num)
 	end
 
-	return value, cost, value-cost
+	return value, cost, value - cost
 end
 
 function TradeskillInfo:PrintCombine(id)
