@@ -933,7 +933,7 @@ function TradeskillInfo:GetComponent(id, getVendorPrice, getAuctioneerPrice)
 		if AucAdvanced and AucAdvanced.API then
 			local itemLink = getItemLink(realId)
 
-			aucMvCost, aucMvSeen = AucAdvanced.API.GetMarketValue(itemLink, AucAdvanced.GetFaction())
+			aucMvCost, aucMvSeen = AucAdvanced.API.GetMarketValue(itemLink)
 
 			-- if auctioneer has no idea, plug in vendor sell value
 			if not aucMvCost then aucMvCost = cost end
