@@ -367,11 +367,13 @@ function TradeskillInfo:GetSpecialCase(id,itemName)
 	return tonumber(id),itemName
 end
 
-local warnedThisSession = {}
 function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 	if CURRENT_TRADESKILL == "Runeforging" then return end
 
+	--@debug@--
 	local newData = ""
+	--@end-debug@--
+
 	local numSkills = GetNumTradeSkills()
 
 	if not startLine then
@@ -394,18 +396,19 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 
 			self.db.realm.userdata[self.vars.playername].knownRecipes[id] = self.vars.difficultyLevel[itemType]
 
+			--@end-debug@--
 			if not self.vars.combines[id] then
 				newData = newData..id..", "
 			end
+			--@end-debug@--
 		end
 	end
 
-	if newData ~= "" and not warnedThisSession[CURRENT_TRADESKILL] then
-		self:Print("New data found for "..CURRENT_TRADESKILL..": "..newData)
-		self:Print("Please attach the above information to a support ticket at\nhttp://www.wowace.com/addons/tradeskill-info/tickets/")
-
-		warnedThisSession[CURRENT_TRADESKILL] = true
+	--@debug@--
+	if newData ~= "" then
+		self:Print("New data found for "..CURRENT_TRADESKILL..":\n"..newData)
 	end
+	--@end-debug@--
 end
 
 ----------------------------------------------------------------------
