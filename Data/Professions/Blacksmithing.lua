@@ -757,12 +757,12 @@ C[94592] = "138893|B600/605/610/615|94111:15 72104:6 76061:9 94590"	-- Lionheart
 C[65] = "143255|B600/610/605/616|72095||1|98717"        -- Balanced Trillium Ingot
 C[66] = "146921|B600/605/610/616|72095 102218||1|98717" -- Accelerated Balanced Trillium Ingot
 
-C[98602] = "142954|B0/605/611/618|98717:28" -- Blessed Trillium Greaves
-C[98606] = "142958|B0/605/611/618|98717:28" -- Protector's Trillium Legguards
-C[98607] = "142959|B0/605/611/618|98717:28" -- Avenger's Trillium Legplates
-C[98611] = "142963|B0/605/611/618|98717:21" -- Blessed Trillium Belt
-C[98615] = "142967|B0/605/611/618|98717:21" -- Protector's Trillium Waistguard
-C[98616] = "142968|B0/605/611/618|98717:21" -- Avenger's Trillium Waistplate
+C[98602] = "142954|B600/605/611/618|98717:28" -- Blessed Trillium Greaves
+C[98606] = "142958|B600/605/611/618|98717:28" -- Protector's Trillium Legguards
+C[98607] = "142959|B600/605/611/618|98717:28" -- Avenger's Trillium Legplates
+C[98611] = "142963|B600/605/611/618|98717:21" -- Blessed Trillium Belt
+C[98615] = "142967|B600/605/611/618|98717:21" -- Protector's Trillium Waistguard
+C[98616] = "142968|B600/605/611/618|98717:21" -- Avenger's Trillium Waistplate
 
 C[98784] = "143163|B600/600/603/606|72096:20" -- Crafted Malevolent Gladiator's Dreadplate Chestpiece
 C[98785] = "143164|B600/600/603/606|72096:15" -- Crafted Malevolent Gladiator's Dreadplate Gauntlets
