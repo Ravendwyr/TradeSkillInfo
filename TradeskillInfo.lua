@@ -396,7 +396,7 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 
 			self.db.realm.userdata[self.vars.playername].knownRecipes[id] = self.vars.difficultyLevel[itemType]
 
-			--@end-debug@--
+			--@debug@--
 			if not self.vars.combines[id] then
 				newData = newData..id..", "
 			end
