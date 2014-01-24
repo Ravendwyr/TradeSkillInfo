@@ -367,10 +367,6 @@ end
 function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 	if CURRENT_TRADESKILL == "Runeforging" then return end
 
-	--@debug@--
-	local newData = ""
-	--@end-debug@--
-
 	local numSkills = GetNumTradeSkills()
 
 	if not startLine then
@@ -392,20 +388,8 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 			local id = self:MakeSpecialCase(getIdFromLink(GetTradeSkillItemLink(i)), spellId)
 
 			self.db.realm.userdata[self.vars.playername].knownRecipes[id] = self.vars.difficultyLevel[itemType]
-
-			--@debug@--
-			if not self.vars.combines[id] then
-				newData = newData..id..", "
-			end
-			--@end-debug@--
 		end
 	end
-
-	--@debug@--
-	if newData ~= "" then
-		self:Print("New data found for "..CURRENT_TRADESKILL..":\n"..newData)
-	end
-	--@end-debug@--
 end
 
 ----------------------------------------------------------------------
