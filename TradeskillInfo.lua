@@ -536,9 +536,12 @@ function TradeskillInfo:AuctionItemButton_OnClick(object, button)
 end
 
 function TradeskillInfo:Item_OnClick(button, link)
+	if not self:LoadUI(true) then return end
+
 	if self.db.profile.QuickSearch then
 		if button == self.vars.MouseButtons[self.db.profile.SearchMouseButton] then
 			local accept = true
+
 			for i, func in ipairs(self.vars.ShiftKeys) do
 				if i == self.db.profile.SearchShiftKey then
 					accept = accept and func()
@@ -549,14 +552,13 @@ function TradeskillInfo:Item_OnClick(button, link)
 
 			if accept then
 				local id = getIdFromLink(link)
+
 				if not self:ComponentExists(id) then return end
-				if self:LoadUI(true) then -- Have TradeskillInfoUI
-					local name = getNameFromLink(link)
-					TradeskillInfoUI:SetSearchText("id="..id.." "..name)
-					TradeskillInfoFrame:Show()
-				else
-					self:PrintWhereUsed(id)
-				end
+
+				local name = getNameFromLink(link)
+
+				TradeskillInfoUI:SetSearchText("id="..id.." "..name)
+				TradeskillInfoFrame:Show()
 			end
 		end
 	end
@@ -596,21 +598,26 @@ end
 
 function TradeskillInfo:GetCombine(id)
 	if not self:CombineExists(id) then return end
+
 	local combine = {}
-	local _, _, skill, spec, level, _, _, _, _, recipe, yield, item =
-		string.find(self.vars.combines[id], "-?%d*|?(%u)(%l*)(%d+)/?(%d*)/?(%d*)/?(%d*)|([^|]+)[|]?(%d*)[|]?([^|]*)[|]?(%d*)")
+	local _, _, skill, spec, level, _, _, _, _, recipe, yield, item = string.find(self.vars.combines[id], "-?%d*|?(%u)(%l*)(%d+)/?(%d*)/?(%d*)/?(%d*)|([^|]+)[|]?(%d*)[|]?([^|]*)[|]?(%d*)")
+
 	combine.skill = skill
 	combine.spec = spec
 	combine.level = tonumber(level)
+
 	if recipe ~= "" then combine.recipe = tonumber(recipe) end
 	if yield ~= "" then combine.yield = tonumber(yield) else combine.yield = 1 end
 	if item ~= "" then combine.item = tonumber(item) end
+
 	if combine.item then
 		combine.link, combine.quality, combine.itemString, combine.texture = getItemLink(combine.item)
 	else
 		combine.link, combine.quality, combine.itemString, combine.texture = getItemLink(id)
 	end
+
 	combine.name = self:GetCombineName(id)
+
 	return combine
 end
 
@@ -853,11 +860,14 @@ end
 
 function TradeskillInfo:PrintCombine(id)
 	if not self:CombineExists(id) then return end
+
 	local combine = self:GetCombine(id)
 	local text = string.format("%s : %s(%d) %s ", combine.link or combine.name, self.vars.tradeskills[combine.skill], combine.level, self.vars.specializations[combine.spec] or "" )
+
 	for _, c in ipairs(combine.components) do
 		text = text .. string.format("x%d*%s ", c.num, c.link or c.name)
 	end
+
 	self:Print(text)
 end
 
@@ -961,31 +971,6 @@ end
 ----------------------------------------------------------------------
 -- Where Used
 ----------------------------------------------------------------------
-
-function TradeskillInfo:PrintWhereUsed(id)
-	if not self.vars.whereUsed[id] then
-		self:Print("Not used in any know tradeskill")
-		return
-	end
-	local skills = {}
-	local num = 0
-	for s in string.gmatch(self.vars.whereUsed[id],"%S+") do
-		num = num + 1
-	local _,_,skill,item = string.find(s, "(%u+)([-]?%d+)")
-	if not skills[skill] then
-		skills[skill] = {}
-	end
-	table.insert(skills[skill],tonumber(item))
-	end
-	local name = self:GetComponent(id)
-	self:Print("Found "..name.." in "..num.." combines")
-	for n,s in pairs(skills) do
-		self:Print(table.getn(s).." "..self.vars.tradeskills[n].." combines")
-		for _,i in ipairs(s) do
-			self:PrintCombine(i)
-		end
-	end
-end
 
 function TradeskillInfo:GetUsedIn(id, tooltip)
 	if not self.vars.whereUsedOverview[id] then return end
