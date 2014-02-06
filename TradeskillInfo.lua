@@ -105,9 +105,9 @@ function TradeskillInfo:OnInitialize()
 			ColorStack			= { r = 1, g = 1, b = 1 },
 			ColorMarketValue	= { r = 0.8, g = 0.9, b = 0 },
 
-			QuickSearch = true,
+			QuickSearch = false,
 			SearchMouseButton = 2,
-			SearchShiftKey = 1,
+			SearchShiftKey = 2,
 			ColorAHRecipes = true,
 			AHColorLearnable = { r = 1, g = 1, b = 1 },
 			AHColorAltLearnable = { r = 0, g = 1, b = 0 },
