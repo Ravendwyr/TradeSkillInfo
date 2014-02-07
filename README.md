@@ -112,20 +112,15 @@ Feedback
 If you have any comments, bug reports or feature requests, please leave a comment here or [open a support ticket](http://www.wowace.com/addons/tradeskill-info/tickets/).
 
 
-* * *
-
-
-About the Author
-----------------
-
-This add-on is being lovingly maintained by Ethan Centaurai, who usually plays as [Ulbrecht](http://eu.battle.net/wow/en/character/ghostlands/ulbrecht/simple) on Ghostlands-EU.
-
-* Visit my [website](http://www.ethancentaurai.com/).
-* Follow me on [Twitter](http://twitter.com/StevenBlanchard).
-* Watch me on [GitHub](https://github.com/EthanCentaurai).
-
-
 Credits
 -------
 
 TradeSkillInfo has been written and maintained by several authors over the years including Dys, wmrojer, and evenue.
+
+
+* * *
+
+
+* Visit my [website](http://www.ethancentaurai.com/).
+* Follow me on [Twitter](http://twitter.com/StevenBlanchard).
+* Watch me on [GitHub](https://github.com/EthanCentaurai).
