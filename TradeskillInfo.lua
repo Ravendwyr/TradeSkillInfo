@@ -86,7 +86,7 @@ function TradeskillInfo:OnInitialize()
 			TooltipUsedIn = true,
 			TooltipUsableBy = true,
 			TooltipColorUsableBy = true,
-			TooltipKnownBy = { R = true, A = true, B = true, D = true, E = true, J = true, L = true, T = true, W = false, X = false, Z = true, Y = true, I = true },
+			TooltipKnownBy     = { R = true, A = true, B = true, D = true, E = true, J = true, L = true, T = true, W = false, X = false, Z = true, Y = true, I = true },
 			TooltipLearnableBy = { R = true, A = true, B = true, D = true, E = true, J = true, L = true, T = true, W = false, X = false, Z = true, Y = true, I = true },
 			TooltipAvailableTo = { R = true, A = true, B = true, D = true, E = true, J = true, L = true, T = true, W = false, X = false, Z = true, Y = true, I = true },
 			TooltipMarketValue = true,
@@ -109,11 +109,11 @@ function TradeskillInfo:OnInitialize()
 			SearchMouseButton = 2,
 			SearchShiftKey = 2,
 			ColorAHRecipes = true,
-			AHColorLearnable = { r = 1, g = 1, b = 1 },
+			AHColorLearnable    = { r = 1, g = 1, b = 1 },
 			AHColorAltLearnable = { r = 0, g = 1, b = 0 },
-			AHColorWillLearn = { r = 1, g = 0.75, b = 0 },
+			AHColorWillLearn    = { r = 1, g = 0.75, b = 0 },
 			AHColorAltWillLearn = { r = 0, g = 0.75, b = 1 },
-			AHColorUnavailable = { r = 1, g = 0, b = 0 },
+			AHColorUnavailable  = { r = 1, g = 0, b = 0 },
 			SavePosition = true,
 			FrameStrata = 1,
 			UIScale = 1,
@@ -536,30 +536,29 @@ function TradeskillInfo:AuctionItemButton_OnClick(object, button)
 end
 
 function TradeskillInfo:Item_OnClick(button, link)
-	if not self:LoadUI(true) then return end
+	if not self:LoadUI() then return end
+	if not self.db.profile.QuickSearch then return end
 
-	if self.db.profile.QuickSearch then
-		if button == self.vars.MouseButtons[self.db.profile.SearchMouseButton] then
-			local accept = true
+	if button == self.vars.MouseButtons[self.db.profile.SearchMouseButton] then
+		local accept = true
 
-			for i, func in ipairs(self.vars.ShiftKeys) do
-				if i == self.db.profile.SearchShiftKey then
-					accept = accept and func()
-				else
-					accept = accept and not func()
-				end
+		for i, func in ipairs(self.vars.ShiftKeys) do
+			if i == self.db.profile.SearchShiftKey then
+				accept = accept and func()
+			else
+				accept = accept and not func()
 			end
+		end
 
-			if accept then
-				local id = getIdFromLink(link)
+		if accept then
+			local id = getIdFromLink(link)
 
-				if not self:ComponentExists(id) then return end
+			if not self:ComponentExists(id) then return end
 
-				local name = getNameFromLink(link)
+			local name = getNameFromLink(link)
 
-				TradeskillInfoUI:SetSearchText("id="..id.." "..name)
-				TradeskillInfoFrame:Show()
-			end
+			TradeskillInfoUI:SetSearchText("id="..id.." "..name)
+			TradeskillInfoFrame:Show()
 		end
 	end
 end
