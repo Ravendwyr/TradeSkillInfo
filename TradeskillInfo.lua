@@ -536,7 +536,7 @@ function TradeskillInfo:AuctionItemButton_OnClick(object, button)
 end
 
 function TradeskillInfo:Item_OnClick(button, link)
-	if not self:LoadUI() then return end
+	if not self:LoadUI(true) then return end
 	if not self.db.profile.QuickSearch then return end
 
 	if button == self.vars.MouseButtons[self.db.profile.SearchMouseButton] then
