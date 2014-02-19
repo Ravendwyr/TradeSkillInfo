@@ -285,32 +285,33 @@ function TradeskillInfo:GetExtraItemDataText(itemId, showVendorProfit, showDiffi
 end
 
 function TradeskillInfo:HookTradeSkillUI()
-	if TradeSkillFrame then
-		-- Add our text fields
-		local fsSkillText = TradeSkillDetailScrollChildFrame:CreateFontString("TradeskillInfoSkillText", "BACKGROUND", "GameFontHighlightSmall")
-		fsSkillText:SetPoint("TOPLEFT", 5, -52)
-		local fsProfitText = TradeSkillDetailScrollChildFrame:CreateFontString("TradeskillInfoProfitText", "BACKGROUND", "GameFontHighlightSmall")
-		fsProfitText:SetPoint("TOPLEFT", fsProfitLabel, "TOPRIGHT")
+	if TradeSkillFrame and not self:IsHooked("TradeSkillFrame_SetSelection") then
+		self:SecureHook("TradeSkillFrame_SetSelection")
 
-		if not self:IsHooked("TradeSkillFrame_SetSelection") then
-			self:SecureHook("TradeSkillFrame_SetSelection")
-		end
+		-- add our text fields
+		local fsSkillText = TradeSkillDetailScrollChildFrame:CreateFontString("TradeskillInfoSkillText", "BACKGROUND", "GameFontHighlightSmall")
+		local fsProfitText = TradeSkillDetailScrollChildFrame:CreateFontString("TradeskillInfoProfitText", "BACKGROUND", "GameFontHighlightSmall")
+
+		fsSkillText:SetPoint("TOPLEFT", 5, -52)
+		fsProfitText:SetPoint("TOPLEFT", fsSkillText, "TOPRIGHT")
 	end
 
 	if Skillet and not self:IsHooked(Skillet, "GetExtraItemDetailText") then
 		self:RawHook(Skillet, "GetExtraItemDetailText")
 	end
 
-	if IsAddOnLoaded("AdvancedTradeSkillWindow") then
+	if IsAddOnLoaded("AdvancedTradeSkillWindow") and not self:IsHooked("ATSWFrame_SetSelection") then
+		self:SecureHook("ATSWFrame_SetSelection")
+
+		-- add our text fields
 		local fsLabel = ATSWFrame:CreateFontString("TradeskillInfoATSWSkillLabel", "OVERLAY", "GameFontHighlightSmall")
 		local fsText = ATSWFrame:CreateFontString("TradeskillInfoATSWSkillText", "OVERLAY", "GameFontHighlightSmall")
+
 		fsLabel:SetPoint("TOPLEFT", ATSWSkillCooldown, "BOTTOMLEFT")
 		fsText:SetPoint("TOPLEFT", fsLabel, "TOPRIGHT")
-		if not self:IsHooked("ATSWFrame_SetSelection") then
-			self:SecureHook("ATSWFrame_SetSelection")
-		end
 	end
 end
+
 
 function TradeskillInfo:UpdateKnownRecipes()
 	if not self.processingUpdates and
