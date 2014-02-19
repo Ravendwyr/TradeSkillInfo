@@ -175,7 +175,6 @@ function TradeskillInfo:OnAddonLoaded(_, addon)
 		self:HookAuctionUI()
 	elseif addon == "Blizzard_TradeSkillUI" or
 	       addon == "Skillet" or
-	       addon == "TradeskillHD" or
 		   addon == "AdvancedTradeSkillWindow" then
 		self:HookTradeSkillUI()
 	end
