@@ -302,10 +302,6 @@ function TradeskillInfo:HookTradeSkillUI()
 		self:RawHook(Skillet, "GetExtraItemDetailText")
 	end
 
-	if IsAddOnLoaded("TradeSkillHD") and not self:IsHooked("TradeSkillFrameSSOverride") then
-		self:SecureHook("TradeSkillFrameSSOverride", "TradeSkillFrame_SetSelection")
-	end
-
 	if IsAddOnLoaded("AdvancedTradeSkillWindow") then
 		local fsLabel = ATSWFrame:CreateFontString("TradeskillInfoATSWSkillLabel", "OVERLAY", "GameFontHighlightSmall")
 		local fsText = ATSWFrame:CreateFontString("TradeskillInfoATSWSkillText", "OVERLAY", "GameFontHighlightSmall")
