@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):GetLocale("TradeskillInfo", true)
+local L = LibStub("AceLocale-3.0"):GetLocale("TradeSkillInfo")
 
 
 -- upvalues, will be populated in :CreateConfig() at the bottom of the file

@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):GetLocale("TradeskillInfo")
+local L = LibStub("AceLocale-3.0"):GetLocale("TradeSkillInfo")
 local BZ = LibStub("LibBabble-Zone-3.0"):GetLookupTable()
 local BF = LibStub("LibBabble-Faction-3.0"):GetLookupTable()
 
