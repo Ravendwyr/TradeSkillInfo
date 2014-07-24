@@ -187,7 +187,7 @@ public class TSInfo
 			case "Erste Hilfe"       : return 129;
 			case "Ingenieurskunst"   : return 202;
 			case "Inschriftenkunde"  : return 773;
-			case "Juwelenschleifen"  : return 755;
+			case "Juwelierskunst"    : return 755;
 			case "Kochkunst"         : return 185;
 			case "Lederverarbeitung" : return 165;
 			case "Schmiedekunst"     : return 164;
@@ -206,7 +206,7 @@ public class TSInfo
 			case "Erste Hilfe"       : temp = "X"; break;
 			case "Ingenieurskunst"   : temp = "E"; break;
 			case "Inschriftenkunde"  : temp = "I"; break;
-			case "Juwelenschleifen"  : temp = "J"; break;
+			case "Juwelierskunst"    : temp = "J"; break;
 			case "Kochkunst"         : temp = "W"; break;
 			case "Lederverarbeitung" : temp = "L"; break;
 			case "Schmiedekunst"     : temp = "B"; break;
@@ -453,7 +453,7 @@ public class TSInfo
 			"Erste Hilfe",
 			"Ingenieurskunst",
 			"Inschriftenkunde",
-			"Juwelenschleifen",
+			"Juwelierskunst",
 			"Kochkunst",
 			"Lederverarbeitung",
 			"Schmiedekunst",
