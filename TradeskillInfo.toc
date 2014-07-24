@@ -34,13 +34,16 @@ Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 #@end-no-lib-strip@
 
 Locale\enUS.lua
-Locale\ruRU.lua
 Locale\deDE.lua
 Locale\esES.lua
+Locale\esMX.lua
+Locale\frFR.lua
+Locale\itIT.lua
 Locale\koKR.lua
+Locale\ptBR.lua
+Locale\ruRU.lua
 Locale\zhCN.lua
 Locale\zhTW.lua
-Locale\frFR.lua
 
 TradeskillInfo.lua
 DataBroker.lua
