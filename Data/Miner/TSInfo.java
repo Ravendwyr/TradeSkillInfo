@@ -25,8 +25,8 @@ class Item
 	}
 
 	public String toString() {
-//		String temp = "\t[" + id + "] = \"" + (spell != 0 ? spell + "|" : "") + skill + "|" + reagents;
-		String temp = "\t[" + spell + "] = \"" + id + "|" + skill + "|" + reagents;
+		String temp = "\t[" + id + "] = \"" + (spell != 0 ? spell + "|" : "") + skill + "|" + reagents;
+//		String temp = "\t[" + spell + "] = \"" + id + "|" + skill + "|" + reagents;
 
 		if (itemid != 0) {
 			return temp + "|" + (recipe != 0 ? recipe : "") + "|" + (yield != 0 ? yield : "") + "|" + itemid + "\",";
@@ -42,7 +42,7 @@ class Item
 	}
 }
 
-/*
+
 class SpecialCase
 {
 	public int id;
@@ -62,7 +62,7 @@ class SpecialCase
 		return "\t[" + id + "] = \"" + temp.substring(0, temp.length() - 1) + "\",";
 	}
 }
-*/
+
 
 class Recipe
 {
@@ -134,7 +134,6 @@ public class TSInfo
 		return null;
 	}
 
-/*
 	public SpecialCase getSpecialCase(int id)
 	{
 		for (SpecialCase entry : specialcases) {
@@ -146,7 +145,6 @@ public class TSInfo
 		specialcases.add(entry);
 		return entry;
 	}
-*/
 
 	public void addCombine(Item newItem)
 	{
@@ -156,7 +154,7 @@ public class TSInfo
 			combines.add(newItem);
 			return;
 		}
-/*
+
 		SpecialCase sc = getSpecialCase(id);
 
 		if (oldItem.itemid == 0) {
@@ -170,7 +168,7 @@ public class TSInfo
 		newItem.itemid = id;
 		newItem.id = maxSpecialCase;
 		sc.list.add(maxSpecialCase);
-*/
+
 		combines.add(newItem);
 	}
 
@@ -269,7 +267,6 @@ public class TSInfo
 								item.skill = getSkill(row);
 								item.recipe = getRecipe(row.optJSONArray("rec"));
 								String school = row.optString("school");
-/*
 								if (school.equals("Verzauberkunst")) {
 									id = -item.spell;
 									item.spell = id;
@@ -281,7 +278,6 @@ public class TSInfo
 									fake.recipe = item.recipe;
 									addCombine(fake);
 								}
-*/
 								addCombine(item);
 								if (item.recipe > 0) {
 									recipes.add(new Recipe(item.recipe, id));
@@ -378,7 +374,6 @@ public class TSInfo
 								if (creates != null) {
 									item.yield = creates.optInt(1);
 								}
-/*
 								if (profession.equals("Verzauberkunst")) {
 									Item fake = getSpellItem(-id);
 									if (fake != null) {
@@ -386,7 +381,6 @@ public class TSInfo
 										fake.yield = item.yield;
 									}
 								}
-*/
 							}
 						}
 					}
@@ -406,13 +400,13 @@ public class TSInfo
 		try
 		{
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(filename))));
-/*
+
 			out.write("\nTradeskillInfo.vars.specialcases = {\n");
 			for (Object item : specialcases) {
 				out.write(item + "\n");
 			}
 			out.write("}\n");
-*/
+
 			out.write("\nTradeskillInfo.vars.combines = {\n");
 			for (Object item : combines) {
 				out.write(item + "\n");
