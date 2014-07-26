@@ -809,7 +809,7 @@ function TradeskillInfo:GetCombineCost(id)
 	if item then id = item end
 
 	if id > 0 then
-		value = select(2, self:GetComponent(id, true))
+		value = select(2, self:GetComponent(id, true)) or 0
 
 		if yield > 1 then
 			value = value * yield
@@ -837,7 +837,7 @@ function TradeskillInfo:GetCombineAuctioneerCost(id)
 	if item then id = item end
 
 	if id > 0 then
-		value = select(4, self:GetComponent(id, false, true))
+		value = select(4, self:GetComponent(id, false, true)) or 0
 
 		if yield > 1 then
 			value = value * yield
