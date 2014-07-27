@@ -180,17 +180,17 @@ public class TSInfo
 	public int getProfessionId(String profession)
 	{
 		switch (profession) {
-			case "Alchemie"          : return 171;
-			case "Bergbau"           : return 186;
-			case "Erste Hilfe"       : return 129;
-			case "Ingenieurskunst"   : return 202;
-			case "Inschriftenkunde"  : return 773;
-			case "Juwelierskunst"    : return 755;
-			case "Kochkunst"         : return 185;
-			case "Lederverarbeitung" : return 165;
-			case "Schmiedekunst"     : return 164;
-			case "Schneiderei"       : return 197;
-			case "Verzauberkunst"    : return 333;
+			case "Alchemy"        : return 171;
+			case "Mining"         : return 186;
+			case "First Aid"      : return 129;
+			case "Engineering"    : return 202;
+			case "Inscription"    : return 773;
+			case "Jewelcrafting"  : return 755;
+			case "Cooking"        : return 185;
+			case "Leatherworking" : return 165;
+			case "Blacksmithing"  : return 164;
+			case "Tailoring"      : return 197;
+			case "Enchanting"     : return 333;
 		}
 		return 0;
 	}
@@ -199,17 +199,17 @@ public class TSInfo
 	{
 		String temp = "";
 		switch (obj.getString("school")) {
-			case "Alchemie"          : temp = "A"; break;
-			case "Bergbau"           : temp = "Y"; break;
-			case "Erste Hilfe"       : temp = "X"; break;
-			case "Ingenieurskunst"   : temp = "E"; break;
-			case "Inschriftenkunde"  : temp = "I"; break;
-			case "Juwelierskunst"    : temp = "J"; break;
-			case "Kochkunst"         : temp = "W"; break;
-			case "Lederverarbeitung" : temp = "L"; break;
-			case "Schmiedekunst"     : temp = "B"; break;
-			case "Schneiderei"       : temp = "T"; break;
-			case "Verzauberkunst"    : temp = "D"; break;
+			case "Alchemy"        : temp = "A"; break;
+			case "Mining"         : temp = "Y"; break;
+			case "First Aid"      : temp = "X"; break;
+			case "Engineering"    : temp = "E"; break;
+			case "Inscription"    : temp = "I"; break;
+			case "Jewelcrafting"  : temp = "J"; break;
+			case "Cooking"        : temp = "W"; break;
+			case "Leatherworking" : temp = "L"; break;
+			case "Blacksmithing"  : temp = "B"; break;
+			case "Tailoring"      : temp = "T"; break;
+			case "Enchanting"     : temp = "D"; break;
 		}
 		int level = obj.optInt("level");
 		temp += level + "/" + level + "/" +level + "/" +level;
@@ -267,7 +267,7 @@ public class TSInfo
 								item.skill = getSkill(row);
 								item.recipe = getRecipe(row.optJSONArray("rec"));
 /*								String school = row.optString("school");
-								if (school.equals("Verzauberkunst")) {
+								if (school.equals("Enchanting")) {
 									id = -item.spell;
 									item.spell = id;
 //									item.reagents += " 38682";
@@ -296,7 +296,7 @@ public class TSInfo
 		String suffix = ");bt.init();</script>";
 		try
 		{
-			URL url = new URL("http://wowdata.buffed.de/spell/profession/" + getProfessionId(profession));
+			URL url = new URL("http://wowdata.getbuffed.com/spell/profession/" + getProfessionId(profession));
 			URLConnection bc = url.openConnection();
 			BufferedReader in = new BufferedReader(new InputStreamReader(bc.getInputStream()));
 
@@ -349,7 +349,7 @@ public class TSInfo
 		String offset = "data: ";
 		try
 		{
-			URL url = new URL("http://de.wowhead.com/skill=" + getProfessionId(profession));
+			URL url = new URL("http://www.wowhead.com/skill=" + getProfessionId(profession));
 			URLConnection bc = url.openConnection();
 			BufferedReader in = new BufferedReader(new InputStreamReader(bc.getInputStream()));
 
@@ -374,7 +374,7 @@ public class TSInfo
 								if (creates != null) {
 									item.yield = creates.optInt(1);
 								}
-/*								if (profession.equals("Verzauberkunst")) {
+/*								if (profession.equals("Enchanting")) {
 									Item fake = getSpellItem(-id);
 									if (fake != null) {
 										fake.skill = item.skill;
@@ -442,17 +442,17 @@ public class TSInfo
 		TSInfo tsi = new TSInfo();
 
 		String[] professions = {
-			"Alchemie",
-			"Bergbau",
-			"Erste Hilfe",
-			"Ingenieurskunst",
-			"Inschriftenkunde",
-			"Juwelierskunst",
-			"Kochkunst",
-			"Lederverarbeitung",
-			"Schmiedekunst",
-			"Schneiderei",
-			"Verzauberkunst"
+			"Alchemy",
+			"Mining",
+			"First Aid",
+			"Engineering",
+			"Inscription",
+			"Jewelcrafting",
+			"Cooking",
+			"Leatherworking",
+			"Blacksmithing",
+			"Tailoring",
+			"Enchanting"
 		};
 
 		for (String profession : professions) {
@@ -463,6 +463,6 @@ public class TSInfo
 		tsi.writeToFile("../Data.lua");
 
 		long difftime = System.currentTimeMillis() - starttime;
-		System.out.println("Programm beendet in " + difftime / 1000 + " Sekunden");
+		System.out.println("Program completed in " + difftime / 1000 + " seconds.");
 	}
 }
