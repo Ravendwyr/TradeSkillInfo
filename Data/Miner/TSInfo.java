@@ -266,7 +266,7 @@ public class TSInfo
 								item.spell = row.getInt("id");
 								item.skill = getSkill(row);
 								item.recipe = getRecipe(row.optJSONArray("rec"));
-								String school = row.optString("school");
+/*								String school = row.optString("school");
 								if (school.equals("Verzauberkunst")) {
 									id = -item.spell;
 									item.spell = id;
@@ -278,7 +278,7 @@ public class TSInfo
 									fake.recipe = item.recipe;
 									addCombine(fake);
 								}
-								addCombine(item);
+*/								addCombine(item);
 								if (item.recipe > 0) {
 									recipes.add(new Recipe(item.recipe, id));
 								}
@@ -374,14 +374,14 @@ public class TSInfo
 								if (creates != null) {
 									item.yield = creates.optInt(1);
 								}
-								if (profession.equals("Verzauberkunst")) {
+/*								if (profession.equals("Verzauberkunst")) {
 									Item fake = getSpellItem(-id);
 									if (fake != null) {
 										fake.skill = item.skill;
 										fake.yield = item.yield;
 									}
 								}
-							}
+*/							}
 						}
 					}
 					break;
