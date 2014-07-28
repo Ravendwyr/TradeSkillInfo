@@ -182,7 +182,7 @@ public class TSInfo
 		switch (profession) {
 			case "Alchemy"        : return 171;
 			case "Mining"         : return 186;
-			case "First Aid"      : return 129;
+//			case "First Aid"      : return 129;
 			case "Engineering"    : return 202;
 			case "Inscription"    : return 773;
 			case "Jewelcrafting"  : return 755;
@@ -201,7 +201,7 @@ public class TSInfo
 		switch (obj.getString("school")) {
 			case "Alchemy"        : temp = "A"; break;
 			case "Mining"         : temp = "Y"; break;
-			case "First Aid"      : temp = "X"; break;
+//			case "First Aid"      : temp = "X"; break;
 			case "Engineering"    : temp = "E"; break;
 			case "Inscription"    : temp = "I"; break;
 			case "Jewelcrafting"  : temp = "J"; break;
@@ -444,7 +444,7 @@ public class TSInfo
 		String[] professions = {
 			"Alchemy",
 			"Mining",
-			"First Aid",
+//			"First Aid",
 			"Engineering",
 			"Inscription",
 			"Jewelcrafting",
