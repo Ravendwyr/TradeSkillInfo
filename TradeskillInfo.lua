@@ -174,7 +174,6 @@ function TradeskillInfo:OnAddonLoaded(_, addon)
 	if addon == "Blizzard_AuctionUI" then
 		self:HookAuctionUI()
 	elseif addon == "Blizzard_TradeSkillUI" or
-	       addon == "Skillet" or
 		   addon == "AdvancedTradeSkillWindow" then
 		self:HookTradeSkillUI()
 	end
@@ -231,58 +230,6 @@ function TradeskillInfo:HookAuctionUI()
 --	end
 end
 
-function TradeskillInfo:GetExtraItemDetailText(_, _, skill_index)
---Thanks to nogudnik for providing this code!
-	local _, skillType = GetTradeSkillInfo(skill_index)
-	if ( skillType == "header" or skillType == "subheader" ) then return end
-	if ( skill_index > GetNumTradeSkills() ) then return end
-
-	local link = GetTradeSkillItemLink(skill_index)
-	local itemId = getIdFromLink(link)
-
-	if not self:CombineExists(itemId) then
-		local spellLink = GetTradeSkillRecipeLink(skill_index)
-		local spellId = getIdFromLink(spellLink)
-		itemId = self:MakeSpecialCase(itemId, spellId)
-	end
-
-	return self:GetExtraItemDataText(itemId,
-	                                 self:ShowingSkillProfit(),
-	                                 self:ShowingSkillLevel(),
-	                                 self:ShowingSkillAuctioneerProfit())
-end
-
-function TradeskillInfo:GetExtraItemDataText(itemId, showVendorProfit, showDifficulty, showAuctioneerProfit)
-	local text
-
-	if self:CombineExists(itemId) then
-		if showAuctioneerProfit then
-			-- Insert item value and reagent costs from auctioneer
-			local value,cost,profit = self:GetCombineAuctioneerCost(itemId)
-			text = string.format("A: %s - %s = %s",
-			                     self:GetMoneyString(value),
-			                     self:GetMoneyString(cost),
-			                     self:GetMoneyString(profit))
-		end
-		local sep = ""
-		if showVendorProfit then
-			-- Insert item value and reagent costs
-			local value,cost,profit = self:GetCombineCost(itemId)
-			if text then sep = "\n" else text = "" end
-			text = text .. sep ..
-			       string.format("V: %s - %s = %s",
-			                     self:GetMoneyString(value),
-			                     self:GetMoneyString(cost),
-			                     self:GetMoneyString(profit))
-		end
-		if showDifficulty then
-			if text then sep = "\n" else text = "" end
-			text = text .. sep .. self:GetColoredDifficulty(itemId)
-		end
-	end
-
-	return text
-end
 
 function TradeskillInfo:HookTradeSkillUI()
 	if TradeSkillFrame and not self:IsHooked("TradeSkillFrame_SetSelection") then
@@ -294,10 +241,6 @@ function TradeskillInfo:HookTradeSkillUI()
 
 		fsSkillText:SetPoint("TOPLEFT", 5, -52)
 		fsProfitText:SetPoint("TOPLEFT", fsSkillText, "TOPRIGHT")
-	end
-
-	if Skillet and not self:IsHooked(Skillet, "GetExtraItemDetailText") then
-		self:RawHook(Skillet, "GetExtraItemDetailText")
 	end
 
 	if IsAddOnLoaded("AdvancedTradeSkillWindow") and not self:IsHooked("ATSWFrame_SetSelection") then
