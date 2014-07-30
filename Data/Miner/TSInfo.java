@@ -25,6 +25,7 @@ class Item
 	}
 
 	public String toString() {
+		if (skill.length() > 1) {
 		String temp = "\t[" + id + "] = \"" + (spell != 0 ? spell + "|" : "") + skill + "|" + reagents;
 //		String temp = "\t[" + spell + "] = \"" + id + "|" + skill + "|" + reagents;
 
@@ -39,6 +40,8 @@ class Item
 		}
 
 		return temp + "\",";
+		}
+		return "";
 	}
 }
 
@@ -211,8 +214,8 @@ public class TSInfo
 			case "Tailoring"      : temp = "T"; break;
 			case "Enchanting"     : temp = "D"; break;
 		}
-		int level = obj.optInt("level");
-		temp += level + "/" + level + "/" +level + "/" +level;
+//		int level = obj.optInt("level");
+//		temp += level + "/" + level + "/" +level + "/" +level;
 		return temp;
 	}
 
@@ -368,7 +371,7 @@ public class TSInfo
 								JSONArray colors = row.optJSONArray("colors");
 								if (colors != null) {
 									String skill = colors.toString().replace(',', '/');
-									item.skill = item.skill.charAt(0) + skill.substring(1, skill.length() - 1);
+									item.skill = item.skill + skill.substring(1, skill.length() - 1);
 								}
 								JSONArray creates = row.optJSONArray("creates");
 								if (creates != null) {
