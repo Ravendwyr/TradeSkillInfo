@@ -442,6 +442,7 @@ public class TSInfo
 	{
 		long starttime = System.currentTimeMillis();
 
+		System.out.println("Beginning program...");
 		TSInfo tsi = new TSInfo();
 
 		String[] professions = {
@@ -459,10 +460,12 @@ public class TSInfo
 		};
 
 		for (String profession : professions) {
+			System.out.println("Scanning " + profession + "...");
 			tsi.readFromBuffed(profession);
 			tsi.readFromWowHead(profession);
 		}
 
+		System.out.println("Saving data to Data.lua...");
 		tsi.writeToFile("../Data.lua");
 
 		long difftime = System.currentTimeMillis() - starttime;
