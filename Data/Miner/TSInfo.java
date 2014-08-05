@@ -198,10 +198,12 @@ public class TSInfo
 		return 0;
 	}
 
-	public String getSkill(JSONObject obj) throws JSONException
+//	public String getSkill(JSONObject obj) throws JSONException
+	public String getSkill(String profession) throws JSONException
 	{
 		String temp = "";
-		switch (obj.getString("school")) {
+//		switch (obj.getString("school")) {
+		switch (profession) {
 			case "Alchemy"        : temp = "A"; break;
 			case "Mining"         : temp = "Y"; break;
 //			case "First Aid"      : temp = "X"; break;
@@ -261,13 +263,17 @@ public class TSInfo
 						JSONObject row = rows.getJSONObject(i);
 						int id = getId(row.optJSONObject("p"));
 						if (id != 0) {
-							String reagents = getReagents(row.optJSONArray("re"));
-							if (reagents != "") {
-								Item item = new Item();
-								item.id = id;
-								item.reagents = reagents;
-								item.spell = row.getInt("id");
-								item.skill = getSkill(row);
+							Item item = getSpellItem(id);
+							if (item != null) {
+//								String reagents = getReagents(row.optJSONArray("re"));
+//								if (reagents != "") {
+//									item.reagents = reagents;
+//								}
+								
+//								Item item = new Item();
+//								item.id = id;
+//								item.spell = row.getInt("id");
+//								item.skill = getSkill(row);
 								item.recipe = getRecipe(row.optJSONArray("rec"));
 /*								String school = row.optString("school");
 								if (school.equals("Enchanting")) {
@@ -281,10 +287,12 @@ public class TSInfo
 									fake.recipe = item.recipe;
 									addCombine(fake);
 								}
-*/								addCombine(item);
+*/
 								if (item.recipe > 0) {
 									recipes.add(new Recipe(item.recipe, id));
 								}
+//							} else {
+//								System.out.println("Cannot find " + id);
 							}
 						}
 					}
@@ -306,8 +314,8 @@ public class TSInfo
 			String line;
 			while ((line = in.readLine()) != null) {
 				if (line.startsWith(prefix) && line.endsWith(suffix)) {
-					combines.add("\n--[[ " + profession + " ]]--");
-					recipes.add("\n--[[ " + profession + " ]]--");
+//					combines.add("\n--[[ " + profession + " ]]--");
+//					recipes.add("\n--[[ " + profession + " ]]--");
 					read(line.substring(prefix.length(), line.length() - suffix.length()));
 					break;
 				}
@@ -355,6 +363,10 @@ public class TSInfo
 			URL url = new URL("http://www.wowhead.com/skill=" + getProfessionId(profession));
 			URLConnection bc = url.openConnection();
 			BufferedReader in = new BufferedReader(new InputStreamReader(bc.getInputStream()));
+//			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("debug/" + profession))));
+
+			combines.add("\n--[[ " + profession + " ]]--");
+			recipes.add("\n--[[ " + profession + " ]]--");
 
 			String line;
 			while ((line = in.readLine()) != null) {
@@ -365,18 +377,43 @@ public class TSInfo
 						JSONArray rows = new JSONArray(line);
 						for (int i = 0; i < rows.length(); i++) {
 							JSONObject row = rows.getJSONObject(i);
+//							out.write(row + "\n");
 							int id = row.optInt("id");
-							Item item = getSpellItem(id);
-							if (item != null) {
+//							Item item = getSpellItem(id);
+							Item item = new Item();
+							item.skill = getSkill(profession);
+
+							JSONArray creates = row.optJSONArray("creates");
+							
+							if (creates != null) {
+								item.id = creates.optInt(0);
+								item.yield = creates.optInt(1);
+								item.spell = id;
+							} else {
+								item.id = -id;
+							}
+
+//								String reagents = getReagents(row.optJSONArray("reagents"));
+	//							if (reagents != "") {
+		//							item.reagents = reagents;
+			//					}
+			
+								JSONArray reagent = row.optJSONArray("reagents");
+								if (reagent != null) {
+									String reagents = reagent.toString().replace("],[", " ").replace(",", ":");
+									item.reagents = reagents.substring(2, reagents.length() - 2);
+								}
+
 								JSONArray colors = row.optJSONArray("colors");
 								if (colors != null) {
 									String skill = colors.toString().replace(',', '/');
 									item.skill = item.skill + skill.substring(1, skill.length() - 1);
 								}
-								JSONArray creates = row.optJSONArray("creates");
-								if (creates != null) {
-									item.yield = creates.optInt(1);
-								}
+//								JSONArray creates = row.optJSONArray("creates");
+//								if (creates != null) {
+//									item.id = creates.optInt(0);
+//									item.yield = creates.optInt(1);
+//								}
 /*								if (profession.equals("Enchanting")) {
 									Item fake = getSpellItem(-id);
 									if (fake != null) {
@@ -384,8 +421,11 @@ public class TSInfo
 										fake.yield = item.yield;
 									}
 								}
-*/							}
+
+*/
+							addCombine(item);
 						}
+//						out.close();
 					}
 					break;
 				}
@@ -461,7 +501,7 @@ public class TSInfo
 
 		for (String profession : professions) {
 			System.out.println("Scanning " + profession + "...");
-			tsi.readFromBuffed(profession);
+//			tsi.readFromBuffed(profession);
 			tsi.readFromWowHead(profession);
 		}
 
