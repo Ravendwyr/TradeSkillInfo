@@ -370,8 +370,19 @@ public class TSInfo
 							if (item != null) {
 								JSONArray colors = row.optJSONArray("colors");
 								if (colors != null) {
-									String skill = colors.toString().replace(',', '/');
-									item.skill = item.skill + skill.substring(1, skill.length() - 1);
+									int orange = colors.getInt(0);
+									int yellow = colors.getInt(1);
+									int green  = colors.getInt(2);
+									int grey   = colors.getInt(3);
+
+									if (green == 0) { green = grey; }
+									if (yellow == 0) { yellow = green; }
+									if (orange == 0) { orange = yellow; }
+
+									item.skill = item.skill + orange + "/" + yellow + "/" + green + "/" + grey;
+									
+//									String skill = colors.toString().replace(',', '/');
+//									item.skill = item.skill + skill.substring(1, skill.length() - 1);
 								}
 								JSONArray creates = row.optJSONArray("creates");
 								if (creates != null) {
