@@ -613,18 +613,16 @@ end
 
 function TradeskillInfo:GetCombineName(id)
 	local name
+
 	if id > 0 then
-		local enchantId = self:GetCombineEnchantId(id)
-		-- Hack Alert: If enchant id < 0, then use item name, otherwise ise spell name
-		if (enchantId < 0) then
-			name = self:GetComponent(id)
-		else
-			name = GetSpellInfo(enchantId)
-		end
+		id = self:GetSpecialCase(id)
+		name = GetItemInfo(id)
 	else
 		name = GetSpellInfo(-id)
 	end
-	if not name then name=tostring(id) end
+
+	if not name then name = tostring(id) end
+
 	return name
 end
 
