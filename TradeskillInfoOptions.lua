@@ -90,7 +90,7 @@ local tooltipOptions = {
 					order = 6,
 				},
 				itemID = {
-					name = L["ItemID"],
+					name = L["Item ID"],
 					desc = L["Show the item's ID"],
 					type = "toggle",
 					arg = "TooltipID",
