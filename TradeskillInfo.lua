@@ -1511,7 +1511,7 @@ function TradeskillInfo:AddTooltipInfo(tooltip)
 
 		if stack and stack > 1 then
 			local c = self.db.profile.ColorStack
-			tooltip:AddDoubleLine(L["Stack size"], tostring(stack), c.r, c.g, c.b, c.r, c.g, c.b)
+			tooltip:AddDoubleLine(L["Stack Size"], tostring(stack), c.r, c.g, c.b, c.r, c.g, c.b)
 		end
 	end
 
