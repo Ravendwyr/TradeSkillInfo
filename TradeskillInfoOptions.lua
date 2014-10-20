@@ -190,7 +190,7 @@ local tooltipOptions = {
 					order = 5,
 				},
 				itemID = {
-					name = L["ItemID"],
+					name = L["Item ID"],
 					desc = L["Show the item's ID"],
 					type = "color",
 					arg = "ColorID",
