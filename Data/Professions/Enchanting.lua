@@ -218,7 +218,8 @@ C[-27927] = "D375/380/385/390|22450:2 22449:2|22538"	-- Enchant Ring - Stats
 C[-27984] = "D375/380/385/390|22450:6 22449:10 22446:8 22445:40|22559"	-- Enchant Weapon - Mongoose
 C[-27982] = "D375/380/385/390|22450:12 22449:10 22446:8 21885:6 22456:6|22561"	-- Enchant Weapon - Soulfrost
 C[-27981] = "D375/375/375/390|22450:12 22449:10 22446:8 21884:6 23571|22560"	-- Enchant Weapon - Sunfire
-C[-42974] = "D375/380/385/390|22450:6 22449:10 22446:6 22445:30 22824:3|33307" --Enchant Weapon: Executioner
+	--[-42974] = "D375/380/385/390|22450:6 22449:10 22446:6 22445:30 22824:3|33307" --Enchant Weapon: Executioner
+C[-42974] = "D375/380/385/390|22450:6 22449:10 22446:6 22445:30 22824:3|78348" --Enchant Weapon: Executioner
 C[-27958] = "D350/360/370/380|34054:6" -- Enchant Chest - Exceptional Mana
 
 	-- WotLK Enchanting combines
@@ -350,9 +351,9 @@ C[-74192] = "D435/450/460/470|52555:3" -- Enchant Cloak - Greater Spell Piercing
 C[-74191] = "D425/440/450/460|52718:2" -- Enchant Chest - Mighty Stats
 C[-74189] = "D425/440/450/460|52555:2" -- Enchant Boots - Earthen Vitality
 C[-74132] = "D425/440/450/460|52555 52718" -- Enchant Gloves - Mastery
-C[-96264] = "D515/525/532/540|52555:12 52722:2 52328:15" -- Enchant Bracer - Agility
-C[-96262] = "D515/525/532/540|52555:4 52719:4 52722:2 52326:15" -- Enchant Bracer - Mighty Intellect
-C[-96261] = "D515/525/532/540|52555:6 52722:2 52327:25" -- Enchant Bracer - Major Strength
+C[-96264] = "D515/525/532/540|52555:12 52722:2 52328:15|68787" -- Enchant Bracer - Agility
+C[-96262] = "D515/525/532/540|52555:4 52719:4 52722:2 52326:15|68789" -- Enchant Bracer - Mighty Intellect
+C[-96261] = "D515/525/532/540|52555:6 52722:2 52327:25|68788" -- Enchant Bracer - Major Strength
 	--[52723] = "92370|D515/515/515/525|44452 52555:10 52719:6 52721:6 65358" -- Runed Elementium Rod
 C[67274] = "93841|D525/525/525/525|52721:8 52722 52555:8" -- Enchanted Lantern
 C[67275] = "93843|D525/525/525/525|52721:8 52722 52719:4" -- Magic Lamp
@@ -663,9 +664,9 @@ C[52745] = "-74192|D435/450/460/470|52555:3 38682" -- Enchant Cloak - Greater Sp
 C[52744] = "-74191|D425/440/450/460|52718:2 38682" -- Enchant Chest - Mighty Stats
 C[52743] = "-74189|D425/440/450/460|52555:2 38682" -- Enchant Boots - Earthen Vitality
 C[52687] = "-74132|D425/440/450/460|52555 52718 38682" -- Enchant Gloves - Mastery
-C[68784] = "-96264|D515/525/532/540|52555:12 52722:2 52328:15 38682" -- Enchant Bracer - Agility
-C[68786] = "-96262|D515/525/532/540|52555:4 52719:4 52722:2 52326:15 38682" -- Enchant Bracer - Mighty Intellect
-C[68785] = "-96261|D515/525/532/540|52555:6 52722:2 52327:25 38682" -- Enchant Bracer - Major Strength
+C[68784] = "-96264|D515/525/532/540|52555:12 52722:2 52328:15 38682|68787" -- Enchant Bracer - Agility
+C[68786] = "-96262|D515/525/532/540|52555:4 52719:4 52722:2 52326:15 38682|68789" -- Enchant Bracer - Mighty Intellect
+C[68785] = "-96261|D515/525/532/540|52555:6 52722:2 52327:25 38682|68788" -- Enchant Bracer - Major Strength
 
 	--MoP enchanting
 C[-103461] = "D550/555/557/560|74249:2|84575" -- Enchant Ring - Greater Agility

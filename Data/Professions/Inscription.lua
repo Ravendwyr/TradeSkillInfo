@@ -3,7 +3,7 @@ local C = TradeskillInfo.vars.combines
 
 -- Classic Recipes
 	-- Insciption (Ink)
-C[37101] = "52738|I1/15/22/30|39151" -- Ivory Ink
+	--[37101] = "52738|I1/15/22/30|39151" -- Ivory Ink -- removed in 6.0.2
 C[39469] = "52843|I35/45/60/75|39151:2" -- Moonglow Ink
 C[43115] = "57703|I85/85/90/95|43103" -- Hunter's Ink
 C[39774] = "53462|I75/75/77/80|39334:2" -- Midnight Ink
