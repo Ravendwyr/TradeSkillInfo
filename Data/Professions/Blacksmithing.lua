@@ -611,8 +611,8 @@ C[75124] = "76456|B500/510/512/515|52186:8 52325:10|66117" -- Vicious Pyrium Bra
 C[75132] = "76468|B515/525/527/530|52186:12 52326:10|66128" -- Vicious Ornate Pyrium Boots
 
 	--blacksmithing
-C[-113263] = "B1/1/1/1|3466:4" -- Socket Bracer
-C[-114112] = "B1/1/1/1|3466:4" -- Socket Gloves
+--C[-113263] = "B1/1/1/1|3466:4" -- Socket Bracer
+--C[-114112] = "B1/1/1/1|3466:4" -- Socket Gloves
 C[80811] = "122568|B550/565/582/600|72096:12|84235" -- Spiritguard Helm
 C[82896] = "122569|B535/550/575/600|72096:7|84238" -- Spiritguard Shoulders
 C[82897] = "122570|B550/565/582/600|72096:12|84233" -- Spiritguard Breastplate
