@@ -305,7 +305,7 @@ function TradeskillInfoUI:DoFrameUpdate()
 			local skillName, skillType, isExpanded = self:GetTradeSkillInfo(skillIndex)
 			-- If we got ???? or an ID instead of a skill name ...
 --			if skillName == "????" or string.match(skillName, "-?%d+") == skillName then
-			if string.match(skillName, "-?%d+") == skillName then
+			if skillName:find("-?%d+") then
 				TradeskillInfo:Print("ERROR: Could not find "..skillName)
 				-- ... update the local cache ...
 --				self:UpdateCacheIndex(self.vars.searchResult[skillIndex], self.vars.coUpdate_Frame)
