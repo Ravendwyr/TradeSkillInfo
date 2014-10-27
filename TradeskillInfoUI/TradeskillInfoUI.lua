@@ -307,13 +307,13 @@ function TradeskillInfoUI:DoFrameUpdate()
 			local skillName, skillType, isExpanded = self:GetTradeSkillInfo(skillIndex)
 
 			-- if we got an ID instead of a skill name ...
-			if skillName:find("-?%d+") then
+			if skillName:find("^-?%d+$") then
 				-- ... try to obtain the info again ...
 				skillName, skillType, isExpanded = self:GetTradeSkillInfo(skillIndex)
 
 				--@debug@--
 				-- ... if we get an ID a second time, print an error
-				if skillName:find("-?%d+") then
+				if skillName:find("^-?%d+$") then
 					TradeskillInfo:Print("ERROR: Could not find "..skillName)
 				end
 				--@end-debug@--
