@@ -698,23 +698,7 @@ function TradeskillInfo:GetCombineComponents(id, getVendorPrice, getAuctioneerPr
 end
 
 function TradeskillInfo:GetCombineDescription(id)
-	local description
-	if id < 0 then
-		-- TODO: This is probably not the best place to put this if we need to scan more tooltips
-		if not TSIScanTooltip then
-			CreateFrame( "GameTooltip", "TSIScanTooltip" )
-			TSIScanTooltip:SetOwner( WorldFrame, "ANCHOR_NONE" )
-			TSIScanTooltip:AddFontStrings(
-				TSIScanTooltip:CreateFontString( "$parentTextLeft1", nil, "GameTooltipText" ),
-				TSIScanTooltip:CreateFontString( "$parentTextRight1", nil, "GameTooltipText" ) )
-		end
-
-		TSIScanTooltip:ClearLines()
-		TSIScanTooltip:SetHyperlink(GetSpellLink(-id))
-		description = _G["TSIScanTooltipTextLeft3"]
-		if description then description = description:GetText() end
-	end
-	return description
+	if id < 0 then return GetSpellDescription(-id) end
 end
 
 function TradeskillInfo:GetCombineTexture(id)
