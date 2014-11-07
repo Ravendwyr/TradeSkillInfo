@@ -1460,8 +1460,10 @@ do
 			skillLink = "spell:" .. -id
 		end
 
+		local attempts = 0
 		local name
 		while not name do
+			attempts = attempts + 1
 			performIdAction(id)
 			tipframe:SetHyperlink(skillLink)
 			coroutine.yield()
@@ -1472,7 +1474,7 @@ do
 			end
 			-- If we update successfully, stop. Otherwise, try again.
 			if name then break end
-			if not name then TradeskillInfo:Print("Could not find "..skillLink..". Please report this error, as the item/recipe may have been removed.") break end
+			if not name and attempts >= 3 then TradeskillInfo:Print("Could not find "..skillLink..". Please report this error, as the item/recipe may have been removed.") break end
 		end
 		idAction[id] = nil
     end
