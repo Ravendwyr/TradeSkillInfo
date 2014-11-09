@@ -26,43 +26,22 @@ class Item
 
 	public String toString() {
 		if (skill.length() > 1) {
-		String temp = "\t[" + id + "] = \"" + (spell != 0 ? spell + "|" : "") + skill + "|" + reagents;
-//		String temp = "\t[" + spell + "] = \"" + id + "|" + skill + "|" + reagents;
+//			String temp = "\t[" + id + "] = \"" + (spell != 0 ? spell + "|" : "") + skill + "|" + reagents;
+			String temp = "\t[" + spell + "] = \"" + id + "|" + skill + "|" + reagents;
 
-		if (itemid != 0) {
-			return temp + "|" + (recipe != 0 ? recipe : "") + "|" + (yield != 0 ? yield : "") + "|" + itemid + "\",";
-		}
-		if (yield != 0) {
-			return temp + "|" + (recipe != 0 ? recipe : "") + "|" + yield + "\",";
-		}
-		if (recipe != 0) {
-			return temp + "|" + recipe + "\",";
-		}
+			if (itemid != 0) {
+				return temp + "|" + (recipe != 0 ? recipe : "") + "|" + (yield != 0 ? yield : "") + "|" + itemid + "\",\n";
+			}
+			if (yield != 0) {
+				return temp + "|" + (recipe != 0 ? recipe : "") + "|" + yield + "\",\n";
+			}
+			if (recipe != 0) {
+				return temp + "|" + recipe + "\",\n";
+			}
 
-		return temp + "\",";
+			return temp + "\",\n";
 		}
 		return "";
-	}
-}
-
-
-class SpecialCase
-{
-	public int id;
-	public ArrayList list;
-
-	public SpecialCase(int id)
-	{
-		this.id = id;
-		list = new ArrayList();
-	}
-
-	public String toString() {
-		String temp = "";
-		for (Object item : list) {
-			temp += item + ",";
-		}
-		return "\t[" + id + "] = \"" + temp.substring(0, temp.length() - 1) + "\",";
 	}
 }
 
@@ -93,16 +72,12 @@ class Recipe
 
 public class TSInfo
 {
-	public int maxSpecialCase;
-	public ArrayList<SpecialCase> specialcases;
 	public ArrayList combines;
 	public Map<Integer, String> components;
 	public ArrayList recipes;
 
 	public TSInfo()
 	{
-		maxSpecialCase = 0;
-		specialcases = new ArrayList();
 		combines = new ArrayList();
 		components = new HashMap<Integer, String>();
 		recipes = new ArrayList();
@@ -137,18 +112,6 @@ public class TSInfo
 		return null;
 	}
 
-	public SpecialCase getSpecialCase(int id)
-	{
-		for (SpecialCase entry : specialcases) {
-			if (entry.id == id) {
-				return entry;
-			}
-		}
-		SpecialCase entry = new SpecialCase(id);
-		specialcases.add(entry);
-		return entry;
-	}
-
 	public void addCombine(Item newItem)
 	{
 		int id = newItem.id;
@@ -157,22 +120,6 @@ public class TSInfo
 			combines.add(newItem);
 			return;
 		}
-
-		SpecialCase sc = getSpecialCase(id);
-
-		if (oldItem.itemid == 0) {
-			maxSpecialCase += 1;
-			oldItem.itemid = id;
-			oldItem.id = maxSpecialCase;
-			sc.list.add(maxSpecialCase);
-		}
-
-		maxSpecialCase += 1;
-		newItem.itemid = id;
-		newItem.id = maxSpecialCase;
-		sc.list.add(maxSpecialCase);
-
-		combines.add(newItem);
 	}
 
 	public int getId(JSONObject obj) throws JSONException
@@ -184,16 +131,16 @@ public class TSInfo
 	{
 		switch (profession) {
 			case "Alchemy"        : return 171;
-			case "Mining"         : return 186;
-//			case "First Aid"      : return 129;
+			case "Blacksmithing"  : return 164;
+			case "Cooking"        : return 185;
+			case "Enchanting"     : return 333;
 			case "Engineering"    : return 202;
+			case "First Aid"      : return 129;
 			case "Inscription"    : return 773;
 			case "Jewelcrafting"  : return 755;
-			case "Cooking"        : return 185;
 			case "Leatherworking" : return 165;
-			case "Blacksmithing"  : return 164;
+			case "Mining"         : return 186;
 			case "Tailoring"      : return 197;
-			case "Enchanting"     : return 333;
 		}
 		return 0;
 	}
@@ -203,39 +150,18 @@ public class TSInfo
 		String temp = "";
 		switch (obj.getString("school")) {
 			case "Alchemy"        : temp = "A"; break;
-			case "Mining"         : temp = "Y"; break;
-//			case "First Aid"      : temp = "X"; break;
+			case "Blacksmithing"  : temp = "B"; break;
+			case "Cooking"        : temp = "W"; break;
+			case "Enchanting"     : temp = "D"; break;
 			case "Engineering"    : temp = "E"; break;
+			case "First Aid"      : temp = "X"; break;
 			case "Inscription"    : temp = "I"; break;
 			case "Jewelcrafting"  : temp = "J"; break;
-			case "Cooking"        : temp = "W"; break;
 			case "Leatherworking" : temp = "L"; break;
-			case "Blacksmithing"  : temp = "B"; break;
+			case "Mining"         : temp = "Y"; break;
 			case "Tailoring"      : temp = "T"; break;
-			case "Enchanting"     : temp = "D"; break;
 		}
-//		int level = obj.optInt("level");
-//		temp += level + "/" + level + "/" +level + "/" +level;
 		return temp;
-	}
-
-	public String getReagents(JSONArray arr) throws JSONException
-	{
-		String temp = "";
-		if (arr != null) {
-			for (int i = 0; i < arr.length(); i++) {
-				JSONObject obj = arr.getJSONObject(i);
-				int id = obj.optInt("id");
-				components.put(id, "V");
-				temp += id;
-				int c = obj.getInt("c");
-				if (c > 1) {
-					temp += ":" + c;
-				}
-				temp += " ";
-			}
-		}
-		return temp.trim();
 	}
 
 	public int getRecipe(JSONArray arr) throws JSONException
@@ -249,50 +175,6 @@ public class TSInfo
 		return 0;
 	}
 
-	public void read(String line) throws JSONException
-	{
-		JSONArray jArray = new JSONArray(line);
-		if (jArray.length() > 0) {
-			JSONObject jObject = jArray.optJSONObject(0);
-			if (jObject != null) {
-				JSONArray rows = jObject.optJSONArray("rows");
-				if (rows != null) {
-					for (int i = 0; i < rows.length(); i++) {
-						JSONObject row = rows.getJSONObject(i);
-						int id = getId(row.optJSONObject("p"));
-						if (id != 0) {
-							String reagents = getReagents(row.optJSONArray("re"));
-							if (reagents != "") {
-								Item item = new Item();
-								item.id = id;
-								item.reagents = reagents;
-								item.spell = row.getInt("id");
-								item.skill = getSkill(row);
-								item.recipe = getRecipe(row.optJSONArray("rec"));
-/*								String school = row.optString("school");
-								if (school.equals("Enchanting")) {
-									id = -item.spell;
-									item.spell = id;
-//									item.reagents += " 38682";
-									Item fake = new Item();
-									fake.id = id;
-									fake.skill = item.skill;
-									fake.reagents = reagents;
-									fake.recipe = item.recipe;
-									addCombine(fake);
-								}
-*/								addCombine(item);
-								if (item.recipe > 0) {
-									recipes.add(new Recipe(item.recipe, id));
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
 	public void readFromBuffed(String profession)
 	{
 		String prefix = "var bt = new Btabs(";
@@ -302,17 +184,43 @@ public class TSInfo
 			URL url = new URL("http://wowdata.getbuffed.com/spell/profession/" + getProfessionId(profession));
 			URLConnection bc = url.openConnection();
 			BufferedReader in = new BufferedReader(new InputStreamReader(bc.getInputStream()));
+//			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("Buffed-" + profession))));
 
 			String line;
 			while ((line = in.readLine()) != null) {
 				if (line.startsWith(prefix) && line.endsWith(suffix)) {
-					combines.add("\n--[[ " + profession + " ]]--");
+					combines.add("\n--[[ " + profession + " ]]--\n");
 					recipes.add("\n--[[ " + profession + " ]]--");
-					read(line.substring(prefix.length(), line.length() - suffix.length()));
+					JSONArray jArray = new JSONArray(line.substring(prefix.length(), line.length() - suffix.length()));
+					if (jArray.length() > 0) {
+						JSONObject jObject = jArray.optJSONObject(0);
+						if (jObject != null) {
+							JSONArray rows = jObject.optJSONArray("rows");
+							if (rows != null) {
+								for (int i = 0; i < rows.length(); i++) {
+									JSONObject row = rows.getJSONObject(i);
+//									out.write(row + "\n");
+									int id = getId(row.optJSONObject("p"));
+									if (id != 0) {
+										Item item = new Item();
+										item.id = id;
+										item.spell = row.getInt("id");
+										item.skill = getSkill(row);
+										item.recipe = getRecipe(row.optJSONArray("rec"));
+										addCombine(item);
+										if (item.recipe > 0) {
+											recipes.add(new Recipe(item.recipe, item.spell));
+										}
+									}
+								}
+							}
+						}
+					}
 					break;
 				}
 			}
 			in.close();
+//			out.close();
 		}
 		catch (Exception e)
 		{
@@ -355,6 +263,7 @@ public class TSInfo
 			URL url = new URL("http://www.wowhead.com/skill=" + getProfessionId(profession));
 			URLConnection bc = url.openConnection();
 			BufferedReader in = new BufferedReader(new InputStreamReader(bc.getInputStream()));
+//			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("WoWhead-" + profession))));
 
 			String line;
 			while ((line = in.readLine()) != null) {
@@ -365,9 +274,33 @@ public class TSInfo
 						JSONArray rows = new JSONArray(line);
 						for (int i = 0; i < rows.length(); i++) {
 							JSONObject row = rows.getJSONObject(i);
+//							out.write(row + "\n");
 							int id = row.optInt("id");
 							Item item = getSpellItem(id);
 							if (item != null) {
+								JSONArray reagents = row.optJSONArray("reagents");
+								if (reagents != null) {
+									String re = "";
+									for (int j = 0; j < reagents.length(); j++) {
+										JSONArray obj = reagents.getJSONArray(j);
+
+										int component = obj.getInt(0);
+										int amount = obj.getInt(1);
+
+										components.put(component, "V");
+
+										re = re + component + ":" + amount + " ";
+									}
+
+//									String re = reagents.toString();
+
+//									re = re.replace("[[", "");
+//									re = re.replace("]]", "");
+//									re = re.replace("],[", " ");
+//									re = re.replace(",", ":");
+
+									item.reagents = re.trim();
+								}
 								JSONArray colors = row.optJSONArray("colors");
 								if (colors != null) {
 									int orange = colors.getInt(0);
@@ -380,28 +313,19 @@ public class TSInfo
 									if (orange == 0) { orange = yellow; }
 
 									item.skill = item.skill + orange + "/" + yellow + "/" + green + "/" + grey;
-									
-//									String skill = colors.toString().replace(',', '/');
-//									item.skill = item.skill + skill.substring(1, skill.length() - 1);
 								}
 								JSONArray creates = row.optJSONArray("creates");
 								if (creates != null) {
 									item.yield = creates.optInt(1);
 								}
-/*								if (profession.equals("Enchanting")) {
-									Item fake = getSpellItem(-id);
-									if (fake != null) {
-										fake.skill = item.skill;
-										fake.yield = item.yield;
-									}
-								}
-*/							}
+							}
 						}
 					}
 					break;
 				}
 			}
 			in.close();
+//			out.close();
 		}
 		catch (Exception e)
 		{
@@ -416,14 +340,14 @@ public class TSInfo
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(filename))));
 
 			out.write("\nTradeskillInfo.vars.specialcases = {\n");
-			for (Object item : specialcases) {
-				out.write(item + "\n");
-			}
+//			for (Object item : specialcases) {
+//				out.write(item + "\n");
+//			}
 			out.write("}\n");
 
 			out.write("\nTradeskillInfo.vars.combines = {\n");
 			for (Object item : combines) {
-				out.write(item + "\n");
+				out.write(item + "");
 			}
 			out.write("}\n");
 
@@ -453,21 +377,21 @@ public class TSInfo
 	{
 		long starttime = System.currentTimeMillis();
 
-		System.out.println("Beginning program...");
+		System.out.println("Beginning scan...");
 		TSInfo tsi = new TSInfo();
 
 		String[] professions = {
 			"Alchemy",
-			"Mining",
-//			"First Aid",
+			"Blacksmithing",
+			"Cooking",
+			"Enchanting",
 			"Engineering",
+			"First Aid",
 			"Inscription",
 			"Jewelcrafting",
-			"Cooking",
 			"Leatherworking",
-			"Blacksmithing",
+			"Mining",
 			"Tailoring",
-			"Enchanting"
 		};
 
 		for (String profession : professions) {
@@ -480,6 +404,6 @@ public class TSInfo
 		tsi.writeToFile("../Data.lua");
 
 		long difftime = System.currentTimeMillis() - starttime;
-		System.out.println("Program completed in " + difftime / 1000 + " seconds.");
+		System.out.println("Scan completed in " + difftime / 1000 + " seconds.");
 	}
 }
