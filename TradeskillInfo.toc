@@ -8,7 +8,7 @@
 ## Author: Ethan Centaurai
 ## Version: @project-version@
 ## OptionalDeps: LibStub, CallbackHandler-1.0, Ace3, LibBabble-Zone-3.0, LibBabble-Faction-3.0, Auc-Advanced
-## SavedVariables: TradeskillInfoDB, TradeskillInfoUIDB
+## SavedVariables: TradeSkillInfoDB
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Always: delayed
 ## X-Credits: Dys, wmrojer, Evenue, Fieroivan, Viruscamp, CMTitan
@@ -48,22 +48,8 @@ Locale\zhTW.lua
 TradeskillInfo.lua
 DataBroker.lua
 
-Data\Components.lua
-Data\Recipes.lua
-Data\SpecialCases.lua
+Data\Data.lua
 Data\TradeskillData.lua
-
-Data\Professions\Alchemy.lua
-Data\Professions\Blacksmithing.lua
-Data\Professions\Cooking.lua
-Data\Professions\Enchanting.lua
-Data\Professions\Engineering.lua
-Data\Professions\FirstAid.lua
-Data\Professions\Inscription.lua
-Data\Professions\Jewelcrafting.lua
-Data\Professions\Leatherworking.lua
-Data\Professions\Mining.lua
-Data\Professions\Tailoring.lua
 
 TradeskillInfoOptions.lua
 
