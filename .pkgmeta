@@ -20,6 +20,6 @@ move-folders:
 	TradeSkillInfo/TradeskillInfoUI: TradeSkillInfoUI
 
 ignore:
-	- Miner
+	- Data/Miner
 
 license-output: LICENSE.txt
