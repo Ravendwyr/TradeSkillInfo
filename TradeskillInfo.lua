@@ -392,6 +392,8 @@ function TradeskillInfo:TradeSkillFrame_SetSelection(id)
 	if GetTradeSkillSelectionIndex() > GetNumTradeSkills() then return end
 
 	local spellLink = GetTradeSkillRecipeLink(TradeSkillFrame.selectedSkill)
+	if not spellLink then return end
+
 	local _, _, spellId = strfind(spellLink, "enchant:(%d+)")
 	spellId = tonumber(spellId)
 
