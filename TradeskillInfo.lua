@@ -1402,6 +1402,8 @@ end
 
 
 function TradeskillInfo:AddTooltipInfo(tooltip)
+	if InCombatLockdown() then return end
+
 	local _, link = tooltip:GetItem()
 	local _, _, id = tooltip:GetSpell()
 
