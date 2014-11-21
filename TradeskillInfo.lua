@@ -1438,7 +1438,8 @@ function TradeskillInfo:AddTooltipInfo(tooltip)
 	local kind
 
 	if recipeId then
-		kind = "R" -- it's a recipe
+--		kind = "R" -- it's a recipe
+		kind = self:GetCombineSkill(recipeId)
 
 		if self:ShowingTooltipKnownBy(kind) then
 			self:GetCombineKnownBy(recipeId, tooltip)
