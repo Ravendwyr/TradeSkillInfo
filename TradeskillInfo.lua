@@ -105,6 +105,7 @@ function TradeskillInfo:OnInitialize()
 			ColorStack			= { r = 1, g = 1, b = 1 },
 			ColorMarketValue	= { r = 0.8, g = 0.9, b = 0 },
 
+			RecipesOnly = false,
 			QuickSearch = false,
 			SearchMouseButton = 2,
 			SearchShiftKey = 2,
@@ -1412,6 +1413,14 @@ function TradeskillInfo:AddTooltipInfo(tooltip)
 	elseif id then -- it's a spell!
 		id = -id
 	else return end -- it's an empty bag slot!
+	
+	local recipeId = self:GetRecipeItem(id)
+
+	if recipeId then -- it's a recipe!
+		id = recipeId
+	elseif self.db.profile.RecipesOnly then -- it's a crafted item or crafting spell!
+		return
+	end
 
 	-- item used in
 	if self:ShowingTooltipUsedIn() then
@@ -1434,11 +1443,8 @@ function TradeskillInfo:AddTooltipInfo(tooltip)
 	end
 
 	-- recipe known by
-	local recipeId = self:GetRecipeItem(id)
 	local kind
-
 	if recipeId then
---		kind = "R" -- it's a recipe
 		kind = self:GetCombineSkill(recipeId)
 
 		if self:ShowingTooltipKnownBy(kind) then
@@ -1452,7 +1458,6 @@ function TradeskillInfo:AddTooltipInfo(tooltip)
 		if self:ShowingTooltipAvailableTo(kind) then
 			self:GetCombineAvailableTo(recipeId, tooltip)
 		end
-
 	else
 		-- there is probably a better way to do this, but I haven't found it yet
 		-- answers on a postcard please
