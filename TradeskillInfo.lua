@@ -238,12 +238,6 @@ function TradeskillInfo:GetExtraItemDetailText(_, _, skill_index)
 	local link = GetTradeSkillItemLink(skill_index)
 	local itemId = getIdFromLink(link)
 
-	if not self:CombineExists(itemId) then
-		local spellLink = GetTradeSkillRecipeLink(skill_index)
-		local spellId = getIdFromLink(spellLink)
-		itemId = self:MakeSpecialCase(itemId, spellId)
-	end
-
 	return self:GetExtraItemDataText(itemId,
 	                                 self:ShowingSkillProfit(),
 	                                 self:ShowingSkillLevel(),
@@ -327,31 +321,6 @@ function TradeskillInfo:UpdateSkills()
 			userData.skills[self.vars.skillnames[name]] = rank
 		end
 	end
-end
-
-function TradeskillInfo:MakeSpecialCase(id, spellId)
-	if id < 100 or not self.vars.specialcases[id] then
-		return id
-	end
-	local specialIds=self.vars.specialcases[id]
-	for i in string.gmatch(specialIds, "(%d+)") do
-		i = tonumber(i)
-		local spellId2 = self:GetCombineEnchantId(i)
-		if spellId2 == spellId or spellId2 == -spellId then
-			return i
-		end
-	end
-
-	return id
-end
-
-function TradeskillInfo:GetSpecialCase(id,itemName)
-	if id > 100 or not self.vars.specialcases[id] then
-		return id,itemName
-	end
-	id = string.match(self.vars.specialcases[id],"(%d+)")
-	itemName = GetItemInfo(id)
-	return tonumber(id),itemName
 end
 
 function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
@@ -449,12 +418,6 @@ function TradeskillInfo:ATSWFrame_SetSelection(id)
 
 	local link = GetTradeSkillItemLink(id)
 	local itemId = getIdFromLink(link)
-
-	if not self:CombineExists(itemId) then
-		local spellLink = GetTradeSkillRecipeLink(id)
-		local spellId = getIdFromLink(spellLink)
-		itemId = self:MakeSpecialCase(itemId, spellId)
-	end
 
 	if self:CombineExists(itemId) then
 
@@ -852,15 +815,6 @@ function TradeskillInfo:GetComponent(id, getVendorPrice, getAuctioneerPrice)
 	if not self:ComponentExists(id) then return end
 
 	local realId = id
-
-	if realId < 100 then -- special case
-		local specialCase = self.vars.specialcases[id]
-		if specialCase and specialCase ~= "" then
-			realId = string.match(specialCase, "(%d+)")
-			realId = tonumber(realId)
-		end
-	end
-
 	local cost = 0
 	local name = GetItemInfo(realId)
 
@@ -1014,16 +968,9 @@ end
 function TradeskillInfo:GetItemCrafted(item, use)
 	if not use then use = {} end
 	if not item then return end
+
 	-- If it is a straightforward item, mark it
 	if self.vars.combines[item] then use[item] = true end
-
-	-- If it is a special item, translate its item ID
-	local specialIds = self.vars.specialcases[item]
-	if specialIds then
-		for i in string.gmatch(specialIds, "(%d+)") do
-			use[tonumber(i)] = true
-		end
-	end
 
 	return use
 end
@@ -1506,45 +1453,17 @@ function TradeskillInfo:AddTooltipInfo(tooltip)
 
 	-- market value
 	if self:ShowingTooltipMarketValue() then
-		-- TODO: what are we going to do if there are more than one recipes producing item?
-		if self:CombineExists(id) then
-			local value, cost, profit = self:GetCombineAuctioneerCost(id)
-			local yield = self:GetCombineYield(id)
-			local Rtext = ("%s - %s = %s"):format( self:GetMoneyString(value), self:GetMoneyString(cost), self:GetMoneyString(profit) )
-			local c = self.db.profile.ColorMarketValue
-			local Ltext = L["Market Value"]
+		local value, cost, profit = self:GetCombineAuctioneerCost(id)
+		local yield = self:GetCombineYield(id)
+		local Rtext = ("%s - %s = %s"):format( self:GetMoneyString(value), self:GetMoneyString(cost), self:GetMoneyString(profit) )
+		local c = self.db.profile.ColorMarketValue
+		local Ltext = L["Market Value"]
 
-			if yield > 1 then
-				Ltext = Ltext .." (x" .. yield .. ")"
-			end
-
-			tooltip:AddDoubleLine(L["Market Value"], Rtext, c.r, c.g, c.b, c.r, c.g, c.b)
-
-		elseif self.vars.specialcases[id] then
-			local Ltext, Rtext
-			local addedText = false
-			local c = self.db.profile.ColorMarketValue
-
-			for i in gmatch(self.vars.specialcases[id], "(%d+)") do
-				local value, cost, profit = self:GetCombineAuctioneerCost(tonumber(i))
-				local yield = self:GetCombineYield(tonumber(i))
-
-				Rtext = ("%s - %s = %s"):format( self:GetMoneyString(value), self:GetMoneyString(cost), self:GetMoneyString(profit) )
-
-				if not addedText then
-					Ltext = L["Market Value"]
-					addedText = true
-				else
-					Ltext = " "
-				end
-
-				if yield > 1 then
-					Ltext = Ltext .. " (x" .. yield .. ")"
-				end
-
-				tooltip:AddDoubleLine(Ltext, Rtext, c.r, c.g, c.b, c.r, c.g, c.b)
-			end
+		if yield > 1 then
+			Ltext = Ltext .." (x" .. yield .. ")"
 		end
+
+		tooltip:AddDoubleLine(L["Market Value"], Rtext, c.r, c.g, c.b, c.r, c.g, c.b)
 	end
 
 	tooltip:Show()
