@@ -374,10 +374,13 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 
 		elseif (itemType ~= "header" and itemType ~= "subheader") then
 			local link = GetTradeSkillRecipeLink(i)
-			local _, _, id = strfind(link, "enchant:(%d+)")
-			id = tonumber(id)
 
-			self.db.realm[self.vars.playername].knownRecipes[id] = self.vars.difficultyLevel[itemType]
+			if link then
+				local _, _, id = strfind(link, "enchant:(%d+)")
+				id = tonumber(id)
+
+				self.db.realm[self.vars.playername].knownRecipes[id] = self.vars.difficultyLevel[itemType]
+			end
 		end
 	end
 end
@@ -1413,7 +1416,7 @@ function TradeskillInfo:AddTooltipInfo(tooltip)
 	elseif id then -- it's a spell!
 		id = -id
 	else return end -- it's an empty bag slot!
-	
+
 	local recipeId = self:GetRecipeItem(id)
 
 	if recipeId then -- it's a recipe!
@@ -1464,7 +1467,7 @@ function TradeskillInfo:AddTooltipInfo(tooltip)
 		for spellID, combine in pairs(self.vars.combines) do
 			if self:GetCombineItem(spellID) == id then
 				kind = self:GetCombineSkill(spellID)
-				
+
 				if self:ShowingTooltipKnownBy(kind) then
 					self:GetCombineKnownBy(spellID, tooltip)
 				end
