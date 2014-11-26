@@ -1426,6 +1426,8 @@ function TradeskillInfo:AddTooltipInfo(tooltip)
 				if self:ShowingTooltipAvailableTo(kind) then
 					self:GetCombineAvailableTo(spellID, tooltip)
 				end
+
+				break
 			end
 		end
 	end
