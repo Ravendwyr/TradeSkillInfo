@@ -1453,17 +1453,19 @@ function TradeskillInfo:AddTooltipInfo(tooltip)
 
 	-- market value
 	if self:ShowingTooltipMarketValue() then
-		local value, cost, profit = self:GetCombineAuctioneerCost(id)
-		local yield = self:GetCombineYield(id)
-		local Rtext = ("%s - %s = %s"):format( self:GetMoneyString(value), self:GetMoneyString(cost), self:GetMoneyString(profit) )
-		local c = self.db.profile.ColorMarketValue
-		local Ltext = L["Market Value"]
+		if self:CombineExists(id) then
+			local value, cost, profit = self:GetCombineAuctioneerCost(id)
+			local yield = self:GetCombineYield(id)
+			local Rtext = ("%s - %s = %s"):format( self:GetMoneyString(value), self:GetMoneyString(cost), self:GetMoneyString(profit) )
+			local c = self.db.profile.ColorMarketValue
+			local Ltext = L["Market Value"]
 
-		if yield > 1 then
-			Ltext = Ltext .." (x" .. yield .. ")"
+			if yield > 1 then
+				Ltext = Ltext .." (x" .. yield .. ")"
+			end
+
+			tooltip:AddDoubleLine(L["Market Value"], Rtext, c.r, c.g, c.b, c.r, c.g, c.b)
 		end
-
-		tooltip:AddDoubleLine(L["Market Value"], Rtext, c.r, c.g, c.b, c.r, c.g, c.b)
 	end
 
 	tooltip:Show()
