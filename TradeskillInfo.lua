@@ -178,8 +178,9 @@ function TradeskillInfo:OnAddonLoaded(_, addon)
 	end
 end
 
+local runeforging = GetSpellInfo(53428)
 function TradeskillInfo:OnTradeShow()
-	if not IsTradeSkillReady() and not IsTradeSkillLinked() and not IsTradeSkillGuild() and not IsNPCCrafting() and CURRENT_TRADESKILL ~= "Runeforging" then
+	if IsTradeSkillReady() and not IsTradeSkillLinked() and not IsTradeSkillGuild() and not IsNPCCrafting() and CURRENT_TRADESKILL ~= runeforging then
 		self:ScheduleTimer("UpdateKnownRecipes", 1)
 	end
 end
@@ -196,7 +197,7 @@ function TradeskillInfo:OnSkillUpdate()
 		self.UpdateInProgress = true
 		self:UpdateSkills()
 
-		if not IsTradeSkillReady() and not IsTradeSkillLinked() and not IsTradeSkillGuild() and not IsNPCCrafting() and CURRENT_TRADESKILL ~= "Runeforging" and GetTradeSkillLine() ~= "UNKNOWN" then
+		if IsTradeSkillReady() and not IsTradeSkillLinked() and not IsTradeSkillGuild() and not IsNPCCrafting() and CURRENT_TRADESKILL ~= runeforging and GetTradeSkillLine() ~= "UNKNOWN" then
 			self:ScheduleTimer("UpdateKnownRecipes", 1)
 		end
 
