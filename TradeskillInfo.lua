@@ -179,7 +179,7 @@ function TradeskillInfo:OnAddonLoaded(_, addon)
 end
 
 function TradeskillInfo:OnTradeShow()
-	if not IsTradeSkillLinked() and not IsTradeSkillGuild() then
+	if not IsTradeSkillReady() and not IsTradeSkillLinked() and not IsTradeSkillGuild() and not IsNPCCrafting() and CURRENT_TRADESKILL ~= "Runeforging" then
 		self:ScheduleTimer("UpdateKnownRecipes", 1)
 	end
 end
@@ -196,10 +196,8 @@ function TradeskillInfo:OnSkillUpdate()
 		self.UpdateInProgress = true
 		self:UpdateSkills()
 
-		if not IsTradeSkillLinked() and not IsTradeSkillGuild() then
-			if (GetTradeSkillLine() ~= "UNKNOWN") then
-				self:ScheduleTimer(self.UpdateKnownRecipes, 1, self)
-			end
+		if not IsTradeSkillReady() and not IsTradeSkillLinked() and not IsTradeSkillGuild() and not IsNPCCrafting() and CURRENT_TRADESKILL ~= "Runeforging" and GetTradeSkillLine() ~= "UNKNOWN" then
+			self:ScheduleTimer("UpdateKnownRecipes", 1)
 		end
 
 		self.UpdateInProgress = false
@@ -302,10 +300,8 @@ end
 
 
 function TradeskillInfo:UpdateKnownRecipes()
-	if not self.processingUpdates and
-		(GetTradeSkillLine() ~= "UNKNOWN") then
+	if not self.processingUpdates and (GetTradeSkillLine() ~= "UNKNOWN") then
 		self.processingUpdates = true
-
 		self:UpdateKnownTradeRecipes()
 		self.processingUpdates = false
 	end
@@ -324,8 +320,6 @@ function TradeskillInfo:UpdateSkills()
 end
 
 function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
-	if CURRENT_TRADESKILL == "Runeforging" then return end
-
 	local numSkills = GetNumTradeSkills()
 
 	if not startLine then
@@ -343,13 +337,10 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 
 		elseif (itemType ~= "header" and itemType ~= "subheader") then
 			local link = GetTradeSkillRecipeLink(i)
+			local _, _, id = strfind(link, "enchant:(%d+)")
+			id = tonumber(id)
 
-			if link then
-				local _, _, id = strfind(link, "enchant:(%d+)")
-				id = tonumber(id)
-
-				self.db.realm[self.vars.playername].knownRecipes[id] = self.vars.difficultyLevel[itemType]
-			end
+			self.db.realm[self.vars.playername].knownRecipes[id] = self.vars.difficultyLevel[itemType]
 		end
 	end
 end
@@ -358,7 +349,7 @@ end
 -- TradeSkillFrame Hook to display recipe skill level and cost/profit
 ----------------------------------------------------------------------
 function TradeskillInfo:TradeSkillFrame_SetSelection(id)
-	if not IsTradeSkillReady() then return end
+	if not IsTradeSkillReady() or IsNPCCrafting() then return end
 
 	local skillName, skillType = GetTradeSkillInfo(id)
 	if skillType == "header" or skillType == "subheader" then return end
