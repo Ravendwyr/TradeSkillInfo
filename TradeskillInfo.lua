@@ -149,9 +149,8 @@ function TradeskillInfo:OnEnable()
 	self:RegisterEvent("SKILL_LINES_CHANGED", "OnSkillUpdate")
 	self:RegisterEvent("ADDON_LOADED", "OnAddonLoaded")
 
-	self:RegisterEvent("MERCHANT_UPDATE")
-	self:RegisterEvent("MERCHANT_SHOW", "MERCHANT_UPDATE")
-	self:RegisterEvent("MERCHANT_CLOSED", "MERCHANT_UPDATE")
+	-- merchant colouring
+	self:SecureHook("MerchantFrame_UpdateMerchantInfo")
 
 	for _, method in pairs({
 		"SetAuctionItem", "SetAuctionSellItem",
@@ -1609,25 +1608,13 @@ end
 -- Property functions
 ----------------------------------------------------------------------
 
-function TradeskillInfo:MERCHANT_UPDATE(...)
+function TradeskillInfo:MerchantFrame_UpdateMerchantInfo()
 	-- largely copied from ProfessionsVault, tweaked to be less awful
-	self:Print("MERCHANT_UPDATE", ...)
-
+	-- now with 80% fewer hooks and 100% fewer events!
 	if not self.db.profile.ColorMerchantRecipes then return end
 	if MerchantFrame.selectedTab ~= 1 then return end -- buyback tab
 
 	local numitems = GetMerchantNumItems()
-
-	if not self.merchantHooked then
-		MerchantNextPageButton:HookScript("PostClick", function() self:MERCHANT_UPDATE("MerchantNextPageButton:PostClick") end)
-		MerchantPrevPageButton:HookScript("PostClick", function() self:MERCHANT_UPDATE("MerchantPrevPageButton:PostClick") end)
-		MerchantFrameTab1:HookScript("PostClick", function() self:MERCHANT_UPDATE("MerchantFrameTab1:PostClick") end)
-		MerchantItem1:HookScript("OnShow", function() self:MERCHANT_UPDATE("MerchantItem1:OnShow") end)
-
-		hooksecurefunc("MerchantFrame_UpdateMerchantInfo", function() self:MERCHANT_UPDATE("MerchantFrame_UpdateMerchantInfo") end)
-
-		self.merchantHooked = true
-	end
 
 	for i=1, MERCHANT_ITEMS_PER_PAGE do
 		local index = (((MerchantFrame.page - 1) * MERCHANT_ITEMS_PER_PAGE) + i)
