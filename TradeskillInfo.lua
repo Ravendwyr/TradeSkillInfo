@@ -169,40 +169,44 @@ function TradeskillInfo:OnEnable()
 end
 
 
+local runeforging = GetSpellInfo(53428)
+function TradeskillInfo:OnTradeShow()
+	if IsTradeSkillReady() then
+		if not IsTradeSkillLinked() and not IsTradeSkillGuild() and not IsNPCCrafting() and GetTradeSkillLine() ~= "UNKNOWN" and CURRENT_TRADESKILL ~= runeforging then
+			self:Print("Scanning "..CURRENT_TRADESKILL.."...")
+			self:ScheduleTimer("UpdateKnownRecipes", 1)
+		end
+	else
+		self:Print("Waiting for tradeskill data to be cached...")
+		self:ScheduleTimer("OnTradeShow", 1)
+	end
+end
+
+function TradeskillInfo:OnSkillUpdate()
+	if not self.UpdateInProgress then
+		self.UpdateInProgress = true
+
+		self:UpdateSkills()
+		self:OnTradeShow()
+
+		self.UpdateInProgress = false
+	end
+end
+
 function TradeskillInfo:OnAddonLoaded(_, addon)
 	if addon == "Blizzard_AuctionUI" then
 		self:HookAuctionUI()
-	elseif addon == "Blizzard_TradeSkillUI" or
-		   addon == "AdvancedTradeSkillWindow" then
+	elseif addon == "Blizzard_TradeSkillUI" or addon == "AdvancedTradeSkillWindow" then
 		self:HookTradeSkillUI()
 	end
 end
 
-local runeforging = GetSpellInfo(53428)
-function TradeskillInfo:OnTradeShow()
-	if IsTradeSkillReady() and not IsTradeSkillLinked() and not IsTradeSkillGuild() and not IsNPCCrafting() and CURRENT_TRADESKILL ~= runeforging then
-		self:ScheduleTimer("UpdateKnownRecipes", 1)
-	end
-end
 
 function TradeskillInfo:ChatCommand(input)
 	input = input:lower():trim()
 
 	if input == "config" then self:ConfigToggle()
 	else self:UI_Toggle() end
-end
-
-function TradeskillInfo:OnSkillUpdate()
-	if not self.UpdateInProgress then
-		self.UpdateInProgress = true
-		self:UpdateSkills()
-
-		if IsTradeSkillReady() and not IsTradeSkillLinked() and not IsTradeSkillGuild() and not IsNPCCrafting() and CURRENT_TRADESKILL ~= runeforging and GetTradeSkillLine() ~= "UNKNOWN" then
-			self:ScheduleTimer("UpdateKnownRecipes", 1)
-		end
-
-		self.UpdateInProgress = false
-	end
 end
 
 function TradeskillInfo:LoadAndCreateConfig()
@@ -212,7 +216,6 @@ function TradeskillInfo:LoadAndCreateConfig()
 end
 
 local hookedAuctionUi = false
-
 function TradeskillInfo:HookAuctionUI()
 	if AuctionFrame and not hookedAuctionUi then
 		for j=1,8 do
@@ -301,7 +304,7 @@ end
 
 
 function TradeskillInfo:UpdateKnownRecipes()
-	if not self.processingUpdates and (GetTradeSkillLine() ~= "UNKNOWN") then
+	if not self.processingUpdates then
 		self.processingUpdates = true
 		self:UpdateKnownTradeRecipes()
 		self.processingUpdates = false
@@ -344,6 +347,8 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 			self.db.realm[self.vars.playername].knownRecipes[id] = self.vars.difficultyLevel[itemType]
 		end
 	end
+
+	self:Print("Scan complete.")
 end
 
 ----------------------------------------------------------------------
