@@ -2,7 +2,7 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("TradeSkillInfo")
 
 
--- upvalues, will be populated in :CreateConfig() at the bottom of the file
+-- upvalues, will be populated in :CreateConfig() at the end of the file
 local knownSelect = {} -- the multiselect array for "Known by", "Learnable by", "Will be learnable by"
 local db
 
