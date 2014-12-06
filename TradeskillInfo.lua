@@ -105,16 +105,18 @@ function TradeskillInfo:OnInitialize()
 			ColorStack			= { r = 1, g = 1, b = 1 },
 			ColorMarketValue	= { r = 0.8, g = 0.9, b = 0 },
 
+			ColorAHRecipes = true,
+			ColorMerchantRecipes = true,
+			AHColorLearnable	= { r = 1, g = 1, b = 1 },
+			AHColorAltLearnable	= { r = 0, g = 1, b = 0 },
+			AHColorWillLearn	= { r = 1, g = 0.75, b = 0 },
+			AHColorAltWillLearn	= { r = 0, g = 0.75, b = 1 },
+			AHColorUnavailable	= { r = 1, g = 0, b = 0 },
+
 			RecipesOnly = false,
 			QuickSearch = false,
 			SearchMouseButton = 2,
 			SearchShiftKey = 2,
-			ColorAHRecipes = true,
-			AHColorLearnable    = { r = 1, g = 1, b = 1 },
-			AHColorAltLearnable = { r = 0, g = 1, b = 0 },
-			AHColorWillLearn    = { r = 1, g = 0.75, b = 0 },
-			AHColorAltWillLearn = { r = 0, g = 0.75, b = 1 },
-			AHColorUnavailable  = { r = 1, g = 0, b = 0 },
 			SavePosition = true,
 			FrameStrata = 1,
 			UIScale = 1,
@@ -146,6 +148,10 @@ function TradeskillInfo:OnEnable()
 	self:RegisterEvent("TRADE_SKILL_SHOW", "OnTradeShow")
 	self:RegisterEvent("SKILL_LINES_CHANGED", "OnSkillUpdate")
 	self:RegisterEvent("ADDON_LOADED", "OnAddonLoaded")
+
+	self:RegisterEvent("MERCHANT_UPDATE")
+	self:RegisterEvent("MERCHANT_SHOW", "MERCHANT_UPDATE")
+	self:RegisterEvent("MERCHANT_CLOSED", "MERCHANT_UPDATE")
 
 	for _, method in pairs({
 		"SetAuctionItem", "SetAuctionSellItem",
@@ -1597,6 +1603,74 @@ function TradeskillInfo:AuctionFrameBrowse_Update()
 		end
 	end
 end
+
+
+----------------------------------------------------------------------
+-- Property functions
+----------------------------------------------------------------------
+
+function TradeskillInfo:MERCHANT_UPDATE(...)
+	-- largely copied from ProfessionsVault, tweaked to be less awful
+	self:Print("MERCHANT_UPDATE", ...)
+
+	if not self.db.profile.ColorMerchantRecipes then return end
+	if MerchantFrame.selectedTab ~= 1 then return end -- buyback tab
+
+	local numitems = GetMerchantNumItems()
+
+	if not self.merchantHooked then
+		MerchantNextPageButton:HookScript("PostClick", function() self:MERCHANT_UPDATE("MerchantNextPageButton:PostClick") end)
+		MerchantPrevPageButton:HookScript("PostClick", function() self:MERCHANT_UPDATE("MerchantPrevPageButton:PostClick") end)
+		MerchantFrameTab1:HookScript("PostClick", function() self:MERCHANT_UPDATE("MerchantFrameTab1:PostClick") end)
+		MerchantItem1:HookScript("OnShow", function() self:MERCHANT_UPDATE("MerchantItem1:OnShow") end)
+
+		hooksecurefunc("MerchantFrame_UpdateMerchantInfo", function() self:MERCHANT_UPDATE("MerchantFrame_UpdateMerchantInfo") end)
+
+		self.merchantHooked = true
+	end
+
+	for i=1, MERCHANT_ITEMS_PER_PAGE do
+		local index = (((MerchantFrame.page - 1) * MERCHANT_ITEMS_PER_PAGE) + i)
+
+		if index > numitems then break end
+
+		local itemButton = _G["MerchantItem"..i.."ItemButton"]
+		local merchantButton = _G["MerchantItem"..i]
+
+		if not itemButton or not merchantButton then break end
+
+		local itemlink = GetMerchantItemLink(index)
+		local recipeId = getIdFromLink(itemlink)
+		local id = self:GetRecipeItem(recipeId)
+
+		if id then
+			local you, alt = self:GetCombineAvailability(id)
+			local c
+
+			-- 0 = unavailable, 1 = known, 2 = learnable, 3 = will be able to learn
+--			self:Print("recipe", id, "you", you, "alt", alt)
+
+			if you == 2 then
+				c = self.db.profile.AHColorLearnable
+			elseif alt == 2 then
+				c = self.db.profile.AHColorAltLearnable
+			elseif you == 3 then
+				c = self.db.profile.AHColorWillLearn
+			elseif alt == 3 then
+				c = self.db.profile.AHColorAltWillLearn
+			else
+				c = self.db.profile.AHColorUnavailable
+			end
+
+			SetItemButtonNameFrameVertexColor(merchantButton, c.r, c.g, c.b)
+			SetItemButtonSlotVertexColor(merchantButton, c.r, c.g, c.b)
+			SetItemButtonTextureVertexColor(itemButton, c.r, c.g, c.b)
+			SetItemButtonNormalTextureVertexColor(itemButton, c.r, c.g, c.b)
+		end
+	end
+end
+
+
 ----------------------------------------------------------------------
 -- Property functions
 ----------------------------------------------------------------------
