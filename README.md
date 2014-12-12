@@ -10,7 +10,7 @@ TradeSkillInfo is an add-on that gives you all the information that you need abo
 
 It can add the following information to the tooltip of an item:
 
-* What tradeskills it is used in, and how many different recipes for that tradeskill it is used in.
+* Which tradeskills the item is used in, and how many different recipes for that tradeskill it is used in.
 * Which of your characters can use the item.
 * Where the item comes from: bought from a vendor, dropped, disenchanted or crafted.
 
@@ -23,6 +23,15 @@ It can add the following information to the tooltip for recipes and crafted item
 * Where the recipe comes from: bought from a vendor, quest reward, dropped or crafted.
 
 
+It can colour-code recipes sold at merchants and on the Auction House.
+
+* White: Current character can learn the recipe now.
+* Orange: Current character will be able to learn the recipe later.
+* Green: One of your other characters can learn the recipe now.
+* Light Blue: One of your other characters will be able to learn the recipe later.
+* Red: Current character knows the recipe.
+
+
 In the tradeskill craft window it will show:
 
 * The cost of the combine (auctioneer or vendor prices), how much the result sells for to a vendor and the profit/loss.
@@ -30,7 +39,7 @@ In the tradeskill craft window it will show:
     For example, "40/60/80/120" means the recipe is learnable at skill level 40, will turn yellow at 60, green at 80 and grey at 120.
 
 
-TradeSkillInfo also has it's own Browser module which is installed as a separate load-on-demand add-on. It is opened by typing "/tsi" or by binding a key in the keybindings interface.
+TradeSkillInfo also has its own Browser module which is installed as a separate load-on-demand add-on. It is opened by typing "/tsi" or by binding a key in the keybindings interface.
 
 * QuickSearch an item in the inventory will open the Browser and show all recipes that use that item.
     QuickSearch key-mouse combination is configurable.  The default setting is shift-right-click.
@@ -53,8 +62,7 @@ In the Browser you can browse all tradeskill recipes in the game.
     * If one of your other characters will be able to learn the recipe later.
     * If it is not known by any of your characters.
 
-
-Recipe names are colour coded in the Browser.
+Recipe names are colour-coded in the Browser.
 
 * White: Current character knows the recipe.
 * Light Green: Current character can learn the recipe now.
@@ -63,9 +71,6 @@ Recipe names are colour coded in the Browser.
 * Dark Green: One of your other characters can learn the recipe now.
 * Orange: One of your other characters will be able to learn the recipe later.
 * Red: Not known by any of your characters.
-
-
-For items not yet cached by your WoW client, the icon will be a red question mark and clicking on it will try and to request item data from the server.
 
 
 What it does not do
@@ -77,19 +82,9 @@ TradeSkillInfo is purely an informational tool and will not assist you in crafti
 Configuration
 -------------
 
-A graphical configuration window can be opened by typing "/tsi config", right-clicking on the provided "data broker" object or by binding a key in the keybindings interface.
+A configuration window can be opened by typing "/tsi config", right-clicking on the provided "data broker" object or by binding a key in the keybindings interface.
 
 Almost everything can be turned on or off according to your needs and preferences.
-
-
-Known issues
-------------
-
-* When first installed, TradeSkillInfo has no idea what recipes your characters know.  You will need to log into each of your characters and open each of their tradeskills.
-
-* Many Blacksmithing and Tailoring recipes added in with Patch 5.2 have not yet been added to the database.
-* Some Jewelcrafting and Inscription recipes may appear more than once in the Browser module.  This is due to how Blizzard recycles crafting "spells".
-* Enchanting scroll data is incomplete.
 
 
 Translations
@@ -97,7 +92,7 @@ Translations
 
 This add-on was written in English but has been translated into other languages.  It should work for everyone but I cannot guarantee completeness or accuracy of the provided translations.
 
-If you would like to update the translations then feel free to upload a patch to a [support ticket on WoWace](http://www.wowace.com/addons/tradeskill-info/tickets/), or if you have the know-how then you can commit the changes directly to the repository.
+If you would like to update the translations, feel free to [update the necessary phrases](http://www.wowace.com/addons/tradeskill-info/localization/) or [open a support ticket](http://www.wowace.com/addons/tradeskill-info/tickets/) on WoWace.
 
 
 Open
@@ -109,7 +104,7 @@ This project, like 99% of all add-ons hosted on [WoWace](http://www.wowace.com/)
 Feedback
 --------
 
-If you have any comments, bug reports or feature requests, please leave a comment here or [open a support ticket](http://www.wowace.com/addons/tradeskill-info/tickets/).
+If you have any comments, bug reports or feature requests, please leave a comment here or [open a support ticket](http://www.wowace.com/addons/tradeskill-info/tickets/) on WoWace.
 
 
 Credits
