@@ -178,11 +178,11 @@ local runeforging = GetSpellInfo(53428)
 function TradeskillInfo:OnTradeShow()
 	if IsTradeSkillReady() then
 		if not IsTradeSkillLinked() and not IsTradeSkillGuild() and not IsNPCCrafting() and GetTradeSkillLine() ~= "UNKNOWN" and CURRENT_TRADESKILL ~= runeforging then
-			self:Print("Scanning "..CURRENT_TRADESKILL.."...")
+--			self:Print("Scanning "..CURRENT_TRADESKILL.."...")
 			self:ScheduleTimer("UpdateKnownRecipes", 1)
 		end
 	else
-		self:Print("Waiting for tradeskill data to be cached...")
+--		self:Print("Waiting for tradeskill data to be cached...")
 		self:ScheduleTimer("OnTradeShow", 1)
 	end
 end
@@ -353,7 +353,7 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 		end
 	end
 
-	self:Print("Scan complete.")
+--	self:Print("Scan complete.")
 end
 
 ----------------------------------------------------------------------
