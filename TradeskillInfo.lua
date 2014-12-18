@@ -1605,7 +1605,7 @@ end
 
 
 ----------------------------------------------------------------------
--- Property functions
+-- Vendor functions
 ----------------------------------------------------------------------
 
 function TradeskillInfo:MerchantFrame_UpdateMerchantInfo()
@@ -1627,32 +1627,35 @@ function TradeskillInfo:MerchantFrame_UpdateMerchantInfo()
 		if not itemButton or not merchantButton then break end
 
 		local itemlink = GetMerchantItemLink(index)
-		local recipeId = getIdFromLink(itemlink)
-		local id = self:GetRecipeItem(recipeId)
+		
+		if itemlink then
+			local recipeId = getIdFromLink(itemlink)
+			local id = self:GetRecipeItem(recipeId)
 
-		if id then
-			local you, alt = self:GetCombineAvailability(id)
-			local c
+			if id then
+				local you, alt = self:GetCombineAvailability(id)
+				local c
 
-			-- 0 = unavailable, 1 = known, 2 = learnable, 3 = will be able to learn
---			self:Print("recipe", id, "you", you, "alt", alt)
+				-- 0 = unavailable, 1 = known, 2 = learnable, 3 = will be able to learn
+--				self:Print("recipe", id, "you", you, "alt", alt)
 
-			if you == 2 then
-				c = self.db.profile.AHColorLearnable
-			elseif alt == 2 then
-				c = self.db.profile.AHColorAltLearnable
-			elseif you == 3 then
-				c = self.db.profile.AHColorWillLearn
-			elseif alt == 3 then
-				c = self.db.profile.AHColorAltWillLearn
-			else
-				c = self.db.profile.AHColorUnavailable
+				if you == 2 then
+					c = self.db.profile.AHColorLearnable
+				elseif alt == 2 then
+					c = self.db.profile.AHColorAltLearnable
+				elseif you == 3 then
+					c = self.db.profile.AHColorWillLearn
+				elseif alt == 3 then
+					c = self.db.profile.AHColorAltWillLearn
+				else
+					c = self.db.profile.AHColorUnavailable
+				end
+
+				SetItemButtonNameFrameVertexColor(merchantButton, c.r, c.g, c.b)
+				SetItemButtonSlotVertexColor(merchantButton, c.r, c.g, c.b)
+				SetItemButtonTextureVertexColor(itemButton, c.r, c.g, c.b)
+				SetItemButtonNormalTextureVertexColor(itemButton, c.r, c.g, c.b)
 			end
-
-			SetItemButtonNameFrameVertexColor(merchantButton, c.r, c.g, c.b)
-			SetItemButtonSlotVertexColor(merchantButton, c.r, c.g, c.b)
-			SetItemButtonTextureVertexColor(itemButton, c.r, c.g, c.b)
-			SetItemButtonNormalTextureVertexColor(itemButton, c.r, c.g, c.b)
 		end
 	end
 end
