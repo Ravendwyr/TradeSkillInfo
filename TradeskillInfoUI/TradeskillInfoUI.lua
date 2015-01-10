@@ -59,7 +59,7 @@ function TradeskillInfoUI:OnInitialize()
 			SearchReagent = true,
 		}
 	}
-	self.db = LibStub("AceDB-3.0"):New("TradeskillInfoUIDB", dbDefaults)
+	self.db = TradeskillInfo.db:RegisterNamespace("Browser", dbDefaults)
 end
 
 function TradeskillInfoUI:OnEnable()
