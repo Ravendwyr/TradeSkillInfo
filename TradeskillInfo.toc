@@ -7,7 +7,7 @@
 ## Notes-koKR: 전문기술 정보의 모든 것!
 ## Author: Ethan Centaurai
 ## Version: @project-version@
-## OptionalDeps: LibStub, CallbackHandler-1.0, Ace3, LibBabble-Zone-3.0, LibBabble-Faction-3.0, Auc-Advanced
+## OptionalDeps: LibStub, CallbackHandler-1.0, Ace3, LibBabble-SubZone-3.0, LibBabble-Faction-3.0, Auc-Advanced
 ## SavedVariables: TradeSkillInfoDB
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Always: delayed
@@ -29,7 +29,7 @@ Libs\AceConsole-3.0\AceConsole-3.0.lua
 Libs\AceConfig-3.0\AceConfig-3.0.xml
 Libs\AceTimer-3.0\AceTimer-3.0.lua
 Libs\LibBabble-Faction-3.0\lib.xml
-Libs\LibBabble-Zone-3.0\lib.xml
+Libs\LibBabble-SubZone-3.0\lib.xml
 Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 #@end-no-lib-strip@
 

@@ -1,6 +1,6 @@
 
 local L = LibStub("AceLocale-3.0"):GetLocale("TradeSkillInfo")
-local BZ = LibStub("LibBabble-Zone-3.0"):GetLookupTable()
+local BZ = LibStub("LibBabble-SubZone-3.0"):GetLookupTable()
 local BF = LibStub("LibBabble-Faction-3.0"):GetLookupTable()
 
 TradeskillInfo.vars.tradeskillspells = {
@@ -105,7 +105,7 @@ TradeskillInfo.vars.zones = {
 	[36] = BZ["Swamp of Sorrows"],
 	[37] = BZ["Tanaris"],
 	[38] = BZ["Teldrassil"],
-	[39] = BZ["The Barrens"],
+	[39] = BZ["Northern Barrens"]
 	[40] = BZ["The Hinterlands"],
 	[41] = BZ["Thousand Needles"],
 	[42] = BZ["Thunder Bluff"],
@@ -150,11 +150,11 @@ TradeskillInfo.vars.zones = {
 	[79] = BZ["The Storm Peaks"],
 	[80] = BZ["Wintergrasp"],
 	[81] = BZ["Icecrown Citadel"],
--- Cata 4.2
+-- Cataclysm
 	[82] = BZ["Molten Front"],
 	[83] = BZ["Firelands"],
--- Cata 4.3
 	[84] = BZ["Dragon Soul"],
+	[85] = BZ["Southern Barrens"],
 }
 
 TradeskillInfo.vars.factions = {
@@ -414,7 +414,7 @@ TradeskillInfo.vars.vendors = {
 	[207] =  L["Xen'to"] .. "|28|2|57,53",
 	[208] =  L["Xizk Goodstitch"] .. "|35|3|28,76",
 	[209] =  L["Xizzer Fizzbolt"] .. "|50|3|61,39",
-	[210] =  L["Yonada"] .. "|39|2|45,60",
+	[210] =  L["Yonada"] .. "|85|2|45,60",
 	[211] =  L["Yuka Screwspigot"] .. "|8|3|66,23",
 	[212] =  L["Zan Shivsproket"] .. "|22|3|84,18",
 	[213] =  L["Zannok Hidepiercer"] .. "|31|3|82,18",
