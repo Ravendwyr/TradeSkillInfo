@@ -49,16 +49,16 @@ class Item
 class Recipe
 {
 	public int id;
-	public int result;
+	public Object result;
 	public String source;
 	public String price;
 	public String factionrank;
 
-	public Recipe(int id, int result)
+	public Recipe(int id, Object result, String source)
 	{
 		this.id = id;
 		this.result = result;
-		source = "V";
+		this.source = source;
 		price = "";
 		factionrank = "";
 	}
@@ -75,12 +75,14 @@ public class TSInfo
 	public ArrayList combines;
 	public Map<Integer, String> components;
 	public ArrayList recipes;
+	public ArrayList spells;
 
 	public TSInfo()
 	{
 		combines = new ArrayList();
 		components = new HashMap<Integer, String>();
 		recipes = new ArrayList();
+		spells = new ArrayList();
 	}
 
 	public Item getItem(int id)
@@ -145,10 +147,12 @@ public class TSInfo
 		return 0;
 	}
 
-	public String getSkill(JSONObject obj) throws JSONException
+//	public String getSkill(JSONObject obj) throws JSONException
+	public String getSkill(String profession)
 	{
 		String temp = "";
-		switch (obj.getString("school")) {
+//		switch (obj.getString("school")) {
+		switch (profession) {
 			case "Alchemy"        : temp = "A"; break;
 			case "Blacksmithing"  : temp = "B"; break;
 			case "Cooking"        : temp = "W"; break;
@@ -186,6 +190,7 @@ public class TSInfo
 			BufferedReader in = new BufferedReader(new InputStreamReader(bc.getInputStream()));
 //			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("Buffed-" + profession))));
 
+			spells.clear();
 			String line;
 			while ((line = in.readLine()) != null) {
 				if (line.startsWith(prefix) && line.endsWith(suffix)) {
@@ -200,6 +205,7 @@ public class TSInfo
 								for (int i = 0; i < rows.length(); i++) {
 									JSONObject row = rows.getJSONObject(i);
 //									out.write(row + "\n");
+/*
 									int id = getId(row.optJSONObject("p"));
 									if (id != 0) {
 										Item item = new Item();
@@ -211,6 +217,14 @@ public class TSInfo
 										if (item.recipe > 0) {
 											recipes.add(new Recipe(item.recipe, item.spell));
 										}
+									}
+*/
+									String name = row.getString("n");
+									if (!name.contains("UNUSED")) {
+										Item item = new Item();
+										item.id = getId(row.optJSONObject("p"));
+										item.spell = row.getInt("id");
+										spells.add(item);
 									}
 								}
 							}
@@ -232,25 +246,27 @@ public class TSInfo
 // Components
 // [itemid] = "source"
 // Source
-// 	V = Vendor(5)
-// 	D = Dropped(2)
-// 	C = Crafted(1)
-// 	M = Mined
-// 	H = Herbalism
-// 	S = Skinned
-// 	F = Fished
-// 	E = Disenchanted
-// 	G = Gathered(7)
-// 	P = Pickpocketed
+//  V = Vendor(5)
+//  D = Dropped(2)
+//  C = Crafted(1)
+//  M = Mined
+//  H = Herbalism
+//  S = Skinned
+//  F = Fished(16)
+//  E = Disenchanted
+//  G = Gathered
+//  P = Pickpocketed(21)
 
-// 1 Hergestellt
-// 2 Drop
-// 3 PvP
-// 5 Händler
-// 6 Lehrer
-// 7 Entdeckung
-// 10 Startausrüstung
-// 12 Erfolg
+// 1 Crafted
+// 2 Dropped
+// 4 Quest Reward
+// 5 Vendor
+// 6 Trainer
+// 7 Discovery
+// 10 Starter Recipe
+// 12 Achievement Reward
+// 16 Fished
+// 21 Pickpocketed
 
 
 	public void readFromWowHead(String profession)
@@ -258,6 +274,7 @@ public class TSInfo
 		String prefix = "new Listview(";
 		String suffix = "});";
 		String offset = "data: ";
+/*
 		try
 		{
 			URL url = new URL("http://www.wowhead.com/skill=" + getProfessionId(profession));
@@ -326,6 +343,138 @@ public class TSInfo
 			}
 			in.close();
 //			out.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+*/
+		try
+		{
+			for (Object temp : spells) {
+				if (temp instanceof Item) {
+					Item entry = (Item)temp;
+					
+					Thread.sleep(25);
+					
+					URL url = new URL("http://www.wowhead.com/spell=" + entry.spell);
+					URLConnection bc = url.openConnection();
+					BufferedReader in = new BufferedReader(new InputStreamReader(bc.getInputStream()));
+//					BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("WoWhead-" + entry.spell))));
+					
+					Item item = new Item();
+					item.id = entry.id;
+					item.spell = entry.spell;
+					item.skill = getSkill(profession);
+					
+					String line;
+					
+					while ((line = in.readLine()) != null) {
+						if (line.startsWith(prefix) && line.endsWith(suffix)) {
+							int index = line.indexOf(offset);
+							
+							if (index != -1) {
+								JSONArray rows;
+								JSONObject row;
+								
+								// recipe data
+								if (line.contains("id: 'recipes'")) {
+//									System.out.println("'recipes' exists for " + entry.spell);
+									
+									line = line.substring(index + offset.length(), line.length() - suffix.length());
+									rows = new JSONArray(line);
+									row = rows.getJSONObject(0);
+									
+//									out.write("recipes        " + row + "\n");
+									
+									item.spell = row.getInt("id");
+									
+									JSONArray reagents = row.optJSONArray("reagents");
+									if (reagents != null) {
+										String re = "";
+										for (int j = 0; j < reagents.length(); j++) {
+											JSONArray obj = reagents.getJSONArray(j);
+											
+											int component = obj.getInt(0);
+											int amount = obj.getInt(1);
+											
+											// TODO: get component source instead of defaulting to "vendor"
+											components.put(component, "V");
+											
+											re = re + component + ":" + amount + " ";
+										}
+										
+//										String re = reagents.toString();
+										
+//										re = re.replace("[[", "");
+//										re = re.replace("]]", "");
+//										re = re.replace("],[", " ");
+//										re = re.replace(",", ":");
+										
+										item.reagents = re.trim();
+									}
+									
+									JSONArray colors = row.optJSONArray("colors");
+									if (colors != null) {
+										int orange = colors.getInt(0);
+										int yellow = colors.getInt(1);
+										int green  = colors.getInt(2);
+										int grey   = colors.getInt(3);
+										
+										if (green == 0) { green = grey; }
+										if (yellow == 0) { yellow = green; }
+										if (orange == 0) { orange = yellow; }
+										
+										item.skill = item.skill + orange + "/" + yellow + "/" + green + "/" + grey;
+									}
+									
+									JSONArray creates = row.optJSONArray("creates");
+									if (creates != null) {
+//										item.id    = creates.optInt(0);
+										item.yield = creates.getInt(1);
+									}
+								}
+								
+								// the item that teaches the recipe
+								if (line.contains("id: 'taught-by-item'")) {
+//									System.out.println("'taught-by-item' exists for " + entry.spell);
+									
+									line = line.substring(index + offset.length(), line.length() - suffix.length());
+									rows = new JSONArray(line);
+									row = rows.getJSONObject(0);
+									
+//									out.write("taught-by-item " + row + "\n");
+									
+									item.recipe = row.optInt("id");
+									
+									JSONArray sources = row.optJSONArray("source");
+									if (sources != null) {
+										String source = "";
+										switch (sources.getInt(0)) {
+											case 1  : source = "C"; break; // crafted by a player
+											case 2  : source = "D"; break; // dropped as loot
+											case 4  : source = "Q"; break; // quest reward
+											case 5  : source = "V"; break; // bought from vendor
+											case 6  : source = "T"; break; // learned from trainer
+											case 10 : source = "R"; break; // starter recipe
+											case 12 : source = "A"; break; // achievement reward
+											case 16 : source = "F"; break; // fished up
+											case 21 : source = "P"; break; // pickpocketed
+										}
+										if (item.recipe > 0) {
+											recipes.add(new Recipe(item.recipe, item.spell, source));
+										}
+									}
+								}
+								addCombine(item);
+							}
+//							break;
+						}
+					}
+					in.close();
+//					out.close();
+				}
+			}
 		}
 		catch (Exception e)
 		{
