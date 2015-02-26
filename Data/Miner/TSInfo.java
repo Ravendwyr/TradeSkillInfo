@@ -351,11 +351,17 @@ public class TSInfo
 */
 		try
 		{
+			int current = 0;
+			int total = spells.size();
+			
 			for (Object temp : spells) {
 				if (temp instanceof Item) {
 					Item entry = (Item)temp;
 					
 					Thread.sleep(25);
+					
+					current = current + 1;
+					System.out.println("  Scanning " + current + " of " + total + ". (" + entry.spell + ")\r");
 					
 					URL url = new URL("http://www.wowhead.com/spell=" + entry.spell);
 					URLConnection bc = url.openConnection();
@@ -475,6 +481,8 @@ public class TSInfo
 //					out.close();
 				}
 			}
+			
+			System.out.println("  Done!                                                           \n");
 		}
 		catch (Exception e)
 		{
