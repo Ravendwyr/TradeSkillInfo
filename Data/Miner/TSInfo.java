@@ -482,7 +482,7 @@ public class TSInfo
 				}
 			}
 			
-			System.out.println("  Done!                                                           \n");
+			System.out.println("  Done!                            \n");
 		}
 		catch (Exception e)
 		{
