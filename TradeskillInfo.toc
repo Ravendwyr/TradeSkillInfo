@@ -48,9 +48,8 @@ Locale\zhTW.lua
 TradeskillInfo.lua
 DataBroker.lua
 
-Data\Data.lua
-Data\TradeskillData.lua
-
+Data.lua
+TradeskillData.lua
 TradeskillInfoOptions.lua
 
 #@debug@
