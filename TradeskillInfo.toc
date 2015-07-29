@@ -1,4 +1,4 @@
-## Interface: 60100
+## Interface: 60200
 ## Title: TradeSkillInfo
 ## Notes: Complete tradeskill information.
 ## Notes-zhTW: 完整的商業技能百科
