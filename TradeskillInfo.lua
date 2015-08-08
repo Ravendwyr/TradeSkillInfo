@@ -346,10 +346,13 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 
 		elseif (itemType ~= "header" and itemType ~= "subheader") then
 			local link = GetTradeSkillRecipeLink(i)
-			local _, _, id = strfind(link, "enchant:(%d+)")
-			id = tonumber(id)
 
-			self.db.realm[self.vars.playername].knownRecipes[id] = self.vars.difficultyLevel[itemType]
+			if link then
+				local _, _, id = strfind(link, "enchant:(%d+)")
+				id = tonumber(id)
+
+				self.db.realm[self.vars.playername].knownRecipes[id] = self.vars.difficultyLevel[itemType]
+			end
 		end
 	end
 
@@ -1627,7 +1630,7 @@ function TradeskillInfo:MerchantFrame_UpdateMerchantInfo()
 		if not itemButton or not merchantButton then break end
 
 		local itemlink = GetMerchantItemLink(index)
-		
+
 		if itemlink then
 			local recipeId = getIdFromLink(itemlink)
 			local id = self:GetRecipeItem(recipeId)
