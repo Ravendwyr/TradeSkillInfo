@@ -73,6 +73,13 @@ local function getItemLink(id, combineName)
 end
 
 
+local GetTradeSkillLine = C_TradeSkillUI.GetTradeSkillLine
+local IsTradeSkillReady = C_TradeSkillUI.IsTradeSkillReady
+local IsTradeSkillLinked = C_TradeSkillUI.IsTradeSkillLinked
+local IsTradeSkillGuild = C_TradeSkillUI.IsTradeSkillGuild
+local IsNPCCrafting = C_TradeSkillUI.IsNPCCrafting
+
+
 function TradeskillInfo:OnInitialize()
 	self.db = LibStub("AceDB-3.0"):New("TradeSkillInfoDB", {
 		profile = {
@@ -138,7 +145,7 @@ function TradeskillInfo:OnEnable()
 
 	self:PopulateProfessionNames()
 
-	self:HookTradeSkillUI()
+--	self:HookTradeSkillUI()
 	self:SecureHook("ContainerFrameItemButton_OnModifiedClick")
 	self:SecureHook("BankFrameItemButtonGeneric_OnModifiedClick")
 	self:SecureHook("MerchantItemButton_OnModifiedClick")
@@ -146,7 +153,7 @@ function TradeskillInfo:OnEnable()
 	self:HookAuctionUI()
 
 	self:RegisterEvent("TRADE_SKILL_SHOW", "OnTradeShow")
-	self:RegisterEvent("SKILL_LINES_CHANGED", "OnSkillUpdate")
+	self:RegisterEvent("CHAT_MSG_SKILL", "OnSkillUpdate")
 	self:RegisterEvent("ADDON_LOADED", "OnAddonLoaded")
 
 	-- merchant colouring
@@ -157,7 +164,7 @@ function TradeskillInfo:OnEnable()
 		"SetExistingSocketGem", "SetSocketGem", "SetSpellByID",
 		"SetHyperlink", "SetAction", "SetQuestLogSpecialItem",
 		"SetBagItem", "SetGuildBankItem", "SetInventoryItem",
-		"SetTradePlayerItem", "SetTradeSkillItem",
+		"SetTradePlayerItem", -- "SetTradeSkillItem",
 		"SetLootItem", "SetLootRollItem",
 		"SetMerchantItem", "SetBuybackItem",
 		"SetSendMailItem", "SetInboxItem",
@@ -174,16 +181,11 @@ function TradeskillInfo:OnEnable()
 end
 
 
-local runeforging = GetSpellInfo(53428)
 function TradeskillInfo:OnTradeShow()
 	if IsTradeSkillReady() then
-		if not IsTradeSkillLinked() and not IsTradeSkillGuild() and not IsNPCCrafting() and GetTradeSkillLine() ~= "UNKNOWN" and CURRENT_TRADESKILL ~= runeforging then
---			self:Print("Scanning "..CURRENT_TRADESKILL.."...")
+		if not IsTradeSkillLinked() and not IsTradeSkillGuild() and not IsNPCCrafting() and GetTradeSkillLine() ~= "UNKNOWN" then
 			self:ScheduleTimer("UpdateKnownRecipes", 1)
 		end
-	else
---		self:Print("Waiting for tradeskill data to be cached...")
-		self:ScheduleTimer("OnTradeShow", 1)
 	end
 end
 
@@ -192,7 +194,7 @@ function TradeskillInfo:OnSkillUpdate()
 		self.UpdateInProgress = true
 
 		self:UpdateSkills()
-		self:OnTradeShow()
+		self:UpdateKnownRecipes()
 
 		self.UpdateInProgress = false
 	end
@@ -202,7 +204,7 @@ function TradeskillInfo:OnAddonLoaded(_, addon)
 	if addon == "Blizzard_AuctionUI" then
 		self:HookAuctionUI()
 	elseif addon == "Blizzard_TradeSkillUI" or addon == "AdvancedTradeSkillWindow" then
-		self:HookTradeSkillUI()
+--		self:HookTradeSkillUI()
 	end
 end
 
@@ -288,8 +290,8 @@ function TradeskillInfo:HookTradeSkillUI()
 		self:SecureHook("TradeSkillFrame_SetSelection")
 
 		-- add our text fields
-		local fsSkillText = TradeSkillDetailScrollChildFrame:CreateFontString("TradeskillInfoSkillText", "BACKGROUND", "GameFontHighlightSmall")
-		local fsProfitText = TradeSkillDetailScrollChildFrame:CreateFontString("TradeskillInfoProfitText", "BACKGROUND", "GameFontHighlightSmall")
+		local fsSkillText = TradeSkillFrame.DetailsFrame:CreateFontString("TradeskillInfoSkillText", "BACKGROUND", "GameFontHighlightSmall")
+		local fsProfitText = TradeSkillFrame.DetailsFrame:CreateFontString("TradeskillInfoProfitText", "BACKGROUND", "GameFontHighlightSmall")
 
 		fsSkillText:SetPoint("TOPLEFT", 5, -52)
 		fsProfitText:SetPoint("TOPLEFT", fsSkillText, "TOPRIGHT")
@@ -329,6 +331,21 @@ function TradeskillInfo:UpdateSkills()
 end
 
 function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
+	local recipes = C_TradeSkillUI.GetAllRecipeIDs()
+	if not recipes or #recipes == 0 then return end
+
+	for _, recipeID in pairs(recipes) do
+		local info = C_TradeSkillUI.GetRecipeInfo(recipeID)
+
+		if info.learned then
+			for key, value in pairs(info) do
+				self:Print(key, value)
+			end
+
+			self.db.realm[self.vars.playername].knownRecipes[recipeID] = self.vars.difficultyLevel[info.difficulty]
+		end
+	end
+--[[
 	local numSkills = GetNumTradeSkills()
 
 	if not startLine then
@@ -355,8 +372,9 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 			end
 		end
 	end
+]]
 
---	self:Print("Scan complete.")
+	self:Print("Scan complete.")
 end
 
 ----------------------------------------------------------------------
