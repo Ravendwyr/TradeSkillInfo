@@ -338,9 +338,9 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 		local info = C_TradeSkillUI.GetRecipeInfo(recipeID)
 
 		if info.learned then
-			for key, value in pairs(info) do
-				self:Print(key, value)
-			end
+--			for key, value in pairs(info) do
+--				self:Print(key, value)
+--			end
 
 			self.db.realm[self.vars.playername].knownRecipes[recipeID] = self.vars.difficultyLevel[info.difficulty]
 		end
@@ -374,7 +374,7 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 	end
 ]]
 
-	self:Print("Scan complete.")
+--	self:Print("Scan complete.")
 end
 
 ----------------------------------------------------------------------
