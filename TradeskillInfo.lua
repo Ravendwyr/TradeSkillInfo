@@ -320,13 +320,27 @@ end
 
 function TradeskillInfo:UpdateSkills()
 	local prof1, prof2, _, _, cook, firstAid = GetProfessions()
-	local professions = {prof1, prof2, cook, firstAid}
 	local userData = self.db.realm[self.vars.playername]
-	for _,idx in ipairs(professions) do
-		local name, _, rank = GetProfessionInfo(idx)
-		if self.vars.skillnames[name] then
-			userData.skills[self.vars.skillnames[name]] = rank
-		end
+	local name, rank
+
+	if prof1 then
+		name, _, rank = GetProfessionInfo(prof1)
+		userData.skills[self.vars.skillnames[name]] = rank
+	end
+
+	if prof2 then
+		name, _, rank = GetProfessionInfo(prof2)
+		userData.skills[self.vars.skillnames[name]] = rank
+	end
+
+	if cook then
+		name, _, rank = GetProfessionInfo(cook)
+		userData.skills[self.vars.skillnames[name]] = rank
+	end
+
+	if firstAid then
+		name, _, rank = GetProfessionInfo(firstAid)
+		userData.skills[self.vars.skillnames[name]] = rank
 	end
 end
 
@@ -1773,31 +1787,31 @@ local defaultNames = {
 }
 
 function TradeskillInfo:PopulateProfessionNames()
-	if not ( self.vars.tradeskills and
-	         self.vars.skillnames) or
-	   not ( self.vars.specializations and
-	         self.vars.specializationnames)
-	then
-		self.vars.tradeskills = {}
-		self.vars.skillnames = {}
-		for l, v in pairs(self.vars.tradeskillspells) do
-			local name = GetSpellInfo(v)
-			if not name then
-				name = defaultNames[v]
-			end
-			self.vars.tradeskills[l] = name
-			self.vars.skillnames[name] = l
+	self.vars.tradeskills = {}
+	self.vars.skillnames = {}
+
+	for l, v in pairs(self.vars.tradeskillspells) do
+		local name = GetSpellInfo(v)
+
+		if not name then
+			name = defaultNames[v]
 		end
 
-		self.vars.specializations = {}
-		self.vars.specializationnames = {}
-		for l, v in pairs(self.vars.specializationspells) do
-			local name = GetSpellInfo(v)
-			if not name then
-				name = defaultNames[v]
-			end
-			self.vars.specializations[l] = name
-			self.vars.specializationnames[name] = l
+		self.vars.tradeskills[l] = name
+		self.vars.skillnames[name] = l
+	end
+
+	self.vars.specializations = {}
+	self.vars.specializationnames = {}
+
+	for l, v in pairs(self.vars.specializationspells) do
+		local name = GetSpellInfo(v)
+
+		if not name then
+			name = defaultNames[v]
 		end
+
+		self.vars.specializations[l] = name
+		self.vars.specializationnames[name] = l
 	end
 end
