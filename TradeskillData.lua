@@ -14,6 +14,8 @@ TradeskillInfo.vars.tradeskillspells = {
 	['W'] = 2550,  -- Cooking
 	['X'] = 3273,  -- First Aid
 	['Y'] = 2575,  -- Mining
+	['S'] = 8613,  -- Skinning
+	['H'] = 2366,  -- Herb Gathering
 	['I'] = 45357, -- Inscription
 }
 
