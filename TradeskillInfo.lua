@@ -17,6 +17,7 @@ TradeskillInfo.vars.diffcolors = { "|cff777777", "|cff33bb33", "|cffffff00", "|c
 
 
 local LDB = LibStub("LibDataBroker-1.1", true)
+local DBI = LibStub("LibDBIcon-1.0", true)
 local object
 
 if LDB then
@@ -204,6 +205,10 @@ function TradeskillInfo:OnEnable()
 	self.OptionsPanel = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("TradeSkillInfo", "TradeSkillInfo")
 
 	self:ScheduleTimer("OnSkillUpdate", 1)
+
+	if DBI then
+		DBI:Register("TradeSkillInfo", object, self.db.profile)
+	end
 end
 
 

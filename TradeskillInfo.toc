@@ -31,6 +31,7 @@ Libs\AceTimer-3.0\AceTimer-3.0.lua
 Libs\LibBabble-Faction-3.0\lib.xml
 Libs\LibBabble-SubZone-3.0\lib.xml
 Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
 #@end-no-lib-strip@
 
 Locale\enUS.lua
