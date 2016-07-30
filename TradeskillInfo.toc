@@ -46,7 +46,6 @@ Locale\zhCN.lua
 Locale\zhTW.lua
 
 TradeskillInfo.lua
-DataBroker.lua
 
 Data.lua
 TradeskillData.lua
