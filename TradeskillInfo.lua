@@ -154,6 +154,9 @@ function TradeskillInfo:OnInitialize()
 			SavePosition = true,
 			FrameStrata = 1,
 			UIScale = 1,
+
+			-- minimap options
+			hide = false,
 		},
 		realm = {
 			["*"] = { -- stores all known characters

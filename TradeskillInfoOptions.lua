@@ -1,5 +1,6 @@
 
 local L = LibStub("AceLocale-3.0"):GetLocale("TradeSkillInfo")
+local DBI = LibStub("LibDBIcon-1.0", true)
 
 
 -- upvalues, will be populated in :CreateConfig() at the end of the file
@@ -354,6 +355,21 @@ local uiOptions = {
 			arg = "SearchShiftKey",
 			disabled = function() return not db["QuickSearch"] end,
 			order = 6,
+		},
+		minimapButton = {
+			name = L["Hide Minimap Button"],
+			type = "toggle",
+			arg = "hide",
+			get = getOption,
+			set = function(info, arg)
+				setOption(info, arg)
+				if arg then
+					DBI:Hide("TradeSkillInfo")
+				else
+					DBI:Show("TradeSkillInfo")
+				end
+			end,
+			order = 7,
 		},
 	},
 }
