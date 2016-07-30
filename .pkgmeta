@@ -20,7 +20,4 @@ externals:
 move-folders:
 	TradeSkillInfo/TradeskillInfoUI: TradeSkillInfoUI
 
-ignore:
-	- Data/Miner
-
 license-output: LICENSE.txt
