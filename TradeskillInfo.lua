@@ -1435,6 +1435,8 @@ function TradeskillInfo:AddTooltipInfo(tooltip)
 		id = -id
 	else return end -- it's an empty bag slot!
 
+	if not id then return end
+
 	local recipeId = self:GetRecipeItem(id)
 
 	if recipeId then -- it's a recipe!
