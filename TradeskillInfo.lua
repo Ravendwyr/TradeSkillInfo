@@ -170,6 +170,33 @@ function TradeskillInfo:OnInitialize()
 	self:BuildWhereUsed()
 end
 
+-- blatently stolen from Xruptor's BagSync, who also gave credit to Tuller
+local function hookTip(tooltip)
+	local modified = false
+
+	tooltip:HookScript("OnTooltipCleared", function(self)
+		modified = false
+	end)
+
+	tooltip:HookScript("OnTooltipSetItem", function(self)
+		if modified then return end
+
+		modified = true
+
+		local name, link = self:GetItem()
+		TradeskillInfo:AddTooltipInfo(self, link)
+	end)
+
+	tooltip:HookScript("OnTooltipSetSpell", function(self)
+		if modified then return end
+
+		modified = true
+
+		local name, _, id = self:GetSpell()
+		TradeskillInfo:AddTooltipInfo(self, spell)
+	end)
+end
+
 function TradeskillInfo:OnEnable()
 	self.vars.playername = UnitName("player")
 
@@ -189,20 +216,8 @@ function TradeskillInfo:OnEnable()
 	-- merchant colouring
 	self:SecureHook("MerchantFrame_UpdateMerchantInfo")
 
-	for _, method in pairs({
-		"SetAuctionItem", "SetAuctionSellItem",
-		"SetExistingSocketGem", "SetSocketGem", "SetSpellByID",
-		"SetHyperlink", "SetAction", "SetQuestLogSpecialItem",
-		"SetBagItem", "SetGuildBankItem", "SetInventoryItem",
-		"SetTradePlayerItem", -- "SetTradeSkillItem",
-		"SetLootItem", "SetLootRollItem",
-		"SetMerchantItem", "SetBuybackItem",
-		"SetSendMailItem", "SetInboxItem",
-	}) do
-		self:SecureHook(GameTooltip, method, "AddTooltipInfo")
-	end
-
-	self:SecureHook("SetItemRef")
+	hookTip(GameTooltip)
+	hookTip(ItemRefTooltip)
 
 	LibStub("AceConfig-3.0"):RegisterOptionsTable("TradeSkillInfo", TradeskillInfo.CreateConfig)
 	self.OptionsPanel = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("TradeSkillInfo", "TradeSkillInfo")
@@ -1423,15 +1438,12 @@ function TradeskillInfo:SetItemRef()
 end
 
 
-function TradeskillInfo:AddTooltipInfo(tooltip)
+function TradeskillInfo:AddTooltipInfo(tooltip, id)
 	if InCombatLockdown() then return end
 
-	local _, link = tooltip:GetItem()
-	local _, _, id = tooltip:GetSpell()
-
-	if link then -- it's an item!
-		id = tonumber( link:match("item:(%d+):") )
-	elseif id then -- it's a spell!
+	if type(id) == "string" then -- it's an item!
+		id = tonumber( id:match("item:(%d+):") )
+	elseif type(id) == "number" then -- it's a spell!
 		id = -id
 	else return end -- it's an empty bag slot!
 
