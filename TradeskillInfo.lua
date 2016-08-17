@@ -211,7 +211,7 @@ function TradeskillInfo:OnEnable()
 	self:SecureHook("ChatFrame_OnHyperlinkShow")
 	self:HookAuctionUI()
 
-	self:RegisterEvent("TRADE_SKILL_SHOW", "OnTradeShow")
+	self:RegisterEvent("TRADE_SKILL_DATA_SOURCE_CHANGED", "OnTradeSkillDataSourceChanged")
 	self:RegisterEvent("CHAT_MSG_SKILL", "OnSkillUpdate")
 	self:RegisterEvent("ADDON_LOADED", "OnAddonLoaded")
 
@@ -236,7 +236,7 @@ function TradeskillInfo:OnEnable()
 end
 
 
-function TradeskillInfo:OnTradeShow()
+function TradeskillInfo:OnTradeSkillDataSourceChanged()
 	if IsTradeSkillReady() then
 		if not IsTradeSkillLinked() and not IsTradeSkillGuild() and not IsNPCCrafting() and GetTradeSkillLine() ~= "UNKNOWN" then
 			self:ScheduleTimer("UpdateKnownRecipes", 1)
