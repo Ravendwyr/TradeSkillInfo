@@ -143,8 +143,9 @@ function TradeskillInfo:OnInitialize()
 			ColorMerchantRecipes = true,
 			AHColorLearnable	= { r = 1, g = 1, b = 1 },
 			AHColorAltLearnable	= { r = 0, g = 1, b = 0 },
-			AHColorWillLearn	= { r = 1, g = 0.75, b = 0 },
-			AHColorAltWillLearn	= { r = 0, g = 0.75, b = 1 },
+			AHColorWillLearn	= { r = 1, g = 0.5, b = 0.15 },
+			AHColorAltWillLearn	= { r = 1, g = 1, b = 0 },
+			AHColorKnown		= { r = 0, g = 0, b = 1 },
 			AHColorUnavailable	= { r = 1, g = 0, b = 0 },
 
 			RecipesOnly = false,
@@ -1706,6 +1707,9 @@ function TradeskillInfo:AuctionFrameBrowse_Update()
 				elseif alt == 3 then
 					local c = self.db.profile.AHColorAltWillLearn
 					iconTexture:SetVertexColor(c.r, c.g, c.b)
+				elseif you == 1 or alt == 1 then
+					local c = self.db.profile.AHColorKnown
+					iconTexture:SetVertexColor(c.r, c.g, c.b)
 				else
 					local c = self.db.profile.AHColorUnavailable
 					iconTexture:SetVertexColor(c.r, c.g, c.b)
@@ -1776,6 +1780,8 @@ function TradeskillInfo:MerchantFrame_UpdateMerchantInfo()
 					c = self.db.profile.AHColorWillLearn
 				elseif alt == 3 then
 					c = self.db.profile.AHColorAltWillLearn
+				elseif you == 1 or alt == 1 then
+					c = self.db.profile.AHColorKnown
 				else
 					c = self.db.profile.AHColorUnavailable
 				end
