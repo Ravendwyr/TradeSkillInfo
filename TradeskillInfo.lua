@@ -157,6 +157,8 @@ function TradeskillInfo:OnInitialize()
 
 			-- minimap options
 			hide = false,
+
+			DebugMode = false,
 		},
 		realm = {
 			["*"] = { -- stores all known characters
@@ -226,6 +228,10 @@ function TradeskillInfo:OnEnable()
 
 	if DBI then
 		DBI:Register("TradeSkillInfo", object, self.db.profile)
+	end
+
+	if self.db.profile.DebugMode then
+		self:FindSkillsUnknownInCombines();
 	end
 end
 
@@ -437,7 +443,9 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 	end
 ]]
 
---	self:Print("Scan complete.")
+	if self.db.profile.DebugMode then
+		self:Print("Scan complete. ",  #recipes, " recipes scanned")
+	end
 end
 
 ----------------------------------------------------------------------
@@ -726,6 +734,9 @@ function TradeskillInfo:GetCombineComponents(id, getVendorPrice, getAuctioneerPr
 		c.name,c.cost,c.source,c.aucMvCost,c.aucMvSeen = self:GetComponent(c.id, getVendorPrice, getAuctioneerPrice)
 		c.link, c.quality, c.itemString, c.texture = getItemLink(c.id)
 		table.insert(components,c)
+		if self.db.profile.DebugMode and not c.name then
+			self:Print("Unknown combine component: " .. c.id);
+		end
 	end
 	return components
 end
@@ -1863,5 +1874,17 @@ function TradeskillInfo:PopulateProfessionNames()
 
 		self.vars.specializations[l] = name
 		self.vars.specializationnames[name] = l
+	end
+end
+
+function TradeskillInfo:FindSkillsUnknownInCombines()
+	self:BuildWhereUsed()
+
+	for pname, pdata in pairs(self.db.realm) do
+		for id, _ in pairs(pdata.knownRecipes) do
+			if not self:CombineExists(id) then
+				self:Print("No combine for " .. self:GetCombineName(id) .. " " .. id);
+			end
+		end
 	end
 end

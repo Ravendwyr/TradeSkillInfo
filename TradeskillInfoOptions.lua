@@ -371,6 +371,15 @@ local uiOptions = {
 			end,
 			order = 7,
 		},
+		debugModeButton = {
+			name = L["Turn on debug info output"],
+			type = "toggle",
+			arg = "DebugMode",
+			get = getOption,
+			set = setOption,
+			width = "full",
+			order = 8,
+		},
 	},
 }
 
