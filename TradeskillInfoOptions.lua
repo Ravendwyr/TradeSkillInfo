@@ -485,3 +485,4 @@ function TradeskillInfo:CreateConfig()
 
 	return options
 end
+
