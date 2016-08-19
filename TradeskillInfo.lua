@@ -1688,52 +1688,39 @@ function TradeskillInfo:AuctionFrameBrowse_Update()
 				index = button.id
 			end
 			local recipeLink = GetAuctionItemLink("list", index)
-			local recipeId = getIdFromLink(recipeLink)
-			local id = self:GetRecipeItem(recipeId)
-			--self:Print("Item: %d(%d) %d %s",i,index,recipeId,recipeLink)
-			if id then
-				local you,alt = self:GetCombineAvailability(id)
-				--self:Print("recipe: %s you %d alt %d",id,you,alt)
-				-- 0 = Unavailable, 1 = known, 2 = learnable, 3 = will be able to learn
-				if you == 2 then
-					local c = self.db.profile.AHColorLearnable
-					iconTexture:SetVertexColor(c.r, c.g, c.b)
-				elseif alt == 2 then
-					local c = self.db.profile.AHColorAltLearnable
-					iconTexture:SetVertexColor(c.r, c.g, c.b)
-				elseif you == 3 then
-					local c = self.db.profile.AHColorWillLearn
-					iconTexture:SetVertexColor(c.r, c.g, c.b)
-				elseif alt == 3 then
-					local c = self.db.profile.AHColorAltWillLearn
-					iconTexture:SetVertexColor(c.r, c.g, c.b)
-				elseif you == 1 or alt == 1 then
-					local c = self.db.profile.AHColorKnown
-					iconTexture:SetVertexColor(c.r, c.g, c.b)
-				else
-					local c = self.db.profile.AHColorUnavailable
-					iconTexture:SetVertexColor(c.r, c.g, c.b)
-				end
---				local knownBy = self:GetCombineKnownBy(id)
---				local learnableBy = self:GetCombineLearnableBy(id)
---				local availableTo = self:GetCombineAvailableTo(id)
---				if learnableBy then
---					iconTexture:SetVertexColor(1.0, 0.1, 0.1)
---				elseif availableTo then
---					iconTexture:SetVertexColor(1.0, 0.1, 0.1)
---				elseif knownBy then
---					iconTexture:SetVertexColor(1.0, 0.1, 0.1)
---				end
-			elseif button.id then  -- button.id is set only by Compact-UI we need to fix texture colors.
-				local _, _, _, _, canUse =  GetAuctionItemInfo("list", index)
-				if ( not canUse ) then
-					iconTexture:SetVertexColor(1.0, 0.1, 0.1)  -- item is not usable
-				else
-					iconTexture:SetVertexColor(1.0, 1.0, 1.0)  -- usable, non-recipe item
-				end
+
+			local c = self:ItemTextureColor(recipeLink)
+			if c then
+				iconTexture:SetVertexColor(c.r, c.g, c.b)
+			else
+				iconTexture:SetVertexColor(1.0, 1.0, 1.0)
 			end
 		end
 	end
+end
+
+function TradeskillInfo:ItemTextureColor(itemLink)
+	local recipeId = getIdFromLink(itemLink)
+	local id = self:GetRecipeItem(recipeId)
+
+	if not id then return nil; end	-- non-recipe item
+
+	local you,alt = self:GetCombineAvailability(id)
+	--self:Print("recipe: %s you %d alt %d",id,you,alt)
+	-- 0 = Unavailable, 1 = known, 2 = learnable, 3 = will be able to learn
+	if you == 2 then
+		return self.db.profile.AHColorLearnable
+	elseif alt == 2 then
+		return self.db.profile.AHColorAltLearnable
+	elseif you == 3 then
+		return self.db.profile.AHColorWillLearn
+	elseif alt == 3 then
+		return self.db.profile.AHColorAltWillLearn
+	elseif you == 1 or alt == 1 then
+		return self.db.profile.AHColorKnown
+	end
+
+	return self.db.profile.AHColorUnavailable
 end
 
 
@@ -1761,36 +1748,12 @@ function TradeskillInfo:MerchantFrame_UpdateMerchantInfo()
 
 		local itemlink = GetMerchantItemLink(index)
 
-		if itemlink then
-			local recipeId = getIdFromLink(itemlink)
-			local id = self:GetRecipeItem(recipeId)
-
-			if id then
-				local you, alt = self:GetCombineAvailability(id)
-				local c
-
-				-- 0 = unavailable, 1 = known, 2 = learnable, 3 = will be able to learn
---				self:Print("recipe", id, "you", you, "alt", alt)
-
-				if you == 2 then
-					c = self.db.profile.AHColorLearnable
-				elseif alt == 2 then
-					c = self.db.profile.AHColorAltLearnable
-				elseif you == 3 then
-					c = self.db.profile.AHColorWillLearn
-				elseif alt == 3 then
-					c = self.db.profile.AHColorAltWillLearn
-				elseif you == 1 or alt == 1 then
-					c = self.db.profile.AHColorKnown
-				else
-					c = self.db.profile.AHColorUnavailable
-				end
-
-				SetItemButtonNameFrameVertexColor(merchantButton, c.r, c.g, c.b)
-				SetItemButtonSlotVertexColor(merchantButton, c.r, c.g, c.b)
-				SetItemButtonTextureVertexColor(itemButton, c.r, c.g, c.b)
-				SetItemButtonNormalTextureVertexColor(itemButton, c.r, c.g, c.b)
-			end
+		local c = self:ItemTextureColor(itemlink)
+		if c then
+			SetItemButtonNameFrameVertexColor(merchantButton, c.r, c.g, c.b)
+			SetItemButtonSlotVertexColor(merchantButton, c.r, c.g, c.b)
+			SetItemButtonTextureVertexColor(itemButton, c.r, c.g, c.b)
+			SetItemButtonNormalTextureVertexColor(itemButton, c.r, c.g, c.b)
 		end
 	end
 end
