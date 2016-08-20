@@ -173,43 +173,6 @@ function TradeskillInfo:OnInitialize()
 	self:BuildWhereUsed()
 end
 
--- blatently stolen from Xruptor's BagSync, who also gave credit to Tuller
-local function hookTip(tooltip)
-	local modified = false
-
-	tooltip:HookScript("OnTooltipCleared", function(self)
-		modified = false
-	end)
-
-	tooltip:HookScript("OnTooltipSetItem", function(self)
-		if modified then return end
-
-		modified = true
-
-		local name, link = self:GetItem()
-		local owner = self:GetOwner()
-
-		if name == "" then -- a Blizzard bug breaks merchant recipe links, so let's work around it
-			if owner and owner.link then
-				link = owner.link
-			else
-				return
-			end
-		end
-
-		TradeskillInfo:AddTooltipInfo(self, link)
-	end)
-
-	tooltip:HookScript("OnTooltipSetSpell", function(self)
-		if modified then return end
-
-		modified = true
-
-		local name, _, id = self:GetSpell()
-		TradeskillInfo:AddTooltipInfo(self, spell)
-	end)
-end
-
 function TradeskillInfo:OnEnable()
 	self.vars.playername = UnitName("player")
 
@@ -229,8 +192,14 @@ function TradeskillInfo:OnEnable()
 	-- merchant colouring
 	self:SecureHook("MerchantFrame_UpdateMerchantInfo")
 
-	hookTip(GameTooltip)
-	hookTip(ItemRefTooltip)
+	local tooltipLib = LibStub("LibExtraTip-1", true)
+	if tooltipLib then
+		tooltipLib:AddCallback({type = "item", callback = TradeskillInfo.TooltipHandler})
+		tooltipLib:RegisterTooltip(GameTooltip)
+		tooltipLib:RegisterTooltip(ItemRefTooltip)
+		tooltipLib:RegisterTooltip(BattlePetTooltip)
+		tooltipLib:RegisterTooltip(FloatingBattlePetTooltip)
+	end
 
 	LibStub("AceConfig-3.0"):RegisterOptionsTable("TradeSkillInfo", TradeskillInfo.CreateConfig)
 	self.OptionsPanel = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("TradeSkillInfo", "TradeSkillInfo")
@@ -1487,10 +1456,9 @@ end
 --  Tooltip Functions
 ----------------------------------------------------------------
 
-function TradeskillInfo:SetItemRef()
-	if not IsModifiedClick() then self:AddTooltipInfo(ItemRefTooltip) end
+function TradeskillInfo.TooltipHandler(frame, item, count)
+	TradeskillInfo:AddTooltipInfo(frame, item)
 end
-
 
 function TradeskillInfo:AddTooltipInfo(tooltip, id)
 	if InCombatLockdown() then return end

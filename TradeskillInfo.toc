@@ -7,7 +7,7 @@
 ## Notes-koKR: 전문기술 정보의 모든 것!
 ## Author: Ethan Centaurai
 ## Version: @project-version@
-## OptionalDeps: LibStub, CallbackHandler-1.0, Ace3, LibBabble-SubZone-3.0, LibBabble-Faction-3.0, Auc-Advanced, TradeSkillMaster
+## OptionalDeps: LibStub, CallbackHandler-1.0, Ace3, LibBabble-SubZone-3.0, LibBabble-Faction-3.0, LibExtraTip, Auc-Advanced, TradeSkillMaster
 ## SavedVariables: TradeSkillInfoDB
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Always: delayed
