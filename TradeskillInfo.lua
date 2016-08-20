@@ -267,7 +267,7 @@ function TradeskillInfo:OnSkillUpdate()
 end
 
 function TradeskillInfo:OnAddonLoaded(_, addon)
-	if addon == "Blizzard_AuctionUI" then
+	if addon == "Blizzard_AuctionUI" or addon == "TradeSkillMaster" then
 		self:HookAuctionUI()
 	elseif addon == "Blizzard_TradeSkillUI" or addon == "AdvancedTradeSkillWindow" then
 --		self:HookTradeSkillUI()
@@ -299,6 +299,11 @@ function TradeskillInfo:HookAuctionUI()
 		self:SecureHook("AuctionFrameBrowse_Update")
 		hookedAuctionUi = true
 	end
+
+	if TSMAPI and TSMAPI.GUI and TSMAPI.GUI.BuildFrame and (not self:IsHooked(TSMAPI.GUI, "BuildFrame")) then
+		self:RawHook(TSMAPI.GUI, "BuildFrame", "TsmBuildFrame")
+	end
+
 --	if Auc-Advanced and not self:IsHooked(Auc-Advanced, "lib.ListUpdate")
 --		self:Hook (Auc-Advanced, "lib.ListUpdate")
 --	end
@@ -1723,6 +1728,30 @@ function TradeskillInfo:ItemTextureColor(itemLink)
 	return self.db.profile.AHColorUnavailable
 end
 
+function TradeskillInfo:TsmBuildFrame(tsmApiGui, info)
+	local orgRes = self.hooks[TSMAPI.GUI].BuildFrame(tsmApiGui, info)
+
+	if info and info.type == "AuctionResultsTable" and
+		orgRes and orgRes.SetRowInfo and not self:IsHooked(orgRes, "SetRowInfo") then
+		self:Hook(orgRes, "SetRowInfo", "TsmSetRowInfo")
+	end
+
+	return orgRes
+end
+
+function TradeskillInfo:TsmSetRowInfo(rt, rowIndex, record, displayNumAuctions, numPlayerAuctions, indented, expandable, expandKey, numAuctions)
+	if not self:ColoringAHRecipes() then return end
+
+	if rowIndex <= 0 or rowIndex > #rt.rows then return end
+	local row = rt.rows[rowIndex]
+
+	local c = self:ItemTextureColor(record.itemLink)
+	if c then
+		row.cells[1].icon:SetVertexColor(c.r, c.g, c.b)
+	else
+		row.cells[1].icon:SetVertexColor(1.0, 1.0, 1.0)
+	end
+end
 
 ----------------------------------------------------------------------
 -- Vendor functions
