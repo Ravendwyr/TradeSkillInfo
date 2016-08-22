@@ -186,6 +186,16 @@ local function hookTip(tooltip)
 		modified = true
 
 		local name, link = self:GetItem()
+		local owner = self:GetOwner()
+
+		if name == "" then -- a Blizzard bug breaks merchant recipe links, so let's work around it
+			if owner and owner.link then
+				link = owner.link
+			else
+				return
+			end
+		end
+
 		TradeskillInfo:AddTooltipInfo(self, link)
 	end)
 
@@ -1457,8 +1467,6 @@ function TradeskillInfo:AddTooltipInfo(tooltip, id)
 	elseif type(id) == "number" then -- it's a spell!
 		id = -id
 	else return end -- it's an empty bag slot!
-
-	if not id then return end
 
 	local recipeId = self:GetRecipeItem(id)
 
