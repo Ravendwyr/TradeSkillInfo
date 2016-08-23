@@ -604,6 +604,16 @@ function TradeskillInfoUI:SkillButton_OnClick(frame, button)
 			self:Frame_SetSelection(frame:GetID())
 			self:Frame_Update()
 		end
+	elseif (button == "RightButton") then
+		local id = frame:GetID()
+		if ((id > self:GetNumTradeSkills()) or (id == 0)) then return end
+
+		local item = self.vars.searchResult[id]
+		if (type(item) == "string") then
+			self.skillForIgnoredDropDown = item;
+			UIDropDownMenu_Initialize(TradeskillInfoIgnoredDropDownFrame, TradeskillInfoUI_InitializeIgnoreDropDown, "MENU");
+			ToggleDropDownMenu(1, nil, TradeskillInfoIgnoredDropDownFrame, "cursor", 0, 0, "MENU");
+		end
 	end
 end
 
@@ -1485,4 +1495,37 @@ do
 		end
 		idAction[id] = nil
     end
+end
+
+----------------------------------------------------------------------
+--- Ignored drop-down menu
+----------------------------------------------------------------------
+function TradeskillInfoUI_InitializeIgnoreDropDown(dropdown)
+	TradeskillInfoUI:InitializeIgnoreDropDown(dropdown)
+end
+
+function TradeskillInfoUI:InitializeIgnoreDropDown(dropdown)
+	local entry = UIDropDownMenu_CreateInfo();		-- Clear the menu
+
+	-- Add title
+	entry.text = L["Active for"];
+	entry.isTitle = true;
+	entry.notCheckable = true;
+	UIDropDownMenu_AddButton(entry);
+
+	local skill = self.skillForIgnoredDropDown;
+	local chars = TradeskillInfo:GetCharsWithSkill(skill)
+	for _, name in pairs(chars) do
+		entry.text = name;
+		entry.checked = not TradeskillInfo:IsSkillIgnoredForChar(name, skill);
+		entry.disabled = false;
+		entry.isNotRadio = true;
+		entry.keepShownOnClick = true;
+		entry.isTitle = false;
+		entry.notCheckable = false;
+		entry.func = function(self,_,_,checked)
+			TradeskillInfo:SetSkillIgnoreStatus(name, skill, not checked)
+		end
+		UIDropDownMenu_AddButton(entry);
+	end
 end

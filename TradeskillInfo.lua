@@ -162,7 +162,7 @@ function TradeskillInfo:OnInitialize()
 		},
 		realm = {
 			["*"] = { -- stores all known characters
-				knownRecipes = {}, skills = {},
+				knownRecipes = {}, skills = {}, skillIgnored = {}
 			},
 		},
 	}, "Default")
@@ -788,7 +788,8 @@ function TradeskillInfo:GetCombineAvailability(id)
 	end
 
 	for name in pairs(self.db.realm) do
-		if name ~= self.vars.playername then
+		local ignored = TradeskillInfo:IsSkillIgnoredForChar(name, combineSkill)
+		if name ~= self.vars.playername and not ignored then
 			local skillLevel = self:GetCharSkillLevel(name,combineSkill)
 			local charSpec = self:GetCharSkillLevel(name,combineSpec)
 			if skillLevel and (combineSpec=="" or charSpec) then
@@ -1334,7 +1335,9 @@ function TradeskillInfo:IsCombineLearnableByChar(name,id)
 	local combineSkill,combineSpec,combineLevel = self:GetCombineSkill(id)
 	local charLevel = self:GetCharSkillLevel(name,combineSkill)
 	local charSpec = self:GetCharSkillLevel(name,combineSpec)
-	if charLevel and charLevel >= combineLevel and not self:IsCombineKnowByChar(name,id) and (combineSpec=="" or charSpec) then
+	local skillIgnored = self:IsSkillIgnoredForChar(name, combineSkill)
+	if charLevel and not skillIgnored
+		and charLevel >= combineLevel and not self:IsCombineKnowByChar(name,id) and (combineSpec=="" or charSpec) then
 		return charLevel
 	end
 end
@@ -1366,7 +1369,8 @@ function TradeskillInfo:IsCombineAvailableToChar(name, id)
 	local combineSkill,combineSpec,combineLevel = self:GetCombineSkill(id)
 	local charLevel = self:GetCharSkillLevel(name,combineSkill)
 	local charSpec = self:GetCharSkillLevel(name,combineSpec)
-	if charLevel and
+	local skillIgnored = self:IsSkillIgnoredForChar(name, combineSkill)
+	if charLevel and not skillIgnored and
 	   charLevel < combineLevel and
 	   (combineSpec=="" or charSpec) and
 	   not self:IsCombineKnowByChar(name, id) then
@@ -1448,6 +1452,29 @@ function TradeskillInfo:GetItemUsableBy(id, tooltip)
 	end
 
 	return text
+end
+
+function TradeskillInfo:GetCharsWithSkill(skill)
+	local chars = {}
+	for n,_ in pairs(self.db.realm) do
+		if self.db.realm[n].skills and self.db.realm[n].skills[skill] then
+			table.insert(chars, n)
+		end
+	end
+	return chars
+end
+
+function TradeskillInfo:IsSkillIgnoredForChar(name, skill)
+	local userData = self.db.realm[name]
+	return userData.skillIgnored and userData.skillIgnored[skill]
+end
+
+function TradeskillInfo:SetSkillIgnoreStatus(name, skill, ignored)
+	local userData = self.db.realm[name]
+	if not userData.skillIgnored then
+		userData.skillIgnored = {}
+	end
+	userData.skillIgnored[skill] = ignored
 end
 
 ----------------------------------------------------------------
