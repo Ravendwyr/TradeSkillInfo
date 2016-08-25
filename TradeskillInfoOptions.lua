@@ -148,6 +148,7 @@ local tooltipOptions = {
 					name = L["Only add extra data to recipes"],
 					desc = L["Only show extra profession data in recipe tooltips instead of every crafted item ever"],
 					type = "toggle",
+					width = "full",
 					arg = "RecipesOnly",
 					order = 13,
 				},
@@ -398,6 +399,7 @@ local colorOptions = {
 			arg = "ColorAHRecipes",
 			get = getOption,
 			set = setOption,
+			width = "double",
 			order = 1,
 		},
 		merchantcolor = {
@@ -407,6 +409,7 @@ local colorOptions = {
 			arg = "ColorMerchantRecipes",
 			get = getOption,
 			set = setOption,
+			width = "double",
 			order = 2,
 		},
 		bagcolor = {
@@ -416,6 +419,7 @@ local colorOptions = {
 			arg = "ColorBagRecipes",
 			get = getOption,
 			set = setOption,
+			width = "double",
 			order = 3,
 		},
 		colors = {
