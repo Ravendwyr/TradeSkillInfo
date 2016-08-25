@@ -409,13 +409,22 @@ local colorOptions = {
 			set = setOption,
 			order = 2,
 		},
+		bagcolor = {
+			name = L["Color Bag Recipes"],
+			desc = L["Color recipes in bags and banks"],
+			type = "toggle",
+			arg = "ColorBagRecipes",
+			get = getOption,
+			set = setOption,
+			order = 3,
+		},
 		colors = {
 			name = L["Colors"],
 			type = "group",
 			get = getColor,
 			set = setColor,
 			inline = true,
-			order = 3,
+			order = 4,
 			args = {
 				playerCan = {
 					name = L["You can learn"],

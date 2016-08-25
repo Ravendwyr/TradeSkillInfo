@@ -141,6 +141,7 @@ function TradeskillInfo:OnInitialize()
 
 			ColorAHRecipes = true,
 			ColorMerchantRecipes = true,
+			ColorBagRecipes = true,
 			AHColorLearnable	= { r = 1, g = 1, b = 1 },
 			AHColorAltLearnable	= { r = 0, g = 1, b = 0 },
 			AHColorWillLearn	= { r = 1, g = 0.5, b = 0.15 },
@@ -189,8 +190,10 @@ function TradeskillInfo:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SKILL", "OnSkillUpdate")
 	self:RegisterEvent("ADDON_LOADED", "OnAddonLoaded")
 
-	-- merchant colouring
+	-- Merchant/bank/bag colouring
 	self:SecureHook("MerchantFrame_UpdateMerchantInfo")
+	self:SecureHook("ContainerFrame_UpdateCooldown")
+	self:SecureHook("BankFrameItemButton_Update")
 
 	local tooltipLib = LibStub("LibExtraTip-1", true)
 	if tooltipLib then
@@ -240,6 +243,8 @@ function TradeskillInfo:OnAddonLoaded(_, addon)
 		self:HookAuctionUI()
 	elseif addon == "Blizzard_TradeSkillUI" or addon == "AdvancedTradeSkillWindow" then
 --		self:HookTradeSkillUI()
+	elseif addon == "Blizzard_GuildBankUI" then
+		self:SecureHook("GuildBankFrame_Update")
 	end
 end
 
@@ -1672,8 +1677,13 @@ function TradeskillInfo:AuctionFrameBrowse_Update()
 	end
 end
 
-function TradeskillInfo:ItemTextureColor(itemLink)
-	local recipeId = getIdFromLink(itemLink)
+function TradeskillInfo:ItemTextureColor(itemLinkOrId)
+	local recipeId
+	if type(itemLinkOrId) == "string" then
+		recipeId = getIdFromLink(itemLinkOrId)
+	elseif type(itemLinkOrId) == "number" then
+		recipeId = itemLinkOrId
+	end
 	local id = self:GetRecipeItem(recipeId)
 
 	if not id then return nil; end	-- non-recipe item
@@ -1722,7 +1732,7 @@ function TradeskillInfo:TsmSetRowInfo(rt, rowIndex, record, displayNumAuctions, 
 end
 
 ----------------------------------------------------------------------
--- Vendor functions
+-- Vendor/bank/bag functions
 ----------------------------------------------------------------------
 
 function TradeskillInfo:MerchantFrame_UpdateMerchantInfo()
@@ -1751,6 +1761,58 @@ function TradeskillInfo:MerchantFrame_UpdateMerchantInfo()
 			SetItemButtonSlotVertexColor(merchantButton, c.r, c.g, c.b)
 			SetItemButtonTextureVertexColor(itemButton, c.r, c.g, c.b)
 			SetItemButtonNormalTextureVertexColor(itemButton, c.r, c.g, c.b)
+		end
+	end
+end
+
+function TradeskillInfo:ContainerFrame_UpdateCooldown(container, button)
+	if not self.db.profile.ColorBagRecipes then return end
+
+	_, _, _, _, _, _, _, _, _, itemID = GetContainerItemInfo(container, button:GetID())
+	local c = self:ItemTextureColor(itemID)
+	if c then
+		SetItemButtonTextureVertexColor(button, c.r, c.g, c.b)
+	end
+end
+
+function TradeskillInfo:BankFrameItemButton_Update(button)
+	if not self.db.profile.ColorBagRecipes then return end
+
+	local container = button:GetParent():GetID();
+	local buttonID = button:GetID();
+	if (button.isBag) then
+		container = -4;
+	end
+
+	local _, _, _, _, _, _, _, _, _, itemID = GetContainerItemInfo(container, buttonID);
+	local c = self:ItemTextureColor(itemID)
+	if c then
+		SetItemButtonTextureVertexColor(button, c.r, c.g, c.b)
+	else
+		SetItemButtonTextureVertexColor(button, 1.0, 1.0, 1.0)		
+	end
+end
+
+function TradeskillInfo:GuildBankFrame_Update()
+	if not self.db.profile.ColorBagRecipes then return end
+
+	if (GuildBankFrame.mode ~= "bank") then return end
+
+	local tab = GetCurrentGuildBankTab();
+	for i=1, MAX_GUILDBANK_SLOTS_PER_TAB do
+		local index = mod(i, NUM_SLOTS_PER_GUILDBANK_GROUP);
+		if (index == 0) then
+			index = NUM_SLOTS_PER_GUILDBANK_GROUP;
+		end
+		local column = ceil((i-0.5)/NUM_SLOTS_PER_GUILDBANK_GROUP);
+
+		local button = _G["GuildBankColumn"..column.."Button"..index];
+		local itemLink = GetGuildBankItemLink(tab, i)
+		local c = self:ItemTextureColor(itemLink)
+		if c then
+			SetItemButtonTextureVertexColor(button, c.r, c.g, c.b)
+		else
+			SetItemButtonTextureVertexColor(button, 1.0, 1.0, 1.0)
 		end
 	end
 end
