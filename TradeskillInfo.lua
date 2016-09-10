@@ -1474,6 +1474,8 @@ function TradeskillInfo:AddTooltipInfo(tooltip, id)
 		id = -id
 	else return end -- it's an empty bag slot!
 
+	if not id then return end
+
 	local recipeId = self:GetRecipeItem(id)
 
 	if recipeId then -- it's a recipe!
@@ -1789,7 +1791,7 @@ function TradeskillInfo:BankFrameItemButton_Update(button)
 	if c then
 		SetItemButtonTextureVertexColor(button, c.r, c.g, c.b)
 	else
-		SetItemButtonTextureVertexColor(button, 1.0, 1.0, 1.0)		
+		SetItemButtonTextureVertexColor(button, 1.0, 1.0, 1.0)
 	end
 end
 
