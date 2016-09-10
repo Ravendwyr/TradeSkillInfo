@@ -32,6 +32,7 @@ Libs\LibBabble-Faction-3.0\lib.xml
 Libs\LibBabble-SubZone-3.0\lib.xml
 Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
+Libs\LibExtraTip\Load.xml
 #@end-no-lib-strip@
 
 Locale\enUS.lua
