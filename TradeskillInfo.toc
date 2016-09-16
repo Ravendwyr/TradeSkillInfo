@@ -16,7 +16,7 @@
 ## X-Category: Professions
 
 #@no-lib-strip@
-Libs\LibStub\LibStub.lua
+Libs\LibExtraTip\Load.xml
 Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
 Libs\AceAddon-3.0\AceAddon-3.0.lua
 Libs\AceEvent-3.0\AceEvent-3.0.lua
@@ -32,7 +32,6 @@ Libs\LibBabble-Faction-3.0\lib.xml
 Libs\LibBabble-SubZone-3.0\lib.xml
 Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
-Libs\LibExtraTip\Load.xml
 #@end-no-lib-strip@
 
 Locale\enUS.lua
