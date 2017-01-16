@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 local LIBNAME = "LibExtraTip"
 local VERSION_MAJOR = 1
-local VERSION_MINOR = 337
+local VERSION_MINOR = 342
 -- Minor Version cannot be a SVN Revison in case this library is used in multiple repositories
 -- Should be updated manually with each (non-trivial) change
 
@@ -37,7 +37,7 @@ local LIBSTRING = LIBNAME.."_"..VERSION_MAJOR.."_"..VERSION_MINOR
 local lib = LibStub:NewLibrary(LIBNAME.."-"..VERSION_MAJOR, VERSION_MINOR)
 if not lib then return end
 
-LibStub("LibRevision"):Set("$URL: http://svn.norganna.org/libs/trunk/LibExtraTip/LibExtraTip.lua $","$Rev: 412 $","5.15.DEV.", 'auctioneer', 'libs')
+LibStub("LibRevision"):Set("$URL$","$Rev$","5.15.DEV.", 'auctioneer', 'libs')
 
 -- Call function to deactivate any outdated version of the library.
 -- (calls the OLD version of this function, NOT the one defined in this
@@ -88,7 +88,7 @@ local alwaysEnable = {
 
 -- Money Icon setup
 local iconpath = "Interface\\MoneyFrame\\UI-"
-local goldicon = "%d|T"..iconpath.."GoldIcon:0|t"
+local goldicon = "%.0f|T"..iconpath.."GoldIcon:0|t"
 local silvericon = "%s|T"..iconpath.."SilverIcon:0|t"
 local coppericon = "%s|T"..iconpath.."CopperIcon:0|t"
 
@@ -248,7 +248,6 @@ local function OnTooltipCleared(tooltip)
 	tooltip:SetFrameLevel(1)
 
 	reg.extraTipUsed = nil
-	reg.minWidth = 0
 	reg.quantity = nil
 	reg.hasItem = nil
 	reg.item = nil
@@ -257,7 +256,9 @@ local function OnTooltipCleared(tooltip)
 		tinsert(self.extraTippool, reg.extraTip)
 		reg.extraTip:Hide()
 		reg.extraTip:Release()
+		reg.extraTip:ClearLines()
 		reg.extraTip:SetHeight(0)
+		reg.extraTip:SetWidth(0)
 		ProcessCallbacks(reg, "extrahide", tooltip, reg.extraTip)
 		reg.extraTip = nil
 	end
@@ -336,22 +337,17 @@ end
 
 -- Function that gets run when a registered tooltip's size changes.
 local function OnSizeChanged(tooltip,w,h)
-	local self = lib
-	local reg = self.tooltipRegistry[tooltip]
+	local reg = lib.tooltipRegistry[tooltip]
 	if not reg then return end
 
 	local extraTip = reg.extraTip
 	if extraTip then
 		extraTip:MatchSize()
-		extraTip:NeedsRefresh(true)
 	end
 end
 
--- TEST -- doesn't seem to help, extra tip not defined when first shown, game tooltip isn't getting show calls during flicker!
--- Function that gets run when a the parent tooltip is shown
-local function OnTooltipShow(tooltip)
-	local self = lib
-	local reg = self.tooltipRegistry[tooltip]
+local function ShowCalled(tooltip)
+	local reg = lib.tooltipRegistry[tooltip]
 	if not reg then return end
 
 	local extraTip = reg.extraTip
@@ -482,7 +478,6 @@ local function hookglobal(func, posthook)
 	end
 	local stub = function(...)
 		local hook
-		-- prehook
 		hook = control[1]
 		if hook then hook(...) end
 	end
@@ -528,7 +523,6 @@ function lib:RegisterTooltip(tooltip)
 			reg.NoColumns = true -- This is not a GameTooltip so it has no Text columns. Cannot support certain functions such as embedding
 			hookscript(tooltip,"OnHide",OnTooltipCleared)
 			hookscript(tooltip,"OnSizeChanged",OnSizeChanged)
-			hookscript(tooltip,"OnShow",OnTooltipShow)
 			hookglobal("BattlePetTooltipTemplate_SetBattlePet", OnTooltipSetBattlePet) -- yes we hook the same function every time - hookglobal protects against multiple hooks
 		else
 			hookscript(tooltip,"OnTooltipSetItem",OnTooltipSetItem)
@@ -536,7 +530,7 @@ function lib:RegisterTooltip(tooltip)
 			hookscript(tooltip,"OnTooltipSetSpell",OnTooltipSetSpell)
 			hookscript(tooltip,"OnTooltipCleared",OnTooltipCleared)
 			hookscript(tooltip,"OnSizeChanged",OnSizeChanged)
-			hookscript(tooltip,"OnShow",OnTooltipShow)
+			hook(tooltip, "Show", nil, ShowCalled) -- posthook
 
 			for k,v in pairs(tooltipMethodPrehooks) do
 				hook(tooltip,k,v)
@@ -739,9 +733,9 @@ end
 	@since 1.0
 ]]
 function lib:GetMoneyText(money, concise)
-	local g = math.floor(money / 10000)
-	local s = math.floor(money % 10000 / 100)
-	local c = math.floor(money % 100)
+	local g = floor(money / 10000)
+	local s = floor(money % 10000 / 100)
+	local c = floor(money % 100)
 
 	local moneyText = ""
 
@@ -1184,11 +1178,11 @@ function lib:GenerateTooltipMethodTable() -- Sets up hooks to give the quantity 
 			reg.additional.link = GetQuestLogItemLink(type,index) -- Workaround [LTT-56], Remove when fixed by Blizzard
 		end,
 
-		SetSendMailItem = function(self,index)
+		SetSendMailItem = function(self, index)
 			OnTooltipCleared(self)
 			local reg = tooltipRegistry[self]
 			reg.ignoreOnCleared = true
-			local name,texture,quantity = GetSendMailItem(index)
+			local name, itemID, texture, quantity = GetSendMailItem(index)
 			reg.quantity = quantity
 			reg.additional.event = "SetSendMailItem"
 			reg.additional.eventIndex = index
@@ -1433,7 +1427,7 @@ function lib:GenerateTooltipMethodTable() -- Sets up hooks to give the quantity 
 end
 
 do -- ExtraTip "class" definition
-	local methods = {"InitLines","Attach","Show","MatchSize","Release","NeedsRefresh","SetParentClamp"}
+	local methods = {"InitLines","Attach","Show","MatchSize","Release","SetParentClamp"}
 	local scripts = {"OnShow","OnHide","OnSizeChanged"}
 	local numTips = 0
 	local class = {}
@@ -1468,20 +1462,35 @@ do -- ExtraTip "class" definition
 		return o
 	end
 
+	local pointsRight = {"TOPRIGHT", "BOTTOMRIGHT"}
+	local pointsCentre = {"TOP", "BOTTOM"}
+	local pointsLeft = {"TOPLEFT", "BOTTOMLEFT"}
+	local attachPointsLookup = {
+		TOPLEFT = pointsLeft,
+		TOPRIGHT = pointsRight,
+		BOTTOMLEFT = pointsLeft,
+		BOTTOMRIGHT = pointsRight,
+		TOP = pointsCentre,
+		BOTTOM = pointsCentre,
+		LEFT = pointsLeft,
+		RIGHT = pointsRight,
+		CENTER = pointsCentre,
+	}
 	function class:Attach(tooltip)
 		if self.parent then self:SetParentClamp(0) end
 		self.parent = tooltip
 		self:SetParent(tooltip)
 		self:SetOwner(tooltip,"ANCHOR_NONE")
-		self:SetPoint("TOP",tooltip,"BOTTOM")
---		self:SetPoint("RIGHT",tooltip,"RIGHT")	-- Legion has a problem with tooltips updating/resizing themselves too often, this helps
+		local parentPoint = tooltip:GetPoint(1)
+		local attach = attachPointsLookup[parentPoint] or pointsRight
+		self:SetPoint(attach[1], tooltip, attach[2])
 	end
 
 	function class:Release()
 		if self.parent then self:SetParentClamp(0) end
 		self.parent = nil
 		self:SetParent(nil)
-		self.minWidth = 0
+		self.inMatchSize = nil
 	end
 
 	function class:InitLines()
@@ -1512,36 +1521,21 @@ do -- ExtraTip "class" definition
 		end
 	end
 
-	local function refresh(self)
-		self:NeedsRefresh(false)
--- without this, making the game tip larger does not work.
--- Legion - But this is causing flicker when we do make the game tip larger, because Blizz seems to resize it down again.
---		self:MatchSize()
-	end
-
-	function class:NeedsRefresh(flag)
-		if flag then
-			self:SetScript("OnUpdate",refresh)
-		else
-			self:SetScript("OnUpdate",nil)
-		end
-	end
-
 	function class:SetParentClamp(h)
 		local p = self.parent
 		if not p then return end
 		local l,r,t,b = p:GetClampRectInsets()
 		p:SetClampRectInsets(l,r,t,-h)
-		self:MatchSize()
-		self:NeedsRefresh(true)
 	end
 
 	function class:OnShow()
---		self:SetParentClamp(self:GetHeight())
+		self:SetParentClamp(self:GetHeight())
+		self:MatchSize()
 	end
 
 	function class:OnSizeChanged(w,h)
---		self:SetParentClamp(h)
+		self:SetParentClamp(h)
+		self:MatchSize()
 	end
 
 	function class:OnHide()
@@ -1550,47 +1544,50 @@ do -- ExtraTip "class" definition
 
 	-- The right-side text is statically positioned to the right of the left-side text.
 	-- As a result, manually changing the width of the tooltip causes the right-side text to not be in the right place.
-	local function fixRight(tooltip, shift)
-		local rights, rightname
-		rights = tooltip.Right
-		if not rights then
-			rightname = tooltip:GetName().."TextRight"
+	local function fixRight(tooltip, width)
+		local lefts = tooltip.Left or tooltip.LibExtraTipLeft
+		if not lefts then
+			lefts = setmetatable({name = tooltip:GetName().."TextLeft"},line_mt)
+			tooltip.LibExtraTipLeft = lefts -- use key containing lib name, to try to ensure it doesn't clash with anything
 		end
+		local rights = tooltip.Right or tooltip.LibExtraTipRight
+		if not rights then
+			rights = setmetatable({name = tooltip:GetName().."TextRight"},line_mt)
+			tooltip.LibExtraTipRight = rights -- use key containing lib name, to try to ensure it doesn't clash with anything
+		end
+
+		local xofs = width - tooltip:GetPadding() - 20.5 -- constant value obtained by analysing default tooltip layout
+
 		for line = 1, tooltip:NumLines() do
-			local right
-			if rights then
-				right = rights[line]
-			else
-				right = _G[rightname..line]
-			end
-			if right then		-- IsVisible always fails, probably removed
-				for index = 1, right:GetNumPoints() do
-					local point, relativeTo, relativePoint, xofs, yofs = right:GetPoint(index)
-					if xofs then
-						right:SetPoint(point, relativeTo, relativePoint, xofs + shift, yofs)
-					end
-				end
+			local left, right = lefts[line], rights[line]
+			if left and right then
+				right:ClearAllPoints()
+				right:SetPoint("RIGHT", left, "LEFT", xofs, 0) -- approximates the layout used by Blizzard, but for the new width
 			end
 		end
 	end
 
 	function class:MatchSize()
 		local p = self.parent
+		if not p then return end
+		if self.inMatchSize then return end
+		self.inMatchSize = true
 		local pw = p:GetWidth()
 		local w = self:GetWidth()
 		local d = pw - w
 		-- if the difference is less than a pixel, we don't want to waste time fixing it
 		if d > .5 then
 			self:SetWidth(pw)	-- parent is wider, so we make child tip match
-			fixRight(self, d)
+			fixRight(self, pw)
 		elseif d < -.5 then
 			local reg = lib.tooltipRegistry[p]
 			if not reg.NoColumns then
---				p:SetWidth(w)	-- the parent is smaller than the child tip, make the parent wider
--- NOTE: calling p:Show here leads to an infinite loop
---				fixRight(p, -d)	-- fix right aligned items in the game tooltip, not working in Legion because Bliz makes the frame smaller again.
+				p:SetWidth(w)	-- the parent is smaller than the child tip, make the parent wider
+				fixRight(p, w)	-- fix right aligned items in the game tooltip, not working currently as it shifts by the wrong amount
+				p:GetWidth()	-- in certain rare cases, inspecting the width here is necessary to force the tooltip to resize properly
 			end
 		end
+		self.inMatchSize = nil
 	end
 
 	function class:Show()
