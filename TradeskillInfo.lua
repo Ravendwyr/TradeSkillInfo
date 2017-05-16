@@ -434,7 +434,7 @@ function TradeskillInfo:UpdateKnownTradeRecipes(startLine, endLine)
 ]]
 
 	if self.db.profile.DebugMode then
-		self:Print("Scan complete. ",  #recipes, " recipes scanned")
+		self:Print("Scan complete. ", #recipes, " recipes scanned.")
 	end
 end
 
