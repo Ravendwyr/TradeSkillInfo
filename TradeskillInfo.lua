@@ -179,7 +179,7 @@ function TradeskillInfo:OnEnable()
 
 	self:PopulateProfessionNames()
 
---	self:HookTradeSkillUI()
+	self:HookTradeSkillUI()
 	self:SecureHook("ContainerFrameItemButton_OnModifiedClick")
 	self:SecureHook("BankFrameItemButtonGeneric_OnModifiedClick")
 	self:SecureHook("MerchantItemButton_OnModifiedClick")
@@ -242,7 +242,7 @@ function TradeskillInfo:OnAddonLoaded(_, addon)
 	if addon == "Blizzard_AuctionUI" or addon == "TradeSkillMaster" then
 		self:HookAuctionUI()
 	elseif addon == "Blizzard_TradeSkillUI" or addon == "AdvancedTradeSkillWindow" then
---		self:HookTradeSkillUI()
+		self:HookTradeSkillUI()
 	elseif addon == "Blizzard_GuildBankUI" then
 		self:SecureHook("GuildBankFrame_Update")
 	end
@@ -332,14 +332,14 @@ end
 
 function TradeskillInfo:HookTradeSkillUI()
 	if TradeSkillFrame and not self:IsHooked("TradeSkillFrame_SetSelection") then
-		self:SecureHook("TradeSkillFrame_SetSelection")
+		self:SecureHook(TradeSkillFrame.DetailsFrame, "SetSelectedRecipeID", "TradeSkillFrame_SetSelection")
 
 		-- add our text fields
 		local fsSkillText = TradeSkillFrame.DetailsFrame:CreateFontString("TradeskillInfoSkillText", "BACKGROUND", "GameFontHighlightSmall")
 		local fsProfitText = TradeSkillFrame.DetailsFrame:CreateFontString("TradeskillInfoProfitText", "BACKGROUND", "GameFontHighlightSmall")
 
-		fsSkillText:SetPoint("TOPLEFT", 5, -52)
-		fsProfitText:SetPoint("TOPLEFT", fsSkillText, "TOPRIGHT")
+		fsSkillText:SetPoint("TOPLEFT", TradeSkillFrame.DetailsFrame.Contents, "BOTTOMLEFT", 10, -10)
+		fsProfitText:SetPoint("TOPLEFT", fsSkillText, "BOTTOMLEFT", -2, -2)
 	end
 
 	if IsAddOnLoaded("AdvancedTradeSkillWindow") and not self:IsHooked("ATSWFrame_SetSelection") then
@@ -444,15 +444,8 @@ end
 function TradeskillInfo:TradeSkillFrame_SetSelection(id)
 	if not IsTradeSkillReady() or IsNPCCrafting() then return end
 
-	local skillName, skillType = GetTradeSkillInfo(id)
-	if skillType == "header" or skillType == "subheader" then return end
-	if GetTradeSkillSelectionIndex() > GetNumTradeSkills() then return end
-
-	local spellLink = GetTradeSkillRecipeLink(TradeSkillFrame.selectedSkill)
-	if not spellLink then return end
-
-	local _, _, spellId = strfind(spellLink, "enchant:(%d+)")
-	spellId = tonumber(spellId)
+	local recipeInfo = C_TradeSkillUI.GetRecipeInfo(TradeSkillFrame.DetailsFrame.selectedRecipeID)
+	local spellId = recipeInfo.recipeID
 
 	if self:CombineExists(spellId) then
 		local yPos = 50
@@ -482,14 +475,14 @@ function TradeskillInfo:TradeSkillFrame_SetSelection(id)
 
 			-- insert item value and reagent costs
 			TradeskillInfoProfitText:SetText(profitLabel .. ": " .. string.format("%s - %s = %s", self:GetMoneyString(value), self:GetMoneyString(cost), self:GetMoneyString(profit)))
-			TradeskillInfoProfitText:SetPoint("TOPLEFT", 5, -yPos)
+--			TradeskillInfoProfitText:SetPoint("TOPLEFT", 5, -yPos)
 			TradeskillInfoProfitText:Show()
 			yPos = yPos + 4 + TradeskillInfoProfitText:GetHeight()
 		else
 			TradeskillInfoProfitText:Hide()
 		end
 
-		TradeSkillDescription:SetPoint("TOPLEFT", 5, -yPos)
+--		TradeSkillDescription:SetPoint("TOPLEFT", 5, -yPos)
 	end
 end
 
