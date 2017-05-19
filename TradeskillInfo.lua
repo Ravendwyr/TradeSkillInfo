@@ -443,6 +443,7 @@ end
 ----------------------------------------------------------------------
 function TradeskillInfo:TradeSkillFrame_SetSelection(id)
 	if not IsTradeSkillReady() or IsNPCCrafting() then return end
+	if not TradeSkillFrame.DetailsFrame.selectedRecipeID then return end
 
 	local recipeInfo = C_TradeSkillUI.GetRecipeInfo(TradeSkillFrame.DetailsFrame.selectedRecipeID)
 	local spellId = recipeInfo.recipeID
