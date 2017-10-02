@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 local LIBNAME = "LibExtraTip"
 local VERSION_MAJOR = 1
-local VERSION_MINOR = 342
+local VERSION_MINOR = 343
 -- Minor Version cannot be a SVN Revison in case this library is used in multiple repositories
 -- Should be updated manually with each (non-trivial) change
 
@@ -377,7 +377,7 @@ if not lib.hookStore or lib.hookStore.version ~= HOOKSTORE_VERSION then
 end
 
 -- Called to install/modify a pre-/post-hook on the given tooltip's method
-local function hook(tip, method, prehook, posthook)
+local function hookmethod(tip, method, prehook, posthook)
 	if not lib.hookStore[tip] then lib.hookStore[tip] = {} end
 	local control
 	-- check for existing hook
@@ -392,7 +392,7 @@ local function hook(tip, method, prehook, posthook)
 	if not orig then
 		-- There should be an original method - abort if it's missing
 		if nLog then
-			nLog.AddMessage("LibExtraTip", "Hooks", N_NOTICE, "Missing method", "LibExtraTip:hook detected missing method: "..tostring(method))
+			nLog.AddMessage("LibExtraTip", "Hooks", N_NOTICE, "Missing method", "LibExtraTip:hookmethod detected missing method: "..tostring(method))
 		end
 		return
 	end
@@ -419,6 +419,35 @@ local function hook(tip, method, prehook, posthook)
 	(i.e. they might get called or they might not...)
 	--]]
 end
+
+-- Called to install/modify a secure post-hook on the given tooltip's method (pre-hooks cannot be applied securely)
+local function hooksecure(tip, method, posthook)
+	if not lib.hookStore[tip] then lib.hookStore[tip] = {} end
+	-- check for existing hook
+	local methodkey = "#"..method -- use modified key to avoid conflict with old hook stubs
+	local control = lib.hookStore[tip][methodkey]
+	if control then
+		control[1] = posthook or control[1]
+		return
+	end
+	if not tip[method] then
+		-- There should be an original method - abort if it's missing
+		if nLog then
+			nLog.AddMessage("LibExtraTip", "Hooks", N_NOTICE, "Missing method", "LibExtraTip:hooksecure detected missing method: "..tostring(method))
+		end
+		return
+	end
+	control = {posthook}
+	lib.hookStore[tip][methodkey] = control
+	-- install hook stub
+	local stub = function(...)
+		local hook = control[1]
+		if hook then hook(...) end
+	end
+	hooksecurefunc(tip, method, stub)
+	-- Using control table protects against multiple hooking and allows us to change or disable the hook
+end
+
 
 -- Called to deactivate our stub hook for the given tooltip's method
 -- The stub is left in place: we assume we are undergoing a version upgrade, and that the stubs will be reused
@@ -477,8 +506,7 @@ local function hookglobal(func, posthook)
 		return
 	end
 	local stub = function(...)
-		local hook
-		hook = control[1]
+		local hook = control[1]
 		if hook then hook(...) end
 	end
 	-- As we only need post-hooks we can use hooksecurefunc
@@ -530,13 +558,13 @@ function lib:RegisterTooltip(tooltip)
 			hookscript(tooltip,"OnTooltipSetSpell",OnTooltipSetSpell)
 			hookscript(tooltip,"OnTooltipCleared",OnTooltipCleared)
 			hookscript(tooltip,"OnSizeChanged",OnSizeChanged)
-			hook(tooltip, "Show", nil, ShowCalled) -- posthook
+			hooksecure(tooltip, "Show", ShowCalled)
 
 			for k,v in pairs(tooltipMethodPrehooks) do
-				hook(tooltip,k,v)
+				hookmethod(tooltip,k,v)
 			end
 			for k,v in pairs(tooltipMethodPosthooks) do
-				hook(tooltip,k,nil,v)
+				hookmethod(tooltip,k,nil,v)
 			end
 		end
 		return true
