@@ -107,7 +107,7 @@ function TradeskillInfoUI:OnShow()
 	self:Frame_SetSelection(TradeskillInfoUI.vars.selectionIndex)
 	self:Frame_Update()
 
-	PlaySound("igCharacterInfoOpen")
+	PlaySound(SOUNDKIT.IG_CHARACTER_INFO_OPEN)
 end
 
 function TradeskillInfoUI:Frame_Toggle()

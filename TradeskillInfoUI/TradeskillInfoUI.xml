@@ -104,7 +104,7 @@
 		<HighlightText inherits="GameFontHighlightSmall"/>
 		<Scripts>
 			<OnClick>
-				PlaySound("igMainMenuOptionCheckBoxOn")
+				PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
 			</OnClick>
 			<OnEnter>
 				if ( self.tooltipText ) then
@@ -941,7 +941,7 @@
 				TradeskillInfoUI:OnShow()
 			</OnShow>
 			<OnHide>
-				PlaySound("igCharacterInfoClose")
+				PlaySound(SOUNDKIT.IG_CHARACTER_INFO_CLOSE)
 			</OnHide>
 			<OnMouseDown>
 				if button == "LeftButton" then
