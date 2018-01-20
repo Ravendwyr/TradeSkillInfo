@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 local LIBNAME = "LibExtraTip"
 local VERSION_MAJOR = 1
-local VERSION_MINOR = 343
+local VERSION_MINOR = 344
 -- Minor Version cannot be a SVN Revison in case this library is used in multiple repositories
 -- Should be updated manually with each (non-trivial) change
 
@@ -1336,6 +1336,7 @@ function lib:GenerateTooltipMethodTable() -- Sets up hooks to give the quantity 
 			reg.additional.eventIndex = index
 		end,
 
+		--[[ disabled due to probable taint issues
 		SetSpellBookItem = function(self,index,booktype)
 			OnTooltipCleared(self)
 			local reg = tooltipRegistry[self]
@@ -1348,6 +1349,7 @@ function lib:GenerateTooltipMethodTable() -- Sets up hooks to give the quantity 
 				SetSpellDetail(reg, link)
 			end
 		end,
+		--]]
 
 		SetTalent = function(self, index, isInspect, talentGroup, inspectedUnit, classID)
 			OnTooltipCleared(self)
@@ -1387,6 +1389,7 @@ function lib:GenerateTooltipMethodTable() -- Sets up hooks to give the quantity 
 		end,
 		--]]
 
+		--[[ disabled due to possible taint issues
 		SetUnitBuff = function(self, unit, index, filter)
 			OnTooltipCleared(self)
 			local reg = tooltipRegistry[self]
@@ -1406,6 +1409,7 @@ function lib:GenerateTooltipMethodTable() -- Sets up hooks to give the quantity 
 			reg.additional.eventIndex = index
 			reg.additional.eventFilter = filter
 		end,
+		--]]
 	}
 
 	local function posthookClearIgnore(self)
@@ -1443,13 +1447,13 @@ function lib:GenerateTooltipMethodTable() -- Sets up hooks to give the quantity 
 		SetQuestLogRewardSpell = posthookClearIgnore,
 		SetQuestRewardSpell = posthookClearIgnore,
 		SetShapeshift = posthookClearIgnore,
-		SetSpellBookItem = posthookClearIgnore,
+		--SetSpellBookItem = posthookClearIgnore,
 		SetTalent = posthookClearIgnore,
 		SetTrainerService = posthookClearIgnore,
 		--SetUnit = posthookClearIgnore,
 		--SetUnitAura = posthookClearIgnore,
-		SetUnitBuff = posthookClearIgnore,
-		SetUnitDebuff = posthookClearIgnore,
+		--SetUnitBuff = posthookClearIgnore,
+		--SetUnitDebuff = posthookClearIgnore,
 	}
 
 end
