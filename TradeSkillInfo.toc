@@ -7,7 +7,7 @@
 ## Notes-koKR: 전문기술 정보의 모든 것!
 ## Author: Ethan Centaurai
 ## Version: @project-version@
-## OptionalDeps: LibStub, CallbackHandler-1.0, Ace3, LibBabble-SubZone-3.0, LibBabble-Faction-3.0, LibExtraTip, Auc-Advanced, TradeSkillMaster
+## OptionalDeps: LibStub, CallbackHandler-1.0, Ace3, LibBabble-SubZone-3.0, LibBabble-Faction-3.0, Auc-Advanced, TradeSkillMaster
 ## SavedVariables: TradeSkillInfoDB
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Always: delayed
@@ -32,7 +32,6 @@ Libs\LibBabble-Faction-3.0\lib.xml
 Libs\LibBabble-SubZone-3.0\lib.xml
 Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
-Libs\LibExtraTip\Load.xml
 #@end-no-lib-strip@
 
 Locale\enUS.lua
@@ -46,6 +45,9 @@ Locale\ptBR.lua
 Locale\ruRU.lua
 Locale\zhCN.lua
 Locale\zhTW.lua
+
+LibRevision.lua
+LibExtraTip.lua
 
 TradeskillInfo.lua
 
