@@ -1,12 +1,19 @@
-TradeSkillInfo
-==============
+# TradeSkillInfo
 
+Complete tradeskill information.
 
-What it does
-------------
+[![Twitter](https://img.shields.io/twitter/follow/ravendwyr.svg?label=Twitter&style=popout)](https://twitter.com/Ravendwyr)
+[![Discord](https://img.shields.io/discord/299308204393889802.svg?label=Discord&style=popout)](https://discord.gg/XC2REFu)
+[![Version](https://img.shields.io/github/tag-date/ravendwyr/tradeskillinfo.svg?label=Version&style=popout)](https://www.curseforge.com/wow/addons/tradeskill-info/files)
+[![Tracker](https://img.shields.io/github/issues/ravendwyr/tradeskillinfo.svg?label=Issues&style=popout)](https://github.com/Ravendwyr/TradeSkillInfo/issues)
+
+***
+
+## The Quick Intro
 
 TradeSkillInfo is an add-on that gives you all the information that you need about tradeskills, including the ones that your character cannot craft.
 
+## What it does
 
 It can add the following information to the tooltip of an item:
 
@@ -14,14 +21,12 @@ It can add the following information to the tooltip of an item:
 * Which of your characters can use the item.
 * Where the item comes from: bought from a vendor, dropped, disenchanted or crafted.
 
-
 It can add the following information to the tooltip for recipes and crafted items:
 
 * If any of your characters knows the recipe.
 * If any of your characters are able to learn the recipe.
 * If any of your characters will be able to learn the recipe in the future.
 * Where the recipe comes from: bought from a vendor, quest reward, dropped or crafted.
-
 
 It can colour-code recipes sold at merchants and on the Auction House.
 
@@ -31,13 +36,11 @@ It can colour-code recipes sold at merchants and on the Auction House.
 * Light Blue: One of your other characters will be able to learn the recipe later.
 * Red: Current character knows the recipe.
 
-
 In the tradeskill craft window it will show:
 
 * The cost of the combine (auctioneer or vendor prices), how much the result sells for to a vendor and the profit/loss.
 * At what skill levels the recipe will change to a different difficulty level.
     For example, "40/60/80/120" means the recipe is learnable at skill level 40, will turn yellow at 60, green at 80 and grey at 120.
-
 
 TradeSkillInfo also has its own Browser module which is installed as a separate load-on-demand add-on. It is opened by typing "/tsi" or by binding a key in the keybindings interface.
 
@@ -47,7 +50,6 @@ TradeSkillInfo also has its own Browser module which is installed as a separate 
 * Right-clicking a reagent icon in the Browser while visiting an auction house will perform a search for that reagent.
 
 * Shift-clicking on the recipe name in the list will paste the recipe link into an open chat editbox.
-
 
 In the Browser you can browse all tradeskill recipes in the game.
 
@@ -72,50 +74,23 @@ Recipe names are colour-coded in the Browser.
 * Orange: One of your other characters will be able to learn the recipe later.
 * Red: Not known by any of your characters.
 
-
-What it does not do
--------------------
+## What it does not do
 
 TradeSkillInfo is purely an informational tool and will not assist you in crafting items.
 
+## Configuration
 
-Configuration
--------------
-
-A configuration window can be opened by typing "/tsi config", right-clicking on the provided "data broker" object or by binding a key in the keybindings interface.
+A configuration window can be opened by typing `/tsi config`, right-clicking on the provided "data broker" object or by binding a key in the keybindings interface.
 
 Almost everything can be turned on or off according to your needs and preferences.
 
+## Translations
 
-Translations
-------------
+This add-on was written in English but has been translated into other languages.  It should work for everyone but I cannot guarantee completeness or accuracy of the provided translations.  If you would like to help with translations, feel free to [update the necessary phrases](https://www.wowace.com/projects/tradeskill-info/localization) on WoWace.
 
-This add-on was written in English but has been translated into other languages.  It should work for everyone but I cannot guarantee completeness or accuracy of the provided translations.
+## Credits
 
-If you would like to update the translations, feel free to [update the necessary phrases](http://www.wowace.com/addons/tradeskill-info/localization/) or [open a support ticket](http://www.wowace.com/addons/tradeskill-info/tickets/) on WoWace.
+TradeSkillInfo has been developed by many different people over the years, including but not limited to the following:
 
-
-Open
-----
-
-This project, like 99% of all add-ons hosted on [WoWace](http://www.wowace.com/), is open for free access to anyone who cares to join.  The source code is open and free, and you are more than welcome to participate in the ongoing development of this project.
-
-
-Feedback
---------
-
-If you have any comments, bug reports or feature requests, please leave a comment here or [open a support ticket](http://www.wowace.com/addons/tradeskill-info/tickets/) on WoWace.
-
-
-Credits
--------
-
-TradeSkillInfo has been written and maintained by several authors over the years including Dys, wmrojer, and evenue.
-
-
-* * *
-
-
-* Visit my [website](http://www.ethancentaurai.com/).
-* Follow me on [Twitter](http://twitter.com/StevenBlanchard).
-* Watch me on [GitHub](https://github.com/EthanCentaurai).
+* Original creator and maintainer - Dys, wmrojer, and evenue.
+* Current maintainer - Ravendwyr
