@@ -4,7 +4,7 @@ Complete tradeskill information.
 
 [![Twitter](https://img.shields.io/twitter/follow/ravendwyr.svg?label=Twitter&style=popout)](https://twitter.com/Ravendwyr)
 [![Discord](https://img.shields.io/discord/299308204393889802.svg?label=Discord&style=popout)](https://discord.gg/XC2REFu)
-[![Version](https://img.shields.io/github/tag-date/ravendwyr/tradeskillinfo.svg?label=Version&style=popout)](https://www.curseforge.com/wow/addons/tradeskill-info/files)
+[![Version](https://img.shields.io/github/tag-date/ravendwyr/tradeskillinfo.svg?label=Version&style=popout)](https://www.curseforge.com/wow/addons/tradeskill-info/files/all)
 [![Tracker](https://img.shields.io/github/issues/ravendwyr/tradeskillinfo.svg?label=Issues&style=popout)](https://github.com/Ravendwyr/TradeSkillInfo/issues)
 
 ***
