@@ -4,6 +4,7 @@ Complete tradeskill information.
 
 [![Twitter](https://img.shields.io/twitter/follow/ravendwyr.svg?label=Twitter&style=popout)](https://twitter.com/Ravendwyr)
 [![Discord](https://img.shields.io/discord/299308204393889802.svg?label=Discord&style=popout)](https://discord.gg/XC2REFu)
+[![Builder](https://img.shields.io/travis/com/ravendwyr/tradeskillinfo.svg?label=Build&style=popout)](https://travis-ci.com/Ravendwyr/TradeSkillInfo)
 [![Version](https://img.shields.io/github/tag-date/ravendwyr/tradeskillinfo.svg?label=Version&style=popout)](https://www.curseforge.com/wow/addons/tradeskill-info/files/all)
 [![Tracker](https://img.shields.io/github/issues/ravendwyr/tradeskillinfo.svg?label=Issues&style=popout)](https://github.com/Ravendwyr/TradeSkillInfo/issues)
 
@@ -39,16 +40,13 @@ It can colour-code recipes sold at merchants and on the Auction House.
 In the tradeskill craft window it will show:
 
 * The cost of the combine (auctioneer or vendor prices), how much the result sells for to a vendor and the profit/loss.
-* At what skill levels the recipe will change to a different difficulty level.
-    For example, "40/60/80/120" means the recipe is learnable at skill level 40, will turn yellow at 60, green at 80 and grey at 120.
+* At what skill levels the recipe will change to a different difficulty level. For example, "40/60/80/120" means the recipe is learnable at skill level 40, will turn yellow at 60, green at 80 and grey at 120.
 
-TradeSkillInfo also has its own Browser module which is installed as a separate load-on-demand add-on. It is opened by typing "/tsi" or by binding a key in the keybindings interface.
+TradeSkillInfo also has its own Browser module which is installed as a separate load-on-demand add-on. It is opened by typing `/tsi` or by binding a key in the keybindings interface.
 
-* QuickSearch an item in the inventory will open the Browser and show all recipes that use that item.
-    QuickSearch key-mouse combination is configurable.  The default setting is shift-right-click.
+QuickSearch an item in the inventory will open the Browser and show all recipes that use that item. QuickSearch key-mouse combination is configurable.  The default setting is shift-right-click.
 
 * Right-clicking a reagent icon in the Browser while visiting an auction house will perform a search for that reagent.
-
 * Shift-clicking on the recipe name in the list will paste the recipe link into an open chat editbox.
 
 In the Browser you can browse all tradeskill recipes in the game.
@@ -86,7 +84,7 @@ Almost everything can be turned on or off according to your needs and preference
 
 ## Translations
 
-This add-on was written in English but has been translated into other languages.  It should work for everyone but I cannot guarantee completeness or accuracy of the provided translations.  If you would like to help with translations, feel free to [update the necessary phrases](https://www.wowace.com/projects/tradeskill-info/localization) on WoWace.
+This add-on was written in English but has been translated into other languages.  It should work for everyone but I cannot guarantee completeness or accuracy of the provided translations.  If you would like to help with translations, feel free to [update the necessary phrases](https://www.curseforge.com/wow/addons/tradeskill-info/localization).
 
 ## Credits
 
