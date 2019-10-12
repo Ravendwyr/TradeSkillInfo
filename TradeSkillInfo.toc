@@ -1,11 +1,11 @@
-## Interface: 80200
+## Interface: 80205
 ## Title: TradeSkillInfo
 ## Notes: Complete tradeskill information.
 ## Notes-zhTW: 完整的商業技能百科
 ## Notes-zhCN: 完整的商业技能百科
 ## Notes-esES: Informarcion Completa de las Habilidades de Comercio
 ## Notes-koKR: 전문기술 정보의 모든 것!
-## Author: Ethan Centaurai
+## Author: Ravendwyr
 ## Version: @project-version@
 ## OptionalDeps: LibStub, CallbackHandler-1.0, Ace3, LibBabble-SubZone-3.0, LibBabble-Faction-3.0, Auc-Advanced, TradeSkillMaster
 ## SavedVariables: TradeSkillInfoDB
@@ -14,6 +14,8 @@
 ## X-Credits: Dys, wmrojer, Evenue, Fieroivan, Viruscamp, CMTitan
 ## X-Icon: Interface\Icons\INV_Elemental_SpiritOfHarmony_2
 ## X-Category: Professions
+## X-Curse-Project-ID: 14834
+## X-WoWI-ID: 5473
 
 #@no-lib-strip@
 Libs\LibStub\LibStub.lua
