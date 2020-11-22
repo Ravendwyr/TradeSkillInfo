@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Twitter
+    url: https://twitter.com/ravendwyr
+    about: Send a tweet on Twitter.
+  - name: Discord
+    url: https://top.gg/servers/299308204393889802
+    about: Send a message on Discord.
+  - name: Armoury (EU)
+    url: https://worldofwarcraft.com/en-gb/character/eu/argent-dawn/ravendwyr
+    about: Send a message in-game.
+  - name: Armoury (US)
+    url: https://worldofwarcraft.com/en-gb/character/us/proudmoore/ravendwyr
+    about: Send a message in-game.
