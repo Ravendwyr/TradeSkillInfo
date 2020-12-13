@@ -2,11 +2,9 @@
 
 Complete tradeskill information.
 
-[![Twitter](https://img.shields.io/twitter/follow/ravendwyr.svg?label=Twitter&style=popout)](https://twitter.com/Ravendwyr)
-[![Discord](https://img.shields.io/discord/299308204393889802.svg?label=Discord&style=popout)](https://discord.gg/XC2REFu)
-[![Builder](https://img.shields.io/travis/com/ravendwyr/tradeskillinfo.svg?label=Build&style=popout)](https://travis-ci.com/Ravendwyr/TradeSkillInfo)
-[![Version](https://img.shields.io/github/tag-date/ravendwyr/tradeskillinfo.svg?label=Version&style=popout)](https://www.curseforge.com/wow/addons/tradeskill-info/files/all)
-[![Tracker](https://img.shields.io/github/issues/ravendwyr/tradeskillinfo.svg?label=Issues&style=popout)](https://github.com/Ravendwyr/TradeSkillInfo/issues)
+[![Builder](https://img.shields.io/github/workflow/status/ravendwyr/tradeskillinfo/Upload?label=Build&logo=github+actions&style=flat-square)](https://github.com/Ravendwyr/TradeSkillInfo/actions)
+[![Version](https://img.shields.io/github/v/tag/ravendwyr/tradeskillinfo?label=Version&logo=curseforge&style=flat-square)](https://www.curseforge.com/wow/addons/tradeskill-info/files/all)
+[![Tracker](https://img.shields.io/github/issues/ravendwyr/tradeskillinfo?label=Issues&logo=github&style=flat-square)](https://github.com/Ravendwyr/TradeSkillInfo/issues)
 
 ***
 
@@ -92,3 +90,16 @@ TradeSkillInfo has been developed by many different people over the years, inclu
 
 * Original creator and maintainer - Dys, wmrojer, and evenue.
 * Current maintainer - Ravendwyr
+
+***
+
+### Support
+
+[![Twitter](https://img.shields.io/twitter/follow/ravendwyr?label=Twitter&logo=twitter&style=flat-square)](https://twitter.com/Ravendwyr)
+[![Discord](https://img.shields.io/discord/299308204393889802?label=Discord&logo=discord&style=flat-square)](https://top.gg/servers/299308204393889802)
+[![Sponsor](https://img.shields.io/github/sponsors/ravendwyr?label=Sponsors&logo=github+sponsors&style=flat-square)](https://github.com/sponsors/Ravendwyr)
+
+[![Twitch](https://img.shields.io/badge/Twitch-subscribe-yellow?&logo=twitch&style=flat-square)](https://www.twitch.tv/subs/ravendwyr)
+[![Crypto](https://img.shields.io/badge/ETH-send-yellow?&logo=ethereum&style=flat-square)](https://etherscan.io/address/0x332224Ed82264298B3DC68dAcf643E8Df4abDCC3)
+[![PayPal](https://img.shields.io/badge/PayPal-donate-yellow?logo=paypal&style=flat-square)](https://www.paypal.me/Ravendwyr/5gbp)
+[![Coffee](https://img.shields.io/badge/Kofi-buy-yellow?logo=ko-fi&style=flat-square)](https://ko-fi.com/Ravendwyr)
